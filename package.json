@@ -1,0 +1,21 @@
+{
+  "name": "rssenal",
+  "version": "0.0.1",
+  "description": "RSS reader.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "rss",
+    "react",
+    "node",
+    "mongodb"
+  ],
+  "author": "Destin Moulton",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.0",
+    "mongoose": "^4.11.13"
+  }
+}
