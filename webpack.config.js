@@ -5,7 +5,7 @@ module.exports = {
     devtool: 'source-map',
     entry: './src/client/App.js',
     output: { 
-        path: path.join(__dirname, 'dist/server/public/js'), 
+        path: path.join(__dirname, 'dist/public/js'), 
         filename: 'rrsenal.js'
     },
     module: {
