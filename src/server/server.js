@@ -21,6 +21,6 @@ ApiRoutes(app);
 app.listen(port);
 
 // Output the server listening message 
-console.log("-".repeat(75));
+console.log("-".repeat(50));
 console.log("--- rssenal server listening on http://127.0.0.1:"+port)
-console.log("-".repeat(75));
+console.log("-".repeat(50));
