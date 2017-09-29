@@ -3,8 +3,8 @@
     {
       "name"        : "rssenal",
       "script"      : "dist/server/server.js",
-      "watch"       : ["dist/server"],
-      "node-args"   : "--inspect",
+      "watch"       : "dist/server",
+      "node_args"   : "--inspect",
       "env": {
         "NODE_ENV": "development"
       },
