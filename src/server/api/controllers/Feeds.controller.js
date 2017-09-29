@@ -5,7 +5,7 @@ class FeedsController {
         Feeds.find({}, (err, feeds)=>{
             if(err) 
                 res.send(err);
-            res.json(feeds);
+            res.send(feeds);
         });
     }
 

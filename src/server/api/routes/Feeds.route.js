@@ -1,12 +1,12 @@
+import express from "express";
+const router = express.Router();
 
 import feeds from "../controllers/Feeds.controller";
 
-export default function(app){
-    app.route('/feeds')
-       .get(feeds.get_all)
-       .post(feeds.add);
+router.get('/', feeds.get_all);
+router.post('/', feeds.add);
 
-    app.route('/feeds/:feedId')
-       .get(feeds.get_single)
-       .delete(feeds.delete_single);
-}
+router.get('/:feedId', feeds.get_single);
+router.delete('/:feedId', feeds.delete_single);
+
+export default router;
