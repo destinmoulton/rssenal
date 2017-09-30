@@ -1,10 +1,12 @@
 import bodyParser from "body-parser";
 import express from "express";
 import mongoose from "mongoose";
+import path from "path";
 
 import ApiRoutes from "./api.routes";
 
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
+const PUBLIC_PATH = path.resolve(__dirname, '../public');
 
 const app = express();
 
@@ -16,12 +18,19 @@ mongoose.connect("mongodb://localhost/rssenal", { useMongoClient: true, promiseL
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+app.use(express.static(PUBLIC_PATH));
+
+// Allow all URI's; handle by react router
+app.get('*', (req, res)=>{
+    res.sendFile(path.join(PUBLIC_PATH, '/index.html'));
+});
+
 // Setup the api routes
 ApiRoutes(app);
 
-app.listen(port);
+app.listen(PORT);
 
 // Output the server listening message 
 console.log("-".repeat(50));
-console.log("--- rssenal server listening on http://127.0.0.1:"+port)
+console.log("--- rssenal server listening on http://127.0.0.1:" + PORT)
 console.log("-".repeat(50));
