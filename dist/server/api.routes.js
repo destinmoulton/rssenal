@@ -6,10 +6,15 @@ Object.defineProperty(exports, "__esModule", {
 
 exports.default = function (app) {
     app.use('/api/feeds', _Feeds2.default);
+    app.use('/api/validatefeedurl', _ValidateFeedURL2.default);
 };
 
 var _Feeds = require("./api/routes/Feeds.route");
 
 var _Feeds2 = _interopRequireDefault(_Feeds);
+
+var _ValidateFeedURL = require("./api/routes/ValidateFeedURL.route");
+
+var _ValidateFeedURL2 = _interopRequireDefault(_ValidateFeedURL);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
