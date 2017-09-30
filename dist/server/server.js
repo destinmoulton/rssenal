@@ -23,6 +23,7 @@ var port = process.env.PORT || 3000;
 var app = (0, _express2.default)();
 
 // Connect mongoose
+_mongoose2.default.Promise = global.Promise;
 _mongoose2.default.connect("mongodb://localhost/rssenal", { useMongoClient: true, promiseLibrary: global.Promise });
 
 // Setup body-parser

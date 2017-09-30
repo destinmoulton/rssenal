@@ -9,6 +9,7 @@ const port = process.env.PORT || 3000;
 const app = express();
 
 // Connect mongoose
+mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/rssenal", { useMongoClient: true, promiseLibrary: global.Promise });
 
 // Setup body-parser
