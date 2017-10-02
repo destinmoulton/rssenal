@@ -37,13 +37,13 @@ app.use(_bodyParser2.default.json());
 
 app.use(_express2.default.static(PUBLIC_PATH));
 
+// Setup the api routes
+(0, _api2.default)(app);
+
 // Allow all URI's; handle by react router
 app.get('*', function (req, res) {
     res.sendFile(_path2.default.join(PUBLIC_PATH, '/index.html'));
 });
-
-// Setup the api routes
-(0, _api2.default)(app);
 
 app.listen(PORT);
 
