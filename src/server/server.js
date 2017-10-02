@@ -20,13 +20,13 @@ app.use(bodyParser.json());
 
 app.use(express.static(PUBLIC_PATH));
 
+// Setup the api routes
+ApiRoutes(app);
+
 // Allow all URI's; handle by react router
 app.get('*', (req, res)=>{
     res.sendFile(path.join(PUBLIC_PATH, '/index.html'));
 });
-
-// Setup the api routes
-ApiRoutes(app);
 
 app.listen(PORT);
 
