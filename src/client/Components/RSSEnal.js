@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Grid, Icon, Menu, Segment } from "semantic-ui-react";
+import { Grid, Menu, Segment } from "semantic-ui-react";
+
+import AddFeed from "./Modals/AddFeed";
 
 class RSSEnal extends Component {
     render(){
@@ -8,9 +10,7 @@ class RSSEnal extends Component {
                 <Grid.Row>
                     <Grid.Column>
                         <Menu attached="top">
-                            <Icon name="plus square"
-                                  color="blue"
-                                  size="large"/>
+                            <AddFeed />                            
                         </Menu>
                         <Segment attached="bottom">
                             Feeds here...
