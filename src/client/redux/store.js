@@ -2,12 +2,11 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import thunk from 'redux-thunk';
 
-//import errorReducer from './reducers/error.reducer';
+import feedGroupsReducer from './reducers/feedgroups.reducer';
 
 const store = createStore(
   combineReducers({
-    //error: errorReducer,
-    
+    feedGroups: feedGroupsReducer
   }),
   applyMiddleware(
     thunk
