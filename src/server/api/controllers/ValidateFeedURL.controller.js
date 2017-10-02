@@ -4,9 +4,10 @@ class ValidateFeedURL {
     
     validate_single(req, res){
         // Validate that the url is accessible
-        request(req.params.feedUrl, (err, res, body)=>{
+        const data = req.body;
+        request(data.feedURL, (err, valres, body)=>{
             let status = "success";
-            if(err || res.statusCode !== 200){
+            if(err || valres.statusCode !== 200){
                 status = "error";
             }
 
@@ -14,3 +15,5 @@ class ValidateFeedURL {
         });
     }
 }
+
+export default new ValidateFeedURL();
