@@ -10,11 +10,11 @@ var _mongoose2 = _interopRequireDefault(_mongoose);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var FeedCategorySchema = _mongoose2.default.Schema({
+var FeedGroupSchema = _mongoose2.default.Schema({
     name: {
         type: String,
-        required: [true, "You must include a category name."]
+        required: [true, "You must include a group name."]
     }
 });
 
-exports.default = _mongoose2.default.model("FeedCategories", FeedCategorySchema);
+exports.default = _mongoose2.default.model("FeedGroups", FeedGroupSchema);
