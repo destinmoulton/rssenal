@@ -25,7 +25,7 @@ var FeedsController = function () {
             _Feeds2.default.find({}, function (err, feeds) {
                 if (err) res.send(err);
                 res.send(feeds);
-            });
+            }).sort({ name: 'asc' });
         }
     }, {
         key: "add",
