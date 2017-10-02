@@ -3,6 +3,6 @@ const router = express.Router();
 
 import validateFeedURL from "../controllers/ValidateFeedURL.controller";
 
-router.get('/:feedUrl', validateFeedURL.validate_single);
+router.post('/', validateFeedURL.validate_single);
 
 export default router;

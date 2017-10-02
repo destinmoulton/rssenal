@@ -16,6 +16,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var router = _express2.default.Router();
 
-router.get('/:feedUrl', _ValidateFeedURL2.default.validate_single);
+router.post('/', _ValidateFeedURL2.default.validate_single);
 
 exports.default = router;
