@@ -1,7 +1,11 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
 
 import { Button, Icon } from "semantic-ui-react";
+
+import { beginSaveFeedGroup } from "../../redux/actions/feedgroups.actions";
 
 class GroupItem extends Component {
     static propTypes = {
@@ -52,6 +56,11 @@ class GroupItem extends Component {
         })
     }
 
+    _handleClickEditSave(){
+        const { editGroupName, group } = this.state;
+        this.props.beginSaveFeedGroup(group._id, editGroupName);
+    }
+
     _onChangeGroupNameInput(e){
         this.setState({
             editGroupName: e.target.value
@@ -88,7 +97,11 @@ class GroupItem extends Component {
                           onChange={this._onChangeGroupNameInput}
                       />
             options = <span>
-                          <Button size="mini" color="green" inverted><Icon name="save"/>&nbsp;Save</Button>
+                          <Button 
+                              size="mini"
+                              color="green"
+                              inverted
+                              onClick={this._handleClickEditSave}><Icon name="save"/>&nbsp;Save</Button>
                           <Button 
                               size="mini"
                               color="orange"
@@ -107,4 +120,14 @@ class GroupItem extends Component {
     }
 }
 
-export default GroupItem;
+const mapStateToProps = (state)=>{
+    return {};
+}
+
+const mapDispatchToProps = (dispatch)=>{
+    return {
+        beginSaveFeedGroup: (groupId, newGroupName)=> dispatch(beginSaveFeedGroup(groupId, newGroupName))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GroupItem);
