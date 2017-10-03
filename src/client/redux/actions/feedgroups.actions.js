@@ -25,11 +25,11 @@ function fetchingInProgress(){
 
 function fetchFeedGroups(){
     return (dispatch)=>{
+        const url = API_FEEDGROUPS_GET_ALL;
         const init = {
-            url: API_FEEDGROUPS_GET_ALL,
             method: "GET"
         };
-        fetch(init)
+        fetch(url, init)
             .then((res)=>{
                 return res.json();
             })
@@ -62,19 +62,23 @@ function updatingInProgress(groupId){
 
 function updateFeedGroup(groupId, newGroupName){
     return (dispatch)=>{
+        const url = API_FEEDGROUPS_BASE + groupId;
         const init = {
-            url: API_FEEDGROUPS_BASE + groupId,
-            method: "UPDATE",
-            body: JSON.stringify({name: newGroupName})
+            method: "PUT",
+            body: JSON.stringify({name: newGroupName}),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
         };
-        const url = 
-        fetch(init)
-        .then((res)=>{
-            return res.json();
-        })
-        .then((newGroup)=>{
-            dispatch(updatingComplete(newGroup))
-        })
+
+        fetch(url, init)
+            .then((res)=>{
+                return res.json();
+            })
+            .then((newGroup)=>{
+                dispatch(updatingComplete(newGroup))
+            })
     }
 }
 
