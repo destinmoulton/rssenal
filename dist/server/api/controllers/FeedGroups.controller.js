@@ -52,6 +52,20 @@ var FeedGroupsController = function () {
                 res.json({ message: "Group deleted." });
             });
         }
+    }, {
+        key: "update_single",
+        value: function update_single(req, res) {
+            _FeedGroups2.default.findById(req.params.feedGroupId, function (err, group) {
+                if (err) res.send(err);
+
+                group.name = req.body.name;
+                group.save(function (err, updatedGroup) {
+                    if (err) res.send(err);
+
+                    res.json(updatedGroup);
+                });
+            });
+        }
     }]);
 
     return FeedGroupsController;
