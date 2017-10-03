@@ -29,22 +29,25 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
                 groups: freshGroups,
                 hasFeedGroups: true
             }
-        case FEEDGROUPS_UPDATE_BEGIN:
+        case FEEDGROUPS_UPDATE_BEGIN: {
             const updatingFeedGroups = state.updatingFeedGroups.push(action.groupId);
 
             return {
                 ...state,
                 updatingFeedGroups
             }
+        }
 
-        case FEEDGROUPS_UPDATE_COMPLETE:
+        case FEEDGROUPS_UPDATE_COMPLETE: {
             const groupIndex = state.groups.findIndex((group)=>{
                 return group._id === action.group._id;
             });
 
-            const groups = groups.update(groupIndex, action.group);
+            const groups = state.groups.update(groupIndex, val => action.group);
 
-            const updatingIndex = state.updatingFeedGroups.findIndex(action.group._id);
+            const updatingIndex = state.updatingFeedGroups.findIndex((groupId)=>{
+                return groupId === action.group._id;
+            });
             const updatingFeedGroups = state.updatingFeedGroups.delete(updatingIndex);
             
             return {
@@ -52,6 +55,7 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
                 groups,
                 updatingFeedGroups
             }
+        }
         default:
             return state;
     }
