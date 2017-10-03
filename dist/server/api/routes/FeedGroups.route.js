@@ -21,5 +21,5 @@ router.post('/', _FeedGroups2.default.add);
 
 router.get('/:feedGroupId', _FeedGroups2.default.get_single);
 router.delete('/:feedGroupId', _FeedGroups2.default.delete_single);
-router.update('/:feedGroupId', _FeedGroups2.default.update_single);
+router.put('/:feedGroupId', _FeedGroups2.default.update_single);
 exports.default = router;
