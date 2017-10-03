@@ -6,7 +6,7 @@ import feedGroupsReducer from './reducers/feedgroups.reducer';
 
 const store = createStore(
   combineReducers({
-    feedGroups: feedGroupsReducer
+    feedgroups: feedGroupsReducer
   }),
   applyMiddleware(
     thunk
