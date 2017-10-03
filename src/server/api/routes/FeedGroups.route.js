@@ -8,5 +8,5 @@ router.post('/', feedGroups.add);
 
 router.get('/:feedGroupId', feedGroups.get_single);
 router.delete('/:feedGroupId', feedGroups.delete_single);
-router.update('/:feedGroupId', feedGroups.update_single);
+router.put('/:feedGroupId', feedGroups.update_single);
 export default router;
