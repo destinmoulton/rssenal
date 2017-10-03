@@ -1,4 +1,4 @@
-import { OrderedMap } from "immutable";
+import { List } from "immutable";
 
 import { 
     FEEDGROUPS_FETCHING,
@@ -6,12 +6,12 @@ import {
 } from "../actiontypes";
 
 const INITIAL_STATE = {
-    groups: OrderedMap(),
+    groups: List(),
     isFetchingFeedGroups: false,
     hasFeedGroups: false
 };
 
-const FeedGroupsReducer = function(state = INITIAL_STATE, action){
+const feedGroupsReducer = function(state = INITIAL_STATE, action){
     switch(action.type){
         case FEEDGROUPS_FETCHING:
             return {
@@ -19,12 +19,7 @@ const FeedGroupsReducer = function(state = INITIAL_STATE, action){
                 isFetchingFeedGroups: true
             }
         case FEEDGROUPS_RECEIVED:
-            let keyedGroups = [];
-            action.groups.map((group)=>{
-                keyedGroups.push({[group._id]: group});
-            });
-
-            const freshGroups = OrderedMap(keyedGroups);
+            const freshGroups = List(action.groups);
 
             return {
                 ...state,
@@ -36,4 +31,4 @@ const FeedGroupsReducer = function(state = INITIAL_STATE, action){
     }
 }
 
-export default FeedGroupsReducer;
+export default feedGroupsReducer;
