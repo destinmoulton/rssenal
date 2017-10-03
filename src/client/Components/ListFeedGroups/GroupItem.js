@@ -18,6 +18,7 @@ class GroupItem extends Component {
         this.state = {
             optionsAreVisible: false,
             isEditing: false,
+            isThisGroupSaving: false,
             editGroupName: props.group.name
         }
 
@@ -25,7 +26,26 @@ class GroupItem extends Component {
         this._hideOptions = this._hideOptions.bind(this);
         this._handleClickEdit = this._handleClickEdit.bind(this);
         this._handleClickEditCancel = this._handleClickEditCancel.bind(this);
+        this._handleClickEditSave = this._handleClickEditSave.bind(this);
         this._onChangeGroupNameInput = this._onChangeGroupNameInput.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps){
+        const { isEditing, isThisGroupSaving } = this.state;
+
+        const nextIsThisGroupSaving = nextProps.updatingFeedGroups.findIndex((testGrpId)=>testGrpId===this.props.group._id) > -1 ? true : false;
+        if(isEditing && isThisGroupSaving && !nextIsThisGroupSaving){
+            // Editing is complete
+            this.setState({
+                isEditing: false,
+                isThisGroupSaving: false
+            })
+        } else if(isEditing && !isThisGroupSaving && nextIsThisGroupSaving){
+            // This group is saving
+            this.setState({
+                isThisGroupSaving: true
+            })
+        }
     }
 
     _showOptions(){
@@ -57,7 +77,8 @@ class GroupItem extends Component {
     }
 
     _handleClickEditSave(){
-        const { editGroupName, group } = this.state;
+        const { group } = this.props;
+        const { editGroupName } = this.state;
         this.props.beginSaveFeedGroup(group._id, editGroupName);
     }
 
@@ -68,8 +89,8 @@ class GroupItem extends Component {
     }
 
     render(){
-        const { group } = this.props;
-        const { editGroupName, isEditing, optionsAreVisible } = this.state;
+        const { group, updatingFeedGroups } = this.props;
+        const { editGroupName, isEditing, isThisGroupSaving, optionsAreVisible } = this.state;
 
         let options = "";
         if(optionsAreVisible && !isEditing){
@@ -89,24 +110,35 @@ class GroupItem extends Component {
                           />
                       </span>;
         }
+
+        
+
         let display = group.name;
         if(isEditing){
             display = <input
                           autoFocus
                           value={editGroupName}
                           onChange={this._onChangeGroupNameInput}
+                          disabled={isThisGroupSaving}
                       />
+
+            let cancelButton = "";
+            if(!isThisGroupSaving){
+                cancelButton = <Button 
+                                    size="mini"
+                                    color="orange"
+                                    inverted
+                                    onClick={this._handleClickEditCancel}><Icon name="cancel"/>&nbsp;Cancel</Button>;
+            }
+
             options = <span>
                           <Button 
                               size="mini"
                               color="green"
                               inverted
-                              onClick={this._handleClickEditSave}><Icon name="save"/>&nbsp;Save</Button>
-                          <Button 
-                              size="mini"
-                              color="orange"
-                              inverted
-                              onClick={this._handleClickEditCancel}><Icon name="cancel"/>&nbsp;Cancel</Button>
+                              onClick={this._handleClickEditSave}
+                              loading={isThisGroupSaving}><Icon name="save"/>&nbsp;Save</Button>
+                          {cancelButton}
                       </span>;
         }
 
@@ -121,7 +153,11 @@ class GroupItem extends Component {
 }
 
 const mapStateToProps = (state)=>{
-    return {};
+    const { feedgroups } = state;
+
+    return {
+        updatingFeedGroups: feedgroups.updatingFeedGroups
+    };
 }
 
 const mapDispatchToProps = (dispatch)=>{
