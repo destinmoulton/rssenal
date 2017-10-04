@@ -38,6 +38,12 @@ var FeedSchema = _mongoose2.default.Schema({
             }
         }
     },
+    description: {
+        type: String
+    },
+    link: {
+        type: String
+    },
     creation_date: {
         type: Date,
         default: Date.now

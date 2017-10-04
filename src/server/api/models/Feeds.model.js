@@ -25,6 +25,12 @@ const FeedSchema = mongoose.Schema({
             }
         }
     },
+    description: {
+        type: String
+    },
+    link: {
+        type: String
+    },
     creation_date: {
         type: Date,
         default: Date.now
