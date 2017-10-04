@@ -3,7 +3,7 @@ import { Grid, Menu, Segment } from "semantic-ui-react";
 
 import AddFeed from "./Modals/AddFeed";
 import AddGroup from "./ListFeedGroups/AddGroup";
-import ListFeedGroups from "./ListFeedGroups";
+import ListFeedGroups from "./ListFeedGroups/ListFeedGroups";
 
 class RSSEnal extends Component {
     render(){
