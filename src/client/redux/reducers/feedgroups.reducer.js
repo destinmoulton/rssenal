@@ -13,7 +13,8 @@ const INITIAL_STATE = {
     groups: List(),
     isFetchingFeedGroups: false,
     hasFeedGroups: false,
-    updatingFeedGroups: List()
+    updatingFeedGroups: List(),
+    isAddingFeedGroup: false
 };
 
 const feedGroupsReducer = function(state = INITIAL_STATE, action){
@@ -38,20 +39,20 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
             }
         case FEEDGROUPS_ADD_COMPLETE: {
             const groups = state.groups.push(action.group);
+            console.log(action.group);
             return {
                 ...state,
-                groups
+                groups,
+                isAddingFeedGroup: false
             }
         }
         case FEEDGROUPS_UPDATE_BEGIN: {
             const updatingFeedGroups = state.updatingFeedGroups.push(action.groupId);
-
             return {
                 ...state,
                 updatingFeedGroups
             }
         }
-
         case FEEDGROUPS_UPDATE_COMPLETE: {
             const groupIndex = state.groups.findIndex((group)=>{
                 return group._id === action.group._id;
