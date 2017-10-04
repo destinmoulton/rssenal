@@ -1,6 +1,8 @@
 import {
     FEEDGROUPS_FETCHING,
     FEEDGROUPS_RECEIVED,
+    FEEDGROUPS_ADD_BEGIN,
+    FEEDGROUPS_ADD_COMPLETE,
     FEEDGROUPS_UPDATE_BEGIN,
     FEEDGROUPS_UPDATE_COMPLETE
 } from "../actiontypes";
@@ -44,6 +46,47 @@ function fetchingComplete(data){
         type: FEEDGROUPS_RECEIVED,
         groups: data
     }
+}
+
+export function beginAddFeedGroup(newGroupName){
+    return (dispatch)=>{
+        dispatch(addingInProgress());
+        dispatch(addFeedGroup(newGroupName));
+    }
+}
+
+function addingInProgress(){
+    return {
+        type: FEEDGROUPS_ADD_BEGIN
+    }
+}
+
+function addFeedGroup(newGroupName){
+    return (dispatch)=>{
+        const url = API_FEEDGROUPS_BASE;
+        const init = {
+            method: "POST",
+            body: JSON.stringify({name: newGroupName}),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }
+        fetch(url, init)
+            .then((res)=>{
+                res.json();
+            })
+            .then((newGroup)=>{
+                dispatch(addingFeedGroupComplete(newGroup));
+            })
+    }
+}
+
+function addingFeedGroupComplete(group){
+    return {
+        type: FEEDGROUPS_ADD_COMPLETE,
+        group
+    };
 }
 
 export function beginSaveFeedGroup(groupId, newGroupName){
