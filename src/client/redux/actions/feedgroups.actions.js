@@ -74,7 +74,7 @@ function addFeedGroup(newGroupName){
         }
         fetch(url, init)
             .then((res)=>{
-                res.json();
+                return res.json();
             })
             .then((newGroup)=>{
                 dispatch(addingFeedGroupComplete(newGroup));
