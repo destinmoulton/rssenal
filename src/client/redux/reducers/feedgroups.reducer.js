@@ -5,6 +5,8 @@ import {
     FEEDGROUPS_RECEIVED,
     FEEDGROUPS_ADD_BEGIN,
     FEEDGROUPS_ADD_COMPLETE,
+    FEEDGROUPS_DELETE_BEGIN,
+    FEEDGROUPS_DELETE_COMPLETE,
     FEEDGROUPS_UPDATE_BEGIN,
     FEEDGROUPS_UPDATE_COMPLETE
 } from "../actiontypes";
@@ -14,7 +16,8 @@ const INITIAL_STATE = {
     isFetchingFeedGroups: false,
     hasFeedGroups: false,
     updatingFeedGroups: List(),
-    isAddingFeedGroup: false
+    isAddingFeedGroup: false,
+    isDeletingFeedGroup: false
 };
 
 const feedGroupsReducer = function(state = INITIAL_STATE, action){
@@ -39,13 +42,28 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
             }
         case FEEDGROUPS_ADD_COMPLETE: {
             const groups = state.groups.push(action.group);
-            console.log(action.group);
             return {
                 ...state,
                 groups,
                 isAddingFeedGroup: false
             }
         }
+        case FEEDGROUPS_DELETE_BEGIN: 
+            return {
+                ...state,
+                isDeletingFeedGroup: true
+            }
+        case FEEDGROUPS_DELETE_COMPLETE: 
+            const groupIndex = state.groups.findIndex((group)=>{
+                return group._id === action.groupId;
+            });
+
+            const groups = state.groups.delete(groupIndex);
+            return {
+                ...state,
+                groups,
+                isDeletingFeedGroup: false
+            }
         case FEEDGROUPS_UPDATE_BEGIN: {
             const updatingFeedGroups = state.updatingFeedGroups.push(action.groupId);
             return {
