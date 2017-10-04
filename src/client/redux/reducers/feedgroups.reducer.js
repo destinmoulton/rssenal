@@ -3,6 +3,8 @@ import { List } from "immutable";
 import { 
     FEEDGROUPS_FETCHING,
     FEEDGROUPS_RECEIVED,
+    FEEDGROUPS_ADD_BEGIN,
+    FEEDGROUPS_ADD_COMPLETE,
     FEEDGROUPS_UPDATE_BEGIN,
     FEEDGROUPS_UPDATE_COMPLETE
 } from "../actiontypes";
@@ -29,6 +31,18 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
                 groups: freshGroups,
                 hasFeedGroups: true
             }
+        case FEEDGROUPS_ADD_BEGIN:
+            return {
+                ...state,
+                isAddingFeedGroup: true
+            }
+        case FEEDGROUPS_ADD_COMPLETE: {
+            const groups = state.groups.push(action.group);
+            return {
+                ...state,
+                groups
+            }
+        }
         case FEEDGROUPS_UPDATE_BEGIN: {
             const updatingFeedGroups = state.updatingFeedGroups.push(action.groupId);
 
