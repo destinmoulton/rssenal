@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _request = require("request");
+var _rssParser = require("rss-parser");
 
-var _request2 = _interopRequireDefault(_request);
+var _rssParser2 = _interopRequireDefault(_rssParser);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24,13 +24,15 @@ var ValidateFeedURL = function () {
         value: function validate_single(req, res) {
             // Validate that the url is accessible
             var data = req.body;
-            (0, _request2.default)(data.feedURL, function (err, valres, body) {
-                var status = "success";
-                if (err || valres.statusCode !== 200) {
-                    status = "error";
+            _rssParser2.default.parseURL(data.feedURL, function (err, valres, body) {
+                if (err) {
+                    res.json({ status: "error", error: err });
                 }
 
-                res.json({ status: status });
+                res.json({
+                    status: "success",
+                    feedInfo: valres
+                });
             });
         }
     }]);

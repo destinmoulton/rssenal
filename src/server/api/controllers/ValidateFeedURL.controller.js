@@ -1,17 +1,19 @@
-import request from "request";
+import parser from "rss-parser";
 
 class ValidateFeedURL {
     
     validate_single(req, res){
         // Validate that the url is accessible
         const data = req.body;
-        request(data.feedURL, (err, valres, body)=>{
-            let status = "success";
-            if(err || valres.statusCode !== 200){
-                status = "error";
+        parser.parseURL(data.feedURL, (err, valres, body)=>{
+            if(err){
+                res.json({status:"error", error:err});
             }
 
-            res.json({status});
+            res.json({
+                status:"success",
+                feedInfo: valres
+            });
         });
     }
 }
