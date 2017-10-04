@@ -8,16 +8,29 @@ class FeedGroupsController {
                     res.send(err);
                 res.send(groups);
             })
-            .sort({name: 'asc'});
+            .sort({order: 'asc'});
     }
 
     add(req, res){
-        let newFeed = new FeedGroups(req.body);
-        newFeed.save((err, group)=>{
-            if(err)
-                res.send(err);
-            res.json(group);
-        });
+        // Add a new feed group as the last in order
+        FeedGroups.find({},(err, maxOrderedFeedGroup)=>{
+            let data = req.body;
+
+            let order = 0;
+            if(maxOrderedFeedGroup.length > 0){
+                order = maxOrderedFeedGroup[0].order + 1;
+            }
+
+            data['order'] = order;
+            let newFeedGroup = new FeedGroups(data);
+                newFeedGroup.save((err, group)=>{
+                    if(err)
+                        res.send(err);
+                    res.json(group);
+                });
+            })
+        .sort({order:'desc'})
+        .limit(1);
     }
 
     get_single(req, res){
@@ -32,7 +45,7 @@ class FeedGroupsController {
         FeedGroups.remove({_id: req.params.feedGroupId}, (err)=>{
             if(err)
                 res.send(err);
-            res.json({message: "Group deleted."});
+            res.json({message: "Group deleted.", _id:req.params.feedGroupId});
         })
     }
 
