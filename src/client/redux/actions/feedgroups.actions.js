@@ -3,6 +3,8 @@ import {
     FEEDGROUPS_RECEIVED,
     FEEDGROUPS_ADD_BEGIN,
     FEEDGROUPS_ADD_COMPLETE,
+    FEEDGROUPS_DELETE_BEGIN,
+    FEEDGROUPS_DELETE_COMPLETE,
     FEEDGROUPS_UPDATE_BEGIN,
     FEEDGROUPS_UPDATE_COMPLETE
 } from "../actiontypes";
@@ -131,3 +133,42 @@ function updatingComplete(newGroup){
         group: newGroup
     }
 }
+
+export function beginDeleteFeedGroup(groupId){
+    return (dispatch)=>{
+        dispatch(deleteInProgress());
+        dispatch(deleteFeedGroup(groupId));
+    }
+}
+
+function deleteInProgress(){
+    return {
+        type: FEEDGROUPS_DELETE_BEGIN
+    }
+}
+
+function deleteFeedGroup(groupId){
+    return (dispatch)=>{
+        const url = API_FEEDGROUPS_BASE + groupId;
+        const init = {
+            method: "DELETE"
+        }
+        fetch(url, init)
+            .then((res)=>{
+                return res.json();
+            })
+            .then((resObj)=>{
+                if(resObj.status==="success"){
+                    dispatch(deleteComplete(groupId));
+                }
+            })
+    }
+}
+
+function deleteComplete(groupId){
+    return {
+        type: FEEDGROUPS_DELETE_COMPLETE,
+        groupId
+    }
+}
+
