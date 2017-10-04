@@ -2,9 +2,9 @@ import React, {Component} from "react";
 
 import { connect } from "react-redux";
 
-import { getAllFeedGroups } from "../redux/actions/feedgroups.actions";
+import { getAllFeedGroups } from "../../redux/actions/feedgroups.actions";
 
-import GroupItem from "./ListFeedGroups/GroupItem";
+import GroupItem from "./ListGroupItem";
 
 class ListFeedGroups extends Component {
 
