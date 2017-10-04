@@ -60,7 +60,7 @@ var FeedGroupsController = function () {
         value: function delete_single(req, res) {
             _FeedGroups2.default.remove({ _id: req.params.feedGroupId }, function (err) {
                 if (err) res.send(err);
-                res.json({ message: "Group deleted.", _id: req.params.feedGroupId });
+                res.json({ message: "Group deleted.", _id: req.params.feedGroupId, status: "success" });
             });
         }
     }, {

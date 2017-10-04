@@ -45,7 +45,7 @@ class FeedGroupsController {
         FeedGroups.remove({_id: req.params.feedGroupId}, (err)=>{
             if(err)
                 res.send(err);
-            res.json({message: "Group deleted.", _id:req.params.feedGroupId});
+            res.json({message: "Group deleted.", _id:req.params.feedGroupId, status: "success"});
         })
     }
 
