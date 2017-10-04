@@ -4,6 +4,9 @@ const FeedGroupSchema = mongoose.Schema({
     name: {
         type: String,
         required: [true, "You must include a group name."]
+    },
+    order: {
+        type: Number
     }
 });
 
