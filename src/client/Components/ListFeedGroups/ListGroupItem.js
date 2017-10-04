@@ -2,12 +2,11 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
+import { Button, Confirm, Icon } from "semantic-ui-react";
 
-import { Button, Icon } from "semantic-ui-react";
+import { beginDeleteFeedGroup, beginSaveFeedGroup } from "../../redux/actions/feedgroups.actions";
 
-import { beginSaveFeedGroup } from "../../redux/actions/feedgroups.actions";
-
-class GroupItem extends Component {
+class ListGroupItem extends Component {
     static propTypes = {
         group: PropTypes.object.isRequired
     };
@@ -24,6 +23,7 @@ class GroupItem extends Component {
 
         this._showOptions = this._showOptions.bind(this);
         this._hideOptions = this._hideOptions.bind(this);
+        this._handleClickDelete = this._handleClickDelete.bind(this);
         this._handleClickEdit = this._handleClickEdit.bind(this);
         this._handleClickEditCancel = this._handleClickEditCancel.bind(this);
         this._handleClickEditSave = this._handleClickEditSave.bind(this);
@@ -82,6 +82,14 @@ class GroupItem extends Component {
         this.props.beginSaveFeedGroup(group._id, editGroupName);
     }
 
+    _handleClickDelete(){
+        const { beginDeleteFeedGroup, group } = this.props;
+        const conf = confirm(`Are you sure you want to delete this (${group.name}) group?`)
+        if(conf){
+            beginDeleteFeedGroup(group._id);
+        }
+    }
+
     _onChangeGroupNameInput(e){
         this.setState({
             editGroupName: e.target.value
@@ -107,6 +115,7 @@ class GroupItem extends Component {
                               icon="trash" 
                               color="red" 
                               inverted
+                              onClick={this._handleClickDelete}
                           />
                       </span>;
         }
@@ -162,8 +171,9 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch)=>{
     return {
-        beginSaveFeedGroup: (groupId, newGroupName)=> dispatch(beginSaveFeedGroup(groupId, newGroupName))
+        beginSaveFeedGroup: (groupId, newGroupName)=> dispatch(beginSaveFeedGroup(groupId, newGroupName)),
+        beginDeleteFeedGroup: (groupId)=> dispatch(beginDeleteFeedGroup(groupId))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GroupItem);
+export default connect(mapStateToProps, mapDispatchToProps)(ListGroupItem);
