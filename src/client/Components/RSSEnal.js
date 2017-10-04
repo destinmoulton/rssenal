@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Grid, Menu, Segment } from "semantic-ui-react";
 
 import AddFeed from "./Modals/AddFeed";
+import AddGroup from "./ListFeedGroups/AddGroup";
 import ListFeedGroups from "./ListFeedGroups";
 
 class RSSEnal extends Component {
@@ -11,10 +12,11 @@ class RSSEnal extends Component {
                 <Grid.Row>
                     <Grid.Column>
                         <Menu attached="top">
-                            <AddFeed />                            
+                            <AddFeed />
                         </Menu>
                         <Segment attached="bottom">
                             <ListFeedGroups />
+                            <AddGroup />
                         </Segment>
                     </Grid.Column>
                     <Grid.Column>
