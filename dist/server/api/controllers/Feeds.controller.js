@@ -23,9 +23,15 @@ var FeedsController = function () {
         key: "get_all",
         value: function get_all(req, res) {
             _Feeds2.default.find({}, function (err, feeds) {
-                if (err) res.send(err);
-                res.send(feeds);
-            }).sort({ name: 'asc' });
+                if (err) {
+                    res.json({
+                        status: "error",
+                        error: err
+                    });
+                } else {
+                    res.json({ status: "success", feeds: feeds });
+                }
+            }).sort({ title: 'asc' });
         }
     }, {
         key: "add",
