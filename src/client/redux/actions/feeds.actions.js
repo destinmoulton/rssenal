@@ -1,7 +1,8 @@
 
 import {
     FEEDS_ADD_BEGIN,
-    FEEDS_ADD_COMPLETE
+    FEEDS_ADD_COMPLETE,
+    FEEDS_GETALL_COMPLETE
 } from "../actiontypes";
 
 import {
@@ -51,5 +52,32 @@ function addFeedComplete(feed){
     return {
         type: FEEDS_ADD_COMPLETE,
         feed
+    }
+}
+
+export function getAllFeeds(){
+    return (dispatch)=>{
+        const url = API_FEEDS_BASE;
+        const init = {
+            method: "GET"
+        };
+        fetch(url, init)
+            .then((res)=>{
+                return res.json();
+            })
+            .then((resObj)=>{
+                if(resObj.status==="error"){
+                    console.error(resObj.error);
+                } else if(resObj.status==="success"){
+                    dispatch(getAllFeedsComplete(resObj.feeds));
+                }
+            })
+    }
+}
+
+function getAllFeedsComplete(feeds){
+    return {
+        type: FEEDS_GETALL_COMPLETE,
+        feeds
     }
 }
