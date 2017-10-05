@@ -14,7 +14,8 @@ class ListFeeds extends Component {
         const groupFeeds = feeds.filter((feed)=>{
             return (feed.feedgroup_id === groupId);
         }).map((feed)=>{
-            feedList.push(<div key={feed._id}>{feed.title}</div>)
+            const item = <div key={feed._id} className="rss-feedgroups-feeditem">{feed.title}</div>;
+            feedList.push(item)
         });
         
         return (
