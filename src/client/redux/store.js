@@ -1,12 +1,14 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { routerReducer } from 'react-router-redux'
-import thunk from 'redux-thunk';
+import { createStore, combineReducers, applyMiddleware } from "redux"
+import { routerReducer } from "react-router-redux"
+import thunk from "redux-thunk";
 
-import feedGroupsReducer from './reducers/feedgroups.reducer';
+import feedsReducer from "./reducers/feeds.reducer";
+import feedGroupsReducer from "./reducers/feedgroups.reducer";
 
 const store = createStore(
   combineReducers({
-    feedgroups: feedGroupsReducer
+    feedgroups: feedGroupsReducer,
+    feeds: feedsReducer
   }),
   applyMiddleware(
     thunk
