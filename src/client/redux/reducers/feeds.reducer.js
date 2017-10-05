@@ -2,7 +2,8 @@ import { List } from "immutable";
 
 import {
     FEEDS_ADD_BEGIN,
-    FEEDS_ADD_COMPLETE
+    FEEDS_ADD_COMPLETE,
+    FEEDS_GETALL_COMPLETE
 } from "../actiontypes";
 
 
@@ -30,6 +31,13 @@ function feedsReducer(state = INITIAL_STATE, action){
                 ...state,
                 feeds: newFeeds,
                 isAddingFeed: false
+            }
+        }
+        case FEEDS_GETALL_COMPLETE:{
+            const feeds = List(action.feeds);
+            return {
+                ...state,
+                feeds
             }
         }
         default:
