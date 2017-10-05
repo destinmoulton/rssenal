@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { getAllFeedGroups } from "../../redux/actions/feedgroups.actions";
 import { getAllFeeds } from "../../redux/actions/feeds.actions";
 
-import GroupItem from "./ListGroupItem";
+import GroupItem from "./GroupItem";
 import ListFeeds from "./ListFeeds";
 
 class ListFeedGroups extends Component {
