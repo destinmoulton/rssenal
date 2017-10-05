@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Button, Form, Icon, Header, Modal, Segment } from "semantic-ui-react";
-import { SelectFeedGroup } from "./SelectFeedGroup";
+import { Button, Form, Icon, Header, Message, Modal, Segment } from "semantic-ui-react";
+import SelectFeedGroup from "./SelectFeedGroup";
 
 import { API_FEEDVALIDATION_BASE } from "../../redux/apiendpoints.js";
 
@@ -19,6 +19,7 @@ class AddFeedModal extends Component {
             isValidatingURL: false,
             isModalOpen: false,
             feedURL: "",
+            feedGroupId: "0",
             formError: ""
         };
 
@@ -27,6 +28,7 @@ class AddFeedModal extends Component {
         this._handleClickContinue = this._handleClickContinue.bind(this);
         this._handleChangeURLInput = this._handleChangeURLInput.bind(this);
         this._handleClose = this._handleClose.bind(this);
+        this._handleSelectFeedGroup = this._handleSelectFeedGroup.bind(this);
         this._transitionToDisplayFeed = this._transitionToDisplayFeed.bind(this);
         this._transitionToDisplayForm = this._transitionToDisplayForm.bind(this);
     }
@@ -57,6 +59,10 @@ class AddFeedModal extends Component {
 
     _handleClose(){
         this.setState({
+            display: DISPLAY_FORM,
+            feedInfo: {},
+            feedGroupId: "0",
+            isValidatingURL: false,
             isModalOpen: false
         });
     }
@@ -65,10 +71,17 @@ class AddFeedModal extends Component {
         console.log("Adding feed");
     }
 
+    _handleSelectFeedGroup(feedGroupId){
+        this.setState({
+            feedGroupId
+        })
+    }
+
     _transitionToDisplayForm(){
         this.setState({
             display: DISPLAY_FORM,
             feedInfo: {},
+            feedGroupId: "0",
             isValidatingURL: false
         })
     }
@@ -76,7 +89,8 @@ class AddFeedModal extends Component {
     _transitionToDisplayFeed(feedObj){
         this.setState({
             display: DISPLAY_FEED,
-            feedInfo: feedObj
+            feedInfo: feedObj,
+            formError: ""
         });
     }
 
@@ -105,11 +119,14 @@ class AddFeedModal extends Component {
                 }
             })
             .then((resObj)=>{
-                this._transitionToDisplayFeed(resJson.feedInfo.feed);
+                this._transitionToDisplayFeed(resObj.feedInfo.feed);
             })
             .catch((err)=>{
                 this.setState({
-                    formError: err
+                    formError: err.message,
+                    feedInfo: {},
+                    feedGroupId: "0",
+                    isValidatingURL: false
                 });
             })
     }
@@ -153,7 +170,7 @@ class AddFeedModal extends Component {
     _buildFeedInfo(){
         const { feedInfo, feedURL } = this.state;
 
-        const description = (feedInfo.description !== feedInfo.title)
+        const description = (feedInfo.description !== feedInfo.title && feedInfo.description !== "")
                                 ? feedInfo.description 
                                 : "No description provided.";
         return (
@@ -164,10 +181,14 @@ class AddFeedModal extends Component {
                 <Header as='h5' attached>
                     {feedURL}
                 </Header>
-                <Segment attached>{description}</Segment>
-                <div>
-                    <SelectFeedGroup />
-                </div>
+                <Segment attached="bottom">{description}</Segment>
+
+                <Header as='h5' attached='top'>
+                    Select Feed Group
+                </Header>
+                <Segment attached="bottom">
+                    <SelectFeedGroup onChange={this._handleSelectFeedGroup} />
+                </Segment>
             </div>
         );
     }
