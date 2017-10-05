@@ -6,22 +6,26 @@ import SelectFeedGroup from "./SelectFeedGroup";
 
 import { API_FEEDVALIDATION_BASE } from "../../redux/apiendpoints.js";
 
+import { beginAddFeed } from "../../redux/actions/feeds.actions";
+
 const DISPLAY_FORM = "FORM";
 const DISPLAY_FEED = "FEED";
+const INITIAL_STATE = {
+    display: DISPLAY_FORM,
+    feedInfo: {},
+    isValidatingURL: false,
+    isModalOpen: false,
+    feedURL: "",
+    feedGroupId: "0",
+    formError: ""
+};
+
 
 class AddFeedModal extends Component {
     constructor(props){
         super(props);
 
-        this.state = {
-            display: DISPLAY_FORM,
-            feedInfo: {},
-            isValidatingURL: false,
-            isModalOpen: false,
-            feedURL: "",
-            feedGroupId: "0",
-            formError: ""
-        };
+        this.state = INITIAL_STATE;
 
         this._handleOpen = this._handleOpen.bind(this);
         this._handleClickAddFeed = this._handleClickAddFeed.bind(this);
@@ -31,6 +35,14 @@ class AddFeedModal extends Component {
         this._handleSelectFeedGroup = this._handleSelectFeedGroup.bind(this);
         this._transitionToDisplayFeed = this._transitionToDisplayFeed.bind(this);
         this._transitionToDisplayForm = this._transitionToDisplayForm.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(this.props.isAddingFeed && !nextProps.isAddingFeed){
+            // The feed was added so reset the state 
+            // and thus close the modal
+            this.setState(INITIAL_STATE);
+        }
     }
 
     _handleChangeURLInput(e){
@@ -68,7 +80,16 @@ class AddFeedModal extends Component {
     }
 
     _handleClickAddFeed(){
-        console.log("Adding feed");
+        const { feedInfo, feedGroupId, feedURL } = this.state;
+
+        const dataToAdd = {
+            title: feedInfo.title,
+            description: feedInfo.description,
+            link: feedInfo.link,
+            feedgroup_id: feedGroupId,
+            url: feedURL
+        };
+        this.props.beginAddFeed(dataToAdd);
     }
 
     _handleSelectFeedGroup(feedGroupId){
@@ -194,7 +215,7 @@ class AddFeedModal extends Component {
     }
 
     _buildFeedInfoButtons(){
-        const { isValidatingURL } = this.state;
+        const { isAddingFeed } = this.props;
         return (
             <span>
                 <Button color="blue"
@@ -204,7 +225,8 @@ class AddFeedModal extends Component {
                 </Button>
                 <Button color="green"
                     onClick={this._handleClickAddFeed}
-                    inverted>
+                    inverted
+                    loading={isAddingFeed}>
                     <Icon name="checkmark" />&nbsp;&nbsp;&nbsp;This Is It!
                 </Button>
             </span>
@@ -261,14 +283,15 @@ class AddFeedModal extends Component {
 }
 
 const mapStateToProps = (state)=>{
+    const { feeds } = state;
     return {
-      
+        isAddingFeed: feeds.isAddingFeed
     }
 }
 
 const mapDispatchToProps = (dispatch)=>{
     return {
-
+        beginAddFeed: (feedInfo)=>dispatch(beginAddFeed(feedInfo))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AddFeedModal);
