@@ -1,29 +1,15 @@
 import mongoose from "mongoose";
-import request from "request";
 
 const FeedSchema = mongoose.Schema({
-    name: {
+    title: {
         type: String,
-        required: [true, "The feed name is required."]
+        required: [true, "The feed title is required."]
+    },
+    feedgroup_id: {
+        type: String
     },
     url: {
-        type: String,
-        required: [true, "The feed url is required."],
-        validate: {
-            isAsync: true,
-            validator: (v, cb)=>{
-                // Validate that the url is accessible
-                request(v, (err, res, body)=>{
-                    let isValid = true;
-                    let msg = "";
-                    if(err || res.statusCode !== 200){
-                        isValid = false;
-                        msg = "There was an issue accessing the feed URL.";
-                    }
-                    cb(isValid, msg);
-                });              
-            }
-        }
+
     },
     description: {
         type: String
