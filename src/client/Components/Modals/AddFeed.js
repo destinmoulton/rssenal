@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import { Button, Form, Icon, Header, Modal, Segment } from "semantic-ui-react";
 
@@ -213,4 +214,16 @@ class AddFeed extends Component {
     }
 }
 
-export default AddFeed;
+const mapStateToProps = (state)=>{
+    const { feedgroups } = state;
+    return {
+        feedgroups: feedgroups.groups
+    }
+}
+
+const mapDispatchToProps = (dispatch)=>{
+    return {
+
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AddFeed);
