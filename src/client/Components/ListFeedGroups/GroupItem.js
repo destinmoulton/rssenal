@@ -6,7 +6,7 @@ import { Button, Confirm, Icon } from "semantic-ui-react";
 
 import { beginDeleteFeedGroup, beginSaveFeedGroup } from "../../redux/actions/feedgroups.actions";
 
-class ListGroupItem extends Component {
+class GroupItem extends Component {
     static propTypes = {
         group: PropTypes.object.isRequired
     };
@@ -176,4 +176,4 @@ const mapDispatchToProps = (dispatch)=>{
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListGroupItem);
+export default connect(mapStateToProps, mapDispatchToProps)(GroupItem);
