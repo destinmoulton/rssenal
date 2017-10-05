@@ -32,8 +32,18 @@ var FeedsController = function () {
         value: function add(req, res) {
             var newFeed = new _Feeds2.default(req.body);
             newFeed.save(function (err, feed) {
-                if (err) res.send(err);
-                res.json(feed);
+                if (err) {
+                    res.json({
+                        status: "error",
+                        error: err
+                    });
+                } else {
+                    var data = {
+                        status: "success",
+                        feedInfo: feed
+                    };
+                    res.json(data);
+                }
             });
         }
     }, {

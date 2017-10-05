@@ -14,9 +14,18 @@ class FeedsController {
     add(req, res){
         let newFeed = new Feeds(req.body);
         newFeed.save((err, feed)=>{
-            if(err)
-                res.send(err);
-            res.json(feed);
+            if(err) {
+                res.json({
+                    status: "error",
+                    error: err
+                });
+            } else {
+                const data = {
+                    status: "success",
+                    feedInfo: feed
+                };
+                res.json(data);
+            }
         });
     }
 
