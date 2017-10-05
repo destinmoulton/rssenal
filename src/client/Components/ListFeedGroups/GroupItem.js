@@ -153,9 +153,10 @@ class GroupItem extends Component {
 
         return (
             <div
+                className="rss-feedgroups-groupitem"
                 onMouseEnter={this._showOptions}
                 onMouseLeave={this._hideOptions}>
-                {display}&nbsp;&nbsp;{options}
+                {display}<div className="rss-feedgroups-groupitem-buttons">{options}</div>
             </div>
         );
     }
