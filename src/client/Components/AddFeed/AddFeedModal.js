@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { Button, Form, Icon, Header, Modal, Segment } from "semantic-ui-react";
+import { SelectFeedGroup } from "./SelectFeedGroup";
 
 import { API_FEEDVALIDATION_BASE } from "../../redux/apiendpoints.js";
 
 const DISPLAY_FORM = "FORM";
 const DISPLAY_FEED = "FEED";
 
-class AddFeed extends Component {
+class AddFeedModal extends Component {
     constructor(props){
         super(props);
 
@@ -17,7 +18,8 @@ class AddFeed extends Component {
             feedInfo: {},
             isValidatingURL: false,
             isModalOpen: false,
-            feedURL: ""
+            feedURL: "",
+            formError: ""
         };
 
         this._handleOpen = this._handleOpen.bind(this);
@@ -95,12 +97,31 @@ class AddFeed extends Component {
             .then((res)=>{
                 return res.json();
             })
-            .then((resJson)=>{
+            .then((resObj)=>{
+                if(resObj.status === "error"){
+                    throw new Error("The feed address does not seem to be valid. Try again.");
+                } else if(resObj.status === "success"){
+                    return resObj;
+                }
+            })
+            .then((resObj)=>{
                 this._transitionToDisplayFeed(resJson.feedInfo.feed);
+            })
+            .catch((err)=>{
+                this.setState({
+                    formError: err
+                });
             })
     }
 
     _buildURLForm(){
+        const { formError } = this.state;
+        let message = "";
+        if(formError !== ""){
+            message = <Message negative>
+                        <Message.Header>{formError}</Message.Header>
+                      </Message>
+        }
         return (
             <Form>
                 <Form.Field>
@@ -110,6 +131,7 @@ class AddFeed extends Component {
                         placeholder='http://feed.url.here'
                         onChange={this._handleChangeURLInput} />
                 </Form.Field>
+                {message}
             </Form>
         );
     }
@@ -130,6 +152,7 @@ class AddFeed extends Component {
 
     _buildFeedInfo(){
         const { feedInfo, feedURL } = this.state;
+
         const description = (feedInfo.description !== feedInfo.title)
                                 ? feedInfo.description 
                                 : "No description provided.";
@@ -142,7 +165,9 @@ class AddFeed extends Component {
                     {feedURL}
                 </Header>
                 <Segment attached>{description}</Segment>
-                <div></div>
+                <div>
+                    <SelectFeedGroup />
+                </div>
             </div>
         );
     }
@@ -215,9 +240,8 @@ class AddFeed extends Component {
 }
 
 const mapStateToProps = (state)=>{
-    const { feedgroups } = state;
     return {
-        feedgroups: feedgroups.groups
+      
     }
 }
 
@@ -226,4 +250,4 @@ const mapDispatchToProps = (dispatch)=>{
 
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(AddFeed);
+export default connect(mapStateToProps, mapDispatchToProps)(AddFeedModal);
