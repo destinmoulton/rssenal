@@ -4,11 +4,16 @@ class FeedsController {
     get_all(req, res){
         Feeds
             .find({}, (err, feeds)=>{
-                if(err) 
-                    res.send(err);
-                res.send(feeds);
+                if(err) {
+                    res.json({
+                        status: "error",
+                        error: err
+                    });
+                } else {
+                    res.json({status: "success", feeds});
+                }
             })
-            .sort({name: 'asc'});
+            .sort({title: 'asc'});
     }
 
     add(req, res){
