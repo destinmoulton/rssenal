@@ -11,7 +11,10 @@ class EntriesController {
             .find({}, (err, entries)=>{
                 if(err) 
                     res.send(err);
-                res.send(groups);
+                res.send({
+                    status: "success",
+                    entries
+                });
             })
             .sort({publish_date: 'desc'});
     }

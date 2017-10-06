@@ -34,7 +34,10 @@ var EntriesController = function () {
         value: function get_all(req, res) {
             _Entries2.default.find({}, function (err, entries) {
                 if (err) res.send(err);
-                res.send(groups);
+                res.send({
+                    status: "success",
+                    entries: entries
+                });
             }).sort({ publish_date: 'desc' });
         }
     }, {
