@@ -2,8 +2,10 @@ import React, {Component} from "react";
 
 import { connect } from "react-redux";
 
+import { beginUpdateAndGetEntries } from "../../redux/actions/entries.actions";
 import { getAllFeedGroups } from "../../redux/actions/feedgroups.actions";
 import { getAllFeeds } from "../../redux/actions/feeds.actions";
+
 
 import GroupItem from "./GroupItem";
 import ListFeeds from "./ListFeeds";
@@ -15,11 +17,17 @@ class ListFeedGroups extends Component {
     }
 
     componentWillMount(){
-        const { getAllFeedGroups, getAllFeeds, hasFeedGroups } = this.props;
+        const { 
+            beginUpdateAndGetEntries,
+            getAllFeedGroups,
+            getAllFeeds,
+            hasFeedGroups
+        } = this.props;
 
         if(!hasFeedGroups){
             getAllFeedGroups();
             getAllFeeds();
+            beginUpdateAndGetEntries();
         }
     }
 
@@ -54,6 +62,7 @@ const mapStateToProps = (state) =>{
 
 const mapDispatchToProps = (dispatch)=>{
     return {
+        beginUpdateAndGetEntries: ()=>dispatch(beginUpdateAndGetEntries()),
         getAllFeedGroups: ()=>dispatch(getAllFeedGroups()),
         getAllFeeds: ()=>dispatch(getAllFeeds())
     }
