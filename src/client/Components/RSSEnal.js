@@ -3,10 +3,30 @@ import { Grid, Menu, Segment } from "semantic-ui-react";
 
 import AddFeedModal from "./AddFeed/AddFeedModal";
 import AddGroup from "./ListFeedGroups/AddGroup";
+import EntriesList from "./Entries/EntriesList";
 import ListFeedGroups from "./ListFeedGroups/ListFeedGroups";
 
 class RSSEnal extends Component {
+
+    constructor(props){
+        super(props);
+
+        this.state = {
+            entriesFilter: {}
+        };
+
+        this._handleChangeEntriesFilter = this._handleChangeEntriesFilter.bind(this);
+    }
+
+    _handleChangeEntriesFilter(newFilter){
+        this.setState({
+            entriesFilter: newFilter
+        });
+    }
+
     render(){
+        const { entriesFilter } = this.state;
+
         return (
             <Grid columns={2}>
                 <Grid.Row>
@@ -15,12 +35,12 @@ class RSSEnal extends Component {
                             <AddFeedModal />
                         </Menu>
                         <Segment attached="bottom">
-                            <ListFeedGroups />
+                            <ListFeedGroups onFilterChange={this._handleChangeEntriesFilter}/>
                             <AddGroup />
                         </Segment>
                     </Grid.Column>
                     <Grid.Column>
-                        Content here...
+                        <EntriesList filter={entriesFilter} />
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

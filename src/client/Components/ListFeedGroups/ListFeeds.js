@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import FeedItem from "./FeedItem";
 class ListFeeds extends Component {
     static propTypes = {
         groupId: PropTypes.string.isRequired
@@ -14,8 +15,8 @@ class ListFeeds extends Component {
         const groupFeeds = feeds.filter((feed)=>{
             return (feed.feedgroup_id === groupId);
         }).map((feed)=>{
-            const item = <div key={feed._id} className="rss-feedgroups-feeditem">{feed.title}</div>;
-            feedList.push(item)
+            const item = <FeedItem key={feed._id} feed={feed}/>;
+            feedList.push(item);
         });
         
         return (
