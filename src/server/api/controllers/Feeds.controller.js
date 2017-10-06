@@ -1,3 +1,4 @@
+import Entries from "../models/Entries.model";
 import Feeds from "../models/Feeds.model";
 
 class FeedsController {
@@ -43,11 +44,17 @@ class FeedsController {
     }
 
     delete_single(req, res){
-        Feeds.remove({_id: req.params.feedId}, (err)=>{
-            if(err)
-                res.send(err);
-            res.json({message: "Feed deleted."});
-        })
+        Entries.remove({feed_id: req.params.feedId}, (err)=>{
+            // TODO: Add err handler?
+
+            Feeds.remove({_id: req.params.feedId}, (err)=>{
+                if(err){
+                    return res.send({status: "error"});
+                }
+                res.json({status: "success"});
+            })
+        });
+        
     }
 }
 

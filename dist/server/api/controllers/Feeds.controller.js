@@ -6,6 +6,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _Entries = require("../models/Entries.model");
+
+var _Entries2 = _interopRequireDefault(_Entries);
+
 var _Feeds = require("../models/Feeds.model");
 
 var _Feeds2 = _interopRequireDefault(_Feeds);
@@ -63,9 +67,15 @@ var FeedsController = function () {
     }, {
         key: "delete_single",
         value: function delete_single(req, res) {
-            _Feeds2.default.remove({ _id: req.params.feedId }, function (err) {
-                if (err) res.send(err);
-                res.json({ message: "Feed deleted." });
+            _Entries2.default.remove({ feed_id: req.params.feedId }, function (err) {
+                // TODO: Add err handler?
+
+                _Feeds2.default.remove({ _id: req.params.feedId }, function (err) {
+                    if (err) {
+                        return res.send({ status: "error" });
+                    }
+                    res.json({ status: "success" });
+                });
             });
         }
     }]);
