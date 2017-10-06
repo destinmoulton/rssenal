@@ -2,12 +2,16 @@
 import {
     FEEDS_ADD_BEGIN,
     FEEDS_ADD_COMPLETE,
+    FEEDS_DELETE_BEGIN,
+    FEEDS_DELETE_COMPLETE,
     FEEDS_GETALL_COMPLETE
 } from "../actiontypes";
 
 import {
     API_FEEDS_BASE
 } from "../apiendpoints";
+
+import {beginUpdateAndGetEntries} from "./entries.actions";
 
 export function beginAddFeed(feedInfo){
     return (dispatch)=>{
@@ -79,5 +83,42 @@ function getAllFeedsComplete(feeds){
     return {
         type: FEEDS_GETALL_COMPLETE,
         feeds
+    }
+}
+
+export function beginDeleteFeed(feedId){
+    return (dispatch)=>{
+        dispatch(beginDeleteProcess());
+        dispatch(deleteFeed(feedId));
+    }
+}
+
+function beginDeleteProcess(feedId){
+    return {
+        type: FEEDS_DELETE_BEGIN
+    }
+}
+
+function deleteFeed(feedId){
+    return (dispatch)=>{
+        const url = API_FEEDS_BASE + feedId;
+        const init = {
+            method: "DELETE"
+        }
+        fetch(url, init)
+            .then((res)=>{
+                return res.json();
+            })
+            .then((resObj)=>{
+                dispatch(deleteFeedComplete(feedId));
+                dispatch(beginUpdateAndGetEntries());
+            })
+    }
+}
+
+function deleteFeedComplete(feedId){
+    return {
+        type: FEEDS_DELETE_COMPLETE,
+        feedId
     }
 }
