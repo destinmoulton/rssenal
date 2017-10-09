@@ -1,19 +1,19 @@
 
-import { List } from "immutable";
+import { Set } from "immutable";
 
 import {
     ENTRIES_GET_COMPLETE
 } from "../actiontypes";
 
 const INITIAL_STATE = {
-    entries: List()
+    entries: Set()
 };
 
 function entriesReducer(state = INITIAL_STATE, action){
     switch(action.type){
         case ENTRIES_GET_COMPLETE: {
-            console.log(action.entries);
-            const entries = state.entries.mergeDeep(List(action.entries));
+
+            const entries = Set(action.entries);
 
             return {
                 ...state,
