@@ -5,11 +5,21 @@
 
  div.rss-feedgroups-feeditem{
      padding-left: 5px;
+     cursor: pointer;
+ }
+
+ span.rss-feedgroups-feeditem-title-active{
+     font-weight: bold;
  }
 
  div.rss-feedgroups-groupitem{
+     cursor: pointer;
      height:20px;
      width:100%;
+ }
+
+ span.rss-feedgroups-groupitem-title-active{
+     font-weight: bold;
  }
 
  div.rss-feedgroups-groupitem-buttons{
