@@ -22,7 +22,11 @@
      font-weight: bold;
  }
 
- div.rss-feedgroups-groupitem-buttons{
-     position: absolute;
-     right: 0px;
+ span.rss-feedgroups-groupitem-options{
+     width: 100%;
+ }
+
+ div.rss-entry-container{
+     border: 1px solid black;
+     padding: 3px;
  }
