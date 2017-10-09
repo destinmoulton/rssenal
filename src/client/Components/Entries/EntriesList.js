@@ -7,14 +7,33 @@ class EntriesList extends Component {
     }
 
     _filterEntries(){
-        const { entries, filter } = this.props;
+        const { entries, feeds, filter } = this.props;
 
-        return entries;
+        switch(filter.limit){
+            case "all":
+                return entries;
+            case "feed":
+                return entries.filter((entry)=>{
+                    return entry.feed_id === filter.id
+                })
+            case "group":
+                const feedIds = feeds.filter((feed)=>{
+                    return feed.feedgroup_id === filter.id;
+                }).map((feed)=>{
+                    return feed._id;
+                });
+                console.log(feedIds.has("59d6ae786e027c580ae5842a"));
+                return entries.filter((entry)=>{
+                    return feedIds.includes(entry.feed_id);
+                })
+            default: 
+                return entries;
+        }
     }
 
     render() {
         const entriesToDisplay = this._filterEntries();
-        console.log(entriesToDisplay);
+        
         let entryList = [];
         entriesToDisplay.map((entry)=>{
             const el =  <div key={entry._id}>
@@ -32,9 +51,11 @@ class EntriesList extends Component {
 }
 
 const mapStateToProps = (state)=>{
-    const { entries } = state;
+    const { entries, feeds, filter } = state;
     return {
-        entries: entries.entries
+        entries: entries.entries,
+        feeds: feeds.feeds,
+        filter: filter.filter
     }
 }
 
