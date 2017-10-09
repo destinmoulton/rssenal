@@ -1,9 +1,23 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import EntryItem from "./EntryItem";
+
 class EntriesList extends Component {
     constructor(props){
         super(props);
+
+        this.state = {
+            activeEntryId: ""
+        };
+
+        this._activateEntry = this._activateEntry.bind(this);
+    }
+
+    _activateEntry(entryId){
+        this.setState({
+            activeEntryId: entryId
+        });
     }
 
     _filterEntries(){
@@ -31,13 +45,16 @@ class EntriesList extends Component {
     }
 
     render() {
+        const { activeEntryId } = this.state;
+
         const entriesToDisplay = this._filterEntries();
         
         let entryList = [];
         entriesToDisplay.map((entry)=>{
-            const el =  <div key={entry._id}>
-                            {entry.title}
-                        </div>;
+            const el =  <EntryItem 
+                            entry={entry}
+                            activateEntry={this._activateEntry}
+                            isActive={(entry._id === activeEntryId)}/>;
 
             entryList.push(el);
         })
