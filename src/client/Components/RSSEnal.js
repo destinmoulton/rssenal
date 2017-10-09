@@ -30,7 +30,7 @@ class RSSEnal extends Component {
         return (
             <Grid columns={2}>
                 <Grid.Row>
-                    <Grid.Column>
+                    <Grid.Column computer={6}>
                         <Menu attached="top">
                             <AddFeedModal />
                         </Menu>
