@@ -155,19 +155,15 @@ class GroupItem extends Component {
 
     _buildOptionButtons(){
         return (
-            <span>
-                <Button 
-                    size="mini" 
-                    icon="pencil"
+            <span className="rss-feedgroups-groupitem-options">
+                <Icon 
+                    name="pencil"
                     color="green" 
-                    inverted
                     onClick={this._handleClickEdit}
                 />
-                <Button 
-                    size="mini" 
-                    icon="trash" 
+                <Icon
+                    name="trash" 
                     color="red" 
-                    inverted
                     onClick={this._handleClickDelete}
                 />
             </span>
@@ -212,7 +208,7 @@ class GroupItem extends Component {
                 className="rss-feedgroups-groupitem"
                 onMouseEnter={this._showOptions}
                 onMouseLeave={this._hideOptions}>
-                {title}<div className="rss-feedgroups-groupitem-buttons">{options}</div>
+                {title}&nbsp;{options}
             </div>
         );
     }
