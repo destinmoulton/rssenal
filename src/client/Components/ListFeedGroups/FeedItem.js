@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Button } from "semantic-ui-react";
 
 import { beginDeleteFeed } from "../../redux/actions/feeds.actions";
+import { changeFilter } from "../../redux/actions/filter.actions";
 
 class FeedItem extends Component {
 
@@ -15,6 +16,7 @@ class FeedItem extends Component {
         }
 
         this._handleClickDelete = this._handleClickDelete.bind(this);
+        this._handleClickTitle = this._handleClickTitle.bind(this);
         this._handleHideOptions = this._handleHideOptions.bind(this);
         this._handleShowOptions = this._handleShowOptions.bind(this);
     }
@@ -39,6 +41,15 @@ class FeedItem extends Component {
         }
     }
 
+    _handleClickTitle(){
+        const { changeFilter, feed } = this.props;
+
+        changeFilter({
+            limit: "feed",
+            id: feed._id
+        });
+    }
+
     _buildOptions(){
         return (
             <Button 
@@ -49,30 +60,38 @@ class FeedItem extends Component {
     }
 
     render() {
-        const { feed } = this.props;
+        const { feed, filter } = this.props;
         const { isOptionsVisible } = this.state;
+
+        let className = "";
+        if(filter.limit === "feed" && filter.id === feed._id){
+            className = "rss-feedgroups-feeditem-title-active"
+        }
+        let title = <span onClick={this._handleClickTitle} className={className}>{feed.title}</span>;
 
         let options = "";
         if(isOptionsVisible){
             options = this._buildOptions();
         }
-        
+
         return (
             <div className="rss-feedgroups-feeditem"
                  onMouseEnter={this._handleShowOptions}
-                 onMouseLeave={this._handleHideOptions}>{feed.title}&nbsp;{options}</div>
+                 onMouseLeave={this._handleHideOptions}>{title}&nbsp;{options}</div>
         );
     }
 }
 const mapStateToProps = (state)=>{
+    const { filter } = state;
     return {
-
+        filter: filter.filter
     }
 };
 
 const mapDispatchToProps = (dispatch)=>{
     return {
-        beginDeleteFeed: (feedId)=>dispatch(beginDeleteFeed(feedId))
+        beginDeleteFeed: (feedId)=>dispatch(beginDeleteFeed(feedId)),
+        changeFilter: (newFilter)=>dispatch(changeFilter(newFilter))
     }
 }
 
