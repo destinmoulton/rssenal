@@ -47,6 +47,7 @@ function addFeed(feedInfo){
                     console.error(feedObj.error);
                 } else if(feedObj.status === "success"){
                     dispatch(addFeedComplete(feedObj.feedInfo));
+                    dispatch(beginUpdateAndGetEntries());
                 }
             })
     }
