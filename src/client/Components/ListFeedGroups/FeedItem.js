@@ -33,13 +33,15 @@ class FeedItem extends Component {
 
     _handleClickDelete(){
         const { beginDeleteFeed, feed } = this.props;
-        beginDeleteFeed(feed._id);
+        const conf = confirm(`Are you sure you want to delete "${feed.title}"?`);
+        if(conf){
+            beginDeleteFeed(feed._id);
+        }
     }
 
     _buildOptions(){
         return (
             <Button 
-                inverted
                 icon="trash"
                 onClick={this._handleClickDelete}>
             </Button>
