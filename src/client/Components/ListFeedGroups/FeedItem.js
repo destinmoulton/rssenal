@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Button } from "semantic-ui-react";
+import { Icon } from "semantic-ui-react";
 
 import { beginDeleteFeed } from "../../redux/actions/feeds.actions";
 import { changeFilter } from "../../redux/actions/filter.actions";
@@ -52,10 +52,10 @@ class FeedItem extends Component {
 
     _buildOptions(){
         return (
-            <Button 
-                icon="trash"
-                onClick={this._handleClickDelete}>
-            </Button>
+            <Icon  
+                name="trash"
+                color="red"
+                onClick={this._handleClickDelete}/>
         );
     }
 
