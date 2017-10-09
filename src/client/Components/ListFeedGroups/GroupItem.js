@@ -96,59 +96,78 @@ class GroupItem extends Component {
         });
     }
 
+    _buildEditForm(){
+        const { editGroupName, isThisGroupSaving } = this.state;
+
+        return (
+            <input
+                autoFocus
+                value={editGroupName}
+                onChange={this._onChangeGroupNameInput}
+                disabled={isThisGroupSaving}
+            />
+        )
+    }
+
+    _buildEditButtons(){
+        const { isThisGroupSaving } = this.state;
+
+        let cancelButton = "";
+        if(!isThisGroupSaving){
+            cancelButton = <Button 
+                                size="mini"
+                                color="orange"
+                                inverted
+                                onClick={this._handleClickEditCancel}><Icon name="cancel"/>&nbsp;Cancel</Button>;
+        }
+
+        return (
+            <span>
+                <Button 
+                    size="mini"
+                    color="green"
+                    inverted
+                    onClick={this._handleClickEditSave}
+                    loading={isThisGroupSaving}><Icon name="save"/>&nbsp;Save</Button>
+                {cancelButton}
+            </span>
+        );
+    }
+
+    _buildOptionButtons(){
+        return (
+            <span>
+                <Button 
+                    size="mini" 
+                    icon="pencil"
+                    color="green" 
+                    inverted
+                    onClick={this._handleClickEdit}
+                />
+                <Button 
+                    size="mini" 
+                    icon="trash" 
+                    color="red" 
+                    inverted
+                    onClick={this._handleClickDelete}
+                />
+            </span>
+        );
+    }
+
     render(){
         const { group, updatingFeedGroups } = this.props;
         const { editGroupName, isEditing, isThisGroupSaving, optionsAreVisible } = this.state;
 
         let options = "";
         if(optionsAreVisible && !isEditing){
-            options = <span>
-                          <Button 
-                              size="mini" 
-                              icon="pencil"
-                              color="green" 
-                              inverted
-                              onClick={this._handleClickEdit}
-                          />
-                          <Button 
-                              size="mini" 
-                              icon="trash" 
-                              color="red" 
-                              inverted
-                              onClick={this._handleClickDelete}
-                          />
-                      </span>;
+            options = this._buildOptionButtons();
         }
-
-        
 
         let display = group.name;
         if(isEditing){
-            display = <input
-                          autoFocus
-                          value={editGroupName}
-                          onChange={this._onChangeGroupNameInput}
-                          disabled={isThisGroupSaving}
-                      />
-
-            let cancelButton = "";
-            if(!isThisGroupSaving){
-                cancelButton = <Button 
-                                    size="mini"
-                                    color="orange"
-                                    inverted
-                                    onClick={this._handleClickEditCancel}><Icon name="cancel"/>&nbsp;Cancel</Button>;
-            }
-
-            options = <span>
-                          <Button 
-                              size="mini"
-                              color="green"
-                              inverted
-                              onClick={this._handleClickEditSave}
-                              loading={isThisGroupSaving}><Icon name="save"/>&nbsp;Save</Button>
-                          {cancelButton}
-                      </span>;
+            display = this._buildEditForm();
+            options = this._buildEditButtons();
         }
 
         return (
