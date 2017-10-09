@@ -22,7 +22,6 @@ class EntriesList extends Component {
                 }).map((feed)=>{
                     return feed._id;
                 });
-                console.log(feedIds.has("59d6ae786e027c580ae5842a"));
                 return entries.filter((entry)=>{
                     return feedIds.includes(entry.feed_id);
                 })
