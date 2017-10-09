@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Button, Confirm, Icon } from "semantic-ui-react";
 
 import { beginDeleteFeedGroup, beginSaveFeedGroup } from "../../redux/actions/feedgroups.actions";
+import { changeFilter } from "../../redux/actions/filter.actions";
 
 class GroupItem extends Component {
     static propTypes = {
@@ -26,8 +27,10 @@ class GroupItem extends Component {
         this._handleClickDelete = this._handleClickDelete.bind(this);
         this._handleClickEdit = this._handleClickEdit.bind(this);
         this._handleClickEditCancel = this._handleClickEditCancel.bind(this);
-        this._handleClickEditSave = this._handleClickEditSave.bind(this);
-        this._onChangeGroupNameInput = this._onChangeGroupNameInput.bind(this);
+        this._handleClickGroupTitle = this._handleClickGroupTitle.bind(this);
+        this._handleEditSave = this._handleEditSave.bind(this);
+        this._handleInputKeyPress = this._handleInputKeyPress.bind(this);
+        this._handleInputOnChange = this._handleInputOnChange.bind(this);
     }
 
     componentWillReceiveProps(nextProps){
@@ -76,7 +79,7 @@ class GroupItem extends Component {
         })
     }
 
-    _handleClickEditSave(){
+    _handleEditSave(){
         const { group } = this.props;
         const { editGroupName } = this.state;
         this.props.beginSaveFeedGroup(group._id, editGroupName);
@@ -90,20 +93,36 @@ class GroupItem extends Component {
         }
     }
 
-    _onChangeGroupNameInput(e){
+    _handleClickGroupTitle(){
+        const { changeFilter, group } = this.props;
+
+        changeFilter({
+            limit: "group",
+            id: group._id
+        });
+    }
+
+    _handleInputKeyPress(e){
+        if(e.key === "Enter"){
+            this._handleEditSave();
+        }
+    }
+
+    _handleInputOnChange(e){
         this.setState({
             editGroupName: e.target.value
         });
     }
 
-    _buildEditForm(){
+    _buildEditInput(){
         const { editGroupName, isThisGroupSaving } = this.state;
 
         return (
             <input
                 autoFocus
                 value={editGroupName}
-                onChange={this._onChangeGroupNameInput}
+                onKeyPress={this._handleInputKeyPress}
+                onChange={this._handleInputOnChange}
                 disabled={isThisGroupSaving}
             />
         )
@@ -127,7 +146,7 @@ class GroupItem extends Component {
                     size="mini"
                     color="green"
                     inverted
-                    onClick={this._handleClickEditSave}
+                    onClick={this._handleEditSave}
                     loading={isThisGroupSaving}><Icon name="save"/>&nbsp;Save</Button>
                 {cancelButton}
             </span>
@@ -155,19 +174,37 @@ class GroupItem extends Component {
         );
     }
 
-    render(){
-        const { group, updatingFeedGroups } = this.props;
-        const { editGroupName, isEditing, isThisGroupSaving, optionsAreVisible } = this.state;
+    _buildGroupTitle(){
+        const { filter, group } = this.props;
 
-        let options = "";
-        if(optionsAreVisible && !isEditing){
-            options = this._buildOptionButtons();
+        let className = "";
+        if(filter.limit === "group" && filter.id === group._id){
+            className = "rss-feedgroups-groupitem-title-active";
         }
 
-        let display = group.name;
+        return (
+            <span className={className} onClick={this._handleClickGroupTitle}>{group.name}</span>
+        );
+    }
+
+    render(){
+        const { group, updatingFeedGroups } = this.props;
+        const { 
+            isEditing, 
+            optionsAreVisible
+        } = this.state;
+
+        let title = "";
+        let options = "";
         if(isEditing){
-            display = this._buildEditForm();
+            title = this._buildEditInput();
             options = this._buildEditButtons();
+        } else {
+            title = this._buildGroupTitle();
+
+            if(optionsAreVisible){
+                options = this._buildOptionButtons();
+            }
         }
 
         return (
@@ -175,24 +212,26 @@ class GroupItem extends Component {
                 className="rss-feedgroups-groupitem"
                 onMouseEnter={this._showOptions}
                 onMouseLeave={this._hideOptions}>
-                {display}<div className="rss-feedgroups-groupitem-buttons">{options}</div>
+                {title}<div className="rss-feedgroups-groupitem-buttons">{options}</div>
             </div>
         );
     }
 }
 
 const mapStateToProps = (state)=>{
-    const { feedgroups } = state;
+    const { feedgroups, filter } = state;
 
     return {
-        updatingFeedGroups: feedgroups.updatingFeedGroups
+        updatingFeedGroups: feedgroups.updatingFeedGroups,
+        filter: filter.filter
     };
 }
 
 const mapDispatchToProps = (dispatch)=>{
     return {
         beginSaveFeedGroup: (groupId, newGroupName)=> dispatch(beginSaveFeedGroup(groupId, newGroupName)),
-        beginDeleteFeedGroup: (groupId)=> dispatch(beginDeleteFeedGroup(groupId))
+        beginDeleteFeedGroup: (groupId)=> dispatch(beginDeleteFeedGroup(groupId)),
+        changeFilter: (newFilter)=> dispatch(changeFilter(newFilter))
     }
 }
 
