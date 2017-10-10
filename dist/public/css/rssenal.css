@@ -30,3 +30,8 @@
      border: 1px solid black;
      padding: 3px;
  }
+
+ div.rss-entry-title{
+     cursor: pointer;
+     font-size: 1.1em;
+ }

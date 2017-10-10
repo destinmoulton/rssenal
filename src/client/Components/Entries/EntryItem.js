@@ -30,7 +30,9 @@ class EntryItem extends Component {
             <div 
                 key={entry._id}
                 className="rss-entry-container">
-                <div onClick={this._toggleEntry.bind(this, entry._id)}>{entry.title}</div>
+                <div
+                    className="rss-entry-title" 
+                    onClick={this._toggleEntry.bind(this, entry._id)}>{entry.title}</div>
                 {body}
             </div>
         );
