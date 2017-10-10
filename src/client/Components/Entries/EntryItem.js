@@ -23,7 +23,7 @@ class EntryItem extends Component {
     _getBodyHTML(){
         const { entry } = this.props;
 
-        return {__html: entry.content};
+        return {__html: htmlEntities.decode(entry.content)};
     }
 
     _getActiveEntryContent(){
