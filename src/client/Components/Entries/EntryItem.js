@@ -36,8 +36,8 @@ class EntryItem extends Component {
         const info = <div className="rss-entry-info-container">{activeFeed.title}{creator} -- {timeAgo}</div>;
 
         const body = <div 
-                    dangerouslySetInnerHTML={this._getBodyHTML()}
-                    className="rss-entry-content-container"></div>
+                        dangerouslySetInnerHTML={this._getBodyHTML()}
+                        className="rss-entry-content-container"></div>
 
         const link =  <div
                         className="rss-entry-link-container">
