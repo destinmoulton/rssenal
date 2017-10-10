@@ -1,7 +1,11 @@
+import { AllHtmlEntities } from "html-entities";
+
 import PropTypes from "prop-types";
 import React, { Component } from 'react';
 
 import { Icon } from "semantic-ui-react";
+
+const htmlEntities = new AllHtmlEntities();
 
 class EntryItem extends Component {
     static propTypes = {
@@ -39,13 +43,15 @@ class EntryItem extends Component {
                         </a>
                     </div>
         }
+
+        const title = htmlEntities.decode(entry.title);
         return (
             <div 
                 key={entry._id}
                 className="rss-entry-container">
                 <div
                     className="rss-entry-title" 
-                    onClick={this._toggleEntry.bind(this, entry._id)}>{entry.title}</div>
+                    onClick={this._toggleEntry.bind(this, entry._id)}>{title}</div>
                     {body}
                     {link}
             </div>
