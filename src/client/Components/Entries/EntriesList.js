@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import { Header } from "semantic-ui-react";
+
 import EntryItem from "./EntryItem";
 
 class EntriesList extends Component {
@@ -24,37 +26,55 @@ class EntriesList extends Component {
         });
     }
 
-    _filterEntries(){
-        const { entries, feeds, filter } = this.props;
+    _filterEntriesAndTitle(){
+        const { entries, groups, feeds, filter } = this.props;
+
+        let filteredEntries = entries;
+        let title = "All";
 
         switch(filter.limit){
-            case "all":
-                return entries;
             case "feed":
-                return entries.filter((entry)=>{
+                filteredEntries = entries.filter((entry)=>{
                     return entry.feed_id === filter.id
                 })
+
+                const activeFeed = feeds.find((feed)=>{
+                    return feed._id === filter.id;
+                });
+
+                title = activeFeed.title;
+                break;
             case "group":
                 const feedIds = feeds.filter((feed)=>{
                     return feed.feedgroup_id === filter.id;
                 }).map((feed)=>{
                     return feed._id;
                 });
-                return entries.filter((entry)=>{
+
+                filteredEntries = entries.filter((entry)=>{
                     return feedIds.includes(entry.feed_id);
                 })
-            default: 
-                return entries;
+
+                const activeGroup = groups.find((group)=>{
+                    return group._id === filter.id;
+                });
+
+                title = activeGroup.name;
+                break;
+        }
+        return {
+            title,
+            entries: filteredEntries
         }
     }
 
     render() {
         const { activeEntryId } = this.state;
 
-        const entriesToDisplay = this._filterEntries();
+        const { title, entries } = this._filterEntriesAndTitle();
         
         let entryList = [];
-        entriesToDisplay.map((entry)=>{
+        entries.map((entry)=>{
             const el =  <EntryItem 
                             key={entry._id}
                             entry={entry}
@@ -65,16 +85,20 @@ class EntriesList extends Component {
         })
         return (
             <div>
-                {entryList}
+                <Header as="h4">{title}</Header>
+                <div>
+                    {entryList}
+                </div>
             </div>
         );
     }
 }
 
 const mapStateToProps = (state)=>{
-    const { entries, feeds, filter } = state;
+    const { entries, feedgroups, feeds, filter } = state;
     return {
         entries: entries.entries,
+        groups: feedgroups.groups,
         feeds: feeds.feeds,
         filter: filter.filter
     }
