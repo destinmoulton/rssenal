@@ -3,14 +3,14 @@ import React, { Component } from 'react';
 
 class EntryItem extends Component {
     static propTypes = {
-        activateEntry: PropTypes.func.isRequired,
+        toggleEntry: PropTypes.func.isRequired,
         isActive: PropTypes.bool.isRequired
     };
 
-    _activateEntry(entryId){
-        const { activateEntry } = this.props;
+    _toggleEntry(entryId){
+        const { toggleEntry } = this.props;
 
-        activateEntry(entryId);
+        toggleEntry(entryId);
     }
 
     _getBodyHTML(){
@@ -30,7 +30,7 @@ class EntryItem extends Component {
             <div 
                 key={entry._id}
                 className="rss-entry-container">
-                <div onClick={this._activateEntry.bind(this, entry._id)}>{entry.title}</div>
+                <div onClick={this._toggleEntry.bind(this, entry._id)}>{entry.title}</div>
                 {body}
             </div>
         );

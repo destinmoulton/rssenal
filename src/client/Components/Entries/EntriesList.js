@@ -11,12 +11,16 @@ class EntriesList extends Component {
             activeEntryId: ""
         };
 
-        this._activateEntry = this._activateEntry.bind(this);
+        this._toggleEntry = this._toggleEntry.bind(this);
     }
 
-    _activateEntry(entryId){
+    _toggleEntry(entryId){
+        let nextActiveEntryId = entryId;
+        if(this.state.activeEntryId === entryId){
+            nextActiveEntryId = "";
+        }
         this.setState({
-            activeEntryId: entryId
+            activeEntryId: nextActiveEntryId
         });
     }
 
@@ -54,7 +58,7 @@ class EntriesList extends Component {
             const el =  <EntryItem 
                             key={entry._id}
                             entry={entry}
-                            activateEntry={this._activateEntry}
+                            toggleEntry={this._toggleEntry}
                             isActive={(entry._id === activeEntryId)}/>;
 
             entryList.push(el);
