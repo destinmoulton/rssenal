@@ -44,7 +44,8 @@ class EntriesController {
                             if(possibleEntry.length === 0){
                                 const data = {
                                     ...entry,
-                                    feed_id: feed._id
+                                    feed_id: feed._id,
+                                    publish_date: entry.isoDate
                                 }
                                 const newEntry = new Entries(data);
                                 newEntry.save((err, entry)=>{

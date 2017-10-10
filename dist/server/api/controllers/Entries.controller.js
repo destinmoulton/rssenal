@@ -64,7 +64,8 @@ var EntriesController = function () {
                             _Entries2.default.find(query, function (err, possibleEntry) {
                                 if (possibleEntry.length === 0) {
                                     var data = _extends({}, entry, {
-                                        feed_id: feed._id
+                                        feed_id: feed._id,
+                                        publish_date: entry.isoDate
                                     });
                                     var newEntry = new _Entries2.default(data);
                                     newEntry.save(function (err, entry) {});
