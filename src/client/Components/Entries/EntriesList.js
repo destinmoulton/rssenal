@@ -2,15 +2,18 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import EntryItem from "./EntryItem";
+import SortMenu from "./SortMenu";
 
 class EntriesList extends Component {
     constructor(props){
         super(props);
 
         this.state = {
+            sortBy: "publish_date:asc",
             activeEntryId: ""
         };
 
+        this._handleChangeSort = this._handleChangeSort.bind(this);
         this._toggleEntry = this._toggleEntry.bind(this);
     }
 
@@ -24,9 +27,16 @@ class EntriesList extends Component {
         });
     }
 
-    _sortEntries(entries){
+    _handleChangeSort(e, obj){
+        this.setState({
+            sortBy: obj.value
+        });
+    }
 
-        return entries.sort((a,b)=>this._compareEntries(a,b,"publish_date", "asc"));
+    _sortEntries(entries){
+        const { sortBy } = this.state;
+        const sortParams = sortBy.split(":");
+        return entries.sort((a,b)=>this._compareEntries(a, b, sortParams[0], sortParams[1]));
     }
 
     _compareEntries(a, b, field, order){
@@ -83,7 +93,7 @@ class EntriesList extends Component {
     }
 
     render() {
-        const { activeEntryId } = this.state;
+        const { activeEntryId, sortBy } = this.state;
 
         const { title, entries } = this._filterEntriesAndTitle();
         
@@ -100,6 +110,7 @@ class EntriesList extends Component {
         return (
             <div>
                 <div className="rss-entrylist-title">{title}</div>
+                <div><SortMenu onChange={this._handleChangeSort} currentSortBy={sortBy}/></div>
                 <div>
                     {entryList}
                 </div>
