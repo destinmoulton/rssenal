@@ -24,6 +24,22 @@ class EntriesList extends Component {
         });
     }
 
+    _sortEntries(entries){
+
+        return entries.sort((a,b)=>this._compareEntries(a,b,"publish_date", "asc"));
+    }
+
+    _compareEntries(a, b, field, order){
+        if(order === "asc"){
+            if(a[field] < b[field]){ return -1; }
+            if(a[field] > b[field]){ return 1; }
+        } else if(order === "desc"){
+            if(a[field] > b[field]){ return -1; }
+            if(a[field] < b[field]){ return 1; }
+        }
+        if(a[field] === b[field]){ return 0;}
+    }
+
     _filterEntriesAndTitle(){
         const { entries, groups, feeds, filter } = this.props;
 
@@ -62,7 +78,7 @@ class EntriesList extends Component {
         }
         return {
             title,
-            entries: filteredEntries
+            entries: this._sortEntries(filteredEntries)
         }
     }
 
