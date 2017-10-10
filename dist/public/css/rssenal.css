@@ -10,6 +10,7 @@
 
  span.rss-feedgroups-feeditem-title-active{
      font-weight: bold;
+     background-color: #EBEBEB;
  }
 
  div.rss-feedgroups-groupitem{
@@ -20,14 +21,21 @@
 
  span.rss-feedgroups-groupitem-title-active{
      font-weight: bold;
+     background-color: #EBEBEB;
  }
 
  span.rss-feedgroups-groupitem-options{
      width: 100%;
  }
 
+ div.rss-entrylist-title{
+     font-size: 1.3em;
+     margin-top:15px;
+     margin-bottom: 25px;
+ }
+
  div.rss-entry-container{
-     border-top: 1px solid black;
+     border-top: 1px solid #B3B3B3;
      padding: 3px;
  }
 
@@ -36,9 +44,18 @@
      font-size: 1.1em;
  }
 
+ div.rss-entry-info-container{
+    font-style: italic;
+    font-size: .9em;
+    margin-left: 10px;
+    margin-top: 4px;
+ }
+
  div.rss-entry-content-container{
      border: 1px solid gray;
      padding: 10px;
+     margin-left: 10px;
+     margin-top: 4px;
  }
 
  div.rss-entry-link-container{
@@ -46,7 +63,9 @@
      margin-right: auto;
      padding: 5px;
      border: 1px solid #5A5A5A;
+     border-radius: 4px;
      background-color: #E5E5E5;
      text-align: center;
      margin-top: 4px;
+     width: 200px;
  }

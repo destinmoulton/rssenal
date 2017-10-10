@@ -33,7 +33,7 @@ class EntryItem extends Component {
         const creator = (entry.creator !== undefined || entry.creator !== "") ? " by "+ entry.creator : "";
         const timeAgo = moment(entry.publish_date).fromNow()
 
-        const info = <div>{activeFeed.title}{creator} -- {timeAgo}</div>;
+        const info = <div className="rss-entry-info-container">{activeFeed.title}{creator} -- {timeAgo}</div>;
 
         const body = <div 
                     dangerouslySetInnerHTML={this._getBodyHTML()}

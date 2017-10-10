@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Header } from "semantic-ui-react";
-
 import EntryItem from "./EntryItem";
 
 class EntriesList extends Component {
@@ -85,7 +83,7 @@ class EntriesList extends Component {
         })
         return (
             <div>
-                <Header as="h4">{title}</Header>
+                <div className="rss-entrylist-title">{title}</div>
                 <div>
                     {entryList}
                 </div>
