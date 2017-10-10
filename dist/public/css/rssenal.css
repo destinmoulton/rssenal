@@ -27,7 +27,7 @@
  }
 
  div.rss-entry-container{
-     border: 1px solid black;
+     border-top: 1px solid black;
      padding: 3px;
  }
 
@@ -39,4 +39,14 @@
  div.rss-entry-content-container{
      border: 1px solid gray;
      padding: 10px;
+ }
+
+ div.rss-entry-link-container{
+     margin-left: auto;
+     margin-right: auto;
+     padding: 5px;
+     border: 1px solid #5A5A5A;
+     background-color: #E5E5E5;
+     text-align: center;
+     margin-top: 4px;
  }

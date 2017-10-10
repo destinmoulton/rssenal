@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import React, { Component } from 'react';
 
+import { Icon } from "semantic-ui-react";
+
 class EntryItem extends Component {
     static propTypes = {
         toggleEntry: PropTypes.func.isRequired,
@@ -21,12 +23,21 @@ class EntryItem extends Component {
 
     render() {
         const { entry, isActive } = this.props;
-        console.log(entry)
+
         let body = "";
+        let link = "";
         if(isActive){
             body = <div 
                     dangerouslySetInnerHTML={this._getBodyHTML()}
                     className="rss-entry-content-container"></div>
+            link =  <div
+                        className="rss-entry-link-container">
+                        <a
+                            target="_blank"
+                            href={entry.link}>
+                            <Icon name="external square"/> Visit Website
+                        </a>
+                    </div>
         }
         return (
             <div 
@@ -35,7 +46,8 @@ class EntryItem extends Component {
                 <div
                     className="rss-entry-title" 
                     onClick={this._toggleEntry.bind(this, entry._id)}>{entry.title}</div>
-                {body}
+                    {body}
+                    {link}
             </div>
         );
     }
