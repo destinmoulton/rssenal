@@ -52,6 +52,7 @@ class EntriesList extends Component {
         let entryList = [];
         entriesToDisplay.map((entry)=>{
             const el =  <EntryItem 
+                            key={entry._id}
                             entry={entry}
                             activateEntry={this._activateEntry}
                             isActive={(entry._id === activeEntryId)}/>;
