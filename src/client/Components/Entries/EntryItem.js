@@ -21,10 +21,12 @@ class EntryItem extends Component {
 
     render() {
         const { entry, isActive } = this.props;
-
+        console.log(entry)
         let body = "";
         if(isActive){
-            body = <div dangerouslySetInnerHTML={this._getBodyHTML()}></div>
+            body = <div 
+                    dangerouslySetInnerHTML={this._getBodyHTML()}
+                    className="rss-entry-content-container"></div>
         }
         return (
             <div 
