@@ -13,12 +13,18 @@ class EntryItem extends Component {
         activateEntry(entryId);
     }
 
+    _getBodyHTML(){
+        const { entry } = this.props;
+
+        return {__html: entry.content};
+    }
+
     render() {
         const { entry, isActive } = this.props;
 
         let body = "";
         if(isActive){
-            body = <div>{entry.content}</div>
+            body = <div dangerouslySetInnerHTML={this._getBodyHTML()}></div>
         }
         return (
             <div 
