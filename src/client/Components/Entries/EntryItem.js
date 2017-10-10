@@ -1,7 +1,8 @@
 import { AllHtmlEntities } from "html-entities";
-
+import moment from "moment";
 import PropTypes from "prop-types";
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 
 import { Icon } from "semantic-ui-react";
 
@@ -25,16 +26,20 @@ class EntryItem extends Component {
         return {__html: entry.content};
     }
 
-    render() {
-        const { entry, isActive } = this.props;
+    _getActiveEntryContent(){
+        const { entry, feeds } = this.props;
 
-        let body = "";
-        let link = "";
-        if(isActive){
-            body = <div 
+        const activeFeed = feeds.find((feed)=>feed._id === entry.feed_id);
+        const creator = (entry.creator !== undefined || entry.creator !== "") ? " by "+ entry.creator : "";
+        const timeAgo = moment(entry.publish_date).fromNow()
+
+        const info = <div>{activeFeed.title}{creator} -- {timeAgo}</div>;
+
+        const body = <div 
                     dangerouslySetInnerHTML={this._getBodyHTML()}
                     className="rss-entry-content-container"></div>
-            link =  <div
+
+        const link =  <div
                         className="rss-entry-link-container">
                         <a
                             target="_blank"
@@ -42,6 +47,18 @@ class EntryItem extends Component {
                             <Icon name="external square"/> Visit Website
                         </a>
                     </div>
+        
+        return (
+            <div>{info}{body}{link}</div>
+        );
+    }
+
+    render() {
+        const { entry, isActive } = this.props;
+
+        let content = "";
+        if(isActive){
+            content = this._getActiveEntryContent();
         }
 
         const title = htmlEntities.decode(entry.title);
@@ -52,11 +69,16 @@ class EntryItem extends Component {
                 <div
                     className="rss-entry-title" 
                     onClick={this._toggleEntry.bind(this, entry._id)}>{title}</div>
-                    {body}
-                    {link}
+                    {content}
             </div>
         );
     }
 }
 
-export default EntryItem;
+const mapStateToProps = (state)=>{
+    const { feeds } = state;
+    return {
+        feeds: feeds.feeds
+    }
+}
+export default connect(mapStateToProps)(EntryItem);
