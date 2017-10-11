@@ -1,3 +1,4 @@
+import { List } from "immutable";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
@@ -12,48 +13,24 @@ class EntriesList extends Component {
 
         this.state = {
             sortBy: "publish_date:asc",
-            activeEntryId: ""
+            activeEntryId: "",
+            currentTitle: "",
+            processedEntries: List()
         };
+
+        // Setup the global/document level keypress events
+        document.onkeydown = this._handleKeyDown.bind(this);
 
         this._handleChangeSort = this._handleChangeSort.bind(this);
         this._toggleEntry = this._toggleEntry.bind(this);
     }
 
-    _toggleEntry(entryId){
-        let nextActiveEntryId = entryId;
-        if(this.state.activeEntryId === entryId){
-            nextActiveEntryId = "";
-        }
-        this.setState({
-            activeEntryId: nextActiveEntryId
-        });
+    componentWillReceiveProps(nextProps){
+        this._filterAndSortEntries(nextProps, this.state.sortBy);
     }
 
-    _handleChangeSort(e, obj){
-        this.setState({
-            sortBy: obj.value
-        });
-    }
-
-    _sortEntries(entries){
-        const { sortBy } = this.state;
-        const sortParams = sortBy.split(":");
-        return entries.sort((a,b)=>this._compareEntries(a, b, sortParams[0], sortParams[1]));
-    }
-
-    _compareEntries(a, b, field, order){
-        if(order === "asc"){
-            if(a[field] < b[field]){ return -1; }
-            if(a[field] > b[field]){ return 1; }
-        } else if(order === "desc"){
-            if(a[field] > b[field]){ return -1; }
-            if(a[field] < b[field]){ return 1; }
-        }
-        if(a[field] === b[field]){ return 0;}
-    }
-
-    _filterEntriesAndTitle(){
-        const { entries, groups, feeds, filter } = this.props;
+    _filterAndSortEntries(props, sortBy){
+        const { entries, groups, feeds, filter } = props;
 
         let filteredEntries = entries;
         let title = "All";
@@ -88,19 +65,103 @@ class EntriesList extends Component {
                 title = activeGroup.name;
                 break;
         }
-        return {
-            title,
-            entries: this._sortEntries(filteredEntries)
+
+        const processedEntries = this._sortEntries(entries, sortBy);
+        
+        this.setState({
+            currentTitle: title,
+            processedEntries
+        });
+    }
+
+    _sortEntries(entries, sortBy){
+        const sortParams = sortBy.split(":");
+        return entries.sort((a,b)=>this._compareEntries(a, b, sortParams[0], sortParams[1]));
+    }
+
+    _compareEntries(a, b, field, order){
+        if(order === "asc"){
+            if(a[field] < b[field]){ return -1; }
+            if(a[field] > b[field]){ return 1; }
+        } else if(order === "desc"){
+            if(a[field] > b[field]){ return -1; }
+            if(a[field] < b[field]){ return 1; }
+        }
+        if(a[field] === b[field]){ return 0;}
+    }
+
+    _handleKeyDown(e){
+        switch(e.key){
+            case "ArrowDown":
+            case "j":
+                e.preventDefault();
+                this._activateSiblingEntry("next");
+                break;
+            case "ArrowUp":
+            case "k":
+                e.preventDefault();
+                this._activateSiblingEntry("previous");
+                break;
         }
     }
 
-    render() {
-        const { activeEntryId, sortBy } = this.state;
+    _activateSiblingEntry(direction){
+        const { activeEntryId, processedEntries } = this.state;
 
-        const { title, entries } = this._filterEntriesAndTitle();
+        let siblingActiveIndex = 0;
         
+        if(activeEntryId === ""){
+            siblingActiveIndex = 0;
+        } else {
+            const activeEntryIndex = processedEntries.findIndex((entry)=>{
+                return entry._id === activeEntryId;
+            });
+
+            if(direction === "next"){
+                if((activeEntryIndex + 1) === processedEntries.size){
+                    siblingActiveIndex = activeEntryIndex;
+                } else {
+                    siblingActiveIndex = activeEntryIndex + 1;
+                }
+            } else if(direction === "previous"){
+                if((activeEntryIndex - 1) < 0){
+                    siblingActiveIndex = 0;
+                } else {
+                    siblingActiveIndex = activeEntryIndex - 1;
+                }
+            }
+        }
+
+        const nextActiveEntry = processedEntries.get(siblingActiveIndex);
+        
+        this.setState({
+            activeEntryId: nextActiveEntry._id
+        });
+    }
+
+    _toggleEntry(entryId){
+        let nextActiveEntryId = entryId;
+        if(this.state.activeEntryId === entryId){
+            nextActiveEntryId = "";
+        }
+        this.setState({
+            activeEntryId: nextActiveEntryId
+        });
+    }
+
+    _handleChangeSort(e, obj){
+        this.setState({
+            sortBy: obj.value
+        });
+
+        this._filterAndSortEntries(this.props, obj.value);
+    }
+
+    render() {
+        const { activeEntryId, currentTitle, processedEntries, sortBy } = this.state;
+
         let entryList = [];
-        entries.map((entry)=>{
+        processedEntries.map((entry)=>{
             const el =  <EntryItem 
                             key={entry._id}
                             entry={entry}
@@ -112,7 +173,7 @@ class EntriesList extends Component {
         return (
             <div>
                 <div className="rss-entrylist-menu">
-                    <div className="rss-entrylist-menu-title-container">{title}</div>
+                    <div className="rss-entrylist-menu-title-container">{currentTitle}</div>
                     <div className="rss-entrylist-menu-sortselect-container"><SortMenu onChange={this._handleChangeSort} currentSortBy={sortBy}/></div>
                 </div>
                 <div className="rss-entrylist-container">
