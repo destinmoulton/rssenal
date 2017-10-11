@@ -20,6 +20,11 @@ const INITIAL_STATE = {
     isDeletingFeedGroup: false
 };
 
+const UNCATEGORIZED_FEEDGROUP = [{
+    _id: "0",
+    name: "Uncategorized"
+}];
+
 const feedGroupsReducer = function(state = INITIAL_STATE, action){
     switch(action.type){
         case FEEDGROUPS_FETCHING:
@@ -29,10 +34,11 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
             }
         case FEEDGROUPS_RECEIVED:
             const freshGroups = List(action.groups);
+            const fullGroups = freshGroups.concat(UNCATEGORIZED_FEEDGROUP);
 
             return {
                 ...state,
-                groups: freshGroups,
+                groups: fullGroups,
                 hasFeedGroups: true
             }
         case FEEDGROUPS_ADD_BEGIN:
