@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import { Menu } from "semantic-ui-react";
+
 import EntryItem from "./EntryItem";
 import SortMenu from "./SortMenu";
 
@@ -109,9 +111,11 @@ class EntriesList extends Component {
         })
         return (
             <div>
-                <div className="rss-entrylist-title">{title}</div>
-                <div><SortMenu onChange={this._handleChangeSort} currentSortBy={sortBy}/></div>
-                <div>
+                <div className="rss-entrylist-menu">
+                    <div className="rss-entrylist-menu-title-container">{title}</div>
+                    <div className="rss-entrylist-menu-sortselect-container"><SortMenu onChange={this._handleChangeSort} currentSortBy={sortBy}/></div>
+                </div>
+                <div className="rss-entrylist-container">
                     {entryList}
                 </div>
             </div>

@@ -28,22 +28,20 @@ class RSSEnal extends Component {
         const { entriesFilter } = this.state;
 
         return (
-            <Grid columns={2}>
-                <Grid.Row>
-                    <Grid.Column computer={6}>
-                        <Menu attached="top">
-                            <AddFeedModal />
-                        </Menu>
-                        <Segment attached="bottom">
-                            <ListFeedGroups onFilterChange={this._handleChangeEntriesFilter}/>
-                            <AddGroup />
-                        </Segment>
-                    </Grid.Column>
-                    <Grid.Column>
-                        <EntriesList filter={entriesFilter} />
-                    </Grid.Column>
-                </Grid.Row>
-            </Grid>
+            <div>
+                <div className="rss-body-left-container">
+                    <div>
+                        <AddFeedModal />
+                    </div>
+                    <div>
+                        <ListFeedGroups onFilterChange={this._handleChangeEntriesFilter}/>
+                        <AddGroup />
+                    </div>
+                </div>
+                <div className="rss-body-right-container">
+                    <EntriesList filter={entriesFilter} />
+                </div>
+            </div>
         )
     }
     
