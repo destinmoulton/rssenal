@@ -8,7 +8,7 @@ import { getAllFeeds } from "../../redux/actions/feeds.actions";
 
 
 import GroupItem from "./GroupItem";
-import ListFeeds from "./ListFeeds";
+
 
 class ListFeedGroups extends Component {
 
@@ -38,7 +38,7 @@ class ListFeedGroups extends Component {
         groups.map((group)=>{
             const groupBlock = <div key={group._id} >
                                    <GroupItem group={group} />
-                                   <ListFeeds groupId={group._id} />
+                                   
                                </div>;
             listFeedGroups.push(groupBlock);
         })

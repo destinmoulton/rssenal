@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 
 import { Button, Confirm, Icon } from "semantic-ui-react";
 
+import ListFeeds from "./ListFeeds";
+
 import { beginDeleteFeedGroup, beginSaveFeedGroup } from "../../redux/actions/feedgroups.actions";
 import { changeFilter } from "../../redux/actions/filter.actions";
 
@@ -16,6 +18,7 @@ class GroupItem extends Component {
         super(props);
 
         this.state = {
+            feedsAreVisible: false,
             optionsAreVisible: false,
             isEditing: false,
             isThisGroupSaving: false,
@@ -31,6 +34,7 @@ class GroupItem extends Component {
         this._handleEditSave = this._handleEditSave.bind(this);
         this._handleInputKeyPress = this._handleInputKeyPress.bind(this);
         this._handleInputOnChange = this._handleInputOnChange.bind(this);
+        this._handleToggleFeedsVisible = this._handleToggleFeedsVisible.bind(this);
     }
 
     componentWillReceiveProps(nextProps){
@@ -114,6 +118,12 @@ class GroupItem extends Component {
         });
     }
 
+    _handleToggleFeedsVisible(){
+        this.setState({
+            feedsAreVisible: !this.state.feedsAreVisible
+        });
+    }
+
     _buildEditInput(){
         const { editGroupName, isThisGroupSaving } = this.state;
 
@@ -184,18 +194,34 @@ class GroupItem extends Component {
     }
 
     render(){
-        const { group, updatingFeedGroups } = this.props;
-        const { 
+        const {
+            group,
+            updatingFeedGroups
+        } = this.props;
+
+        const {
+            feedsAreVisible,
             isEditing, 
             optionsAreVisible
         } = this.state;
 
+        
+
+        let toggleFeedsIcon = "";
+        let listFeeds = "";
         let title = "";
         let options = "";
         if(isEditing){
             title = this._buildEditInput();
             options = this._buildEditButtons();
         } else {
+            let toggleFeedsIconClass = "caret right";
+            if(feedsAreVisible){
+                toggleFeedsIconClass = "caret down";
+                listFeeds = <ListFeeds groupId={group._id} />;
+            }
+            toggleFeedsIcon = <Icon name={toggleFeedsIconClass} onClick={this._handleToggleFeedsVisible}/>;
+
             title = this._buildGroupTitle();
 
             if(optionsAreVisible){
@@ -204,11 +230,14 @@ class GroupItem extends Component {
         }
 
         return (
-            <div
-                className="rss-feedgroups-groupitem"
-                onMouseEnter={this._showOptions}
-                onMouseLeave={this._hideOptions}>
-                {title}&nbsp;{options}
+            <div>
+                <div
+                    className="rss-feedgroups-groupitem"
+                    onMouseEnter={this._showOptions}
+                    onMouseLeave={this._hideOptions}>
+                    {toggleFeedsIcon}{title}&nbsp;{options}
+                </div>
+                {listFeeds}
             </div>
         );
     }
