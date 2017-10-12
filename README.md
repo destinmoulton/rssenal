@@ -1,6 +1,6 @@
 ### RSSenal
 
-RSSenal is a simple personal RSS feed reader. The server is a node/express api using a mongo database and the client is a React app. The client is built using the Semantic UI React framework so it looks decent.
+RSSenal is a simple personal RSS feed reader. The server is a node/express api using a mongo database and the client is a React redux app. The client is built using the Semantic UI React framework so it looks decent.
 
 You can organize your subscriptions into groups (categories). Navigate your feeds using up/down arrows or j/k for the vim oriented. Disable HTML tags if you want a pure text experience.
 
