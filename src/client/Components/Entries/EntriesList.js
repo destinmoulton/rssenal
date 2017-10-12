@@ -26,6 +26,8 @@ class EntriesList extends Component {
     }
 
     componentWillReceiveProps(nextProps){
+        console.log("props changed");
+        console.log(nextProps.filter);
         this._filterAndSortEntries(nextProps, this.state.sortBy);
     }
 
@@ -66,7 +68,7 @@ class EntriesList extends Component {
                 break;
         }
 
-        const processedEntries = this._sortEntries(entries, sortBy);
+        const processedEntries = this._sortEntries(filteredEntries, sortBy);
         
         this.setState({
             currentTitle: title,
