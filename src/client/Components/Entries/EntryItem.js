@@ -3,6 +3,7 @@ import moment from "moment";
 import PropTypes from "prop-types";
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import striptags from "striptags";
 
 import { Icon } from "semantic-ui-react";
 
@@ -14,6 +15,29 @@ class EntryItem extends Component {
         isActive: PropTypes.bool.isRequired
     };
 
+    constructor(props){
+        super(props);
+
+        this.state = {
+            shouldShowImages: false
+        };
+    }
+
+    componentWillReceiveProps(nextProps){
+        const { settings } = nextProps;
+
+        let shouldShowImages = false;
+        settings.forEach((setting)=>{
+            if(setting.key === "show_images"){
+                shouldShowImages = setting.value;
+            }
+        });
+
+        this.setState({
+            shouldShowImages
+        })
+    }
+
     _toggleEntry(entryId){
         const { toggleEntry } = this.props;
 
@@ -22,15 +46,23 @@ class EntryItem extends Component {
 
     _getBodyHTML(){
         const { entry } = this.props;
+        const { shouldShowImages } = this.state;
 
-        return {__html: htmlEntities.decode(entry.content)};
+        let body = htmlEntities.decode(entry.content);
+
+        let tagsToAllow = ["a", "img"];
+        if(!shouldShowImages){
+            tagsToAllow = ["a"];
+        }
+        body = striptags(body, tagsToAllow);
+        return {__html: body};
     }
 
     _getActiveEntryContent(){
         const { entry, feeds } = this.props;
 
         const activeFeed = feeds.find((feed)=>feed._id === entry.feed_id);
-        const creator = (entry.creator !== undefined || entry.creator !== "") ? " by "+ entry.creator : "";
+        const creator = (entry.creator !== undefined || entry.creator !== "" || entry.creator !== "undefined") ? " by "+ entry.creator : "";
         const timeAgo = moment(entry.publish_date).fromNow()
 
         const info = <div className="rss-entry-info-container">{activeFeed.title}{creator} -- {timeAgo}</div>;
@@ -76,9 +108,10 @@ class EntryItem extends Component {
 }
 
 const mapStateToProps = (state)=>{
-    const { feeds } = state;
+    const { feeds, settings } = state;
     return {
-        feeds: feeds.feeds
+        feeds: feeds.feeds,
+        settings: settings.settings
     }
 }
 export default connect(mapStateToProps)(EntryItem);
