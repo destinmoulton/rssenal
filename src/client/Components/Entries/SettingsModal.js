@@ -1,6 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import { Button, Header, Icon, Modal } from "semantic-ui-react";
+import { Button, Header, Icon, Modal, Radio } from "semantic-ui-react";
+
+import { changeSetting } from "../../redux/actions/settings.actions";
+
 class SettingsModal extends Component {
     constructor(props){
         super(props);
@@ -25,9 +29,28 @@ class SettingsModal extends Component {
         })
     }
 
+    _buildSettings(){
+        const { changeSetting, settings } = this.props;
+
+        return settings.map((setting)=>{
+            if(setting.type==="toggle"){
+                return <Radio 
+                        key={setting.key}
+                        checked={setting.value}
+                        toggle
+                        label={setting.name}
+                        onChange={this._handleChangeSetting.bind(this, setting.key, !setting.value)}/>;
+            }
+        });
+    }
+
+    _handleChangeSetting(setting_key, setting_value){
+        this.props.changeSetting(setting_key, setting_value);
+    }
+
     render() {
         const { isModalOpen } = this.state;
-        const content = "";
+        const content = this._buildSettings();
         return (
             <span>
                 <Icon 
@@ -46,8 +69,8 @@ class SettingsModal extends Component {
                         {content}
                     </Modal.Content>
                     <Modal.Actions>
-                        <Button color="orange" onClick={this._handleClickCloseModal} inverted>
-                            <Icon name="close" /> Cancel
+                        <Button color="green" onClick={this._handleClickCloseModal} inverted>
+                            <Icon name="checkmark" /> Done
                         </Button>
                     </Modal.Actions>
                 </Modal>
@@ -56,4 +79,16 @@ class SettingsModal extends Component {
     }
 }
 
-export default SettingsModal;
+const mapStateToProps = (state)=>{
+    const { settings } = state;
+    return {
+        settings: settings.settings
+    }
+}
+
+const mapDispatchToProps = (dispatch)=>{
+    return {
+        changeSetting: (setting_key, setting_value)=>dispatch(changeSetting(setting_key, setting_value))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsModal);
