@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Menu } from "semantic-ui-react";
 
 import EntryItem from "./EntryItem";
+import SettingsModal from "./SettingsModal";
 import SortMenu from "./SortMenu";
 
 class EntriesList extends Component {
@@ -174,7 +175,10 @@ class EntriesList extends Component {
             <div>
                 <div className="rss-entrylist-menu">
                     <div className="rss-entrylist-menu-title-container">{currentTitle}</div>
-                    <div className="rss-entrylist-menu-sortselect-container"><SortMenu onChange={this._handleChangeSort} currentSortBy={sortBy}/></div>
+                    <div className="rss-entrylist-menu-sortselect-container">
+                        <SortMenu onChange={this._handleChangeSort} currentSortBy={sortBy}/>
+                        <SettingsModal />
+                    </div>
                 </div>
                 <div className="rss-entrylist-container">
                     {entryList}
