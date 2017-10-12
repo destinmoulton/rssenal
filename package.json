@@ -47,6 +47,7 @@
     "rss-parser": "^2.10.6",
     "semantic-ui-css": "^2.2.12",
     "semantic-ui-react": "^0.74.2",
+    "striptags": "^3.1.0",
     "webpack": "^3.6.0"
   }
 }
