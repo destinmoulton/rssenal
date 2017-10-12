@@ -26,8 +26,6 @@ class EntriesList extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        console.log("props changed");
-        console.log(nextProps.filter);
         this._filterAndSortEntries(nextProps, this.state.sortBy);
     }
 
