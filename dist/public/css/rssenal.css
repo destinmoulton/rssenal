@@ -17,7 +17,6 @@ div.rss-body-left-container {
     left: 250px;
     right: 0px;
     height: 100%;
-    overflow-y: scroll;
 }
 
 div.rss-feedgroups-feeditem {
@@ -82,15 +81,20 @@ div.rss-entry-link-container {
 }
 
 .rss-entrylist-container {
-    margin-top: 50px;
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    overflow-y: scroll;
 }
 
 .rss-entrylist-menu {
     border-bottom: 2px solid gray;
     height: 40px;
-    position: fixed;
+    position: absolute;
     top: 0px;
-    left: 250px;
+    left: 0px;
     right: 0px;
     background-color: white;
 }
