@@ -13,11 +13,10 @@ import {
 
 const INITIAL_STATE = {
     groups: List(),
-    isFetchingFeedGroups: false,
     hasFeedGroups: false,
-    updatingFeedGroups: List(),
-    isAddingFeedGroup: false,
-    isDeletingFeedGroup: false
+    isDeletingFeedGroup: false,
+    isFetchingFeedGroups: false,
+    isSavingFeedGroup: false
 };
 
 const UNCATEGORIZED_FEEDGROUP = [{
@@ -44,14 +43,14 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
         case FEEDGROUPS_ADD_BEGIN:
             return {
                 ...state,
-                isAddingFeedGroup: true
+                isSavingFeedGroup: true
             }
         case FEEDGROUPS_ADD_COMPLETE: {
             const groups = state.groups.push(action.group);
             return {
                 ...state,
                 groups,
-                isAddingFeedGroup: false
+                isSavingFeedGroup: false
             }
         }
         case FEEDGROUPS_DELETE_BEGIN: 
@@ -71,10 +70,9 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
                 isDeletingFeedGroup: false
             }
         case FEEDGROUPS_UPDATE_BEGIN: {
-            const updatingFeedGroups = state.updatingFeedGroups.push(action.groupId);
             return {
                 ...state,
-                updatingFeedGroups
+                isSavingFeedGroup: true
             }
         }
         case FEEDGROUPS_UPDATE_COMPLETE: {
@@ -83,16 +81,11 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
             });
 
             const groups = state.groups.update(groupIndex, val => action.group);
-
-            const updatingIndex = state.updatingFeedGroups.findIndex((groupId)=>{
-                return groupId === action.group._id;
-            });
-            const updatingFeedGroups = state.updatingFeedGroups.delete(updatingIndex);
             
             return {
                 ...state,
                 groups,
-                updatingFeedGroups
+                isSavingFeedGroup: false
             }
         }
         default:
