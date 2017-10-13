@@ -6,7 +6,7 @@ import { beginUpdateAndGetEntries } from "../../redux/actions/entries.actions";
 import { getAllFeedGroups } from "../../redux/actions/feedgroups.actions";
 import { getAllFeeds } from "../../redux/actions/feeds.actions";
 
-import FeedEditorModal from "../Modals/FeedEditorModal";
+import AddFeedModal from "../Modals/AddFeedModal";
 import ButtonBar from "./ButtonBar";
 import GroupEditorModal from "../Modals/GroupEditorModal";
 import GroupItem from "./GroupItem";
@@ -102,7 +102,7 @@ class LeftMenu extends Component {
         return(
             <div>
                 <div>
-                    <FeedEditorModal />
+                    <AddFeedModal />
                     <ButtonBar 
                         openEditGroupModal={this._handleEditGroup}
                         openEditFeedModal={this._handleEditFeed}
