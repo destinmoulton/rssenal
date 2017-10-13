@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
@@ -14,19 +15,22 @@ const INITIAL_STATE = {
     display: DISPLAY_FORM,
     feedInfo: {},
     isValidatingURL: false,
-    isModalOpen: false,
     feedURL: "",
     feedGroupId: "0",
     formError: ""
 };
 
 class AddFeedModal extends Component {
+    static propTypes = {
+        isModalOpen: PropTypes.bool.isRequired,
+        onCloseModal: PropTypes.func.isRequired
+    };
+
     constructor(props){
         super(props);
 
         this.state = INITIAL_STATE;
 
-        this._handleOpen = this._handleOpen.bind(this);
         this._handleClickAddFeed = this._handleClickAddFeed.bind(this);
         this._handleClickContinue = this._handleClickContinue.bind(this);
         this._handleChangeURLInput = this._handleChangeURLInput.bind(this);
@@ -62,20 +66,15 @@ class AddFeedModal extends Component {
         }
     }
 
-    _handleOpen(){
-        this.setState({
-            isModalOpen: true
-        });
-    }
-
     _handleClose(){
         this.setState({
             display: DISPLAY_FORM,
             feedInfo: {},
             feedGroupId: "0",
-            isValidatingURL: false,
-            isModalOpen: false
+            isValidatingURL: false
         });
+
+        this.props.onCloseModal();
     }
 
     _handleClickAddFeed(){
@@ -234,9 +233,12 @@ class AddFeedModal extends Component {
 
     render(){
         const {
-            display,
-            isModalOpen
+            display
         } = this.state;
+
+        const {
+            isModalOpen
+        } = this.props;
 
         let content = "";
         let buttons = "";
