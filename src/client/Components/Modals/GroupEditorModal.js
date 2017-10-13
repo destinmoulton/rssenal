@@ -86,23 +86,31 @@ class GroupEditorModal extends Component {
 
         let cancelButton = "";
         if(!isSavingFeedGroup){
-            cancelButton = <Button 
-                                size="mini"
+            cancelButton = <Button
                                 color="orange"
+                                content="Cancel"
+                                floated="left"
+                                icon="cancel"
                                 inverted
-                                onClick={this._handleClose}><Icon name="cancel"/>&nbsp;Cancel</Button>;
+                                onClick={this._handleClose}
+                                size="mini"
+                            />;
         }
 
         return (
-            <span>
-                <Button 
-                    size="mini"
-                    color="green"
-                    inverted
-                    onClick={this._handleSave}
-                    loading={isSavingFeedGroup}><Icon name="save"/>&nbsp;Save</Button>
+            <div>
                 {cancelButton}
-            </span>
+                <Button 
+                    color="green"
+                    content="Save"
+                    icon="save"
+                    floated="right"
+                    inverted
+                    loading={isSavingFeedGroup}
+                    onClick={this._handleSave}
+                    size="mini"
+                />
+            </div>
         );
     }
 
@@ -121,7 +129,7 @@ class GroupEditorModal extends Component {
                 <Modal
                     open={isModalOpen}
                     onClose={this._handleClickCloseModal}
-                    size="small"
+                    size="tiny"
                 >
                     <Header icon="plus" content={modalHeader} />
                     <Modal.Content>
