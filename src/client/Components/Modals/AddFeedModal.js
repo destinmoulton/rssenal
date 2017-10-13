@@ -232,7 +232,7 @@ class AddFeedModal extends Component {
         );
     }
 
-    _buildModal(){
+    render(){
         const {
             display,
             isModalOpen
@@ -265,18 +265,6 @@ class AddFeedModal extends Component {
                     {buttons}
                 </Modal.Actions>
             </Modal>
-        );
-    }
-
-    render(){
-        const modal = this._buildModal();
-        return (
-            <div>
-                <Button onClick={this._handleOpen}>
-                    <Icon name="plus square" /> Add Feed
-                </Button>
-                {modal}
-            </div>
         );
     }
 }
