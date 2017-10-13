@@ -5,11 +5,16 @@ import { Button, Icon } from "semantic-ui-react";
 
 class ButtonBar extends Component {
     static propTypes = {
+        openAddFeedModal: PropTypes.func.isRequired,
         openEditGroupModal: PropTypes.func.isRequired
     }
 
     _handleAddGroup(){
-        this.props.openEditGroupModal({_id:"", name:""})
+        this.props.openEditGroupModal({_id:"", name:""});
+    }
+
+    _handleAddFeed(){
+        this.props.openAddFeedModal({_id:"", title:""});
     }
 
     render() {
@@ -17,9 +22,20 @@ class ButtonBar extends Component {
         return (
             <div>
                 <Button.Group>
-                    <Button onClick={this._handleAddGroup.bind(this)}>
-                        <Icon name="plus square" /> Add Group
-                    </Button>
+                    <Button
+                        color="grey"
+                        content="Feed"
+                        icon="plus"
+                        onClick={this._handleAddFeed.bind(this)}
+                        size="tiny"
+                    />
+                    <Button
+                        color="olive"
+                        content="Group"
+                        icon="plus"
+                        onClick={this._handleAddGroup.bind(this)}
+                        size="tiny"
+                    />
                 </Button.Group>                
             </div>
         );
