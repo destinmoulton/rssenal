@@ -21,7 +21,8 @@ const INITIAL_STATE = {
 
 const UNCATEGORIZED_FEEDGROUP = [{
     _id: "0",
-    name: "Uncategorized"
+    name: "Uncategorized",
+    order: Infinity
 }];
 
 const feedGroupsReducer = function(state = INITIAL_STATE, action){
