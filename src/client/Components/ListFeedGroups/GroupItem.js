@@ -11,6 +11,7 @@ import { changeFilter } from "../../redux/actions/filter.actions";
 
 class GroupItem extends Component {
     static propTypes = {
+        editGroup: PropTypes.func.isRequired,
         group: PropTypes.object.isRequired
     };
 
@@ -29,30 +30,9 @@ class GroupItem extends Component {
         this._hideOptions = this._hideOptions.bind(this);
         this._handleClickDelete = this._handleClickDelete.bind(this);
         this._handleClickEdit = this._handleClickEdit.bind(this);
-        this._handleClickEditCancel = this._handleClickEditCancel.bind(this);
         this._handleClickGroupTitle = this._handleClickGroupTitle.bind(this);
-        this._handleEditSave = this._handleEditSave.bind(this);
-        this._handleInputKeyPress = this._handleInputKeyPress.bind(this);
-        this._handleInputOnChange = this._handleInputOnChange.bind(this);
+        
         this._handleToggleFeedsVisible = this._handleToggleFeedsVisible.bind(this);
-    }
-
-    componentWillReceiveProps(nextProps){
-        const { isEditing, isThisGroupSaving } = this.state;
-
-        const nextIsThisGroupSaving = nextProps.updatingFeedGroups.findIndex((testGrpId)=>testGrpId===this.props.group._id) > -1 ? true : false;
-        if(isEditing && isThisGroupSaving && !nextIsThisGroupSaving){
-            // Editing is complete
-            this.setState({
-                isEditing: false,
-                isThisGroupSaving: false
-            })
-        } else if(isEditing && !isThisGroupSaving && nextIsThisGroupSaving){
-            // This group is saving
-            this.setState({
-                isThisGroupSaving: true
-            })
-        }
     }
 
     _showOptions(){
@@ -68,25 +48,7 @@ class GroupItem extends Component {
     }
 
     _handleClickEdit(){
-        this.setState({
-            isEditing: true,
-            optionsAreVisible: false,
-            editGroupName: this.props.group.name
-        })
-
-    }
-
-    _handleClickEditCancel(){
-        this.setState({
-            isEditing: false,
-            optionsAreVisible: false
-        })
-    }
-
-    _handleEditSave(){
-        const { group } = this.props;
-        const { editGroupName } = this.state;
-        this.props.beginSaveFeedGroup(group._id, editGroupName);
+        this.props.editGroup(this.props.group);
     }
 
     _handleClickDelete(){
@@ -106,61 +68,10 @@ class GroupItem extends Component {
         });
     }
 
-    _handleInputKeyPress(e){
-        if(e.key === "Enter"){
-            this._handleEditSave();
-        }
-    }
-
-    _handleInputOnChange(e){
-        this.setState({
-            editGroupName: e.target.value
-        });
-    }
-
     _handleToggleFeedsVisible(){
         this.setState({
             feedsAreVisible: !this.state.feedsAreVisible
         });
-    }
-
-    _buildEditInput(){
-        const { editGroupName, isThisGroupSaving } = this.state;
-
-        return (
-            <input
-                autoFocus
-                value={editGroupName}
-                onKeyPress={this._handleInputKeyPress}
-                onChange={this._handleInputOnChange}
-                disabled={isThisGroupSaving}
-            />
-        )
-    }
-
-    _buildEditButtons(){
-        const { isThisGroupSaving } = this.state;
-
-        let cancelButton = "";
-        if(!isThisGroupSaving){
-            cancelButton = <Button 
-                                size="mini"
-                                color="orange"
-                                inverted
-                                onClick={this._handleClickEditCancel}><Icon name="cancel"/>&nbsp;Cancel</Button>;
-        }
-
-        return (
-            <span>
-                <Button 
-                    size="mini"
-                    color="green"
-                    inverted
-                    onClick={this._handleEditSave}
-                    loading={isThisGroupSaving}><Icon name="save"/>&nbsp;Save</Button>
-                {cancelButton}
-            </span>
-        );
     }
 
     _buildOptionButtons(){
@@ -201,7 +112,6 @@ class GroupItem extends Component {
 
         const {
             feedsAreVisible,
-            isEditing, 
             optionsAreVisible
         } = this.state;
 
@@ -211,23 +121,20 @@ class GroupItem extends Component {
         let listFeeds = "";
         let title = "";
         let options = "";
-        if(isEditing){
-            title = this._buildEditInput();
-            options = this._buildEditButtons();
-        } else {
-            let toggleFeedsIconClass = "caret right";
-            if(feedsAreVisible){
-                toggleFeedsIconClass = "caret down";
-                listFeeds = <ListFeeds groupId={group._id} />;
-            }
-            toggleFeedsIcon = <Icon name={toggleFeedsIconClass} onClick={this._handleToggleFeedsVisible}/>;
-
-            title = this._buildGroupTitle();
-
-            if(optionsAreVisible){
-                options = this._buildOptionButtons();
-            }
+        
+        let toggleFeedsIconClass = "caret right";
+        if(feedsAreVisible){
+            toggleFeedsIconClass = "caret down";
+            listFeeds = <ListFeeds groupId={group._id} />;
         }
+        toggleFeedsIcon = <Icon name={toggleFeedsIconClass} onClick={this._handleToggleFeedsVisible}/>;
+
+        title = this._buildGroupTitle();
+
+        if(optionsAreVisible){
+            options = this._buildOptionButtons();
+        }
+
 
         return (
             <div>
@@ -254,7 +161,6 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch)=>{
     return {
-        beginSaveFeedGroup: (groupId, newGroupName)=> dispatch(beginSaveFeedGroup(groupId, newGroupName)),
         beginDeleteFeedGroup: (groupId)=> dispatch(beginDeleteFeedGroup(groupId)),
         changeFilter: (newFilter)=> dispatch(changeFilter(newFilter))
     }
