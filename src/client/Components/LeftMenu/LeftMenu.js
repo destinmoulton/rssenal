@@ -16,14 +16,13 @@ class LeftMenu extends Component {
         super(props);
 
         this.state = {
-            editFeed: {},
-            editFeedModalOpen: false,
+            addFeedModalOpen: false,
             editGroup: {},
             editGroupModalOpen: false
         }
-        this._handleEditFeed = this._handleEditFeed.bind(this);
-        this._handleCloseEditFeedModal = this._handleCloseEditFeedModal.bind(this);
-        this._handleEditGroup = this._handleEditGroup.bind(this);
+        this._handleOpenAddFeedModal = this._handleOpenAddFeedModal.bind(this);
+        this._handleCloseAddFeedModal = this._handleCloseAddFeedModal.bind(this);
+        this._handleOpenEditGroupModal = this._handleOpenEditGroupModal.bind(this);
         this._handleCloseEditGroupModal = this._handleCloseEditGroupModal.bind(this);
     }
 
@@ -42,21 +41,20 @@ class LeftMenu extends Component {
         }
     }
 
-    _handleEditFeed(feed){
+    _handleOpenAddFeedModal(feed){
         this.setState({
             editFeed: feed,
-            editFeedModalOpen: true
+            addFeedModalOpen: true
         });
     }
 
-    _handleCloseEditFeedModal(){
+    _handleCloseAddFeedModal(){
         this.setState({
-            editFeed: {},
-            editFeedModalOpen: false
+            addFeedModalOpen: false
         });
     }
 
-    _handleEditGroup(group){
+    _handleOpenEditGroupModal(group){
         this.setState({
             editGroup: group,
             editGroupModalOpen: true
@@ -82,8 +80,7 @@ class LeftMenu extends Component {
 
     render(){
         const {
-            editFeed,
-            editFeedModalOpen,
+            addFeedModalOpen,
             editGroup,
             editGroupModalOpen,
         } = this.state;
@@ -94,7 +91,7 @@ class LeftMenu extends Component {
         let listFeedGroups = [];
         sortedGroups.map((group)=>{
             const groupBlock = <div key={group._id} >
-                                   <GroupItem group={group} editGroup={this._handleEditGroup}/>
+                                   <GroupItem group={group} editGroup={this._handleOpenEditGroupModal}/>
                                </div>;
             listFeedGroups.push(groupBlock);
         })
@@ -102,11 +99,13 @@ class LeftMenu extends Component {
         return(
             <div>
                 <div>
-                    <AddFeedModal />
                     <ButtonBar 
-                        openEditGroupModal={this._handleEditGroup}
-                        openEditFeedModal={this._handleEditFeed}
+                        openEditGroupModal={this._handleOpenEditGroupModal}
+                        openAddFeedModal={this._handleOpenAddFeedModal}
                     />
+                    <AddFeedModal 
+                        isModalOpen={addFeedModalOpen}
+                        onCloseModal={this._handleCloseAddFeedModal}/>
                     <GroupEditorModal 
                         isModalOpen={editGroupModalOpen}
                         onCloseModal={this._handleCloseEditGroupModal}
