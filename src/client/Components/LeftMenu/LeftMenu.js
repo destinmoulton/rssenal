@@ -6,7 +6,7 @@ import { beginUpdateAndGetEntries } from "../../redux/actions/entries.actions";
 import { getAllFeedGroups } from "../../redux/actions/feedgroups.actions";
 import { getAllFeeds } from "../../redux/actions/feeds.actions";
 
-import AddFeedModal from "../Modals/AddFeedModal";
+import FeedEditorModal from "../Modals/FeedEditorModal";
 import ButtonBar from "./ButtonBar";
 import GroupEditorModal from "../Modals/GroupEditorModal";
 import GroupItem from "./GroupItem";
@@ -16,12 +16,15 @@ class LeftMenu extends Component {
         super(props);
 
         this.state = {
+            editFeed: {},
+            editFeedModalOpen: false,
             editGroup: {},
             editGroupModalOpen: false
         }
-
-        this._handleCloseEditGroupModal = this._handleCloseEditGroupModal.bind(this);
+        this._handleEditFeed = this._handleEditFeed.bind(this);
+        this._handleCloseEditFeedModal = this._handleCloseEditFeedModal.bind(this);
         this._handleEditGroup = this._handleEditGroup.bind(this);
+        this._handleCloseEditGroupModal = this._handleCloseEditGroupModal.bind(this);
     }
 
     componentWillMount(){
@@ -39,6 +42,20 @@ class LeftMenu extends Component {
         }
     }
 
+    _handleEditFeed(feed){
+        this.setState({
+            editFeed: feed,
+            editFeedModalOpen: true
+        });
+    }
+
+    _handleCloseEditFeedModal(){
+        this.setState({
+            editFeed: {},
+            editFeedModalOpen: false
+        });
+    }
+
     _handleEditGroup(group){
         this.setState({
             editGroup: group,
@@ -53,16 +70,29 @@ class LeftMenu extends Component {
         });
     }
 
+    _sortGroups(groups){
+        return groups.sort((a,b)=>this._compareEntries(a, b));
+    }
+
+    _compareEntries(a, b){
+        if(a.order < b.order){ return -1; }
+        if(a.order > b.order){ return 1; }
+        if(a.order === b.order){ return 0;}
+    }
+
     render(){
-        const { 
+        const {
+            editFeed,
+            editFeedModalOpen,
             editGroup,
             editGroupModalOpen,
         } = this.state;
 
         const { groups } = this.props;
+        const sortedGroups = this._sortGroups(groups);
 
         let listFeedGroups = [];
-        groups.map((group)=>{
+        sortedGroups.map((group)=>{
             const groupBlock = <div key={group._id} >
                                    <GroupItem group={group} editGroup={this._handleEditGroup}/>
                                </div>;
@@ -72,8 +102,11 @@ class LeftMenu extends Component {
         return(
             <div>
                 <div>
-                    <AddFeedModal />
-                    <ButtonBar openEditGroupModal={this._handleEditGroup}/>
+                    <FeedEditorModal />
+                    <ButtonBar 
+                        openEditGroupModal={this._handleEditGroup}
+                        openEditFeedModal={this._handleEditFeed}
+                    />
                     <GroupEditorModal 
                         isModalOpen={editGroupModalOpen}
                         onCloseModal={this._handleCloseEditGroupModal}

@@ -20,8 +20,7 @@ const INITIAL_STATE = {
     formError: ""
 };
 
-
-class AddFeedModal extends Component {
+class FeedEditorModal extends Component {
     constructor(props){
         super(props);
 
@@ -294,4 +293,4 @@ const mapDispatchToProps = (dispatch)=>{
         beginAddFeed: (feedInfo)=>dispatch(beginAddFeed(feedInfo))
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(AddFeedModal);
+export default connect(mapStateToProps, mapDispatchToProps)(FeedEditorModal);
