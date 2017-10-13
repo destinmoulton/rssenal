@@ -11,7 +11,7 @@ import ButtonBar from "./ButtonBar";
 import GroupEditorModal from "../Modals/GroupEditorModal";
 import GroupItem from "./GroupItem";
 
-class ListFeedGroups extends Component {
+class LeftMenu extends Component {
     constructor(props){
         super(props);
 
@@ -104,4 +104,4 @@ const mapDispatchToProps = (dispatch)=>{
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListFeedGroups);
+export default connect(mapStateToProps, mapDispatchToProps)(LeftMenu);

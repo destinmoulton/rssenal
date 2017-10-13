@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Grid, Menu, Segment } from "semantic-ui-react";
 
 import EntriesList from "./Entries/EntriesList";
-import ListFeedGroups from "./ListFeedGroups/ListFeedGroups";
+import LeftMenu from "./LeftMenu/LeftMenu";
 
 class RSSEnal extends Component {
 
@@ -32,7 +32,7 @@ class RSSEnal extends Component {
         return (
             <div>
                 <div className="rss-body-left-container">
-                    <ListFeedGroups
+                    <LeftMenu
                         onFilterChange={this._handleChangeEntriesFilter}
                     />
                 </div>
