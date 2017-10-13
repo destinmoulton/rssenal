@@ -50,10 +50,15 @@ function fetchingComplete(data){
     }
 }
 
-export function beginAddFeedGroup(newGroupName){
+export function beginSaveFeedGroup(groupInfo){
     return (dispatch)=>{
-        dispatch(addingInProgress());
-        dispatch(addFeedGroup(newGroupName));
+        if(groupInfo._id !== ""){
+            dispatch(updatingInProgress());
+            dispatch(updateFeedGroup(groupInfo._id, groupInfo.name));
+        } else {
+            dispatch(addingInProgress());
+            dispatch(addFeedGroup(groupInfo.name));
+        }
     }
 }
 
@@ -91,17 +96,9 @@ function addingFeedGroupComplete(group){
     };
 }
 
-export function beginSaveFeedGroup(groupId, newGroupName){
-    return (dispatch)=>{
-        dispatch(updatingInProgress(groupId));
-        dispatch(updateFeedGroup(groupId, newGroupName));
-    };
-}
-
-function updatingInProgress(groupId){
+function updatingInProgress(){
     return {
-        type: FEEDGROUPS_UPDATE_BEGIN,
-        groupId
+        type: FEEDGROUPS_UPDATE_BEGIN
     };
 }
 
