@@ -43,7 +43,8 @@ class SelectFeedGroup extends Component {
             };
         }).toArray();
 
-        groupOptions.unshift({key: "0", value: "0", text:"Uncategorized"});
+        // Put "Uncategorized" first
+        groupOptions.unshift(groupOptions.pop());
         
         return (
             <Dropdown 
