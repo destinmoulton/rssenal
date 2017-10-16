@@ -4,7 +4,9 @@ import {
     FEEDS_ADD_COMPLETE,
     FEEDS_DELETE_BEGIN,
     FEEDS_DELETE_COMPLETE,
-    FEEDS_GETALL_COMPLETE
+    FEEDS_GETALL_COMPLETE,
+    FEEDS_UPDATE_BEGIN,
+    FEEDS_UPDATE_COMPLETE
 } from "../actiontypes";
 
 import {
@@ -142,7 +144,7 @@ function updateFeed(feedInfo){
         const url = API_FEEDS_BASE + feedInfo._id;
         const init = {
             method: "PUT",
-            body: JSON.stringify({...feedInfo}),
+            body: JSON.stringify({title: feedInfo.title, feedgroup_id: feedInfo.feedgroup_id}),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
