@@ -6,7 +6,8 @@ import { Dropdown } from "semantic-ui-react";
 
 class SelectFeedGroup extends Component {
     static propTypes = {
-        onChange: PropTypes.func.isRequired
+        onChange: PropTypes.func.isRequired,
+        selectedValue: PropTypes.string
     }
 
     constructor(props){
@@ -17,6 +18,14 @@ class SelectFeedGroup extends Component {
         }
 
         this._handleOnChange = this._handleOnChange.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.hasOwnProperty("selectedValue")){
+            this.setState({
+                selectedValue: nextProps.selectedValue
+            });
+        }
     }
 
     _handleOnChange(e, dropdown){
