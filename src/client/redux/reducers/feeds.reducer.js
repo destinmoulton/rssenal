@@ -51,11 +51,13 @@ function feedsReducer(state = INITIAL_STATE, action){
         case FEEDS_UPDATE_COMPLETE:{
             const { feeds } = state;
 
-            const feedIndex = feeds.indexOf((feed)=> feed._id === action.feed._id);
+            const feedIndex = feeds.findIndex((feed)=> {return feed._id === action.feed._id});
+
             const newFeeds = feeds.splice(feedIndex, 1, action.feed).sort(sortFeeds);
             return {
                 ...state,
-                feeds: newFeeds
+                feeds: newFeeds,
+                isUpdatingFeed: false
             }
         }
         default:
