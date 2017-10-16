@@ -21,5 +21,5 @@ router.post('/', _Feeds2.default.add);
 
 router.get('/:feedId', _Feeds2.default.get_single);
 router.delete('/:feedId', _Feeds2.default.delete_single);
-
+router.put('/:feedId', _Feeds2.default.update_single);
 exports.default = router;
