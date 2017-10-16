@@ -31,4 +31,6 @@ const EntrySchema = mongoose.Schema({
     }
 });
 
+EntrySchema.index({title: "text", content: "text"});
+
 export default mongoose.model("Entries", EntrySchema);

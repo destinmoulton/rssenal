@@ -41,4 +41,6 @@ var EntrySchema = _mongoose2.default.Schema({
     }
 });
 
+EntrySchema.index({ title: "text", content: "text" });
+
 exports.default = _mongoose2.default.model("Entries", EntrySchema);
