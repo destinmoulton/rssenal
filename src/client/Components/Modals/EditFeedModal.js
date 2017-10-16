@@ -25,12 +25,14 @@ class EditFeedModal extends Component {
         this._handleSave = this._handleSave.bind(this);
         this._handleInputKeyPress = this._handleInputKeyPress.bind(this);
         this._handleInputOnChange = this._handleInputOnChange.bind(this);
+        this._handleSelectGroupChange = this._handleSelectGroupChange.bind(this);
     }
 
     componentWillReceiveProps(nextProps){
         if(this.props.isUpdatingFeed && !nextProps.isUpdatingFeed){
             this._handleClose();
         }
+
         this.setState({
             newFeed: nextProps.feed
         });
@@ -48,7 +50,7 @@ class EditFeedModal extends Component {
         const { newFeed } = this.state;
 
         if(newFeed.name !== ""){
-            this.props.beginSaveFeed(newFeed);
+            this.props.beginUpdateFeed(newFeed);
         }
     }
 
@@ -60,7 +62,16 @@ class EditFeedModal extends Component {
 
     _handleInputOnChange(e){
         const { newFeed } = this.state;
-        newFeed.name = e.target.value;
+        newFeed.title = e.target.value;
+        this.setState({
+            newFeed
+        });
+    }
+
+    _handleSelectGroupChange(feedgroupId){
+        const { newFeed } = this.state;
+        newFeed.feedgroup_id = feedgroupId;
+        
         this.setState({
             newFeed
         });
@@ -69,18 +80,25 @@ class EditFeedModal extends Component {
     _buildEditInput(){
         const { newFeed } = this.state;
         const { isUpdatingFeed } = this.props;
-
+        
         return (
             <div>
-                <input
-                    autoFocus
-                    value={newFeed.name}
-                    placeholder="Feed name..."
-                    onKeyPress={this._handleInputKeyPress}
-                    onChange={this._handleInputOnChange}
-                    disabled={isUpdatingFeed}
-                />
-                < SelectFeedGroup selectedValue={newFeed.feedgroup_id}/>
+                <div>
+                    <input
+                        autoFocus
+                        value={newFeed.title}
+                        placeholder="Feed name..."
+                        onKeyPress={this._handleInputKeyPress}
+                        onChange={this._handleInputOnChange}
+                        disabled={isUpdatingFeed}
+                        className="rss-editfeed-input"
+                    />
+                </div>
+                <div>
+                    <SelectFeedGroup
+                        selectedValue={newFeed.feedgroup_id} 
+                        onChange={this._handleSelectGroupChange}/>
+                </div>
             </div>
         )
     }
@@ -119,7 +137,7 @@ class EditFeedModal extends Component {
     }
 
     render() {
-        const { feed, isModalOpen } = this.props;
+        const { isModalOpen } = this.props;
         const form = this._buildEditInput();
 
         const buttons = this._buildButtons();
