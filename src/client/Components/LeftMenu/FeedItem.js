@@ -52,10 +52,18 @@ class FeedItem extends Component {
 
     _buildOptions(){
         return (
-            <Icon  
-                name="trash"
-                color="red"
-                onClick={this._handleClickDelete}/>
+            <span>
+                <Icon 
+                    name="pencil"
+                    color="green" 
+                    onClick={this._handleClickEdit}
+                />
+                <Icon  
+                    name="trash"
+                    color="red"
+                    onClick={this._handleClickDelete}
+                />
+            </span>
         );
     }
 
