@@ -56,6 +56,36 @@ class FeedsController {
         });
         
     }
+
+    update_single(req, res){
+        Entries.findById(req.params.feedId, (err, feed)=>{
+            if(err) {
+                res.json({
+                    status: "error",
+                    error: "Unable to find that feed to update."
+                });
+            } else {
+                let newFeed = req.body;
+                feed.title = newFeed.title;
+                feed.feedgroup_id = newFeed.feedgroup_id;
+                feed.save((err, feedInfo)=>{
+                    if(err) {
+                        res.json({
+                            status: "error",
+                            error: "Unable to save the new feed information."
+                        });
+                    } else {
+                        const data = {
+                            status: "success",
+                            feedInfo
+                        };
+                        res.json(data);
+                    }
+                });
+                
+            }
+        });
+    }
 }
 
 export default new FeedsController();

@@ -78,6 +78,36 @@ var FeedsController = function () {
                 });
             });
         }
+    }, {
+        key: "update_single",
+        value: function update_single(req, res) {
+            _Entries2.default.findById(req.params.feedId, function (err, feed) {
+                if (err) {
+                    res.json({
+                        status: "error",
+                        error: "Unable to find that feed to update."
+                    });
+                } else {
+                    var newFeed = req.body;
+                    feed.title = newFeed.title;
+                    feed.feedgroup_id = newFeed.feedgroup_id;
+                    feed.save(function (err, feedInfo) {
+                        if (err) {
+                            res.json({
+                                status: "error",
+                                error: "Unable to save the new feed information."
+                            });
+                        } else {
+                            var data = {
+                                status: "success",
+                                feedInfo: feedInfo
+                            };
+                            res.json(data);
+                        }
+                    });
+                }
+            });
+        }
     }]);
 
     return FeedsController;
