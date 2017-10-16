@@ -44,7 +44,7 @@ class AddFeedModal extends Component {
         if(this.props.isAddingFeed && !nextProps.isAddingFeed){
             // The feed was added so reset the state 
             // and thus close the modal
-            this.setState(INITIAL_STATE);
+            this._handleClose();
         }
     }
 
@@ -67,12 +67,7 @@ class AddFeedModal extends Component {
     }
 
     _handleClose(){
-        this.setState({
-            display: DISPLAY_FORM,
-            feedInfo: {},
-            feedGroupId: "0",
-            isValidatingURL: false
-        });
+        this.setState(INITIAL_STATE);
 
         this.props.onCloseModal();
     }
