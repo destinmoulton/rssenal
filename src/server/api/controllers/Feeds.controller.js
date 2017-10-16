@@ -58,16 +58,15 @@ class FeedsController {
     }
 
     update_single(req, res){
-        Entries.findById(req.params.feedId, (err, feed)=>{
-            if(err) {
+        Feeds.findById(req.params.feedId, (err, feed)=>{
+            if(err || feed.length===0) {
                 res.json({
                     status: "error",
                     error: "Unable to find that feed to update."
                 });
             } else {
-                let newFeed = req.body;
-                feed.title = newFeed.title;
-                feed.feedgroup_id = newFeed.feedgroup_id;
+                feed.title = req.body.title;
+                feed.feedgroup_id = req.body.feedgroup_id;
                 feed.save((err, feedInfo)=>{
                     if(err) {
                         res.json({
