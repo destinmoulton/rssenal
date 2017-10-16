@@ -123,3 +123,49 @@ function deleteFeedComplete(feedId){
         feedId
     }
 }
+
+export function beginUpdateFeed(feedInfo){
+    return (dispatch)=>{
+        dispatch(beginUpdateFeedProcess());
+        dispatch(updateFeed(feedInfo));
+    }
+}
+
+function beginUpdateFeedProcess(){
+    return {
+        type: FEEDS_UPDATE_BEGIN
+    }
+}
+
+function updateFeed(feedInfo){
+    return (dispatch)=>{
+        const url = API_FEEDS_BASE + feedInfo._id;
+        const init = {
+            method: "PUT",
+            body: JSON.stringify({...feedInfo}),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }
+
+        fetch(url, init)
+            .then((res)=>{
+                return res.json();
+            })
+            .then((feedObj)=>{
+                if(feedObj.status === "error"){
+                    console.error(feedObj.error);
+                } else if(feedObj.status === "success"){
+                    dispatch(updateFeedComplete(feedObj.feedInfo));
+                }
+            })
+    }
+}
+
+function updateFeedComplete(feed){
+    return {
+        type: FEEDS_UPDATE_COMPLETE,
+        feed
+    }
+}

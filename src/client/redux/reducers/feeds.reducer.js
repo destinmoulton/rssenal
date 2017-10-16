@@ -3,13 +3,16 @@ import { List } from "immutable";
 import {
     FEEDS_ADD_BEGIN,
     FEEDS_ADD_COMPLETE,
-    FEEDS_GETALL_COMPLETE
+    FEEDS_GETALL_COMPLETE,
+    FEEDS_UPDATE_BEGIN,
+    FEEDS_UPDATE_COMPLETE
 } from "../actiontypes";
 
 
 const INITIAL_STATE = {
     feeds: List(),
-    isAddingFeed: false
+    isAddingFeed: false,
+    isUpdatingFeed: false
 }
 
 function sortFeeds(a, b){
@@ -38,6 +41,21 @@ function feedsReducer(state = INITIAL_STATE, action){
             return {
                 ...state,
                 feeds
+            }
+        }
+        case FEEDS_UPDATE_BEGIN:
+            return {
+                ...state,
+                isUpdatingFeed: true
+            }
+        case FEEDS_UPDATE_COMPLETE:{
+            const { feeds } = state;
+
+            const feedIndex = feeds.indexOf((feed)=> feed._id === action.feed._id);
+            const newFeeds = feeds.splice(feedIndex, 1, action.feed).sort(sortFeeds);
+            return {
+                ...state,
+                feeds: newFeeds
             }
         }
         default:

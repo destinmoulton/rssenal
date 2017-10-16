@@ -115,8 +115,6 @@ class GroupItem extends Component {
             optionsAreVisible
         } = this.state;
 
-        
-
         let toggleFeedsIcon = "";
         let listFeeds = "";
         let title = "";
@@ -134,7 +132,6 @@ class GroupItem extends Component {
         if(optionsAreVisible){
             options = this._buildOptionButtons();
         }
-
 
         return (
             <div>
