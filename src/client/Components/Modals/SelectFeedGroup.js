@@ -10,11 +10,15 @@ class SelectFeedGroup extends Component {
         selectedValue: PropTypes.string
     }
 
+    static defaultProps = {
+        selectedValue: "0"
+    }
+
     constructor(props){
         super(props);
 
         this.state = {
-            selectedValue: "0"
+            selectedValue: props.selectedValue
         }
 
         this._handleOnChange = this._handleOnChange.bind(this);
