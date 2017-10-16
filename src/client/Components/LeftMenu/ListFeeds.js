@@ -5,17 +5,22 @@ import { connect } from "react-redux";
 import FeedItem from "./FeedItem";
 class ListFeeds extends Component {
     static propTypes = {
+        editFeed: PropTypes.func.isRequired,
         groupId: PropTypes.string.isRequired
     };
 
     render() {
-        const { feeds, groupId } = this.props;
+        const {
+            editFeed,
+            feeds,
+            groupId
+        } = this.props;
 
         const feedList = [];
         const groupFeeds = feeds.filter((feed)=>{
             return (feed.feedgroup_id === groupId);
         }).map((feed)=>{
-            const item = <FeedItem key={feed._id} feed={feed}/>;
+            const item = <FeedItem key={feed._id} feed={feed} editFeed={editFeed}/>;
             feedList.push(item);
         });
         
