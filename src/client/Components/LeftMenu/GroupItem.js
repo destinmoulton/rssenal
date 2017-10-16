@@ -11,6 +11,7 @@ import { changeFilter } from "../../redux/actions/filter.actions";
 
 class GroupItem extends Component {
     static propTypes = {
+        editFeed: PropTypes.func.isRequired,
         editGroup: PropTypes.func.isRequired,
         group: PropTypes.object.isRequired
     };
@@ -106,6 +107,7 @@ class GroupItem extends Component {
 
     render(){
         const {
+            editFeed,
             group,
             updatingFeedGroups
         } = this.props;
@@ -123,7 +125,7 @@ class GroupItem extends Component {
         let toggleFeedsIconClass = "caret right";
         if(feedsAreVisible){
             toggleFeedsIconClass = "caret down";
-            listFeeds = <ListFeeds groupId={group._id} />;
+            listFeeds = <ListFeeds groupId={group._id} editFeed={editFeed}/>;
         }
         toggleFeedsIcon = <Icon name={toggleFeedsIconClass} onClick={this._handleToggleFeedsVisible}/>;
 
