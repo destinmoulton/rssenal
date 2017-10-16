@@ -43,7 +43,9 @@ span.rss-feedgroups-groupitem-title-active {
 span.rss-feedgroups-groupitem-options {
     width: 100%;
 }
-
+input.rss-editfeed-input{
+    width: 100%;
+}
 div.rss-entry-container {
     border-top: 1px solid #B3B3B3;
     padding: 3px;
