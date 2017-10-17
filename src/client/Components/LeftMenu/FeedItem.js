@@ -84,7 +84,12 @@ class FeedItem extends Component {
         if(filter.limit === "feed" && filter.id === feed._id){
             className = "rss-feedgroups-feeditem-title-active"
         }
-        let title = <span onClick={this._handleClickTitle} className={className}>{feed.title}</span>;
+
+        let unreadEntriesCount = "";
+        if(feed.hasOwnProperty("unread_count") && feed.unread_count > 0){
+            unreadEntriesCount = " [" + feed.unread_count + "]";
+        }
+        let title = <span onClick={this._handleClickTitle} className={className}>{feed.title}{unreadEntriesCount}</span>;
 
         let options = "";
         if(isOptionsVisible){
