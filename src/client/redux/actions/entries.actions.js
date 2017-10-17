@@ -10,6 +10,8 @@ import {
     API_ENTRIES_BASE
 } from "../apiendpoints";
 
+import { feedsSetAllUnreadCount } from "./feeds.actions";
+
 export function beginUpdateAndGetEntries(){
     return (dispatch)=>{
         dispatch(beginUpdateProcess());
@@ -70,6 +72,7 @@ function getEntries(){
             })
             .then((resObj)=>{
                 dispatch(getEntriesComplete(resObj.entries));
+                dispatch(entriesUpdateUnreadCount(resObj.entries));
             })
     }
 }
@@ -81,3 +84,9 @@ function getEntriesComplete(entries){
     }
 }
 
+function entriesUpdateUnreadCount(entries){
+    return (dispatch, getState)=>{
+        const state = getState();
+        dispatch(feedsSetAllUnreadCount(entries));
+    }
+}
