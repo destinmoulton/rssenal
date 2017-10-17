@@ -11,6 +11,7 @@ import {
 } from "../apiendpoints";
 
 import { feedsSetAllUnreadCount } from "./feeds.actions";
+import { feedgroupsSetAllUnreadCount } from "./feedgroups.actions";
 
 export function beginUpdateAndGetEntries(){
     return (dispatch)=>{
@@ -85,8 +86,8 @@ function getEntriesComplete(entries){
 }
 
 function entriesUpdateUnreadCount(entries){
-    return (dispatch, getState)=>{
-        const state = getState();
+    return (dispatch)=>{
         dispatch(feedsSetAllUnreadCount(entries));
+        dispatch(feedgroupsSetAllUnreadCount());
     }
 }

@@ -5,6 +5,7 @@ import {
     FEEDGROUPS_ADD_COMPLETE,
     FEEDGROUPS_DELETE_BEGIN,
     FEEDGROUPS_DELETE_COMPLETE,
+    FEEDGROUPS_SETALL_UNREAD_COUNT,
     FEEDGROUPS_UPDATE_BEGIN,
     FEEDGROUPS_UPDATE_COMPLETE
 } from "../actiontypes";
@@ -169,3 +170,16 @@ function deleteComplete(groupId){
     }
 }
 
+export function feedgroupsSetAllUnreadCount(){
+    return (dispatch, getState)=>{
+        const state = getState();
+        dispatch(setAllUnreadCount(state.feeds.feeds));
+    }
+}
+
+function setAllUnreadCount(feeds){
+    return {
+        type: FEEDGROUPS_SETALL_UNREAD_COUNT,
+        feeds
+    }
+}

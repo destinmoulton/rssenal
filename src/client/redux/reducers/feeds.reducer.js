@@ -47,10 +47,12 @@ function feedsReducer(state = INITIAL_STATE, action){
         case FEEDS_SETALL_UNREAD_COUNT:{
             let feedCounter = {};
             action.entries.map((entry)=>{
-                if(feedCounter.hasOwnProperty(entry.feed_id)){
-                    feedCounter[entry.feed_id] = feedCounter[entry.feed_id] + 1;
-                } else {
-                    feedCounter[entry.feed_id] = 1;
+                if(!entry.has_read){
+                    if(feedCounter.hasOwnProperty(entry.feed_id)){
+                        feedCounter[entry.feed_id] = feedCounter[entry.feed_id] + 1;
+                    } else {
+                        feedCounter[entry.feed_id] = 1;
+                    }
                 }
             });
 

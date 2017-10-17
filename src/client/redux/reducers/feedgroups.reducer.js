@@ -7,6 +7,7 @@ import {
     FEEDGROUPS_ADD_COMPLETE,
     FEEDGROUPS_DELETE_BEGIN,
     FEEDGROUPS_DELETE_COMPLETE,
+    FEEDGROUPS_SETALL_UNREAD_COUNT,
     FEEDGROUPS_UPDATE_BEGIN,
     FEEDGROUPS_UPDATE_COMPLETE
 } from "../actiontypes";
@@ -70,6 +71,30 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
                 groups,
                 isDeletingFeedGroup: false
             }
+        case FEEDGROUPS_SETALL_UNREAD_COUNT:{
+            const feedsCount = {};
+            action.feeds.map((feed)=>{
+                if(!feedsCount.hasOwnProperty(feed.feedgroup_id)){
+                    feedsCount[feed.feedgroup_id] = feed.unread_count;
+                } else {
+                    feedsCount[feed.feedgroup_id] += feed.unread_count;
+                }
+            });
+            
+            const newFeedgroups = state.groups.map((feedgroup)=>{
+                let newFeedgroup = Object.assign({}, feedgroup);
+                newFeedgroup.unread_count = 0;
+
+                if(feedsCount.hasOwnProperty(feedgroup._id)){
+                    newFeedgroup.unread_count = feedsCount[feedgroup._id];
+                }
+                return newFeedgroup
+            });
+            return {
+                ...state,
+                groups: newFeedgroups
+            }
+        }
         case FEEDGROUPS_UPDATE_BEGIN: {
             return {
                 ...state,

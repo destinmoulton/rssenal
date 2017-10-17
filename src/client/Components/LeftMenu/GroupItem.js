@@ -100,8 +100,12 @@ class GroupItem extends Component {
             className = "rss-feedgroups-groupitem-title-active";
         }
 
+        let unread = "";
+        if(group.hasOwnProperty("unread_count") && group.unread_count > 0){
+            unread = " [" + group.unread_count + "]";
+        }
         return (
-            <span className={className} onClick={this._handleClickGroupTitle}>{group.name}</span>
+            <span className={className} onClick={this._handleClickGroupTitle}>{group.name}{unread}</span>
         );
     }
 
