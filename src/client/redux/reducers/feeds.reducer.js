@@ -4,6 +4,7 @@ import {
     FEEDS_ADD_BEGIN,
     FEEDS_ADD_COMPLETE,
     FEEDS_GETALL_COMPLETE,
+    FEEDS_SETALL_UNREAD_COUNT,
     FEEDS_UPDATE_BEGIN,
     FEEDS_UPDATE_COMPLETE
 } from "../actiontypes";
@@ -41,6 +42,30 @@ function feedsReducer(state = INITIAL_STATE, action){
             return {
                 ...state,
                 feeds
+            }
+        }
+        case FEEDS_SETALL_UNREAD_COUNT:{
+            let feedCounter = {};
+            action.entries.map((entry)=>{
+                if(feedCounter.hasOwnProperty(entry.feed_id)){
+                    feedCounter[entry.feed_id] = feedCounter[entry.feed_id] + 1;
+                } else {
+                    feedCounter[entry.feed_id] = 1;
+                }
+            });
+
+            const countedFeeds = state.feeds.map((feed)=>{
+                let newFeed = Object.assign({}, feed);
+                newFeed.unread_count = 0;
+                if(feedCounter.hasOwnProperty(feed._id)){
+                    newFeed.unread_count = feedCounter[feed._id];
+                }
+                return newFeed;
+            });
+
+            return {
+                ...state,
+                feeds: countedFeeds
             }
         }
         case FEEDS_UPDATE_BEGIN:
