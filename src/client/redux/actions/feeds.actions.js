@@ -5,6 +5,7 @@ import {
     FEEDS_DELETE_BEGIN,
     FEEDS_DELETE_COMPLETE,
     FEEDS_GETALL_COMPLETE,
+    FEEDS_SETALL_UNREAD_COUNT,
     FEEDS_UPDATE_BEGIN,
     FEEDS_UPDATE_COMPLETE
 } from "../actiontypes";
@@ -169,5 +170,12 @@ function updateFeedComplete(feed){
     return {
         type: FEEDS_UPDATE_COMPLETE,
         feed
+    }
+}
+
+export function feedsSetAllUnreadCount(entries){
+    return {
+        type: FEEDS_SETALL_UNREAD_COUNT,
+        entries
     }
 }
