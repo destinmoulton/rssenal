@@ -3,6 +3,7 @@ import {
     FEEDGROUPS_RECEIVED,
     FEEDGROUPS_ADD_BEGIN,
     FEEDGROUPS_ADD_COMPLETE,
+    FEEDGROUPS_DECREMENT_UNREAD,
     FEEDGROUPS_DELETE_BEGIN,
     FEEDGROUPS_DELETE_COMPLETE,
     FEEDGROUPS_SETALL_UNREAD_COUNT,
@@ -181,5 +182,12 @@ function setAllUnreadCount(feeds){
     return {
         type: FEEDGROUPS_SETALL_UNREAD_COUNT,
         feeds
+    }
+}
+
+export function feedgroupsDecrementUnread(groupId){
+    return {
+        type: FEEDGROUPS_DECREMENT_UNREAD,
+        groupId
     }
 }
