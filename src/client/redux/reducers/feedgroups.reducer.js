@@ -5,6 +5,7 @@ import {
     FEEDGROUPS_RECEIVED,
     FEEDGROUPS_ADD_BEGIN,
     FEEDGROUPS_ADD_COMPLETE,
+    FEEDGROUPS_DECREMENT_UNREAD,
     FEEDGROUPS_DELETE_BEGIN,
     FEEDGROUPS_DELETE_COMPLETE,
     FEEDGROUPS_SETALL_UNREAD_COUNT,
@@ -53,6 +54,21 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
                 ...state,
                 groups,
                 isSavingFeedGroup: false
+            }
+        }
+        case FEEDGROUPS_DECREMENT_UNREAD:{
+            const groupIndex = state.groups.findIndex((group)=>{
+                return group._id === action.groupId;
+            });
+
+            const feedgroup = state.groups.get(groupIndex);
+            feedgroup.unread_count -= 1;
+
+            const newFeedgroups = state.groups.splice(groupIndex, 1, feedgroup);
+
+            return {
+                ...state,
+                groups: newFeedgroups
             }
         }
         case FEEDGROUPS_DELETE_BEGIN: 
