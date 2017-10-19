@@ -10,8 +10,8 @@ import {
     API_ENTRIES_BASE
 } from "../apiendpoints";
 
-import { feedsSetAllUnreadCount } from "./feeds.actions";
-import { feedgroupsSetAllUnreadCount } from "./feedgroups.actions";
+import { feedsDecrementUnread, feedsSetAllUnreadCount } from "./feeds.actions";
+import { feedgroupsDecrementUnread, feedgroupsSetAllUnreadCount } from "./feedgroups.actions";
 
 export function beginUpdateAndGetEntries(){
     return (dispatch)=>{
@@ -89,5 +89,12 @@ function entriesUpdateUnreadCount(entries){
     return (dispatch)=>{
         dispatch(feedsSetAllUnreadCount(entries));
         dispatch(feedgroupsSetAllUnreadCount());
+    }
+}
+
+export function entryMarkRead(feedId, groupId){
+    return (dispatch)=>{
+        dispatch(feedsDecrementUnread(feedId));
+        dispatch(feedgroupsDecrementUnread(groupId));
     }
 }
