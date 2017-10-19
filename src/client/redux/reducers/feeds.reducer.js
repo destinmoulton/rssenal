@@ -1,4 +1,4 @@
-import { List } from "immutable";
+import { OrderedMap } from "immutable";
 
 import {
     FEEDS_ADD_BEGIN,
@@ -11,7 +11,7 @@ import {
 
 
 const INITIAL_STATE = {
-    feeds: List(),
+    feeds: OrderedMap(),
     isAddingFeed: false,
     isUpdatingFeed: false
 }
@@ -38,10 +38,13 @@ function feedsReducer(state = INITIAL_STATE, action){
             }
         }
         case FEEDS_GETALL_COMPLETE:{
-            const feeds = List(action.feeds);
+            const arrayMap = action.feeds.map((feed)=>{
+                return [feed._id, feed];
+            });
+            const mappedFeeds = OrderedMap(arrayMap);
             return {
                 ...state,
-                feeds
+                feeds: mappedFeeds
             }
         }
         case FEEDS_SETALL_UNREAD_COUNT:{
@@ -78,9 +81,7 @@ function feedsReducer(state = INITIAL_STATE, action){
         case FEEDS_UPDATE_COMPLETE:{
             const { feeds } = state;
 
-            const feedIndex = feeds.findIndex((feed)=> {return feed._id === action.feed._id});
-
-            const newFeeds = feeds.splice(feedIndex, 1, action.feed).sort(sortFeeds);
+            const newFeeds = feeds.set(action.feed._id, action.feed).sort(sortFeeds);
             return {
                 ...state,
                 feeds: newFeeds,
