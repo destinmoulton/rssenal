@@ -1,4 +1,4 @@
-import { List } from "immutable";
+import { OrderedMap } from "immutable";
 
 import { 
     FEEDGROUPS_FETCHING,
@@ -14,7 +14,7 @@ import {
 } from "../actiontypes";
 
 const INITIAL_STATE = {
-    groups: List(),
+    groups: OrderedMap(),
     hasFeedGroups: false,
     isDeletingFeedGroup: false,
     isFetchingFeedGroups: false,
@@ -35,8 +35,11 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
                 isFetchingFeedGroups: true
             }
         case FEEDGROUPS_RECEIVED:
-            const freshGroups = List(action.groups);
-            const fullGroups = freshGroups.concat(UNCATEGORIZED_FEEDGROUP);
+            const arrayMap = action.groups.map((group)=>{
+                return [group._id, group];
+            });
+            const mappedGroups = OrderedMap(arrayMap);
+            const fullGroups = mappedGroups.set(UNCATEGORIZED_FEEDGROUP._id, UNCATEGORIZED_FEEDGROUP);
 
             return {
                 ...state,
@@ -49,7 +52,7 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
                 isSavingFeedGroup: true
             }
         case FEEDGROUPS_ADD_COMPLETE: {
-            const groups = state.groups.push(action.group);
+            const groups = state.groups.set(action.group._id, action.group);
             return {
                 ...state,
                 groups,
@@ -57,14 +60,10 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
             }
         }
         case FEEDGROUPS_DECREMENT_UNREAD:{
-            const groupIndex = state.groups.findIndex((group)=>{
-                return group._id === action.groupId;
-            });
-
-            const feedgroup = state.groups.get(groupIndex);
+            const feedgroup = state.groups.get(action.groupId);
             feedgroup.unread_count -= 1;
 
-            const newFeedgroups = state.groups.splice(groupIndex, 1, feedgroup);
+            const newFeedgroups = state.groups.set(action.groupId, feedgroup);
 
             return {
                 ...state,
@@ -76,17 +75,14 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
                 ...state,
                 isDeletingFeedGroup: true
             }
-        case FEEDGROUPS_DELETE_COMPLETE: 
-            const groupIndex = state.groups.findIndex((group)=>{
-                return group._id === action.groupId;
-            });
-
-            const groups = state.groups.delete(groupIndex);
+        case FEEDGROUPS_DELETE_COMPLETE: {
+            const groups = state.groups.delete(action.groupId);
             return {
                 ...state,
                 groups,
                 isDeletingFeedGroup: false
             }
+        }
         case FEEDGROUPS_SETALL_UNREAD_COUNT:{
             const feedsCount = {};
             action.feeds.map((feed)=>{
@@ -118,11 +114,7 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
             }
         }
         case FEEDGROUPS_UPDATE_COMPLETE: {
-            const groupIndex = state.groups.findIndex((group)=>{
-                return group._id === action.group._id;
-            });
-
-            const groups = state.groups.update(groupIndex, val => action.group);
+            const groups = state.groups.set(action.group._id, action.group);
             
             return {
                 ...state,
