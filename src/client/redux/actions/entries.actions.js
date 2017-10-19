@@ -38,8 +38,12 @@ function getEntries(){
                 return res.json();
             })
             .then((resObj)=>{
-                dispatch(getEntriesComplete(resObj.entries));
-                dispatch(entriesUpdateUnreadCount(resObj.entries));
+                if(resObj.status === "error"){
+                    console.error(resObj.error);
+                } else {
+                    dispatch(getEntriesComplete(resObj.entries));
+                    dispatch(entriesUpdateUnreadCount(resObj.entries));
+                }
             })
     }
 }

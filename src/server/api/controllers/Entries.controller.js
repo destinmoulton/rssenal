@@ -6,13 +6,14 @@ import Feeds from "../models/Feeds.model";
 
 
 class EntriesController {
+
     getAll(req, res){
         try {
             this._updateAllFeeds();
         } catch(e){
             return res.json({
                 status: "error",
-                error: "Unable to update all feeds."
+                error: "Unable to update all feeds." + e.message
             })
         }
 
@@ -66,7 +67,7 @@ class EntriesController {
 
         Feeds.find({}, (err, feeds)=>{
             if(err) {
-                throw new Error("Feeds not found");
+                throw new Error(err);
             }
 
             feeds.forEach((feed)=>{

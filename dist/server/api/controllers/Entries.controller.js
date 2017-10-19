@@ -37,7 +37,7 @@ var EntriesController = function () {
             } catch (e) {
                 return res.json({
                     status: "error",
-                    error: "Unable to update all feeds."
+                    error: "Unable to update all feeds." + e.message
                 });
             }
 
@@ -91,7 +91,7 @@ var EntriesController = function () {
 
             _Feeds2.default.find({}, function (err, feeds) {
                 if (err) {
-                    throw new Error("Feeds not found");
+                    throw new Error(err);
                 }
 
                 feeds.forEach(function (feed) {

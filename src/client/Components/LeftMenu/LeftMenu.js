@@ -2,7 +2,7 @@
 import React, {Component} from "react";
 import { connect } from "react-redux";
 
-import { beginUpdateAndGetEntries } from "../../redux/actions/entries.actions";
+import { beginGetEntries } from "../../redux/actions/entries.actions";
 import { getAllFeedGroups } from "../../redux/actions/feedgroups.actions";
 import { getAllFeeds } from "../../redux/actions/feeds.actions";
 
@@ -35,7 +35,7 @@ class LeftMenu extends Component {
 
     componentWillMount(){
         const { 
-            beginUpdateAndGetEntries,
+            beginGetEntries,
             getAllFeedGroups,
             getAllFeeds,
             hasFeedGroups
@@ -44,7 +44,7 @@ class LeftMenu extends Component {
         if(!hasFeedGroups){
             getAllFeedGroups();
             getAllFeeds();
-            beginUpdateAndGetEntries();
+            beginGetEntries();
         }
     }
 
@@ -164,7 +164,7 @@ const mapStateToProps = (state) =>{
 
 const mapDispatchToProps = (dispatch)=>{
     return {
-        beginUpdateAndGetEntries: ()=>dispatch(beginUpdateAndGetEntries()),
+        beginGetEntries: ()=>dispatch(beginGetEntries()),
         getAllFeedGroups: ()=>dispatch(getAllFeedGroups()),
         getAllFeeds: ()=>dispatch(getAllFeeds())
     }
