@@ -2,6 +2,7 @@
 import {
     FEEDS_ADD_BEGIN,
     FEEDS_ADD_COMPLETE,
+    FEEDS_DECREMENT_UNREAD,
     FEEDS_DELETE_BEGIN,
     FEEDS_DELETE_COMPLETE,
     FEEDS_GETALL_COMPLETE,
@@ -177,5 +178,12 @@ export function feedsSetAllUnreadCount(entries){
     return {
         type: FEEDS_SETALL_UNREAD_COUNT,
         entries
+    }
+}
+
+export function feedsDecrementUnreadCount(feedId){
+    return {
+        type: FEEDS_DECREMENT_UNREAD,
+        feedId
     }
 }
