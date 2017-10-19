@@ -13,40 +13,6 @@ import {
 import { feedsDecrementUnread, feedsSetAllUnreadCount } from "./feeds.actions";
 import { feedgroupsDecrementUnread, feedgroupsSetAllUnreadCount } from "./feedgroups.actions";
 
-export function beginUpdateAndGetEntries(){
-    return (dispatch)=>{
-        dispatch(beginUpdateProcess());
-        dispatch(updateEntries());
-    };
-}
-
-function beginUpdateProcess(){
-    return {
-        type: ENTRIES_UPDATE_BEGIN
-    }
-}
-
-function updateEntries(){
-    return (dispatch)=>{
-        const url = API_ENTRIES_BASE;
-        const init = {
-            method: "PUT",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }            
-        };
-
-        fetch(url, init)
-            .then((res)=>{
-                return res.json();
-            })
-            .then((resObj)=>{
-                dispatch(beginGetEntries());
-            })
-    }
-}
-
 export function beginGetEntries(){
     return (dispatch)=>{
         dispatch(beginGetProcess());
