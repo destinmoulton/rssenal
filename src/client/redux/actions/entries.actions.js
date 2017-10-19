@@ -27,7 +27,7 @@ function beginGetProcess(){
 }
 
 function getEntries(){
-    return (dispatch)=>{
+    return (dispatch, getState)=>{
         const url = API_ENTRIES_BASE;
         const init = {
             method: "GET"
@@ -41,8 +41,9 @@ function getEntries(){
                 if(resObj.status === "error"){
                     console.error(resObj.error);
                 } else {
-                    dispatch(getEntriesComplete(resObj.entries));
-                    dispatch(entriesUpdateUnreadCount(resObj.entries));
+                    let entries = resObj.entries;
+                    dispatch(getEntriesComplete(entries));
+                    dispatch(entriesUpdateUnreadCount(entries));
                 }
             })
     }
@@ -62,9 +63,35 @@ function entriesUpdateUnreadCount(entries){
     }
 }
 
-export function entryMarkRead(feedId, groupId){
+function updateReadState(entry, hasRead){
     return (dispatch)=>{
-        dispatch(feedsDecrementUnread(feedId));
-        dispatch(feedgroupsDecrementUnread(groupId));
+        const url = API_ENTRIES_BASE + entry._id;
+        const init = {
+            method: "PUT",
+            body: JSON.stringify({has_read: hasRead}),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        };
+
+        fetch(url, init)
+            .then((res)=>{
+                return res.json();
+            })
+            .then((resObj)=>{
+                if(resObj.status === "error"){
+                    console.error(resObj.error);
+                } else {
+                    dispatch(entryMarkReadComplete(entry));
+                }
+            });
+    }
+}
+
+export function entryMarkReadComplete(entry){
+    return (dispatch)=>{
+        dispatch(feedsDecrementUnread(entry.feed_id));
+        dispatch(feedgroupsDecrementUnread(entry.group_id));
     }
 }
