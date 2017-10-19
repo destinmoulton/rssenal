@@ -1,23 +1,25 @@
 
-import { List } from "immutable";
+import { OrderedMap } from "immutable";
 
 import {
     ENTRIES_GET_COMPLETE
 } from "../actiontypes";
 
 const INITIAL_STATE = {
-    entries: List()
+    entries: OrderedMap()
 };
 
 function entriesReducer(state = INITIAL_STATE, action){
     switch(action.type){
         case ENTRIES_GET_COMPLETE: {
-
-            const entries = List(action.entries);
+            const arrayMap = action.entries.map((entry)=>{
+                return [entry._id, entry];
+            });
+            const mappedEntries = OrderedMap(arrayMap);
 
             return {
                 ...state,
-                entries
+                entries: mappedEntries
             }
         }
 
