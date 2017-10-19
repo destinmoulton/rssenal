@@ -68,7 +68,6 @@ var FeedGroupsController = function () {
         value: function update_single(req, res) {
             _FeedGroups2.default.findById(req.params.feedGroupId, function (err, group) {
                 if (err) res.send(err);
-
                 group.name = req.body.name;
                 group.save(function (err, updatedGroup) {
                     if (err) res.send(err);

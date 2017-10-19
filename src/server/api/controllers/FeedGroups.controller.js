@@ -53,7 +53,6 @@ class FeedGroupsController {
         FeedGroups.findById(req.params.feedGroupId, (err, group)=>{
             if(err)
                 res.send(err);
-                
             group.name = req.body.name;
             group.save((err, updatedGroup)=>{
                 if(err)
