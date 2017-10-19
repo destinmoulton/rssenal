@@ -30,31 +30,73 @@ var EntriesController = function () {
     }
 
     _createClass(EntriesController, [{
-        key: "get_all",
-        value: function get_all(req, res) {
-            _Entries2.default.find({}, function (err, entries) {
-                if (err) res.send(err);
-                res.send({
-                    status: "success",
-                    entries: entries
+        key: "getAll",
+        value: function getAll(req, res) {
+            try {
+                this._updateAllFeeds();
+            } catch (e) {
+                return res.json({
+                    status: "error",
+                    error: "Unable to update all feeds."
                 });
+            }
+
+            _Entries2.default.find({}, function (err, entries) {
+                if (err) {
+                    res.json({
+                        status: "error",
+                        error: "Unable to get all entries."
+                    });
+                } else {
+                    res.json({
+                        status: "success",
+                        entries: entries
+                    });
+                }
             }).sort({ publish_date: 'desc' });
         }
     }, {
-        key: "update_all",
-        value: function update_all(req, res) {
+        key: "updateSingle",
+        value: function updateSingle(req, res) {
+            _Entries2.default.findById(req.params.entryId, function (err, entry) {
+                if (err) {
+                    res.json({
+                        status: "error",
+                        error: "Unable to find the entry with id: " + req.params.entryId
+                    });
+                } else {
+                    var data = req.body;
+                    if (data.hasOwnProperty("has_read")) {
+                        entry.has_read = data.has_read;
+                    }
+                    entry.save(function (err, newEntry) {
+                        if (err) {
+                            res.json({
+                                status: "error",
+                                error: "Unable to save the updated entry."
+                            });
+                        } else {
+                            res.json({
+                                status: "success",
+                                entry: newEntry
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    }, {
+        key: "_updateAllFeeds",
+        value: function _updateAllFeeds() {
 
             _Feeds2.default.find({}, function (err, feeds) {
                 if (err) {
-                    return res.json({
-                        status: "error",
-                        error: "Feeds not found."
-                    });
+                    throw new Error("Feeds not found");
                 }
 
                 feeds.forEach(function (feed) {
                     _rssParser2.default.parseURL(feed.url, function (err, parsedFeed) {
-                        if (err) {}
+                        // TODO: Add err handler?
 
                         parsedFeed.feed.entries.forEach(function (entry) {
                             var query = {
@@ -68,14 +110,13 @@ var EntriesController = function () {
                                         publish_date: entry.isoDate
                                     });
                                     var newEntry = new _Entries2.default(data);
-                                    newEntry.save(function (err, entry) {});
+                                    newEntry.save(function (err, entry) {
+                                        // TODO: Add err handler?
+                                    });
                                 }
                             }).limit(1);
                         });
                     });
-                });
-                return res.json({
-                    status: "success"
                 });
             });
         }

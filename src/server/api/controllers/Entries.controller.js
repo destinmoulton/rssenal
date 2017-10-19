@@ -6,34 +6,72 @@ import Feeds from "../models/Feeds.model";
 
 
 class EntriesController {
-    get_all(req, res){
+    getAll(req, res){
+        try {
+            this._updateAllFeeds();
+        } catch(e){
+            return res.json({
+                status: "error",
+                error: "Unable to update all feeds."
+            })
+        }
+
         Entries
             .find({}, (err, entries)=>{
-                if(err) 
-                    res.send(err);
-                res.send({
-                    status: "success",
-                    entries
-                });
+                if(err){
+                    res.json({
+                        status: "error",
+                        error: "Unable to get all entries."
+                    });
+                } else {
+                    res.json({
+                        status: "success",
+                        entries
+                    });
+                }
             })
             .sort({publish_date: 'desc'});
     }
 
-    update_all(req, res){
+    updateSingle(req, res){
+        Entries.findById(req.params.entryId, (err, entry)=>{
+            if(err){
+                res.json({
+                    status: "error",
+                    error: "Unable to find the entry with id: "+req.params.entryId
+                })
+            } else {
+                const data = req.body;
+                if(data.hasOwnProperty("has_read")){
+                    entry.has_read = data.has_read;
+                }
+                entry.save((err, newEntry)=>{
+                    if(err){
+                        res.json({
+                            status: "error",
+                            error: "Unable to save the updated entry."
+                        })
+                    } else {
+                        res.json({
+                            status: "success",
+                            entry: newEntry
+                        });
+                    }
+                })
+            }
+        });            
+    }
+
+    _updateAllFeeds(){
 
         Feeds.find({}, (err, feeds)=>{
             if(err) {
-                return res.json({
-                    status: "error",
-                    error: "Feeds not found."
-                })
+                throw new Error("Feeds not found");
             }
 
             feeds.forEach((feed)=>{
                 parser.parseURL(feed.url, (err, parsedFeed)=>{
-                    if(err){
-
-                    }
+                    // TODO: Add err handler?
 
                     parsedFeed.feed.entries.forEach((entry)=>{
                         const query = {
@@ -49,17 +87,13 @@ class EntriesController {
                                 }
                                 const newEntry = new Entries(data);
                                 newEntry.save((err, entry)=>{
-        
+                                    // TODO: Add err handler?
                                 })
                             }
                         }).limit(1);
-
                     });
                 })
             })
-            return res.json({
-                status: "success"
-            });
         });
     }
 }
