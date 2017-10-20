@@ -1,4 +1,4 @@
-import { OrderedMap } from "immutable";
+import { Map, OrderedMap } from "immutable";
 
 import {
     FEEDS_ADD_BEGIN,
@@ -12,6 +12,7 @@ import {
 
 const INITIAL_STATE = {
     feeds: OrderedMap(),
+    unreadMap: {"feeds": Map(), "groups": Map()},
     isAddingFeed: false,
     isUpdatingFeed: false
 }
@@ -48,29 +49,33 @@ function feedsReducer(state = INITIAL_STATE, action){
             }
         }
         case FEEDS_SETALL_UNREAD_COUNT:{
-            let feedCounter = {};
+            const { feeds, unreadMap } = state;
+            const unreadFeeds = unreadMap.feeds;
+            const unreadGroups = unreadMap.groups;
+
             action.entries.map((entry)=>{
                 if(!entry.has_read){
-                    if(feedCounter.hasOwnProperty(entry.feed_id)){
-                        feedCounter[entry.feed_id] = feedCounter[entry.feed_id] + 1;
+                    const feed = feeds.get(entry.feed_id);
+                    if(!unreadFeeds.has(feed._id)){
+                        unreadFeeds.set(feed._id, 1);
                     } else {
-                        feedCounter[entry.feed_id] = 1;
+                        const countUnread = unreadFeeds.get(feed._id);
+                        unreadFeeds.set(feed._id, countUnread + 1);
+                    }
+
+                    if(!unreadGroups.has(feed.group_id)){
+                        unreadGroups.set(feed.group_id, 1);
+                    } else {
+                        const countUnread = unreadGroups.get(feed.group_id);
+                        unreadGroups.set(feed.group_id, countUnread + 1);
                     }
                 }
             });
 
-            const countedFeeds = state.feeds.map((feed)=>{
-                let newFeed = Object.assign({}, feed);
-                newFeed.unread_count = 0;
-                if(feedCounter.hasOwnProperty(feed._id)){
-                    newFeed.unread_count = feedCounter[feed._id];
-                }
-                return newFeed;
-            });
-
+            const unreadMap = {"feeds": unreadFeeds, "groups": unreadGroups};
             return {
                 ...state,
-                feeds: countedFeeds
+                unreadMap
             }
         }
         case FEEDS_UPDATE_BEGIN:
