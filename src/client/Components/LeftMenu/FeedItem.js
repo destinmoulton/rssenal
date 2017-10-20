@@ -77,7 +77,7 @@ class FeedItem extends Component {
     }
 
     render() {
-        const { feed, filter } = this.props;
+        const { feed, filter, unreadMapFeeds} = this.props;
         const { isOptionsVisible } = this.state;
 
         let className = "";
@@ -86,8 +86,8 @@ class FeedItem extends Component {
         }
 
         let unreadEntriesCount = "";
-        if(feed.hasOwnProperty("unread_count") && feed.unread_count > 0){
-            unreadEntriesCount = " [" + feed.unread_count + "]";
+        if(unreadMapFeeds.has(feed._id)){
+            unreadEntriesCount = " [" + unreadMapFeeds.get(feed._id) + "]";
         }
         let title = <span onClick={this._handleClickTitle} className={className}>{feed.title}{unreadEntriesCount}</span>;
 
@@ -104,8 +104,9 @@ class FeedItem extends Component {
     }
 }
 const mapStateToProps = (state)=>{
-    const { filter } = state;
+    const { feeds, filter } = state;
     return {
+        unreadMapFeeds: feeds.unreadMap.feeds,
         filter: filter.filter
     }
 };
