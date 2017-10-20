@@ -1,4 +1,4 @@
-import { OrderedMap } from "immutable";
+import { Map, OrderedMap } from "immutable";
 
 import { 
     FEEDGROUPS_FETCHING,
@@ -15,17 +15,18 @@ import {
 
 const INITIAL_STATE = {
     groups: OrderedMap(),
+    groupsUnreadMap: Map(),
     hasFeedGroups: false,
     isDeletingFeedGroup: false,
     isFetchingFeedGroups: false,
     isSavingFeedGroup: false
 };
 
-const UNCATEGORIZED_FEEDGROUP = [{
+const UNCATEGORIZED_FEEDGROUP = {
     _id: "0",
     name: "Uncategorized",
     order: Infinity
-}];
+};
 
 const feedGroupsReducer = function(state = INITIAL_STATE, action){
     switch(action.type){
@@ -40,7 +41,7 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
             });
             const mappedGroups = OrderedMap(arrayMap);
             const fullGroups = mappedGroups.set(UNCATEGORIZED_FEEDGROUP._id, UNCATEGORIZED_FEEDGROUP);
-
+            
             return {
                 ...state,
                 groups: fullGroups,
@@ -77,34 +78,29 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
             }
         case FEEDGROUPS_DELETE_COMPLETE: {
             const groups = state.groups.delete(action.groupId);
+            const groupsUnreadMap = state.groupsUnreadMap.delete(action.groupId);
             return {
                 ...state,
                 groups,
+                groupsUnreadMap,
                 isDeletingFeedGroup: false
             }
         }
         case FEEDGROUPS_SETALL_UNREAD_COUNT:{
-            const feedsCount = {};
+            let groupsUnreadMap = state.groupsUnreadMap;
+
             action.feeds.map((feed)=>{
-                if(!feedsCount.hasOwnProperty(feed.feedgroup_id)){
-                    feedsCount[feed.feedgroup_id] = feed.unread_count;
+                if(!groupsUnreadMap.has(feed.feedgroup_id)){
+                    groupsUnreadMap = groupsUnreadMap.set(feed.feedgroup_id, feed.unread_count)
                 } else {
-                    feedsCount[feed.feedgroup_id] += feed.unread_count;
+                    const groupUnreadCount = groupsUnreadMap.get(feed.feedgroup_id);
+                    groupsUnreadMap = groupsUnreadMap.set(feed.feedgroup_id, groupUnreadCount);
                 }
             });
             
-            const newFeedgroups = state.groups.map((feedgroup)=>{
-                let newFeedgroup = Object.assign({}, feedgroup);
-                newFeedgroup.unread_count = 0;
-
-                if(feedsCount.hasOwnProperty(feedgroup._id)){
-                    newFeedgroup.unread_count = feedsCount[feedgroup._id];
-                }
-                return newFeedgroup
-            });
             return {
                 ...state,
-                groups: newFeedgroups
+                groupsUnreadMap
             }
         }
         case FEEDGROUPS_UPDATE_BEGIN: {
