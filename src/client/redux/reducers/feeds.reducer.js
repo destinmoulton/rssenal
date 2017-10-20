@@ -44,8 +44,8 @@ function feedsReducer(state = INITIAL_STATE, action){
             const { entry } = action;
             const { feed } = feeds.get(entry.feed_id);
 
-            const unreadFeeds = unreadMap.feeds;
-            const unreadGroups = unreadMap.groups;
+            let unreadFeeds = unreadMap.feeds;
+            let unreadGroups = unreadMap.groups;
 
             if(unreadFeeds.has(entry.feed_id)){
                 const unreadCount = unreadFeeds.get(entry.feed_id);
@@ -57,10 +57,10 @@ function feedsReducer(state = INITIAL_STATE, action){
                 unreadGroups = unreadGroups.set(feed.group_id, unreadCount - 1);
             }
 
-            const unreadMap = {"feeds": unreadFeeds, "groups": unreadGroups};
+            const newUnreadMap = {"feeds": unreadFeeds, "groups": unreadGroups};
             return {
                 ...state,
-                unreadMap
+                unreadMap: newUnreadMap
             }
         }
         case FEEDS_GETALL_COMPLETE:{
@@ -75,8 +75,8 @@ function feedsReducer(state = INITIAL_STATE, action){
         }
         case FEEDS_SETALL_UNREAD_COUNT:{
             const { feeds, unreadMap } = state;
-            const unreadFeeds = unreadMap.feeds;
-            const unreadGroups = unreadMap.groups;
+            let unreadFeeds = unreadMap.feeds;
+            let unreadGroups = unreadMap.groups;
 
             action.entries.map((entry)=>{
                 if(!entry.has_read){
@@ -97,10 +97,10 @@ function feedsReducer(state = INITIAL_STATE, action){
                 }
             });
 
-            const unreadMap = {"feeds": unreadFeeds, "groups": unreadGroups};
+            const newUnreadMap = {"feeds": unreadFeeds, "groups": unreadGroups};
             return {
                 ...state,
-                unreadMap
+                unreadMap: newUnreadMap
             }
         }
         case FEEDS_UPDATE_BEGIN:
