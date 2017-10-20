@@ -170,24 +170,3 @@ function deleteComplete(groupId){
         groupId
     }
 }
-
-export function feedgroupsSetAllUnreadCount(){
-    return (dispatch, getState)=>{
-        const state = getState();
-        dispatch(setAllUnreadCount(state.feeds.feeds));
-    }
-}
-
-function setAllUnreadCount(feeds){
-    return {
-        type: FEEDGROUPS_SETALL_UNREAD_COUNT,
-        feeds
-    }
-}
-
-export function feedgroupsDecrementUnread(groupId){
-    return {
-        type: FEEDGROUPS_DECREMENT_UNREAD,
-        groupId
-    }
-}
