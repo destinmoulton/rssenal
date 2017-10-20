@@ -11,7 +11,6 @@ import {
 } from "../apiendpoints";
 
 import { feedsDecrementUnread, feedsSetAllUnreadCount } from "./feeds.actions";
-import { feedgroupsDecrementUnread, feedgroupsSetAllUnreadCount } from "./feedgroups.actions";
 
 export function beginGetEntries(){
     return (dispatch)=>{
@@ -59,7 +58,6 @@ function getEntriesComplete(entries){
 function entriesUpdateUnreadCount(entries){
     return (dispatch)=>{
         dispatch(feedsSetAllUnreadCount(entries));
-        dispatch(feedgroupsSetAllUnreadCount());
     }
 }
 
@@ -92,6 +90,5 @@ function updateReadState(entry, hasRead){
 export function entryMarkReadComplete(entry){
     return (dispatch)=>{
         dispatch(feedsDecrementUnread(entry.feed_id));
-        dispatch(feedgroupsDecrementUnread(entry.group_id));
     }
 }
