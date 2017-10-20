@@ -8,14 +8,12 @@ import {
     FEEDGROUPS_DECREMENT_UNREAD,
     FEEDGROUPS_DELETE_BEGIN,
     FEEDGROUPS_DELETE_COMPLETE,
-    FEEDGROUPS_SETALL_UNREAD_COUNT,
     FEEDGROUPS_UPDATE_BEGIN,
     FEEDGROUPS_UPDATE_COMPLETE
 } from "../actiontypes";
 
 const INITIAL_STATE = {
     groups: OrderedMap(),
-    groupsUnreadMap: Map(),
     hasFeedGroups: false,
     isDeletingFeedGroup: false,
     isFetchingFeedGroups: false,
@@ -84,23 +82,6 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
                 groups,
                 groupsUnreadMap,
                 isDeletingFeedGroup: false
-            }
-        }
-        case FEEDGROUPS_SETALL_UNREAD_COUNT:{
-            let groupsUnreadMap = state.groupsUnreadMap;
-
-            action.feeds.map((feed)=>{
-                if(!groupsUnreadMap.has(feed.feedgroup_id)){
-                    groupsUnreadMap = groupsUnreadMap.set(feed.feedgroup_id, feed.unread_count)
-                } else {
-                    const groupUnreadCount = groupsUnreadMap.get(feed.feedgroup_id);
-                    groupsUnreadMap = groupsUnreadMap.set(feed.feedgroup_id, groupUnreadCount);
-                }
-            });
-            
-            return {
-                ...state,
-                groupsUnreadMap
             }
         }
         case FEEDGROUPS_UPDATE_BEGIN: {
