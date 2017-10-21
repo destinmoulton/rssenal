@@ -48,13 +48,15 @@ function feedsReducer(state = INITIAL_STATE, action){
             let unreadGroups = unreadMap.groups;
 
             if(unreadFeeds.has(feedId)){
-                const unreadCount = unreadFeeds.get(feedId);
-                unreadFeeds = unreadFeeds.set(feedId, unreadCount - 1);
+                const unreadFeedCount = unreadFeeds.get(feedId);
+                const newCount = (unreadFeedCount > 1) ? unreadFeedCount - 1 : 0;
+                unreadFeeds = unreadFeeds.set(feedId, newCount);
             }
             
             if(unreadGroups.has(feed.feedgroup_id)){
-                const unreadCount = unreadGroups.get(feed.feedgroup_id);
-                unreadGroups = unreadGroups.set(feed.feedgroup_id, unreadCount - 1);
+                const unreadGroupCount = unreadGroups.get(feed.feedgroup_id);
+                const newCount = (unreadGroupCount > 1) ? unreadGroupCount - 1 : 0;
+                unreadGroups = unreadGroups.set(feed.feedgroup_id, newCount);
             }
 
             const newUnreadMap = {"feeds": unreadFeeds, "groups": unreadGroups};

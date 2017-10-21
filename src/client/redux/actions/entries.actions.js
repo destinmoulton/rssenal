@@ -61,7 +61,7 @@ function entriesUpdateUnreadCount(entries){
     }
 }
 
-function updateReadState(entry, hasRead){
+export function updateReadState(entry, hasRead){
     return (dispatch)=>{
         const url = API_ENTRIES_BASE + entry._id;
         const init = {
@@ -81,14 +81,8 @@ function updateReadState(entry, hasRead){
                 if(resObj.status === "error"){
                     console.error(resObj.error);
                 } else {
-                    dispatch(entryMarkReadComplete(entry));
+                    dispatch(feedsDecrementUnread(entry.feed_id));
                 }
             });
-    }
-}
-
-export function entryMarkReadComplete(entry){
-    return (dispatch)=>{
-        dispatch(feedsDecrementUnread(entry.feed_id));
     }
 }

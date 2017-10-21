@@ -181,7 +181,7 @@ export function feedsSetAllUnreadCount(entries){
     }
 }
 
-export function feedsDecrementUnreadCount(feedId){
+export function feedsDecrementUnread(feedId){
     return {
         type: FEEDS_DECREMENT_UNREAD,
         feedId

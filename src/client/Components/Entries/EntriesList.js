@@ -8,6 +8,8 @@ import EntryItem from "./EntryItem";
 import SettingsModal from "./SettingsModal";
 import SortMenu from "./SortMenu";
 
+import { updateReadState } from "../../redux/actions/entries.actions";
+
 class EntriesList extends Component {
     constructor(props){
         super(props);
@@ -42,9 +44,7 @@ class EntriesList extends Component {
                     return entry.feed_id === filter.id
                 })
 
-                const activeFeed = feeds.find((feed)=>{
-                    return feed._id === filter.id;
-                });
+                const activeFeed = feeds.get(filter.id);
 
                 title = activeFeed.title;
                 break;
@@ -59,9 +59,7 @@ class EntriesList extends Component {
                     return feedIds.includes(entry.feed_id);
                 })
 
-                const activeGroup = groups.find((group)=>{
-                    return group._id === filter.id;
-                });
+                const activeGroup = groups.get(filter.id);                
 
                 title = activeGroup.name;
                 break;
@@ -109,34 +107,48 @@ class EntriesList extends Component {
     _activateSiblingEntry(direction){
         const { activeEntryId, processedEntries } = this.state;
 
-        let siblingActiveIndex = 0;
-        
+        let sibling = {};
+
         if(activeEntryId === ""){
-            siblingActiveIndex = 0;
+            sibling = processedEntries.first();
         } else {
-            const activeEntryIndex = processedEntries.findIndex((entry)=>{
-                return entry._id === activeEntryId;
+            let previousEntry = {};
+            let nextEntry = {};
+            let found = false;
+            processedEntries.map((entry, entryId)=>{
+                if(found && !nextEntry.hasOwnProperty("_id")){
+                    nextEntry = entry;
+                }
+
+                if(entryId === activeEntryId){
+                    found = true;
+                }
+
+                if(!found){
+                    previousEntry = entry;
+                }
+                
             });
 
             if(direction === "next"){
-                if((activeEntryIndex + 1) === processedEntries.size){
-                    siblingActiveIndex = activeEntryIndex;
+                if(nextEntry.hasOwnProperty("_id")){
+                    sibling = nextEntry;
                 } else {
-                    siblingActiveIndex = activeEntryIndex + 1;
+                    sibling = processedEntries.last();
                 }
             } else if(direction === "previous"){
-                if((activeEntryIndex - 1) < 0){
-                    siblingActiveIndex = 0;
+                if(previousEntry.hasOwnProperty("_id")){
+                    sibling = previousEntry;
                 } else {
-                    siblingActiveIndex = activeEntryIndex - 1;
+                    sibling = processedEntries.first();
                 }
             }
         }
 
-        const nextActiveEntry = processedEntries.get(siblingActiveIndex);
-        
+        this._markRead(sibling._id);
+
         this.setState({
-            activeEntryId: nextActiveEntry._id
+            activeEntryId: sibling._id
         });
     }
 
@@ -145,9 +157,18 @@ class EntriesList extends Component {
         if(this.state.activeEntryId === entryId){
             nextActiveEntryId = "";
         }
+
+        this._markRead(nextActiveEntryId);
+
         this.setState({
             activeEntryId: nextActiveEntryId
         });
+    }
+
+    _markRead(entryId){
+        const { entries, markEntryRead } = this.props;
+
+        markEntryRead(entries.get(entryId));
     }
 
     _handleChangeSort(e, obj){
@@ -199,6 +220,8 @@ const mapStateToProps = (state)=>{
 }
 
 const mapDispatchToProps = (dispatch)=>{
-    return {}
+    return {
+        markEntryRead: (entry)=>dispatch(updateReadState(entry, true))
+    }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(EntriesList);
