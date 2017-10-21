@@ -93,7 +93,7 @@ class GroupItem extends Component {
     }
 
     _buildGroupTitle(){
-        const { filter, group } = this.props;
+        const { filter, group, unreadMapGroups } = this.props;
 
         let className = "";
         if(filter.limit === "group" && filter.id === group._id){
@@ -101,8 +101,8 @@ class GroupItem extends Component {
         }
 
         let unread = "";
-        if(group.hasOwnProperty("unread_count") && group.unread_count > 0){
-            unread = " [" + group.unread_count + "]";
+        if(unreadMapGroups.has(group._id)){
+            unread = " [" + unreadMapGroups.get(group._id) + "]";
         }
         return (
             <span className={className} onClick={this._handleClickGroupTitle}>{group.name}{unread}</span>
@@ -154,11 +154,12 @@ class GroupItem extends Component {
 }
 
 const mapStateToProps = (state)=>{
-    const { feedgroups, filter } = state;
+    const { feeds, feedgroups, filter } = state;
 
     return {
         updatingFeedGroups: feedgroups.updatingFeedGroups,
-        filter: filter.filter
+        filter: filter.filter,
+        unreadMapGroups: feeds.unreadMap.groups
     };
 }
 
