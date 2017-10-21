@@ -41,15 +41,15 @@ function feedsReducer(state = INITIAL_STATE, action){
         }
         case FEEDS_DECREMENT_UNREAD:{
             const { unreadMap, feeds } = state;
-            const { entry } = action;
-            const { feed } = feeds.get(entry.feed_id);
+            const { feedId } = action;
+            const feed = feeds.get(feedId);
 
             let unreadFeeds = unreadMap.feeds;
             let unreadGroups = unreadMap.groups;
 
-            if(unreadFeeds.has(entry.feed_id)){
-                const unreadCount = unreadFeeds.get(entry.feed_id);
-                unreadFeeds = unreadFeeds.set(entry.feed_id, unreadCount - 1);
+            if(unreadFeeds.has(feedId)){
+                const unreadCount = unreadFeeds.get(feedId);
+                unreadFeeds = unreadFeeds.set(feedId, unreadCount - 1);
             }
             
             if(unreadGroups.has(feed.feedgroup_id)){
@@ -81,6 +81,7 @@ function feedsReducer(state = INITIAL_STATE, action){
             action.entries.map((entry)=>{
                 if(!entry.has_read){
                     const feed = feeds.get(entry.feed_id);
+
                     if(!unreadFeeds.has(feed._id)){
                         unreadFeeds = unreadFeeds.set(feed._id, 1);
                     } else {
