@@ -61,7 +61,7 @@ class EntryItem extends Component {
     _getActiveEntryContent(){
         const { entry, feeds } = this.props;
 
-        const activeFeed = feeds.find((feed)=>feed._id === entry.feed_id);
+        const activeFeed = feeds.get(entry.feed_id);
         const creator = (entry.creator !== undefined || entry.creator !== "" || entry.creator !== "undefined") ? " by "+ entry.creator : "";
         const timeAgo = moment(entry.publish_date).fromNow()
 
