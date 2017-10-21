@@ -82,17 +82,17 @@ function feedsReducer(state = INITIAL_STATE, action){
                 if(!entry.has_read){
                     const feed = feeds.get(entry.feed_id);
                     if(!unreadFeeds.has(feed._id)){
-                        unreadFeeds.set(feed._id, 1);
+                        unreadFeeds = unreadFeeds.set(feed._id, 1);
                     } else {
                         const countUnread = unreadFeeds.get(feed._id);
-                        unreadFeeds.set(feed._id, countUnread + 1);
+                        unreadFeeds = unreadFeeds.set(feed._id, countUnread + 1);
                     }
 
                     if(!unreadGroups.has(feed.group_id)){
-                        unreadGroups.set(feed.group_id, 1);
+                        unreadGroups = unreadGroups.set(feed.group_id, 1);
                     } else {
                         const countUnread = unreadGroups.get(feed.group_id);
-                        unreadGroups.set(feed.group_id, countUnread + 1);
+                        unreadGroups = unreadGroups.set(feed.group_id, countUnread + 1);
                     }
                 }
             });
