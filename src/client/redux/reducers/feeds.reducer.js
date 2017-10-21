@@ -52,9 +52,9 @@ function feedsReducer(state = INITIAL_STATE, action){
                 unreadFeeds = unreadFeeds.set(entry.feed_id, unreadCount - 1);
             }
             
-            if(unreadGroups.has(feed.group_id)){
-                const unreadCount = unreadGroups.get(feed.group_id);
-                unreadGroups = unreadGroups.set(feed.group_id, unreadCount - 1);
+            if(unreadGroups.has(feed.feedgroup_id)){
+                const unreadCount = unreadGroups.get(feed.feedgroup_id);
+                unreadGroups = unreadGroups.set(feed.feedgroup_id, unreadCount - 1);
             }
 
             const newUnreadMap = {"feeds": unreadFeeds, "groups": unreadGroups};
@@ -88,14 +88,15 @@ function feedsReducer(state = INITIAL_STATE, action){
                         unreadFeeds = unreadFeeds.set(feed._id, countUnread + 1);
                     }
 
-                    if(!unreadGroups.has(feed.group_id)){
-                        unreadGroups = unreadGroups.set(feed.group_id, 1);
+                    if(!unreadGroups.has(feed.feedgroup_id)){
+                        unreadGroups = unreadGroups.set(feed.feedgroup_id, 1);
                     } else {
-                        const countUnread = unreadGroups.get(feed.group_id);
-                        unreadGroups = unreadGroups.set(feed.group_id, countUnread + 1);
+                        const countUnread = unreadGroups.get(feed.feedgroup_id);
+                        unreadGroups = unreadGroups.set(feed.feedgroup_id, countUnread + 1);
                     }
                 }
             });
+            console.log(unreadFeeds);
 
             const newUnreadMap = {"feeds": unreadFeeds, "groups": unreadGroups};
             return {
