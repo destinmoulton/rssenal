@@ -96,7 +96,6 @@ function feedsReducer(state = INITIAL_STATE, action){
                     }
                 }
             });
-            console.log(unreadFeeds);
 
             const newUnreadMap = {"feeds": unreadFeeds, "groups": unreadGroups};
             return {
