@@ -76,9 +76,9 @@ function feedsReducer(state = INITIAL_STATE, action){
             }
         }
         case FEEDS_SETALL_UNREAD_COUNT:{
-            const { feeds, unreadMap } = state;
-            let unreadFeeds = unreadMap.feeds;
-            let unreadGroups = unreadMap.groups;
+            const { feeds } = state;
+            let unreadFeeds = Map();
+            let unreadGroups = Map();
 
             action.entries.map((entry)=>{
                 if(!entry.has_read){
