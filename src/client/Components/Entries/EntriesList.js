@@ -2,13 +2,13 @@ import { List } from "immutable";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Menu } from "semantic-ui-react";
+import { Button, Menu } from "semantic-ui-react";
 
 import EntryItem from "./EntryItem";
 import SettingsModal from "./SettingsModal";
 import SortMenu from "./SortMenu";
 
-import { updateReadState } from "../../redux/actions/entries.actions";
+import { beginGetEntries, updateReadState } from "../../redux/actions/entries.actions";
 
 class EntriesList extends Component {
     constructor(props){
@@ -25,6 +25,7 @@ class EntriesList extends Component {
         document.onkeydown = this._handleKeyDown.bind(this);
 
         this._handleChangeSort = this._handleChangeSort.bind(this);
+        this._handleClickRefresh = this._handleClickRefresh.bind(this);
         this._toggleEntry = this._toggleEntry.bind(this);
     }
 
@@ -87,6 +88,18 @@ class EntriesList extends Component {
             if(a[field] < b[field]){ return 1; }
         }
         if(a[field] === b[field]){ return 0;}
+    }
+
+    _handleChangeSort(e, obj){
+        this.setState({
+            sortBy: obj.value
+        });
+
+        this._filterAndSortEntries(this.props, obj.value);
+    }
+
+    _handleClickRefresh(){
+        this.props.getEntries();
     }
 
     _handleKeyDown(e){
@@ -171,14 +184,6 @@ class EntriesList extends Component {
         markEntryRead(entries.get(entryId));
     }
 
-    _handleChangeSort(e, obj){
-        this.setState({
-            sortBy: obj.value
-        });
-
-        this._filterAndSortEntries(this.props, obj.value);
-    }
-
     render() {
         const { activeEntryId, currentTitle, processedEntries, sortBy } = this.state;
 
@@ -197,6 +202,10 @@ class EntriesList extends Component {
                 <div className="rss-entrylist-menu">
                     <div className="rss-entrylist-menu-title-container">{currentTitle}</div>
                     <div className="rss-entrylist-menu-sortselect-container">
+                        <Button
+                            icon="refresh"
+                            onClick={this._handleClickRefresh}
+                        />
                         <SortMenu onChange={this._handleChangeSort} currentSortBy={sortBy}/>
                         <SettingsModal />
                     </div>
@@ -221,7 +230,8 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch)=>{
     return {
-        markEntryRead: (entry)=>dispatch(updateReadState(entry, true))
+        markEntryRead: (entry)=>dispatch(updateReadState(entry, true)),
+        getEntries: ()=>dispatch(beginGetEntries())
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(EntriesList);
