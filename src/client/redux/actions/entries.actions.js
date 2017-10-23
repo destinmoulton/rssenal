@@ -27,7 +27,15 @@ function beginGetProcess(){
 
 function getEntries(){
     return (dispatch, getState)=>{
-        const url = API_ENTRIES_BASE;
+        const { settings } = getState();
+        let showUnread = true;
+        settings.settings.forEach((setting)=>{
+            if(setting.key === "show_unread"){
+                showUnread = setting.value;
+            }
+        });
+        const queryString = "?hasRead=" + !showUnread;
+        const url = API_ENTRIES_BASE + queryString;
         const init = {
             method: "GET"
         };
