@@ -30,8 +30,8 @@ var EntriesController = function () {
     }
 
     _createClass(EntriesController, [{
-        key: "getAll",
-        value: function getAll(req, res) {
+        key: "get",
+        value: function get(req, res) {
             try {
                 this._updateAllFeeds();
             } catch (e) {
@@ -41,7 +41,11 @@ var EntriesController = function () {
                 });
             }
 
-            _Entries2.default.find({}, function (err, entries) {
+            var query = {};
+            if (req.query.hasOwnProperty("hasRead")) {
+                query["has_read"] = req.query.hasRead;
+            }
+            _Entries2.default.find(query, function (err, entries) {
                 if (err) {
                     res.json({
                         status: "error",

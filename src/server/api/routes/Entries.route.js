@@ -3,7 +3,7 @@ const router = express.Router();
 
 import entries from "../controllers/Entries.controller";
 
-router.get('/', entries.getAll.bind(entries));
+router.get('/', entries.get.bind(entries));
 router.put('/:entryId', entries.updateSingle);
 
 export default router;

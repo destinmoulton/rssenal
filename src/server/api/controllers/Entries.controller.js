@@ -7,7 +7,7 @@ import Feeds from "../models/Feeds.model";
 
 class EntriesController {
 
-    getAll(req, res){
+    get(req, res){
         try {
             this._updateAllFeeds();
         } catch(e){
@@ -17,8 +17,12 @@ class EntriesController {
             })
         }
 
+        let query = {};
+        if(req.query.hasOwnProperty("hasRead")){
+            query["has_read"] = req.query.hasRead;
+        }
         Entries
-            .find({}, (err, entries)=>{
+            .find(query, (err, entries)=>{
                 if(err){
                     res.json({
                         status: "error",
