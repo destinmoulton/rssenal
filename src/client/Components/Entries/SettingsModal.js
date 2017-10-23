@@ -41,9 +41,8 @@ class SettingsModal extends Component {
 
     _buildRadioToggle(setting){
         return (
-            <div>
+            <div key={setting.key}>
                 <Radio 
-                    key={setting.key}
                     checked={setting.value}
                     toggle
                     label={setting.name}
