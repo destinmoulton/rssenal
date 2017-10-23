@@ -34,14 +34,22 @@ class SettingsModal extends Component {
 
         return settings.map((setting)=>{
             if(setting.type==="toggle"){
-                return <Radio 
-                        key={setting.key}
-                        checked={setting.value}
-                        toggle
-                        label={setting.name}
-                        onChange={this._handleChangeSetting.bind(this, setting.key, !setting.value)}/>;
+                return this._buildRadioToggle(setting);
             }
         });
+    }
+
+    _buildRadioToggle(setting){
+        return (
+            <div>
+                <Radio 
+                    key={setting.key}
+                    checked={setting.value}
+                    toggle
+                    label={setting.name}
+                    onChange={this._handleChangeSetting.bind(this, setting.key, !setting.value)}/>
+            </div>
+        );
     }
 
     _handleChangeSetting(setting_key, setting_value){
