@@ -10,7 +10,13 @@ const INITIAL_STATE = {
             name: "Show Images",
             type: "toggle",
             value: true
-        }            
+        },
+        {
+            key: "show_unread",
+            name: "Show Unread",
+            type: "toggle",
+            value: true
+        }          
     ]
 };
 
