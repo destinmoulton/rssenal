@@ -111,3 +111,20 @@ div.rss-entrylist-menu-sortselect-container {
     float: right;
     margin-right: 15px;
 }
+
+div.rss-sortgroup-list-container{
+    position: relative;
+    z-index: 0;
+    background-color: #f3f3f3;
+    border: 1px solid #efefef;
+    border-radius: 3px;
+    outline: none;
+}
+div.rss-sortgroup-list-item{
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 30px;
+    background-color: white;
+    padding: 3px;
+}
