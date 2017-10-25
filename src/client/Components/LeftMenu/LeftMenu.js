@@ -90,7 +90,7 @@ class LeftMenu extends Component {
     }
 
     _sortGroups(groups){
-        return groups.sort((a,b)=>this._compareEntries(a, b));
+        return groups.sort(this._compareEntries);
     }
 
     _compareEntries(a, b){

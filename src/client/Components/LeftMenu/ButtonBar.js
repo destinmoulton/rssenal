@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 
 import { Button, Icon } from "semantic-ui-react";
 
+import ReorderGroupsModal from "../Modals/ReorderGroupsModal";
+
 class ButtonBar extends Component {
     static propTypes = {
         openAddFeedModal: PropTypes.func.isRequired,
@@ -37,6 +39,7 @@ class ButtonBar extends Component {
                         size="tiny"
                     />
                 </Button.Group>                
+                <ReorderGroupsModal />
             </div>
         );
     }
