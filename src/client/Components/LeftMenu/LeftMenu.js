@@ -12,6 +12,8 @@ import EditFeedModal from "../Modals/EditFeedModal";
 import GroupEditorModal from "../Modals/GroupEditorModal";
 import GroupItem from "./GroupItem";
 
+import { compareAscByProp } from "../../lib/sort";
+
 class LeftMenu extends Component {
     constructor(props){
         super(props);
@@ -90,14 +92,8 @@ class LeftMenu extends Component {
     }
 
     _sortGroups(groups){
-        return groups.sort(this._compareEntries);
-    }
-
-    _compareEntries(a, b){
-        if(a.order < b.order){ return -1; }
-        if(a.order > b.order){ return 1; }
-        if(a.order === b.order){ return 0;}
-    }
+        return groups.sort((a, b)=>compareAscByProp(a, b, "order"));
+    }    
 
     render(){
         const {
