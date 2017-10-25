@@ -1,19 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { sortable } from "react-sortable";
+import { arrayMove } from "react-sortable-hoc";
 import { Button, Header, Icon, Modal } from "semantic-ui-react";
 
-import ReorderGroupItem from "./ReorderGroupItem";
+import { SortableGroupItem, SortableGroupList } from "./SortableComponents";
 
-const SortableItem = sortable(ReorderGroupItem);
-
+import { compareAscByProp } from "../../lib/sort";
 
 class ReorderGroupsModal extends Component {
     constructor(props){
         super(props);
 
         this.state = {
-            draggingIndex: null,
             groupsAsArray: [],
             isModalOpen: false
         }
@@ -24,13 +22,12 @@ class ReorderGroupsModal extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        let tmpArray = nextProps.groups.toArray().sort(this._sortItems);
+        let tmpArray = nextProps.groups.toArray().sort((a, b)=>compareAscByProp(a,b,"order"));
         //Remove the "Uncategorized" group
         tmpArray.pop();
 
-        const groupsAsArray = tmpArray.map((group)=>group.name);
         this.setState({
-            groupsAsArray
+            groupsAsArray: tmpArray
         });
     }
 
@@ -46,44 +43,18 @@ class ReorderGroupsModal extends Component {
         });
     }
 
-    _sortItems(a, b){
-        if (a.order < b.order) return -1;
-        if (a.order > b.order) return 1;
-        if (a.order === b.order) return 0;
-    }
-
     _reorderComplete(reorderedObj){
-        console.log(reorderedObj);
-        if(reorderedObj.hasOwnProperty("draggingIndex")){
-            this.setState({
-                draggingIndex: reorderedObj.draggingIndex
-            })
-        }
-        if(reorderedObj.hasOwnProperty("items")){
-            this.setState({
-                groupsAsArray: reorderedObj.items
-            });
-        }
-        
+        this.setState({
+            groupsAsArray: arrayMove(this.state.groupsAsArray, reorderedObj.oldIndex, reorderedObj.newIndex)
+        });
     }
 
     _buildReorderer(){
-        const { draggingIndex, groupsAsArray } = this.state;
-        console.log(groupsAsArray);
-        const reorderItems = groupsAsArray.map((group, index)=>{
-                return (
-                    <SortableItem
-                        key={index}
-                        updateState={this._reorderComplete}
-                        items={groupsAsArray}
-                        draggingIndex={draggingIndex}
-                        outline="list"
-                        sortId={index}
-                    >{group}</SortableItem>
-                );
-        });
-
-        return (<div>{reorderItems}</div>);
+        const { groupsAsArray } = this.state;
+        
+        return (
+            <SortableGroupList items={groupsAsArray} onSortEnd={this._reorderComplete}/>
+        );
     }
 
     render() {
