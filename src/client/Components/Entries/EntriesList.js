@@ -171,7 +171,9 @@ class EntriesList extends Component {
             nextActiveEntryId = "";
         }
 
-        this._markRead(nextActiveEntryId);
+        if(nextActiveEntryId !== ""){
+            this._markRead(nextActiveEntryId);
+        }
 
         this.setState({
             activeEntryId: nextActiveEntryId
