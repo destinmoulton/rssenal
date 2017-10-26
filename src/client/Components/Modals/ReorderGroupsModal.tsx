@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import * as React from "react";
 import { connect } from "react-redux";
 import { arrayMove } from "react-sortable-hoc";
 import { Button, Header, Icon, Modal } from "semantic-ui-react";
@@ -7,7 +7,7 @@ import { SortableGroupItem, SortableGroupList } from "./SortableComponents";
 
 import { compareAscByProp } from "../../lib/sort";
 
-class ReorderGroupsModal extends Component {
+class ReorderGroupsModal extends React.Component {
     constructor(props){
         super(props);
 

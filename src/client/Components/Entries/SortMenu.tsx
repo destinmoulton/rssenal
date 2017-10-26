@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { Component } from "react";
+import * as React from "react";
 
 import { Select } from "semantic-ui-react";
 
@@ -9,7 +9,7 @@ const MENU_OPTIONS = [
     {key: "title:asc", value: "title:asc", text: "Title"},
 ];
 
-class SortMenu extends Component {
+class SortMenu extends React.Component {
     static propTypes = {
         currentSortBy: PropTypes.string.isRequired,
         onChange: PropTypes.func.isRequired

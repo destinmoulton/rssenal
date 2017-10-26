@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { Dropdown } from "semantic-ui-react";
 
-class SelectFeedGroup extends Component {
+class SelectFeedGroup extends React.Component {
     static propTypes = {
         onChange: PropTypes.func.isRequired,
         selectedValue: PropTypes.string

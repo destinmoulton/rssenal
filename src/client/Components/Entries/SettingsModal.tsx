@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import * as React from "react";
 import { connect } from "react-redux";
 
 import { Button, Header, Icon, Modal, Radio } from "semantic-ui-react";
 
 import { changeSetting } from "../../redux/actions/settings.actions";
 
-class SettingsModal extends Component {
+class SettingsModal extends React.Component {
     constructor(props){
         super(props);
 

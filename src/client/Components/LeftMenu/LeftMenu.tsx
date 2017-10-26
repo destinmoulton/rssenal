@@ -14,7 +14,7 @@ import GroupItem from "./GroupItem";
 
 import { compareAscByProp } from "../../lib/sort";
 
-class LeftMenu extends Component {
+class LeftMenu extends React.Component {
     constructor(props){
         super(props);
 

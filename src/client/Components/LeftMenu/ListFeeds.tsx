@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
-import React, { Component } from "react";
+import * as React from "react";
 import { connect } from "react-redux";
 
 import FeedItem from "./FeedItem";
-class ListFeeds extends Component {
+class ListFeeds extends React.Component {
     static propTypes = {
         editFeed: PropTypes.func.isRequired,
         groupId: PropTypes.string.isRequired

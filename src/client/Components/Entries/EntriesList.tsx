@@ -1,5 +1,5 @@
 import { List } from "immutable";
-import React, { Component } from "react";
+import * as React from "react";
 import { connect } from "react-redux";
 
 import { Button, Menu } from "semantic-ui-react";
@@ -10,7 +10,7 @@ import SortMenu from "./SortMenu";
 
 import { beginGetEntries, updateReadState } from "../../redux/actions/entries.actions";
 
-class EntriesList extends Component {
+class EntriesList extends React.Component {
     constructor(props){
         super(props);
 

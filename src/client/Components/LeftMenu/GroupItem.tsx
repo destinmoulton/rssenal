@@ -9,7 +9,7 @@ import ListFeeds from "./ListFeeds";
 import { beginDeleteFeedGroup, beginSaveFeedGroup } from "../../redux/actions/feedgroups.actions";
 import { changeFilter } from "../../redux/actions/filter.actions";
 
-class GroupItem extends Component {
+class GroupItem extends React.Component {
     static propTypes = {
         editFeed: PropTypes.func.isRequired,
         editGroup: PropTypes.func.isRequired,

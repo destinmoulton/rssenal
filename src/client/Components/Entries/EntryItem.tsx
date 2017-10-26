@@ -9,7 +9,7 @@ import { Icon } from "semantic-ui-react";
 
 const htmlEntities = new AllHtmlEntities();
 
-class EntryItem extends Component {
+class EntryItem extends React.Component {
     static propTypes = {
         toggleEntry: PropTypes.func.isRequired,
         isActive: PropTypes.bool.isRequired

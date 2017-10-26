@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
-import React, { Component } from "react";
+
+import * as React from "react";
 import { connect } from "react-redux";
 
 import { Icon } from "semantic-ui-react";
@@ -7,7 +7,10 @@ import { Icon } from "semantic-ui-react";
 import { beginDeleteFeed } from "../../redux/actions/feeds.actions";
 import { changeFilter } from "../../redux/actions/filter.actions";
 
-class FeedItem extends Component {
+interface FeedItemProps {
+    editFeed: 
+}
+class FeedItem extends React.Component {
     static propTypes = {
         editFeed: PropTypes.func.isRequired,
         feed: PropTypes.object.isRequired
@@ -91,7 +94,7 @@ class FeedItem extends Component {
         }
         let title = <span onClick={this._handleClickTitle} className={className}>{feed.title}{unreadEntriesCount}</span>;
 
-        let options = "";
+        let options: any = "";
         if(isOptionsVisible){
             options = this._buildOptions();
         }

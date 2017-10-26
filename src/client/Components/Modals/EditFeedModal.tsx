@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { Component } from "react";
+import * as React from "react";
 import { connect } from "react-redux";
 
 import { Button, Header, Icon, Modal } from "semantic-ui-react";
@@ -7,7 +7,7 @@ import SelectFeedGroup from "./SelectFeedGroup";
 
 import { beginUpdateFeed } from "../../redux/actions/feeds.actions";
 
-class EditFeedModal extends Component {
+class EditFeedModal extends React.Component {
     static propTypes = {
         isModalOpen: PropTypes.bool.isRequired,
         onCloseModal: PropTypes.func.isRequired,

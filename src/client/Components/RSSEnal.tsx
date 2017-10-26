@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import * as React from "react";
 import { Grid, Menu, Segment } from "semantic-ui-react";
 
 import EntriesList from "./Entries/EntriesList";
 import LeftMenu from "./LeftMenu/LeftMenu";
 
-class RSSEnal extends Component {
+class RSSEnal extends React.Component {
 
     constructor(props){
         super(props);

@@ -5,7 +5,7 @@ import { Button, Icon } from "semantic-ui-react";
 
 import ReorderGroupsModal from "../Modals/ReorderGroupsModal";
 
-class ButtonBar extends Component {
+class ButtonBar extends React.Component {
     static propTypes = {
         openAddFeedModal: PropTypes.func.isRequired,
         openEditGroupModal: PropTypes.func.isRequired

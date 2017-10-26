@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
-import React, { Component } from "react";
+import * as React from "react";
 import { connect } from "react-redux";
 
 import { Button, Header, Icon, Modal } from "semantic-ui-react";
 
 import { beginSaveFeedGroup } from "../../redux/actions/feedgroups.actions";
 
-class GroupEditorModal extends Component {
+class GroupEditorModal extends React.Component {
     static propTypes = {
         isModalOpen: PropTypes.bool.isRequired,
         onCloseModal: PropTypes.func.isRequired,

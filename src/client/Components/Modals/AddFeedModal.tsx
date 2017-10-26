@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { Component } from "react";
+import * as React from "react";
 import { connect } from "react-redux";
 
 import { Button, Form, Icon, Header, Message, Modal, Segment } from "semantic-ui-react";
@@ -20,7 +20,7 @@ const INITIAL_STATE = {
     formError: ""
 };
 
-class AddFeedModal extends Component {
+class AddFeedModal extends React.Component {
     static propTypes = {
         isModalOpen: PropTypes.bool.isRequired,
         onCloseModal: PropTypes.func.isRequired
