@@ -1,4 +1,4 @@
-import { List } from "immutable";
+import { OrderedMap } from "immutable";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -10,16 +10,32 @@ import SortMenu from "./SortMenu";
 
 import { beginGetEntries, updateReadState } from "../../redux/actions/entries.actions";
 
-class EntriesList extends React.Component {
-    constructor(props){
-        super(props);
+import { IDispatch, IEntry, IFilter, IRootStoreState, TEntries, TEntryID, TFeedgroups, TFeeds} from "../../interfaces";
 
-        this.state = {
-            sortBy: "publish_date:asc",
-            activeEntryId: "",
-            currentTitle: "",
-            processedEntries: List()
-        };
+interface IMapStateProps {
+    entries: TEntries;
+    groups: TFeedgroups;
+    feeds: TFeeds;
+    filter: IFilter;
+}
+
+interface IMapDispatchProps {
+    markEntryRead: (entry: IEntry)=>void;
+    getEntries: ()=>void;
+}
+
+interface EntriesListProps extends IMapStateProps, IMapDispatchProps{};
+
+class EntriesList extends React.Component<EntriesListProps> {
+    state = {
+        sortBy: "publish_date:asc",
+        activeEntryId: "",
+        currentTitle: "",
+        processedEntries: OrderedMap<TEntryID, IEntry>()
+    };
+
+    constructor(props: EntriesListProps){
+        super(props);
 
         // Setup the global/document level keypress events
         document.onkeydown = this._handleKeyDown.bind(this);
@@ -29,11 +45,11 @@ class EntriesList extends React.Component {
         this._toggleEntry = this._toggleEntry.bind(this);
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps: EntriesListProps){
         this._filterAndSortEntries(nextProps, this.state.sortBy);
     }
 
-    _filterAndSortEntries(props, sortBy){
+    _filterAndSortEntries(props: EntriesListProps, sortBy: string){
         const { entries, groups, feeds, filter } = props;
 
         let filteredEntries = entries;
@@ -41,9 +57,9 @@ class EntriesList extends React.Component {
 
         switch(filter.limit){
             case "feed":
-                filteredEntries = entries.filter((entry)=>{
+                filteredEntries = filteredEntries.filter((entry)=>{
                     return entry.feed_id === filter.id
-                })
+                }).toOrderedMap();
 
                 const activeFeed = feeds.get(filter.id);
 
@@ -58,7 +74,7 @@ class EntriesList extends React.Component {
 
                 filteredEntries = entries.filter((entry)=>{
                     return feedIds.includes(entry.feed_id);
-                })
+                }).toOrderedMap();
 
                 const activeGroup = groups.get(filter.id);                
 
@@ -74,12 +90,12 @@ class EntriesList extends React.Component {
         });
     }
 
-    _sortEntries(entries, sortBy){
+    _sortEntries(entries: TEntries, sortBy: string){
         const sortParams = sortBy.split(":");
         return entries.sort((a,b)=>this._compareEntries(a, b, sortParams[0], sortParams[1]));
     }
 
-    _compareEntries(a, b, field, order){
+    _compareEntries(a: any, b: any, field: string, order: string){
         if(order === "asc"){
             if(a[field] < b[field]){ return -1; }
             if(a[field] > b[field]){ return 1; }
@@ -90,7 +106,7 @@ class EntriesList extends React.Component {
         if(a[field] === b[field]){ return 0;}
     }
 
-    _handleChangeSort(e, obj){
+    _handleChangeSort(e: Event, obj: any){
         this.setState({
             sortBy: obj.value
         });
@@ -102,7 +118,7 @@ class EntriesList extends React.Component {
         this.props.getEntries();
     }
 
-    _handleKeyDown(e){
+    _handleKeyDown(e: React.SyntheticEvent<KeyboardEvent>){
         switch(e.key){
             case "ArrowDown":
             case "j":
@@ -117,23 +133,23 @@ class EntriesList extends React.Component {
         }
     }
 
-    _activateSiblingEntry(direction){
+    _activateSiblingEntry(direction: string){
         const { activeEntryId, processedEntries } = this.state;
 
-        let sibling = {};
+        let sibling: IEntry = null;
 
         if(activeEntryId === ""){
             sibling = processedEntries.first();
         } else {
-            let previousEntry = {};
-            let nextEntry = {};
+            let previousEntry: IEntry = null;
+            let nextEntry: IEntry = null;
             let found = false;
-            processedEntries.map((entry, entryId)=>{
+            processedEntries.map((entry)=>{
                 if(found && !nextEntry.hasOwnProperty("_id")){
                     nextEntry = entry;
                 }
 
-                if(entryId === activeEntryId){
+                if(entry._id === activeEntryId){
                     found = true;
                 }
 
@@ -165,7 +181,7 @@ class EntriesList extends React.Component {
         });
     }
 
-    _toggleEntry(entryId){
+    _toggleEntry(entryId: TEntryID){
         let nextActiveEntryId = entryId;
         if(this.state.activeEntryId === entryId){
             nextActiveEntryId = "";
@@ -180,7 +196,7 @@ class EntriesList extends React.Component {
         });
     }
 
-    _markRead(entryId){
+    _markRead(entryId: TEntryID){
         const { entries, markEntryRead } = this.props;
 
         markEntryRead(entries.get(entryId));
@@ -189,15 +205,14 @@ class EntriesList extends React.Component {
     render() {
         const { activeEntryId, currentTitle, processedEntries, sortBy } = this.state;
 
-        let entryList = [];
-        processedEntries.map((entry)=>{
-            const el =  <EntryItem 
-                            key={entry._id}
-                            entry={entry}
-                            toggleEntry={this._toggleEntry}
-                            isActive={(entry._id === activeEntryId)}/>;
-
-            entryList.push(el);
+        const entryList = processedEntries.map((entry)=>{
+            return (
+                <EntryItem 
+                    key={entry._id}
+                    entry={entry}
+                    toggleEntry={this._toggleEntry}
+                    isActive={(entry._id === activeEntryId)}/>
+            )
         })
         return (
             <div>
@@ -220,7 +235,7 @@ class EntriesList extends React.Component {
     }
 }
 
-const mapStateToProps = (state)=>{
+const mapStateToProps = (state: IRootStoreState): IMapStateProps =>{
     const { entries, feedgroups, feeds, filter } = state;
     return {
         entries: entries.entries,
@@ -230,7 +245,7 @@ const mapStateToProps = (state)=>{
     }
 }
 
-const mapDispatchToProps = (dispatch)=>{
+const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchProps =>{
     return {
         markEntryRead: (entry)=>dispatch(updateReadState(entry, true)),
         getEntries: ()=>dispatch(beginGetEntries())
