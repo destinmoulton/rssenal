@@ -1,4 +1,4 @@
-
+import { Map } from "immutable";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -7,14 +7,17 @@ import { Icon } from "semantic-ui-react";
 import { beginDeleteFeed } from "../../redux/actions/feeds.actions";
 import { changeFilter } from "../../redux/actions/filter.actions";
 
-import { TFeedID, IFeed } from "../../interfaces";
+import { IDispatch, TFeedID, IFeed, IFeedsUnreadMap, IFilter, IRootStoreState } from "../../interfaces";
 
 interface IFeedItemProps {
     editFeed: (feed: IFeed)=>void;
     feed: IFeed;
     beginDeleteFeed: (feedId: TFeedID)=>void;
     changeFilter: (newFilter: object)=>void;
+    filter: IFilter;
+    unreadMapFeeds: Map<TFeedID, number>;
 }
+
 class FeedItem extends React.Component<IFeedItemProps> {
     state = {
         isOptionsVisible: false
@@ -107,7 +110,7 @@ class FeedItem extends React.Component<IFeedItemProps> {
         );
     }
 }
-const mapStateToProps = (state)=>{
+const mapStateToProps = (state: IRootStoreState)=>{
     const { feeds, filter } = state;
     return {
         unreadMapFeeds: feeds.unreadMap.feeds,
@@ -115,10 +118,10 @@ const mapStateToProps = (state)=>{
     }
 };
 
-const mapDispatchToProps = (dispatch)=>{
+const mapDispatchToProps = (dispatch: IDispatch)=>{
     return {
-        beginDeleteFeed: (feedId)=>dispatch(beginDeleteFeed(feedId)),
-        changeFilter: (newFilter)=>dispatch(changeFilter(newFilter))
+        beginDeleteFeed: (feedId: TFeedID)=>dispatch(beginDeleteFeed(feedId)),
+        changeFilter: (newFilter: IFilter)=>dispatch(changeFilter(newFilter))
     }
 }
 

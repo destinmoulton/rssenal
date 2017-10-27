@@ -10,11 +10,11 @@ import {
     FEEDS_UPDATE_COMPLETE
 } from "../actiontypes";
 
-import { IEntry, TFeedID, IFeed, IFeedsAction } from "../../interfaces";
+import { IEntry, TFeedID, IFeed, IFeedsAction, IReducerStateFeeds } from "../../interfaces";
 
 import { compareAscByProp } from "../../lib/sort";
 
-const INITIAL_STATE = {
+const INITIAL_STATE: IReducerStateFeeds = {
     feeds: OrderedMap<TFeedID, IFeed>(),
     unreadMap: {"feeds": Map<TFeedID, number>(), "groups": Map<string, number>()},
     isAddingFeed: false,

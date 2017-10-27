@@ -3,9 +3,9 @@ import {
     FILTER_CHANGE
 } from "../actiontypes"
 
-import { IFilterAction } from "../../interfaces";
+import { IFilterAction, IReducerStateFilter } from "../../interfaces";
 
-const INITIAL_STATE = {
+const INITIAL_STATE: IReducerStateFilter = {
     filter: {limit: "all"}
 };
 

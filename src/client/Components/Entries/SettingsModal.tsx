@@ -5,13 +5,20 @@ import { Button, Header, Icon, Modal, Radio } from "semantic-ui-react";
 
 import { changeSetting } from "../../redux/actions/settings.actions";
 
-class SettingsModal extends React.Component {
-    constructor(props){
-        super(props);
+import { IDispatch, IRootStoreState, ISetting } from "../../interfaces";
 
-        this.state = {
-            isModalOpen: false
-        };
+interface ISettingsModalProps {
+    changeSetting: (setting_key: string, setting_value: any)=>void;
+    settings: ISetting[];
+}
+
+class SettingsModal extends React.Component<ISettingsModalProps> {
+    state = {
+        isModalOpen: false
+    }
+
+    constructor(props: ISettingsModalProps){
+        super(props);
 
         this._handleClickOpenModal = this._handleClickOpenModal.bind(this);
         this._handleClickCloseModal = this._handleClickCloseModal.bind(this);
@@ -30,7 +37,7 @@ class SettingsModal extends React.Component {
     }
 
     _buildSettings(){
-        const { changeSetting, settings } = this.props;
+        const { settings } = this.props;
 
         return settings.map((setting)=>{
             if(setting.type==="toggle"){
@@ -39,7 +46,7 @@ class SettingsModal extends React.Component {
         });
     }
 
-    _buildRadioToggle(setting){
+    _buildRadioToggle(setting: ISetting){
         return (
             <div key={setting.key}>
                 <Radio 
@@ -51,7 +58,7 @@ class SettingsModal extends React.Component {
         );
     }
 
-    _handleChangeSetting(setting_key, setting_value){
+    _handleChangeSetting(setting_key: string, setting_value: any){
         this.props.changeSetting(setting_key, setting_value);
     }
 
@@ -86,16 +93,16 @@ class SettingsModal extends React.Component {
     }
 }
 
-const mapStateToProps = (state)=>{
+const mapStateToProps = (state: IRootStoreState)=>{
     const { settings } = state;
     return {
         settings: settings.settings
     }
 }
 
-const mapDispatchToProps = (dispatch)=>{
+const mapDispatchToProps = (dispatch: IDispatch)=>{
     return {
-        changeSetting: (setting_key, setting_value)=>dispatch(changeSetting(setting_key, setting_value))
+        changeSetting: (setting_key: string, setting_value: any)=>dispatch(changeSetting(setting_key, setting_value))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsModal);

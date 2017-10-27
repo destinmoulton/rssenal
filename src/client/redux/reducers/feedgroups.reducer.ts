@@ -11,9 +11,9 @@ import {
     FEEDGROUPS_UPDATE_COMPLETE
 } from "../actiontypes";
 
-import { TFeedgroupID, IFeedgroup, IFeedgroupAction } from "../../interfaces";
+import { TFeedgroupID, IFeedgroup, IFeedgroupAction, IReducerStateFeedgroups } from "../../interfaces";
 
-const INITIAL_STATE = {
+const INITIAL_STATE: IReducerStateFeedgroups = {
     groups: OrderedMap<TFeedgroupID, IFeedgroup>(),
     hasFeedGroups: false,
     isDeletingFeedGroup: false,

@@ -5,9 +5,9 @@ import {
     ENTRIES_GET_COMPLETE
 } from "../actiontypes";
 
-import { TEntryID, IEntry, IEntriesAction } from "../../interfaces";
+import { TEntryID, IEntry, IEntriesAction, IReducerStateEntries } from "../../interfaces";
 
-const INITIAL_STATE = {
+const INITIAL_STATE: IReducerStateEntries = {
     entries: OrderedMap<TEntryID, IEntry>()
 };
 

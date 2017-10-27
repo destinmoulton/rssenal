@@ -1,16 +1,15 @@
-import PropTypes from "prop-types";
-import React, { Component } from 'react';
+import * as React from 'react';
 
 import { Button, Icon } from "semantic-ui-react";
 
 import ReorderGroupsModal from "../Modals/ReorderGroupsModal";
 
-class ButtonBar extends React.Component {
-    static propTypes = {
-        openAddFeedModal: PropTypes.func.isRequired,
-        openEditGroupModal: PropTypes.func.isRequired
-    }
+interface IButtonBarProps {
+    openAddFeedModal: (newFeed: object)=>void;
+    openEditGroupModal: (groupDefault: object)=>void;
+}
 
+class ButtonBar extends React.Component<IButtonBarProps> {
     _handleAddGroup(){
         this.props.openEditGroupModal({_id:"", name:""});
     }

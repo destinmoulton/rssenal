@@ -6,26 +6,30 @@ import striptags from "striptags";
 
 import { Icon } from "semantic-ui-react";
 
-import { TEntryID } from "../../interfaces";
+import { TEntryID, IEntry, IFeeds, IRootStoreState, ISetting } from "../../interfaces";
 
 const htmlEntities = new AllHtmlEntities();
 
 interface IEntryItemProps {
+    entry: IEntry;
+    feeds: IFeeds;
     toggleEntry: (entryId: TEntryID)=>void;
     isActive: boolean;
+    settings: ISetting[];
 }
 
 class EntryItem extends React.Component<IEntryItemProps> {
 
+    state = {
+        shouldShowImages: false
+    };
+
     constructor(props: IEntryItemProps){
         super(props);
 
-        this.state = {
-            shouldShowImages: false
-        };
     }
 
-    componentWillReceiveProps({ settings }){
+    componentWillReceiveProps({ settings }: IEntryItemProps){
         let shouldShowImages = false;
         settings.forEach((setting)=>{
             if(setting.key === "show_images"){
@@ -62,7 +66,7 @@ class EntryItem extends React.Component<IEntryItemProps> {
         const { entry, feeds } = this.props;
 
         const activeFeed = feeds.get(entry.feed_id);
-        const creator = (entry.creator !== undefined || entry.creator !== "" || entry.creator !== "undefined") ? " by "+ entry.creator : "";
+        const creator = (entry.creator !== undefined || entry.creator !== "") ? " by "+ entry.creator : "";
         const timeAgo = moment(entry.publish_date).fromNow()
 
         const info = <div className="rss-entry-info-container">{activeFeed.title}{creator} -- {timeAgo}</div>;
@@ -88,7 +92,7 @@ class EntryItem extends React.Component<IEntryItemProps> {
     render() {
         const { entry, isActive } = this.props;
 
-        let content = "";
+        let content = null;
         if(isActive){
             content = this._getActiveEntryContent();
         }
@@ -107,7 +111,7 @@ class EntryItem extends React.Component<IEntryItemProps> {
     }
 }
 
-const mapStateToProps = (state)=>{
+const mapStateToProps = (state: IRootStoreState)=>{
     const { feeds, settings } = state;
     return {
         feeds: feeds.feeds,

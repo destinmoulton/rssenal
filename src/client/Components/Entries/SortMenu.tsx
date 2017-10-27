@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import * as React from "react";
 
 import { Select } from "semantic-ui-react";
@@ -9,21 +8,19 @@ const MENU_OPTIONS = [
     {key: "title:asc", value: "title:asc", text: "Title"},
 ];
 
-class SortMenu extends React.Component {
-    static propTypes = {
-        currentSortBy: PropTypes.string.isRequired,
-        onChange: PropTypes.func.isRequired
-    };
+interface ISortMenuProps {
+    currentSortBy: string;
+    onChange: ()=>void;
+}
 
-    render() {
-        const { currentSortBy, onChange } = this.props;
-        return (
-            <Select
-                options={MENU_OPTIONS}
-                onChange={onChange}
-                defaultValue={currentSortBy}/>
-        );
-    }
+const SortMenu = (props: ISortMenuProps)=>{
+    const { currentSortBy, onChange } = props;
+    return (
+        <Select
+            options={MENU_OPTIONS}
+            onChange={onChange}
+            defaultValue={currentSortBy}/>
+    );
 }
 
 export default SortMenu;

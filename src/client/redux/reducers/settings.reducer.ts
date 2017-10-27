@@ -3,9 +3,9 @@ import {
     SETTINGS_CHANGE
 } from "../actiontypes";
 
-import {ISettingsAction} from "../../interfaces";
+import { ISettingsAction, IReducerStateSettings} from "../../interfaces";
 
-const INITIAL_STATE = {
+const INITIAL_STATE: IReducerStateSettings = {
     settings: [
         {
             key: "show_images",
