@@ -1,21 +1,23 @@
 import { AllHtmlEntities } from "html-entities";
-import moment from "moment";
-import PropTypes from "prop-types";
-import React, { Component } from 'react';
+import * as moment from "moment";
+import * as React from 'react';
 import { connect } from "react-redux";
 import striptags from "striptags";
 
 import { Icon } from "semantic-ui-react";
 
+import { TEntryID } from "../../interfaces";
+
 const htmlEntities = new AllHtmlEntities();
 
-class EntryItem extends React.Component {
-    static propTypes = {
-        toggleEntry: PropTypes.func.isRequired,
-        isActive: PropTypes.bool.isRequired
-    };
+interface IEntryItemProps {
+    toggleEntry: (entryId: TEntryID)=>void;
+    isActive: boolean;
+}
 
-    constructor(props){
+class EntryItem extends React.Component<IEntryItemProps> {
+
+    constructor(props: IEntryItemProps){
         super(props);
 
         this.state = {
@@ -23,9 +25,7 @@ class EntryItem extends React.Component {
         };
     }
 
-    componentWillReceiveProps(nextProps){
-        const { settings } = nextProps;
-
+    componentWillReceiveProps({ settings }){
         let shouldShowImages = false;
         settings.forEach((setting)=>{
             if(setting.key === "show_images"){
@@ -38,7 +38,7 @@ class EntryItem extends React.Component {
         })
     }
 
-    _toggleEntry(entryId){
+    _toggleEntry(entryId: TEntryID){
         const { toggleEntry } = this.props;
 
         toggleEntry(entryId);

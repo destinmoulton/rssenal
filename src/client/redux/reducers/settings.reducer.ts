@@ -3,6 +3,8 @@ import {
     SETTINGS_CHANGE
 } from "../actiontypes";
 
+import {ISettingsAction} from "../../interfaces";
+
 const INITIAL_STATE = {
     settings: [
         {
@@ -20,14 +22,14 @@ const INITIAL_STATE = {
     ]
 };
 
-function settingsReducer(state = INITIAL_STATE, action){
+function settingsReducer(state = INITIAL_STATE, action: ISettingsAction){
     switch(action.type){
         case SETTINGS_CHANGE:
             const { settings } = state;
 
             const newSettings = settings.map((setting)=>{
                 if(setting.key === action.setting_key){
-                    const newSetting = Object.assign({}, setting);
+                    const newSetting = {...setting};
                     newSetting.value = action.setting_value;
                     return newSetting;
                 } else {

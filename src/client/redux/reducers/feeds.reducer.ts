@@ -10,21 +10,18 @@ import {
     FEEDS_UPDATE_COMPLETE
 } from "../actiontypes";
 
+import { IEntry, TFeedID, IFeed, IFeedsAction } from "../../interfaces";
+
+import { compareAscByProp } from "../../lib/sort";
 
 const INITIAL_STATE = {
-    feeds: OrderedMap(),
-    unreadMap: {"feeds": Map(), "groups": Map()},
+    feeds: OrderedMap<TFeedID, IFeed>(),
+    unreadMap: {"feeds": Map<TFeedID, number>(), "groups": Map<string, number>()},
     isAddingFeed: false,
     isUpdatingFeed: false
 }
 
-function sortFeeds(a, b){
-    if(a.title < b.title){ return -1; }
-    if(a.title > b.title){ return 1; }
-    if(a.title === b.title){ return 0;}
-}
-
-function feedsReducer(state = INITIAL_STATE, action){
+function feedsReducer(state = INITIAL_STATE, action: IFeedsAction){
     switch(action.type){
         case FEEDS_ADD_BEGIN:
             return {
@@ -32,7 +29,7 @@ function feedsReducer(state = INITIAL_STATE, action){
                 isAddingFeed: true
             }
         case FEEDS_ADD_COMPLETE: {
-            const newFeeds = state.feeds.push(action.feed).sort(sortFeeds);
+            const newFeeds = state.feeds.set(action.feed._id, action.feed).sort((a: IFeed, b: IFeed)=>compareAscByProp(a, b, "title"));
             return {
                 ...state,
                 feeds: newFeeds,
@@ -66,7 +63,7 @@ function feedsReducer(state = INITIAL_STATE, action){
             }
         }
         case FEEDS_GETALL_COMPLETE:{
-            const arrayMap = action.feeds.map((feed)=>{
+            const arrayMap = action.feeds.map((feed: IFeed)=>{
                 return [feed._id, feed];
             });
             const mappedFeeds = OrderedMap(arrayMap);
@@ -77,24 +74,24 @@ function feedsReducer(state = INITIAL_STATE, action){
         }
         case FEEDS_SETALL_UNREAD_COUNT:{
             const { feeds } = state;
-            let unreadFeeds = Map();
-            let unreadGroups = Map();
+            let unreadFeeds = Map<string, number>();
+            let unreadGroups = Map<string, number>();
 
-            action.entries.map((entry)=>{
+            action.entries.map((entry: IEntry)=>{
                 if(!entry.has_read){
                     const feed = feeds.get(entry.feed_id);
 
                     if(!unreadFeeds.has(feed._id)){
                         unreadFeeds = unreadFeeds.set(feed._id, 1);
                     } else {
-                        const countUnread = unreadFeeds.get(feed._id);
+                        const countUnread: number = unreadFeeds.get(feed._id);
                         unreadFeeds = unreadFeeds.set(feed._id, countUnread + 1);
                     }
 
                     if(!unreadGroups.has(feed.feedgroup_id)){
                         unreadGroups = unreadGroups.set(feed.feedgroup_id, 1);
                     } else {
-                        const countUnread = unreadGroups.get(feed.feedgroup_id);
+                        const countUnread: number = unreadGroups.get(feed.feedgroup_id);
                         unreadGroups = unreadGroups.set(feed.feedgroup_id, countUnread + 1);
                     }
                 }
@@ -114,7 +111,7 @@ function feedsReducer(state = INITIAL_STATE, action){
         case FEEDS_UPDATE_COMPLETE:{
             const { feeds } = state;
 
-            const newFeeds = feeds.set(action.feed._id, action.feed).sort(sortFeeds);
+            const newFeeds = feeds.set(action.feed._id, action.feed).sort((a: IFeed, b: IFeed)=>compareAscByProp(a, b, "title"));
             return {
                 ...state,
                 feeds: newFeeds,

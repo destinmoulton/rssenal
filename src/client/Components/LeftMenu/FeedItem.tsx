@@ -7,20 +7,21 @@ import { Icon } from "semantic-ui-react";
 import { beginDeleteFeed } from "../../redux/actions/feeds.actions";
 import { changeFilter } from "../../redux/actions/filter.actions";
 
-interface FeedItemProps {
-    editFeed: 
-}
-class FeedItem extends React.Component {
-    static propTypes = {
-        editFeed: PropTypes.func.isRequired,
-        feed: PropTypes.object.isRequired
-    };
-    constructor(props){
-        super(props);
+import { TFeedID, IFeed } from "../../interfaces";
 
-        this.state = {
-            isOptionsVisible: false
-        }
+interface IFeedItemProps {
+    editFeed: (feed: IFeed)=>void;
+    feed: IFeed;
+    beginDeleteFeed: (feedId: TFeedID)=>void;
+    changeFilter: (newFilter: object)=>void;
+}
+class FeedItem extends React.Component<IFeedItemProps> {
+    state = {
+        isOptionsVisible: false
+    };
+
+    constructor(props: IFeedItemProps){
+        super(props);
 
         this._handleClickDelete = this._handleClickDelete.bind(this);
         this._handleClickEdit = this._handleClickEdit.bind(this);

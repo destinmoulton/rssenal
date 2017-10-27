@@ -5,11 +5,13 @@ import {
     ENTRIES_GET_COMPLETE
 } from "../actiontypes";
 
+import { TEntryID, IEntry, IEntriesAction } from "../../interfaces";
+
 const INITIAL_STATE = {
-    entries: OrderedMap()
+    entries: OrderedMap<TEntryID, IEntry>()
 };
 
-function entriesReducer(state = INITIAL_STATE, action){
+function entriesReducer(state = INITIAL_STATE, action: IEntriesAction){
     switch(action.type){
         case ENTRIES_GET_COMPLETE: {
             const arrayMap = action.entries.map((entry)=>{

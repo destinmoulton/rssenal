@@ -5,15 +5,16 @@ import {
     FEEDGROUPS_RECEIVED,
     FEEDGROUPS_ADD_BEGIN,
     FEEDGROUPS_ADD_COMPLETE,
-    FEEDGROUPS_DECREMENT_UNREAD,
     FEEDGROUPS_DELETE_BEGIN,
     FEEDGROUPS_DELETE_COMPLETE,
     FEEDGROUPS_UPDATE_BEGIN,
     FEEDGROUPS_UPDATE_COMPLETE
 } from "../actiontypes";
 
+import { TFeedgroupID, IFeedgroup, IFeedgroupAction } from "../../interfaces";
+
 const INITIAL_STATE = {
-    groups: OrderedMap(),
+    groups: OrderedMap<TFeedgroupID, IFeedgroup>(),
     hasFeedGroups: false,
     isDeletingFeedGroup: false,
     isFetchingFeedGroups: false,
@@ -26,7 +27,7 @@ const UNCATEGORIZED_FEEDGROUP = {
     order: Infinity
 };
 
-const feedGroupsReducer = function(state = INITIAL_STATE, action){
+const feedGroupsReducer = function(state = INITIAL_STATE, action: IFeedgroupAction){
     switch(action.type){
         case FEEDGROUPS_FETCHING:
             return {
@@ -58,17 +59,6 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
                 isSavingFeedGroup: false
             }
         }
-        case FEEDGROUPS_DECREMENT_UNREAD:{
-            const feedgroup = state.groups.get(action.groupId);
-            feedgroup.unread_count -= 1;
-
-            const newFeedgroups = state.groups.set(action.groupId, feedgroup);
-
-            return {
-                ...state,
-                groups: newFeedgroups
-            }
-        }
         case FEEDGROUPS_DELETE_BEGIN: 
             return {
                 ...state,
@@ -76,11 +66,10 @@ const feedGroupsReducer = function(state = INITIAL_STATE, action){
             }
         case FEEDGROUPS_DELETE_COMPLETE: {
             const groups = state.groups.delete(action.groupId);
-            const groupsUnreadMap = state.groupsUnreadMap.delete(action.groupId);
+
             return {
                 ...state,
                 groups,
-                groupsUnreadMap,
                 isDeletingFeedGroup: false
             }
         }
