@@ -1,3 +1,13 @@
+import { Map, OrderedMap } from "immutable";
+
+export interface IDispatch {
+    <R>(asyncAction: (dispatch: IDispatch, getState: () => IRootStoreState) => R): R;
+    <R>(asyncAction: (dispatch: IDispatch) => R): R;
+    // (neverAction: (dispatch: Dispatch, getState: () => GetState) => never): never;
+    (action: object): void;
+    // (action: Thunk): ; // thunks in this app must return a promise
+}
+
 export type TEntryID = string;
 
 export interface IEntry {
@@ -30,12 +40,19 @@ export interface IFeed {
     last_updated: string;
 }
 
+export type IFeeds = OrderedMap<TFeedID, IFeed>;
+
 export interface IFeedsAction {
     type: string;
     feedId?: TFeedID;
     feed?: IFeed;
     feeds?: IFeed[];
     entries?: IEntry[];
+}
+
+export interface IFeedsUnreadMap {
+    feeds: Map<TFeedID, number>;
+    groups: Map<TFeedgroupID, number>;
 }
 
 export type TFeedgroupID = string;
@@ -53,6 +70,10 @@ export interface IFeedgroupAction {
     group?: IFeedgroup;
 }
 
+export interface IFilter {
+    id?: string;
+    limit: string;
+}
 export interface IFilterAction {
     type: string;
     newFilter: object;
@@ -62,4 +83,46 @@ export interface ISettingsAction{
     type: string;
     setting_key: string;
     setting_value: any;
+}
+
+export interface IReducerStateEntries{
+    entries: OrderedMap<TEntryID, IEntry>;
+}
+
+export interface IReducerStateFilter{
+    filter: IFilter;    
+}
+
+export interface IReducerStateFeedgroups {
+    groups: OrderedMap<TFeedgroupID, IFeedgroup>;
+    hasFeedGroups: boolean;
+    isDeletingFeedGroup: boolean;
+    isFetchingFeedGroups: boolean;
+    isSavingFeedGroup: boolean;
+}
+
+export interface IReducerStateFeeds {
+    feeds: IFeeds;
+    unreadMap: IFeedsUnreadMap;
+    isAddingFeed: boolean;
+    isUpdatingFeed: boolean;
+}
+
+export interface IReducerStateSettings {
+    settings: ISetting[];
+}
+
+export interface IRootStoreState {
+    entries: IReducerStateEntries;
+    feedgroups: IReducerStateFeedgroups;    
+    feeds: IReducerStateFeeds;
+    filter: IReducerStateFilter;
+    settings: IReducerStateSettings;
+}
+
+export interface ISetting {
+    key: string;
+    name: string;
+    type: string;
+    value: any;
 }
