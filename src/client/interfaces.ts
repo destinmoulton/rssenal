@@ -28,6 +28,8 @@ export interface IEntriesAction {
     entries?: IEntry[];
 }
 
+export type TEntries = OrderedMap<TEntryID, IEntry>;
+
 export type TFeedID = string;
 
 export interface IFeed {
@@ -40,7 +42,7 @@ export interface IFeed {
     last_updated: string;
 }
 
-export type IFeeds = OrderedMap<TFeedID, IFeed>;
+export type TFeeds = OrderedMap<TFeedID, IFeed>;
 
 export interface IFeedsAction {
     type: string;
@@ -70,6 +72,8 @@ export interface IFeedgroupAction {
     group?: IFeedgroup;
 }
 
+export type TFeedgroups = OrderedMap<TFeedgroupID, IFeedgroup>;
+
 export interface IFilter {
     id?: string;
     limit: string;
@@ -86,7 +90,7 @@ export interface ISettingsAction{
 }
 
 export interface IReducerStateEntries{
-    entries: OrderedMap<TEntryID, IEntry>;
+    entries: TEntries;
 }
 
 export interface IReducerStateFilter{
@@ -94,7 +98,7 @@ export interface IReducerStateFilter{
 }
 
 export interface IReducerStateFeedgroups {
-    groups: OrderedMap<TFeedgroupID, IFeedgroup>;
+    groups: TFeedgroups;
     hasFeedGroups: boolean;
     isDeletingFeedGroup: boolean;
     isFetchingFeedGroups: boolean;
@@ -102,7 +106,7 @@ export interface IReducerStateFeedgroups {
 }
 
 export interface IReducerStateFeeds {
-    feeds: IFeeds;
+    feeds: TFeeds;
     unreadMap: IFeedsUnreadMap;
     isAddingFeed: boolean;
     isUpdatingFeed: boolean;
