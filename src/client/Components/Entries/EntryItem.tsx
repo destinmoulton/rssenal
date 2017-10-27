@@ -6,13 +6,13 @@ import striptags from "striptags";
 
 import { Icon } from "semantic-ui-react";
 
-import { TEntryID, IEntry, IFeeds, IRootStoreState, ISetting } from "../../interfaces";
+import { TEntryID, IEntry, TFeeds, IRootStoreState, ISetting } from "../../interfaces";
 
 const htmlEntities = new AllHtmlEntities();
 
 interface IEntryItemProps {
     entry: IEntry;
-    feeds: IFeeds;
+    feeds: TFeeds;
     toggleEntry: (entryId: TEntryID)=>void;
     isActive: boolean;
     settings: ISetting[];
