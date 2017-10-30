@@ -3,7 +3,9 @@ import {
     FILTER_CHANGE
 } from "../actiontypes";
 
-export function changeFilter(newFilter){
+import { IFilter } from "../../interfaces";
+
+export function changeFilter(newFilter: IFilter){
     return {
         type: FILTER_CHANGE,
         newFilter

@@ -12,8 +12,10 @@ import {
 
 import { feedsDecrementUnread, feedsSetAllUnreadCount } from "./feeds.actions";
 
+import { IDispatch, IEntry, IGetState, TEntries } from "../../interfaces";
+
 export function beginGetEntries(){
-    return (dispatch)=>{
+    return (dispatch: IDispatch)=>{
         dispatch(beginGetProcess());
         dispatch(getEntries());
     }
@@ -26,7 +28,7 @@ function beginGetProcess(){
 }
 
 function getEntries(){
-    return (dispatch, getState)=>{
+    return (dispatch: IDispatch, getState: IGetState)=>{
         const { settings } = getState();
         let showUnread = true;
         settings.settings.forEach((setting)=>{
@@ -56,21 +58,21 @@ function getEntries(){
     }
 }
 
-function getEntriesComplete(entries){
+function getEntriesComplete(entries: TEntries){
     return {
         type: ENTRIES_GET_COMPLETE,
         entries
     }
 }
 
-function entriesUpdateUnreadCount(entries){
-    return (dispatch)=>{
+function entriesUpdateUnreadCount(entries: TEntries){
+    return (dispatch: IDispatch)=>{
         dispatch(feedsSetAllUnreadCount(entries));
     }
 }
 
-export function updateReadState(entry, hasRead){
-    return (dispatch)=>{
+export function updateReadState(entry: IEntry, hasRead: boolean){
+    return (dispatch: IDispatch)=>{
         const url = API_ENTRIES_BASE + entry._id;
         const init = {
             method: "PUT",

@@ -3,10 +3,8 @@ import {
     FEEDGROUPS_RECEIVED,
     FEEDGROUPS_ADD_BEGIN,
     FEEDGROUPS_ADD_COMPLETE,
-    FEEDGROUPS_DECREMENT_UNREAD,
     FEEDGROUPS_DELETE_BEGIN,
     FEEDGROUPS_DELETE_COMPLETE,
-    FEEDGROUPS_SETALL_UNREAD_COUNT,
     FEEDGROUPS_UPDATE_BEGIN,
     FEEDGROUPS_UPDATE_COMPLETE
 } from "../actiontypes";
@@ -16,8 +14,10 @@ import {
     API_FEEDGROUPS_GET_ALL
 } from "../apiendpoints";
 
+import { IDispatch, IFeedgroup, TFeedgroupID } from "../../interfaces";
+
 export function getAllFeedGroups(){
-    return (dispatch)=>{
+    return (dispatch: IDispatch)=>{
         dispatch(fetchingInProgress());
         dispatch(fetchFeedGroups());
     }
@@ -30,7 +30,7 @@ function fetchingInProgress(){
 }
 
 function fetchFeedGroups(){
-    return (dispatch)=>{
+    return (dispatch: IDispatch)=>{
         const url = API_FEEDGROUPS_GET_ALL;
         const init = {
             method: "GET"
@@ -45,15 +45,15 @@ function fetchFeedGroups(){
     }
 }
 
-function fetchingComplete(data){
+function fetchingComplete(data: IFeedgroup[]){
     return {
         type: FEEDGROUPS_RECEIVED,
         groups: data
     }
 }
 
-export function beginSaveFeedGroup(groupInfo){
-    return (dispatch)=>{
+export function beginSaveFeedGroup(groupInfo: IFeedgroup){
+    return (dispatch: IDispatch)=>{
         if(groupInfo._id !== ""){
             dispatch(updatingInProgress());
             dispatch(updateFeedGroup(groupInfo._id, groupInfo.name));
@@ -70,8 +70,8 @@ function addingInProgress(){
     }
 }
 
-function addFeedGroup(newGroupName){
-    return (dispatch)=>{
+function addFeedGroup(newGroupName: string){
+    return (dispatch: IDispatch)=>{
         const url = API_FEEDGROUPS_BASE;
         const init = {
             method: "POST",
@@ -91,7 +91,7 @@ function addFeedGroup(newGroupName){
     }
 }
 
-function addingFeedGroupComplete(group){
+function addingFeedGroupComplete(group: IFeedgroup){
     return {
         type: FEEDGROUPS_ADD_COMPLETE,
         group
@@ -104,8 +104,8 @@ function updatingInProgress(){
     };
 }
 
-function updateFeedGroup(groupId, newGroupName){
-    return (dispatch)=>{
+function updateFeedGroup(groupId: TFeedgroupID, newGroupName: string){
+    return (dispatch: IDispatch)=>{
         const url = API_FEEDGROUPS_BASE + groupId;
         const init = {
             method: "PUT",
@@ -126,15 +126,15 @@ function updateFeedGroup(groupId, newGroupName){
     }
 }
 
-function updatingComplete(newGroup){
+function updatingComplete(newGroup: IFeedgroup){
     return {
         type: FEEDGROUPS_UPDATE_COMPLETE,
         group: newGroup
     }
 }
 
-export function beginDeleteFeedGroup(groupId){
-    return (dispatch)=>{
+export function beginDeleteFeedGroup(groupId: TFeedgroupID){
+    return (dispatch: IDispatch)=>{
         dispatch(deleteInProgress());
         dispatch(deleteFeedGroup(groupId));
     }
@@ -146,8 +146,8 @@ function deleteInProgress(){
     }
 }
 
-function deleteFeedGroup(groupId){
-    return (dispatch)=>{
+function deleteFeedGroup(groupId: TFeedgroupID){
+    return (dispatch: IDispatch)=>{
         const url = API_FEEDGROUPS_BASE + groupId;
         const init = {
             method: "DELETE"
@@ -164,7 +164,7 @@ function deleteFeedGroup(groupId){
     }
 }
 
-function deleteComplete(groupId){
+function deleteComplete(groupId: TFeedgroupID){
     return {
         type: FEEDGROUPS_DELETE_COMPLETE,
         groupId
