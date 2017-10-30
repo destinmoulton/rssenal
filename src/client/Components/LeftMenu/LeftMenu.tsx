@@ -1,5 +1,5 @@
-
-import React, {Component} from "react";
+import { OrderedMap } from "immutable";
+import * as React from "react";
 import { connect } from "react-redux";
 
 import { beginGetEntries } from "../../redux/actions/entries.actions";
@@ -14,17 +14,35 @@ import GroupItem from "./GroupItem";
 
 import { compareAscByProp } from "../../lib/sort";
 
-class LeftMenu extends React.Component {
-    constructor(props){
-        super(props);
+import { TFeeds, IFeed, IFeedgroup, IDispatch, IRootStoreState, TFeedID, TFeedgroupID } from "../../interfaces";
 
-        this.state = {
-            addFeedModalOpen: false,
-            editFeed: {},
-            editFeedModalOpen: false,
-            editGroup: {},
-            editGroupModalOpen: false
-        }
+interface IMapStateProps {
+    feeds: TFeeds;
+    hasFeedGroups: boolean;
+    groups: OrderedMap<TFeedgroupID, IFeedgroup>;
+}
+
+interface IMapDispatchProps {
+    beginGetEntries: ()=>void;
+    getAllFeedGroups: ()=>void;
+    getAllFeeds: ()=>void;
+}
+
+interface ILeftMenuProps extends IMapStateProps, IMapDispatchProps{
+
+}
+
+class LeftMenu extends React.Component<ILeftMenuProps> {
+    state = {
+        addFeedModalOpen: false,
+        editFeed: {},
+        editFeedModalOpen: false,
+        editGroup: {},
+        editGroupModalOpen: false
+    };
+
+    constructor(props: ILeftMenuProps){
+        super(props);
         
         this._handleCloseAddFeedModal = this._handleCloseAddFeedModal.bind(this);
         this._handleCloseEditFeedModal = this._handleCloseEditFeedModal.bind(this);
@@ -50,7 +68,7 @@ class LeftMenu extends React.Component {
         }
     }
 
-    _handleOpenAddFeedModal(feed){
+    _handleOpenAddFeedModal(feed: IFeed){
         this.setState({
             editFeed: feed,
             addFeedModalOpen: true
@@ -63,7 +81,7 @@ class LeftMenu extends React.Component {
         });
     }
 
-    _handleOpenEditGroupModal(group){
+    _handleOpenEditGroupModal(group: IFeedgroup){
         this.setState({
             editGroup: group,
             editGroupModalOpen: true
@@ -77,7 +95,7 @@ class LeftMenu extends React.Component {
         });
     }
 
-    _handleOpenEditFeedModal(feed){
+    _handleOpenEditFeedModal(feed: IFeed){
         this.setState({
             editFeed: feed,
             editFeedModalOpen: true
@@ -89,11 +107,7 @@ class LeftMenu extends React.Component {
             editFeed: {},
             editFeedModalOpen: false
         });
-    }
-
-    _sortGroups(groups){
-        return groups.sort((a, b)=>compareAscByProp(a, b, "order"));
-    }    
+    }   
 
     render(){
         const {
@@ -105,18 +119,18 @@ class LeftMenu extends React.Component {
         } = this.state;
 
         const { groups } = this.props;
-        const sortedGroups = this._sortGroups(groups);
+        const sortedGroups = groups.sort((a: IFeedgroup, b: IFeedgroup)=>compareAscByProp(a, b, "order"));
 
-        let listFeedGroups = [];
-        sortedGroups.map((group)=>{
-            const groupBlock = <div key={group._id} >
-                                   <GroupItem
-                                        group={group}
-                                        editGroup={this._handleOpenEditGroupModal}
-                                        editFeed={this._handleOpenEditFeedModal}
-                                    />
-                               </div>;
-            listFeedGroups.push(groupBlock);
+        let listFeedGroups = sortedGroups.map((group)=>{
+            return (
+                <div key={group._id} >
+                    <GroupItem
+                        group={group}
+                        editGroup={this._handleOpenEditGroupModal}
+                        editFeed={this._handleOpenEditFeedModal}
+                    />
+                </div>
+            );
         })
         
         return(
@@ -149,16 +163,17 @@ class LeftMenu extends React.Component {
     }
 }
 
-const mapStateToProps = (state) =>{
-    const { feedgroups } = state;
+const mapStateToProps = (state: IRootStoreState): IMapStateProps =>{
+    const { feedgroups, feeds } = state;
 
     return {
+        feeds: feeds.feeds,
         hasFeedGroups: feedgroups.hasFeedGroups,
         groups: feedgroups.groups
     }
 }
 
-const mapDispatchToProps = (dispatch)=>{
+const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchProps=>{
     return {
         beginGetEntries: ()=>dispatch(beginGetEntries()),
         getAllFeedGroups: ()=>dispatch(getAllFeedGroups()),

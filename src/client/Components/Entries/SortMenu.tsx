@@ -10,7 +10,7 @@ const MENU_OPTIONS = [
 
 interface ISortMenuProps {
     currentSortBy: string;
-    onChange: ()=>void;
+    onChange: (e: Event, obj: any)=>void;
 }
 
 const SortMenu = (props: ISortMenuProps)=>{

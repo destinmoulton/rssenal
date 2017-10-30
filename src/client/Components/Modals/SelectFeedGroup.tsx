@@ -1,30 +1,35 @@
-import PropTypes from "prop-types";
-import React, { Component } from 'react';
+import * as React from 'react';
 import { connect } from "react-redux";
 
 import { Dropdown } from "semantic-ui-react";
 
-class SelectFeedGroup extends React.Component {
-    static propTypes = {
-        onChange: PropTypes.func.isRequired,
-        selectedValue: PropTypes.string
-    }
+import { IRootStoreState, TFeedgroups } from "../../interfaces";
+interface IMapStateToProps{
+    feedgroups: TFeedgroups
+}
+
+interface ISelectFeedGroupProps extends IMapStateToProps{
+    onChange: (selectedValue: string)=>void;
+    selectedValue: string
+}
+
+class SelectFeedGroup extends React.Component<ISelectFeedGroupProps> {
 
     static defaultProps = {
         selectedValue: "0"
     }
 
-    constructor(props){
-        super(props);
+    state = {
+        selectedValue: this.props.selectedValue
+    }
 
-        this.state = {
-            selectedValue: props.selectedValue
-        }
+    constructor(props: ISelectFeedGroupProps){
+        super(props);
 
         this._handleOnChange = this._handleOnChange.bind(this);
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps: ISelectFeedGroupProps){
         if(nextProps.hasOwnProperty("selectedValue")){
             this.setState({
                 selectedValue: nextProps.selectedValue
@@ -32,7 +37,7 @@ class SelectFeedGroup extends React.Component {
         }
     }
 
-    _handleOnChange(e, dropdown){
+    _handleOnChange(e: React.FormEvent<HTMLSelectElement>, dropdown: any){
         
         const selectedValue = dropdown.value;
         this.setState({
@@ -69,16 +74,11 @@ class SelectFeedGroup extends React.Component {
         );
     }
 }
-const mapStateToProps = (state)=>{
+const mapStateToProps = (state: IRootStoreState)=>{
     const { feedgroups } = state;
     return {
         feedgroups: feedgroups.groups
     }
 }
 
-const mapDispatchToProps = (dispatch)=>{
-    return {
-        
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(SelectFeedGroup);
+export default connect(mapStateToProps)(SelectFeedGroup);

@@ -1,7 +1,6 @@
-import React, {Component} from "react";
-import PropTypes from "prop-types";
+import { Map, OrderedMap } from "immutable";
+import * as React from "react";
 import { connect } from "react-redux";
-
 import { Button, Confirm, Icon } from "semantic-ui-react";
 
 import ListFeeds from "./ListFeeds";
@@ -9,30 +8,43 @@ import ListFeeds from "./ListFeeds";
 import { beginDeleteFeedGroup, beginSaveFeedGroup } from "../../redux/actions/feedgroups.actions";
 import { changeFilter } from "../../redux/actions/filter.actions";
 
-class GroupItem extends React.Component {
-    static propTypes = {
-        editFeed: PropTypes.func.isRequired,
-        editGroup: PropTypes.func.isRequired,
-        group: PropTypes.object.isRequired
-    };
+import { IDispatch, IFeed, IFeedgroup, IFilter, IRootStoreState, TFeedgroupID, TFeedID, TFeeds } from "../../interfaces";
 
-    constructor(props){
+interface IMapStateProps {
+    filter: IFilter;
+    unreadMapGroups: Map<TFeedgroupID, number>;
+    feeds: TFeeds;
+}
+
+interface IMapDispatchProps {
+    beginDeleteFeedGroup: (groupId: TFeedgroupID)=>void;
+    changeFilter: (filter: IFilter)=>void;
+}
+
+interface IGroupItemProps extends IMapStateProps, IMapDispatchProps{
+    editFeed: (feed: IFeed)=>void;
+    editGroup: (currentGroup: IFeedgroup)=>void;
+    group: IFeedgroup;
+}
+
+class GroupItem extends React.Component<IGroupItemProps> {
+
+    state = {
+        feedsAreVisible: false,
+        optionsAreVisible: false,
+        isEditing: false,
+        isThisGroupSaving: false,
+        editGroupName: this.props.group.name
+    }
+
+    constructor(props: IGroupItemProps){
         super(props);
-
-        this.state = {
-            feedsAreVisible: false,
-            optionsAreVisible: false,
-            isEditing: false,
-            isThisGroupSaving: false,
-            editGroupName: props.group.name
-        }
 
         this._showOptions = this._showOptions.bind(this);
         this._hideOptions = this._hideOptions.bind(this);
         this._handleClickDelete = this._handleClickDelete.bind(this);
         this._handleClickEdit = this._handleClickEdit.bind(this);
         this._handleClickGroupTitle = this._handleClickGroupTitle.bind(this);
-        
         this._handleToggleFeedsVisible = this._handleToggleFeedsVisible.bind(this);
     }
 
@@ -112,8 +124,7 @@ class GroupItem extends React.Component {
     render(){
         const {
             editFeed,
-            group,
-            updatingFeedGroups
+            group
         } = this.props;
 
         const {
@@ -121,10 +132,10 @@ class GroupItem extends React.Component {
             optionsAreVisible
         } = this.state;
 
-        let toggleFeedsIcon = "";
-        let listFeeds = "";
-        let title = "";
-        let options = "";
+        let toggleFeedsIcon = null;
+        let listFeeds = null;
+        let title = null;
+        let options = null;
         
         let toggleFeedsIconClass = "caret right";
         if(feedsAreVisible){
@@ -153,20 +164,20 @@ class GroupItem extends React.Component {
     }
 }
 
-const mapStateToProps = (state)=>{
-    const { feeds, feedgroups, filter } = state;
+const mapStateToProps = (state: IRootStoreState)=>{
+    const { feeds, filter } = state;
 
     return {
-        updatingFeedGroups: feedgroups.updatingFeedGroups,
         filter: filter.filter,
-        unreadMapGroups: feeds.unreadMap.groups
+        unreadMapGroups: feeds.unreadMap.groups,
+        feeds: feeds.feeds
     };
 }
 
-const mapDispatchToProps = (dispatch)=>{
+const mapDispatchToProps = (dispatch: IDispatch)=>{
     return {
-        beginDeleteFeedGroup: (groupId)=> dispatch(beginDeleteFeedGroup(groupId)),
-        changeFilter: (newFilter)=> dispatch(changeFilter(newFilter))
+        beginDeleteFeedGroup: (groupId: TFeedgroupID)=> dispatch(beginDeleteFeedGroup(groupId)),
+        changeFilter: (newFilter: IFilter)=> dispatch(changeFilter(newFilter))
     }
 }
 

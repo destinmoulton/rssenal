@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 
 import FeedItem from "./FeedItem";
 
-import { IFeed, TFeedID, TFeedgroupID } from "../../interfaces";
+import { IFeed, TFeedID, TFeedgroupID, TFeeds } from "../../interfaces";
 
 interface IListFeeds {
-    feeds: OrderedMap<TFeedID, IFeed>;
+    feeds: TFeeds;
     editFeed: (feed: IFeed)=>void;
     groupId: TFeedgroupID;
 }
