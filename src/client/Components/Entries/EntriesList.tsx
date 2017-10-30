@@ -118,7 +118,7 @@ class EntriesList extends React.Component<EntriesListProps> {
         this.props.getEntries();
     }
 
-    _handleKeyDown(e: React.SyntheticEvent<KeyboardEvent>){
+    _handleKeyDown(e: any){
         switch(e.key){
             case "ArrowDown":
             case "j":

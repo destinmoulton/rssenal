@@ -3,13 +3,13 @@ import { connect } from "react-redux";
 
 import { Dropdown } from "semantic-ui-react";
 
-import { IRootStoreState, TFeedgroups } from "../../interfaces";
+import { IRootStoreState, TFeedgroups, TFeedgroupID } from "../../interfaces";
 interface IMapStateToProps{
     feedgroups: TFeedgroups
 }
 
 interface ISelectFeedGroupProps extends IMapStateToProps{
-    onChange: (selectedValue: string)=>void;
+    onChange: (selectedValue: TFeedgroupID)=>void;
     selectedValue: string
 }
 

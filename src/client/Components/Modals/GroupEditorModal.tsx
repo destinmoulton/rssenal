@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -6,27 +5,42 @@ import { Button, Header, Icon, Modal } from "semantic-ui-react";
 
 import { beginSaveFeedGroup } from "../../redux/actions/feedgroups.actions";
 
-class GroupEditorModal extends React.Component {
-    static propTypes = {
-        isModalOpen: PropTypes.bool.isRequired,
-        onCloseModal: PropTypes.func.isRequired,
-        group: PropTypes.object.isRequired
+import { IDispatch, IFeedgroup, IRootStoreState } from "../../interfaces";
+
+interface IMapStateToProps {
+    isSavingFeedGroup: boolean;
+}
+
+interface IMapDispatchToProps {
+    beginSaveFeedGroup: (group: any)=>void;
+}
+
+interface IGroupEditorModalProps extends IMapDispatchToProps, IMapStateToProps{
+    isModalOpen: boolean;
+    onCloseModal: ()=>void;
+    group: IFeedgroup
+}
+
+interface IGroupEditorModalState {
+    newGroup: any;
+}
+
+class GroupEditorModal extends React.Component<IGroupEditorModalProps> {
+
+    state: IGroupEditorModalState = {
+        newGroup: {}
     }
 
-    constructor(props){
+    constructor(props: IGroupEditorModalProps){
         super(props);
 
-        this.state = {
-            newGroup: {}
-        }
-        
         this._handleClose = this._handleClose.bind(this);
         this._handleSave = this._handleSave.bind(this);
         this._handleInputKeyPress = this._handleInputKeyPress.bind(this);
         this._handleInputOnChange = this._handleInputOnChange.bind(this);
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps: IGroupEditorModalProps){
         if(this.props.isSavingFeedGroup && !nextProps.isSavingFeedGroup){
             this._handleClose();
         }
@@ -51,13 +65,13 @@ class GroupEditorModal extends React.Component {
         }
     }
 
-    _handleInputKeyPress(e){
+    _handleInputKeyPress(e: any){
         if(e.key === "Enter"){
             this._handleSave();
         }
     }
 
-    _handleInputOnChange(e){
+    _handleInputOnChange(e: any){
         const { newGroup } = this.state;
         newGroup.name = e.target.value;
         this.setState({
@@ -84,7 +98,7 @@ class GroupEditorModal extends React.Component {
     _buildButtons(){
         const { isSavingFeedGroup } = this.props;
 
-        let cancelButton = "";
+        let cancelButton = null;
         if(!isSavingFeedGroup){
             cancelButton = <Button
                                 color="orange"
@@ -128,7 +142,7 @@ class GroupEditorModal extends React.Component {
             <span>
                 <Modal
                     open={isModalOpen}
-                    onClose={this._handleClickCloseModal}
+                    onClose={this._handleClose}
                     size="tiny"
                 >
                     <Header icon="plus" content={modalHeader} />
@@ -144,14 +158,14 @@ class GroupEditorModal extends React.Component {
     }
 }
 
-const mapStateToProps = (state)=>{
+const mapStateToProps = (state: IRootStoreState): IMapStateToProps=>{
     const { feedgroups } = state;
     return {
         isSavingFeedGroup: feedgroups.isSavingFeedGroup
     };
 }
 
-const mapDispatchToProps = (dispatch)=>{
+const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps=>{
     return {
         beginSaveFeedGroup: (groupInfo)=> dispatch(beginSaveFeedGroup(groupInfo))
     }

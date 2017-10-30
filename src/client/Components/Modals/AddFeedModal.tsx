@@ -1,35 +1,54 @@
-import PropTypes from "prop-types";
 import * as React from "react";
 import { connect } from "react-redux";
 
 import { Button, Form, Icon, Header, Message, Modal, Segment } from "semantic-ui-react";
 import SelectFeedGroup from "./SelectFeedGroup";
 
-import { API_FEEDVALIDATION_BASE } from "../../redux/apiendpoints.js";
+import { API_FEEDVALIDATION_BASE } from "../../redux/apiendpoints";
 
 import { beginAddFeed } from "../../redux/actions/feeds.actions";
 
+import { IDispatch, IFeed, IRootStoreState, TFeedgroupID } from "../../interfaces";
+
+interface IAddFeedModalState {
+    display: string;
+    feedInfo: IFeed;
+    isValidatingURL: boolean;
+    feedURL: string;
+    feedGroupId: TFeedgroupID;
+    formError: string;
+}
+
+interface IMapStateToProps{
+    isAddingFeed: boolean;
+}
+
+interface IMapDispatchToProps{
+    beginAddFeed: (feedInfo: any)=>void
+}
+
+interface IAddFeedModalProps extends IMapStateToProps, IMapDispatchToProps {
+    isModalOpen: boolean;
+    onCloseModal: ()=>void;
+}
+
 const DISPLAY_FORM = "FORM";
 const DISPLAY_FEED = "FEED";
-const INITIAL_STATE = {
+const INITIAL_STATE: IAddFeedModalState = {
     display: DISPLAY_FORM,
-    feedInfo: {},
+    feedInfo: null,
     isValidatingURL: false,
     feedURL: "",
     feedGroupId: "0",
     formError: ""
 };
 
-class AddFeedModal extends React.Component {
-    static propTypes = {
-        isModalOpen: PropTypes.bool.isRequired,
-        onCloseModal: PropTypes.func.isRequired
-    };
+class AddFeedModal extends React.Component<IAddFeedModalProps> {
 
-    constructor(props){
+    state = INITIAL_STATE;
+
+    constructor(props: IAddFeedModalProps){
         super(props);
-
-        this.state = INITIAL_STATE;
 
         this._handleClickAddFeed = this._handleClickAddFeed.bind(this);
         this._handleClickContinue = this._handleClickContinue.bind(this);
@@ -40,7 +59,7 @@ class AddFeedModal extends React.Component {
         this._transitionToDisplayForm = this._transitionToDisplayForm.bind(this);
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps: IAddFeedModalProps){
         if(this.props.isAddingFeed && !nextProps.isAddingFeed){
             // The feed was added so reset the state 
             // and thus close the modal
@@ -48,9 +67,9 @@ class AddFeedModal extends React.Component {
         }
     }
 
-    _handleChangeURLInput(e){
+    _handleChangeURLInput(e: React.FormEvent<HTMLInputElement>){
         this.setState({
-            feedURL: e.target.value
+            feedURL: e.currentTarget.value
         });
     }
 
@@ -85,7 +104,7 @@ class AddFeedModal extends React.Component {
         this.props.beginAddFeed(dataToAdd);
     }
 
-    _handleSelectFeedGroup(feedGroupId){
+    _handleSelectFeedGroup(feedGroupId: TFeedgroupID){
         this.setState({
             feedGroupId
         })
@@ -100,7 +119,7 @@ class AddFeedModal extends React.Component {
         })
     }
 
-    _transitionToDisplayFeed(feedObj){
+    _transitionToDisplayFeed(feedObj: IFeed){
         this.setState({
             display: DISPLAY_FEED,
             feedInfo: feedObj,
@@ -147,7 +166,7 @@ class AddFeedModal extends React.Component {
 
     _buildURLForm(){
         const { formError } = this.state;
-        let message = "";
+        let message = null;
         if(formError !== ""){
             message = <Message negative>
                         <Message.Header>{formError}</Message.Header>
@@ -235,8 +254,8 @@ class AddFeedModal extends React.Component {
             isModalOpen
         } = this.props;
 
-        let content = "";
-        let buttons = "";
+        let content = null;
+        let buttons = null;
         if(display === DISPLAY_FORM){
             content = this._buildURLForm();
             buttons = this._buildURLDisplayButtons();
@@ -266,14 +285,14 @@ class AddFeedModal extends React.Component {
     }
 }
 
-const mapStateToProps = (state)=>{
+const mapStateToProps = (state: IRootStoreState): IMapStateToProps=>{
     const { feeds } = state;
     return {
         isAddingFeed: feeds.isAddingFeed
     }
 }
 
-const mapDispatchToProps = (dispatch)=>{
+const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps=>{
     return {
         beginAddFeed: (feedInfo)=>dispatch(beginAddFeed(feedInfo))
     }

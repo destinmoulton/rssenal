@@ -7,21 +7,37 @@ import { SortableGroupItem, SortableGroupList } from "./SortableComponents";
 
 import { compareAscByProp } from "../../lib/sort";
 
-class ReorderGroupsModal extends React.Component {
-    constructor(props){
-        super(props);
+import {IRootStoreState, TFeedgroups} from "../../interfaces";
 
-        this.state = {
-            groupsAsArray: [],
-            isModalOpen: false
-        }
+interface IMapStateToProps {
+    groups: TFeedgroups
+}
+
+interface IReorderGroupsModalProps extends IMapStateToProps{
+
+}
+
+interface IReorderGroupsModalState {
+    groupsAsArray: TFeedgroups[];
+    isModalOpen: boolean;
+}
+
+class ReorderGroupsModal extends React.Component<IReorderGroupsModalProps> {
+
+    state: IReorderGroupsModalState = {
+        groupsAsArray: [],
+        isModalOpen: false
+    }
+
+    constructor(props: IReorderGroupsModalProps){
+        super(props);
 
         this._handleCloseModal = this._handleCloseModal.bind(this);
         this._handleOpenModal = this._handleOpenModal.bind(this);
         this._reorderComplete = this._reorderComplete.bind(this);
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps: IReorderGroupsModalProps){
         let tmpArray = nextProps.groups.toArray().sort((a, b)=>compareAscByProp(a,b,"order"));
         //Remove the "Uncategorized" group
         tmpArray.pop();
@@ -43,7 +59,7 @@ class ReorderGroupsModal extends React.Component {
         });
     }
 
-    _reorderComplete(reorderedObj){
+    _reorderComplete(reorderedObj: any){
         this.setState({
             groupsAsArray: arrayMove(this.state.groupsAsArray, reorderedObj.oldIndex, reorderedObj.newIndex)
         });
@@ -87,16 +103,11 @@ class ReorderGroupsModal extends React.Component {
     }
 }
 
-const mapStateToProps = (state)=>{
+const mapStateToProps = (state: IRootStoreState)=>{
     const { feedgroups } = state;
     return {
         groups: feedgroups.groups
     }
 };
 
-const mapDispatchToProps = (state)=>{
-    return {
-
-    }
-};
 export default connect(mapStateToProps)(ReorderGroupsModal);

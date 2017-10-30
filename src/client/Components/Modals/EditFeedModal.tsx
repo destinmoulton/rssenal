@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import * as React from "react";
 import { connect } from "react-redux";
 
@@ -7,19 +6,34 @@ import SelectFeedGroup from "./SelectFeedGroup";
 
 import { beginUpdateFeed } from "../../redux/actions/feeds.actions";
 
-class EditFeedModal extends React.Component {
-    static propTypes = {
-        isModalOpen: PropTypes.bool.isRequired,
-        onCloseModal: PropTypes.func.isRequired,
-        feed: PropTypes.object.isRequired
+import {IDispatch, IFeed, IRootStoreState, TFeedgroupID} from "../../interfaces";
+
+interface IMapDispatchToProps {
+    beginUpdateFeed: (feedInfo: any)=>void;
+}
+
+interface IMapStateToProps {
+    isUpdatingFeed: boolean;
+}
+
+interface IEditFeedModalProps extends IMapDispatchToProps, IMapStateToProps{
+    isModalOpen: boolean;
+    onCloseModal: ()=>void;
+    feed: any;
+}
+
+interface IEditFeedModalState {
+    newFeed: any;
+}
+
+class EditFeedModal extends React.Component<IEditFeedModalProps> {
+
+    state: IEditFeedModalState = {
+        newFeed: null
     }
 
-    constructor(props){
+    constructor(props: IEditFeedModalProps){
         super(props);
-
-        this.state = {
-            newFeed: {}
-        }
         
         this._handleClose = this._handleClose.bind(this);
         this._handleSave = this._handleSave.bind(this);
@@ -28,7 +42,7 @@ class EditFeedModal extends React.Component {
         this._handleSelectGroupChange = this._handleSelectGroupChange.bind(this);
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps: IEditFeedModalProps){
         if(this.props.isUpdatingFeed && !nextProps.isUpdatingFeed){
             this._handleClose();
         }
@@ -54,21 +68,21 @@ class EditFeedModal extends React.Component {
         }
     }
 
-    _handleInputKeyPress(e){
+    _handleInputKeyPress(e: any){
         if(e.key === "Enter"){
             this._handleSave();
         }
     }
 
-    _handleInputOnChange(e){
+    _handleInputOnChange(e: React.FormEvent<HTMLInputElement>){
         const { newFeed } = this.state;
-        newFeed.title = e.target.value;
+        newFeed.title = e.currentTarget.value;
         this.setState({
             newFeed
         });
     }
 
-    _handleSelectGroupChange(feedgroupId){
+    _handleSelectGroupChange(feedgroupId: TFeedgroupID){
         const { newFeed } = this.state;
         newFeed.feedgroup_id = feedgroupId;
         
@@ -106,7 +120,7 @@ class EditFeedModal extends React.Component {
     _buildButtons(){
         const { isUpdatingFeed } = this.props;
 
-        let cancelButton = "";
+        let cancelButton = null;
         if(!isUpdatingFeed){
             cancelButton = <Button
                                 color="orange"
@@ -145,7 +159,7 @@ class EditFeedModal extends React.Component {
             <span>
                 <Modal
                     open={isModalOpen}
-                    onClose={this._handleClickCloseModal}
+                    onClose={this._handleClose}
                     size="tiny"
                 >
                     <Header icon="pencil" content="Edit Feed" />
@@ -160,14 +174,14 @@ class EditFeedModal extends React.Component {
         );
     }
 }
-const mapStateToProps = (state)=>{
+const mapStateToProps = (state: IRootStoreState): IMapStateToProps=>{
     const { feeds } = state;
     return {
         isUpdatingFeed: feeds.isUpdatingFeed
     };
 }
 
-const mapDispatchToProps = (dispatch)=>{
+const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps=>{
     return {
         beginUpdateFeed: (feedInfo)=> dispatch(beginUpdateFeed(feedInfo))
     }

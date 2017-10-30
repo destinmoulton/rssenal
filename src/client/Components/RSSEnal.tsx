@@ -4,21 +4,26 @@ import { Grid, Menu, Segment } from "semantic-ui-react";
 import EntriesList from "./Entries/EntriesList";
 import LeftMenu from "./LeftMenu/LeftMenu";
 
+import { IFilter} from "../interfaces";
+
+interface IRSSEnalProps {
+
+}
+interface IRSSEnalState {
+    entriesFilter: IFilter;
+}
 class RSSEnal extends React.Component {
 
-    constructor(props){
+    state: IRSSEnalState = {
+        entriesFilter: {limit: ""},
+    };
+
+    constructor(props: IRSSEnalProps){
         super(props);
-
-        this.state = {
-            entriesFilter: {},
-            
-        };
-
         this._handleChangeEntriesFilter = this._handleChangeEntriesFilter.bind(this);
-        
     }
 
-    _handleChangeEntriesFilter(newFilter){
+    _handleChangeEntriesFilter(newFilter: IFilter){
         this.setState({
             entriesFilter: newFilter
         });
@@ -32,12 +37,10 @@ class RSSEnal extends React.Component {
         return (
             <div>
                 <div className="rss-body-left-container">
-                    <LeftMenu
-                        onFilterChange={this._handleChangeEntriesFilter}
-                    />
+                    <LeftMenu />
                 </div>
                 <div className="rss-body-right-container">
-                    <EntriesList filter={entriesFilter} />
+                    <EntriesList />
                 </div>
             </div>
         )

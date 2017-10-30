@@ -19,7 +19,7 @@ const SortMenu = (props: ISortMenuProps)=>{
         <Select
             options={MENU_OPTIONS}
             onChange={onChange}
-            defaultValue={currentSortBy}/>
+            defaultValue={currentSortBy} />
     );
 }
 
