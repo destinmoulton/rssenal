@@ -27,9 +27,17 @@ interface IGroupItemProps extends IMapStateProps, IMapDispatchProps{
     group: IFeedgroup;
 }
 
+interface IGroupItemState {
+    feedsAreVisible: boolean;
+    optionsAreVisible: boolean;
+    isEditing: boolean;
+    isThisGroupSaving: boolean;
+    editGroupName: string;
+}
+
 class GroupItem extends React.Component<IGroupItemProps> {
 
-    state = {
+    state: IGroupItemState = {
         feedsAreVisible: false,
         optionsAreVisible: false,
         isEditing: false,

@@ -106,12 +106,12 @@ class EntriesList extends React.Component<EntriesListProps> {
         if(a[field] === b[field]){ return 0;}
     }
 
-    _handleChangeSort(e: Event, obj: any){
+    _handleChangeSort(e: any){
         this.setState({
-            sortBy: obj.value
+            sortBy: e.currentTarget.value
         });
 
-        this._filterAndSortEntries(this.props, obj.value);
+        this._filterAndSortEntries(this.props, e.currentTarget.value);
     }
 
     _handleClickRefresh(){

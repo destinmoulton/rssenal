@@ -6,18 +6,18 @@ import FeedItem from "./FeedItem";
 
 import { IFeed, TFeedID, TFeedgroupID, TFeeds } from "../../interfaces";
 
-interface IListFeeds {
+interface IListFeedsProps {
     feeds: TFeeds;
     editFeed: (feed: IFeed)=>void;
     groupId: TFeedgroupID;
 }
 
-const ListFeeds = (props: IListFeeds)=>{
+const ListFeeds = (props: IListFeedsProps)=>{
     const {
         editFeed,
         feeds,
         groupId
-    } = this.props;
+    } = props;
 
     const feedList = feeds.filter((feed: IFeed)=>{
         return (feed.feedgroup_id === groupId);

@@ -32,12 +32,19 @@ interface ILeftMenuProps extends IMapStateProps, IMapDispatchProps{
 
 }
 
+interface ILeftMenuState {
+    addFeedModalOpen: boolean;
+    editFeed: IFeed;
+    editFeedModalOpen: boolean;
+    editGroup: IFeedgroup;
+    editGroupModalOpen: boolean;
+}
 class LeftMenu extends React.Component<ILeftMenuProps> {
-    state = {
+    state: ILeftMenuState = {
         addFeedModalOpen: false,
-        editFeed: {},
+        editFeed: null,
         editFeedModalOpen: false,
-        editGroup: {},
+        editGroup: null,
         editGroupModalOpen: false
     };
 

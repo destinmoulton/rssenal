@@ -29,7 +29,7 @@ interface IEditFeedModalState {
 class EditFeedModal extends React.Component<IEditFeedModalProps> {
 
     state: IEditFeedModalState = {
-        newFeed: null
+        newFeed: {title:""}
     }
 
     constructor(props: IEditFeedModalProps){
