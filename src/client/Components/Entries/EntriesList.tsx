@@ -205,15 +205,17 @@ class EntriesList extends React.Component<EntriesListProps> {
     render() {
         const { activeEntryId, currentTitle, processedEntries, sortBy } = this.state;
 
-        const entryList = processedEntries.map((entry)=>{
+        const entryList = processedEntries.toArray().map((entry)=>{
+            const isActive = (entry._id === activeEntryId);
             return (
                 <EntryItem 
                     key={entry._id}
                     entry={entry}
                     toggleEntry={this._toggleEntry}
-                    isActive={(entry._id === activeEntryId)}/>
+                    isActive={isActive}/>
             )
         })
+        
         return (
             <div>
                 <div className="rss-entrylist-menu">

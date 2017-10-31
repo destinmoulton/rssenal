@@ -21,7 +21,7 @@ const ListFeeds = (props: IListFeedsProps)=>{
 
     const feedList = feeds.filter((feed: IFeed)=>{
         return (feed.feedgroup_id === groupId);
-    }).map((feed: IFeed)=>{
+    }).toArray().map((feed: IFeed)=>{
         return <FeedItem key={feed._id} feed={feed} editFeed={editFeed}/>;
     });
     

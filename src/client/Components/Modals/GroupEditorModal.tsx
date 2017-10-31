@@ -133,7 +133,8 @@ class GroupEditorModal extends React.Component<IGroupEditorModalProps> {
         const form = this._buildEditInput();
 
         let modalHeader = "Add Group";
-        if(group._id !== ""){
+        
+        if(group && group._id !== ""){
             modalHeader = "Edit Group";
         }
 

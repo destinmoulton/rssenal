@@ -99,9 +99,7 @@ class EntryItem extends React.Component<IEntryItemProps> {
 
         const title = htmlEntities.decode(entry.title);
         return (
-            <div 
-                key={entry._id}
-                className="rss-entry-container">
+            <div className="rss-entry-container" >
                 <div
                     className="rss-entry-title" 
                     onClick={this._toggleEntry.bind(this, entry._id)}>{title}</div>

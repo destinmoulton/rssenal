@@ -128,7 +128,7 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
         const { groups } = this.props;
         const sortedGroups = groups.sort((a: IFeedgroup, b: IFeedgroup)=>compareAscByProp(a, b, "order"));
 
-        let listFeedGroups = sortedGroups.map((group)=>{
+        let listFeedGroups = sortedGroups.toArray().map((group)=>{
             return (
                 <div key={group._id} >
                     <GroupItem
