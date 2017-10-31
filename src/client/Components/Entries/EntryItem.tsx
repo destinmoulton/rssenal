@@ -2,11 +2,16 @@ import { AllHtmlEntities } from "html-entities";
 import * as moment from "moment";
 import * as React from 'react';
 import { connect } from "react-redux";
-import striptags from "striptags";
 
 import { Icon } from "semantic-ui-react";
 
 import { TEntryID, IEntry, TFeeds, IRootStoreState, ISetting } from "../../interfaces";
+
+// Define a typescript interface for the striptags module (@types/striptags did not work)
+interface IStriptags{
+    (html: string, allowedTags?: string | string[]): string;
+}
+const striptags: IStriptags = require("striptags");
 
 const htmlEntities = new AllHtmlEntities();
 
