@@ -132,6 +132,7 @@ class GroupItem extends React.Component<IGroupItemProps> {
     render(){
         const {
             editFeed,
+            feeds,
             group
         } = this.props;
 
@@ -148,7 +149,7 @@ class GroupItem extends React.Component<IGroupItemProps> {
         let toggleFeedsIconClass = "caret right";
         if(feedsAreVisible){
             toggleFeedsIconClass = "caret down";
-            listFeeds = <ListFeeds groupId={group._id} editFeed={editFeed}/>;
+            listFeeds = <ListFeeds groupId={group._id} editFeed={editFeed} feeds={feeds}/>;
         }
         toggleFeedsIcon = <Icon name={toggleFeedsIconClass} onClick={this._handleToggleFeedsVisible}/>;
 

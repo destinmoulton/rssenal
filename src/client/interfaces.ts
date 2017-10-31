@@ -94,6 +94,9 @@ export interface ISettingsAction{
     setting_value: any;
 }
 
+
+/** Redux Reducer Interfaces */
+
 export interface IReducerStateEntries{
     entries: TEntries;
 }

@@ -7,7 +7,7 @@ import { SortableGroupItem, SortableGroupList } from "./SortableComponents";
 
 import { compareAscByProp } from "../../lib/sort";
 
-import {IRootStoreState, TFeedgroups} from "../../interfaces";
+import {IFeedgroup, IRootStoreState, TFeedgroups} from "../../interfaces";
 
 interface IMapStateToProps {
     groups: TFeedgroups
@@ -18,7 +18,7 @@ interface IReorderGroupsModalProps extends IMapStateToProps{
 }
 
 interface IReorderGroupsModalState {
-    groupsAsArray: TFeedgroups[];
+    groupsAsArray: IFeedgroup[];
     isModalOpen: boolean;
 }
 

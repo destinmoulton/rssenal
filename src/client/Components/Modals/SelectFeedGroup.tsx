@@ -9,8 +9,8 @@ interface IMapStateToProps{
 }
 
 interface ISelectFeedGroupProps extends IMapStateToProps{
-    onChange: (selectedValue: TFeedgroupID)=>void;
-    selectedValue: string
+    onChange: (feedGroupId: TFeedgroupID)=>void;
+    selectedValue?: string;
 }
 
 class SelectFeedGroup extends React.Component<ISelectFeedGroupProps> {
@@ -37,7 +37,7 @@ class SelectFeedGroup extends React.Component<ISelectFeedGroupProps> {
         }
     }
 
-    _handleOnChange(e: React.FormEvent<HTMLSelectElement>, dropdown: any){
+    _handleOnChange(e: any, dropdown: any){
         
         const selectedValue = dropdown.value;
         this.setState({
