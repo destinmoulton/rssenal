@@ -103,10 +103,12 @@ class EntryItem extends React.Component<IEntryItemProps> {
         }
 
         const title = htmlEntities.decode(entry.title);
+        
+        const entryClass = (entry.has_read) ? "rss-entry-title-hasread" : "rss-entry-title-unread";
         return (
             <div className="rss-entry-container" >
                 <div
-                    className="rss-entry-title" 
+                    className={entryClass}
                     onClick={this._toggleEntry.bind(this, entry._id)}>{title}</div>
                     {content}
             </div>
