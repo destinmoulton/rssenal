@@ -62,6 +62,31 @@ class FeedGroupsController {
             })
         });
     }
+
+    update_multiple(req, res){
+        const updatedFeedgroups = req.body.feedgroups;
+        const newFeedgroups = [];
+        updatedFeedgroups.map((updatedFeedgroup)=>{
+            FeedGroups.findById(updatedFeedgroup._id, (err, existingFeedgroup)=>{
+                if(err){
+                    // TODO Add err handler?
+                } else {
+                    existingFeedgroup.name = updatedFeedgroup.name;
+                    existingFeedgroup.order = updatedFeedgroup.order;
+                    existingFeedgroup.save((err, newFeedgroup)=>{
+                        if(!err){
+                            newFeedgroups.push(newFeedgroup);
+                        }
+                    });
+                }
+            });
+        });
+
+        res.json({
+            status: "success",
+            feedgroups: newFeedgroups
+        })
+    }
 }
 
 export default new FeedGroupsController();
