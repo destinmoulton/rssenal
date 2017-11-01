@@ -51,9 +51,16 @@ div.rss-entry-container {
     padding: 3px;
 }
 
-div.rss-entry-title {
+div.rss-entry-title-unread {
     cursor: pointer;
     font-size: 1.1em;
+    font-weight: bold;
+}
+
+div.rss-entry-title-hasread {
+    cursor: pointer;
+    font-size: 1.1.em;
+    font-weight: normal;
 }
 
 div.rss-entry-info-container {
