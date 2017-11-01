@@ -2,6 +2,7 @@
 import {
     ENTRIES_GET_BEGIN,
     ENTRIES_GET_COMPLETE,
+    ENTRIES_MARKREAD_COMPLETE,
     ENTRIES_UPDATE_BEGIN,
     ENTRIES_UPDATE_COMPLETE
 } from "../actiontypes";
@@ -92,7 +93,15 @@ export function updateReadState(entry: IEntry, hasRead: boolean){
                     console.error(resObj.error);
                 } else {
                     dispatch(feedsDecrementUnread(entry.feed_id));
+                    dispatch(entryMarkReadComplete(resObj.entry));
                 }
             });
+    }
+}
+
+function entryMarkReadComplete(newEntry: IEntry){
+    return {
+        type: ENTRIES_MARKREAD_COMPLETE,
+        newEntry
     }
 }
