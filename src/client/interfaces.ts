@@ -31,6 +31,7 @@ export interface IEntry {
 export interface IEntriesAction {
     type: string;
     entries?: IEntry[];
+    newEntry?: IEntry;
 }
 
 export type TEntries = OrderedMap<TEntryID, IEntry>;
