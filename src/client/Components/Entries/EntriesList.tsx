@@ -145,7 +145,7 @@ class EntriesList extends React.Component<EntriesListProps> {
             let nextEntry: IEntry = null;
             let found = false;
             processedEntries.map((entry)=>{
-                if(found && !nextEntry.hasOwnProperty("_id")){
+                if(found && !nextEntry){
                     nextEntry = entry;
                 }
 
@@ -160,13 +160,13 @@ class EntriesList extends React.Component<EntriesListProps> {
             });
 
             if(direction === "next"){
-                if(nextEntry.hasOwnProperty("_id")){
+                if(nextEntry !== null){
                     sibling = nextEntry;
                 } else {
                     sibling = processedEntries.last();
                 }
             } else if(direction === "previous"){
-                if(previousEntry.hasOwnProperty("_id")){
+                if(previousEntry !== null){
                     sibling = previousEntry;
                 } else {
                     sibling = processedEntries.first();
