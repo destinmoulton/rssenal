@@ -2,7 +2,8 @@
 import { OrderedMap } from "immutable";
 
 import {
-    ENTRIES_GET_COMPLETE
+    ENTRIES_GET_COMPLETE,
+    ENTRIES_MARKREAD_COMPLETE
 } from "../actiontypes";
 
 import { TEntryID, IEntry, IEntriesAction, IReducerStateEntries } from "../../interfaces";
@@ -25,6 +26,14 @@ function entriesReducer(state = INITIAL_STATE, action: IEntriesAction){
             }
         }
 
+        case ENTRIES_MARKREAD_COMPLETE:{
+            const { entries } = state;
+            const newEntries = entries.set(action.newEntry._id, action.newEntry);
+            return {
+                ...state,
+                entries: newEntries
+            }
+        }
         default:
             return {...state};
     }
