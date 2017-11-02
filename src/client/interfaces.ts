@@ -78,7 +78,7 @@ export interface IFolderAction {
     folder?: IFolder;
 }
 
-export type Tfolders = OrderedMap<TFolderID, IFolder>;
+export type TFolders = OrderedMap<TFolderID, IFolder>;
 
 export interface IFilter {
     id?: string;
@@ -107,7 +107,7 @@ export interface IReducerStateFilter{
 }
 
 export interface IReducerStateFolders {
-    folders: Tfolders;
+    folders: TFolders;
     hasFolders: boolean;
     isDeletingFolder: boolean;
     isFetchingFolders: boolean;

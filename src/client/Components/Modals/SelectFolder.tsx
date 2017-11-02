@@ -9,7 +9,7 @@ interface IMapStateToProps{
 }
 
 interface ISelectFolderProps extends IMapStateToProps{
-    onChange: (feedGroupId: TFolderID)=>void;
+    onChange: (folderId: TFolderID)=>void;
     selectedValue?: string;
 }
 

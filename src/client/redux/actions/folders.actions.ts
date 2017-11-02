@@ -1,17 +1,17 @@
 import {
-    FEEDGROUPS_FETCHING,
-    FEEDGROUPS_RECEIVED,
-    FEEDGROUPS_ADD_BEGIN,
-    FEEDGROUPS_ADD_COMPLETE,
-    FEEDGROUPS_DELETE_BEGIN,
-    FEEDGROUPS_DELETE_COMPLETE,
-    FEEDGROUPS_UPDATE_BEGIN,
-    FEEDGROUPS_UPDATE_COMPLETE
+   FOLDERS_FETCHING,
+   FOLDERS_RECEIVED,
+   FOLDERS_ADD_BEGIN,
+   FOLDERS_ADD_COMPLETE,
+   FOLDERS_DELETE_BEGIN,
+   FOLDERS_DELETE_COMPLETE,
+   FOLDERS_UPDATE_BEGIN,
+   FOLDERS_UPDATE_COMPLETE
 } from "../actiontypes";
 
 import {
-    API_FEEDGROUPS_BASE,
-    API_FEEDGROUPS_GET_ALL
+    API_FOLDERS_BASE,
+    API_FOLDERS_GET_ALL
 } from "../apiendpoints";
 
 import { IDispatch, IFolder, TFolderID } from "../../interfaces";
@@ -25,13 +25,13 @@ export function getAllFolders(){
 
 function fetchingInProgress(){
     return {
-        type: FEEDGROUPS_FETCHING
+        type:FOLDERS_FETCHING
     }
 }
 
 function fetchFolders(){
     return (dispatch: IDispatch)=>{
-        const url = API_FEEDGROUPS_GET_ALL;
+        const url = API_FOLDERS_GET_ALL;
         const init = {
             method: "GET"
         };
@@ -47,7 +47,7 @@ function fetchFolders(){
 
 function fetchingComplete(data: IFolder[]){
     return {
-        type: FEEDGROUPS_RECEIVED,
+        type:FOLDERS_RECEIVED,
         folders: data
     }
 }
@@ -66,13 +66,13 @@ export function beginSaveFolder(groupInfo: IFolder){
 
 function addingInProgress(){
     return {
-        type: FEEDGROUPS_ADD_BEGIN
+        type:FOLDERS_ADD_BEGIN
     }
 }
 
 function addFolder(newGroupName: string){
     return (dispatch: IDispatch)=>{
-        const url = API_FEEDGROUPS_BASE;
+        const url = API_FOLDERS_BASE;
         const init = {
             method: "POST",
             body: JSON.stringify({name: newGroupName}),
@@ -93,20 +93,20 @@ function addFolder(newGroupName: string){
 
 function addingFolderComplete(folder: IFolder){
     return {
-        type: FEEDGROUPS_ADD_COMPLETE,
+        type:FOLDERS_ADD_COMPLETE,
         folder
     };
 }
 
 function updatingInProgress(){
     return {
-        type: FEEDGROUPS_UPDATE_BEGIN
+        type:FOLDERS_UPDATE_BEGIN
     };
 }
 
 function updateFolder(groupId: TFolderID, newGroupName: string){
     return (dispatch: IDispatch)=>{
-        const url = API_FEEDGROUPS_BASE + groupId;
+        const url = API_FOLDERS_BASE + groupId;
         const init = {
             method: "PUT",
             body: JSON.stringify({name: newGroupName}),
@@ -128,7 +128,7 @@ function updateFolder(groupId: TFolderID, newGroupName: string){
 
 function updatingComplete(newGroup: IFolder){
     return {
-        type: FEEDGROUPS_UPDATE_COMPLETE,
+        type:FOLDERS_UPDATE_COMPLETE,
         folder: newGroup
     }
 }
@@ -142,13 +142,13 @@ export function beginDeleteFolder(groupId: TFolderID){
 
 function deleteInProgress(){
     return {
-        type: FEEDGROUPS_DELETE_BEGIN
+        type:FOLDERS_DELETE_BEGIN
     }
 }
 
 function deleteFolder(groupId: TFolderID){
     return (dispatch: IDispatch)=>{
-        const url = API_FEEDGROUPS_BASE + groupId;
+        const url = API_FOLDERS_BASE + groupId;
         const init = {
             method: "DELETE"
         }
@@ -166,14 +166,14 @@ function deleteFolder(groupId: TFolderID){
 
 function deleteComplete(groupId: TFolderID){
     return {
-        type: FEEDGROUPS_DELETE_COMPLETE,
+        type:FOLDERS_DELETE_COMPLETE,
         groupId
     }
 }
 
 export function beginReorderFolders(foldersArr: IFolder[]){
     return (dispatch: IDispatch)=>{
-        const url = API_FEEDGROUPS_BASE;
+        const url = API_FOLDERS_BASE;
         const init = {
             method: "PUT",
             body: JSON.stringify({folders: foldersArr}),

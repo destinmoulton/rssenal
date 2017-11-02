@@ -1,14 +1,14 @@
 import { Map, OrderedMap } from "immutable";
 
 import { 
-    FOLDERS_FETCHING,
-    FOLDERS_RECEIVED,
-    FOLDERS_ADD_BEGIN,
-    FOLDERS_ADD_COMPLETE,
-    FOLDERS_DELETE_BEGIN,
-    FOLDERS_DELETE_COMPLETE,
-    FOLDERS_UPDATE_BEGIN,
-    FOLDERS_UPDATE_COMPLETE
+   FOLDERS_FETCHING,
+   FOLDERS_RECEIVED,
+   FOLDERS_ADD_BEGIN,
+   FOLDERS_ADD_COMPLETE,
+   FOLDERS_DELETE_BEGIN,
+   FOLDERS_DELETE_COMPLETE,
+   FOLDERS_UPDATE_BEGIN,
+   FOLDERS_UPDATE_COMPLETE
 } from "../actiontypes";
 
 import { TFolderID, IFolder, IFolderAction, IReducerStateFolders } from "../../interfaces";

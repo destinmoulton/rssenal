@@ -148,7 +148,7 @@ function updateFeed(feedInfo: IFeed){
         const url = API_FEEDS_BASE + feedInfo._id;
         const init = {
             method: "PUT",
-            body: JSON.stringify({title: feedInfo.title, feedgroup_id: feedInfo.feedgroup_id}),
+            body: JSON.stringify({title: feedInfo.title, folder_id: feedInfo.folder_id}),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'

@@ -15,7 +15,7 @@ interface IAddFeedModalState {
     feedInfo: IFeed;
     isValidatingURL: boolean;
     feedURL: string;
-    feedGroupId: TFolderID;
+    folderId: TFolderID;
     formError: string;
 }
 
@@ -39,7 +39,7 @@ const INITIAL_STATE: IAddFeedModalState = {
     feedInfo: null,
     isValidatingURL: false,
     feedURL: "",
-    feedGroupId: "0",
+    folderId: "0",
     formError: ""
 };
 
@@ -92,21 +92,21 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
     }
 
     _handleClickAddFeed(){
-        const { feedInfo, feedGroupId, feedURL } = this.state;
+        const { feedInfo, folderId, feedURL } = this.state;
 
         const dataToAdd = {
             title: feedInfo.title,
             description: feedInfo.description,
             link: feedInfo.link,
-            folder_id: feedGroupId,
+            folder_id: folderId,
             url: feedURL
         };
         this.props.beginAddFeed(dataToAdd);
     }
 
-    _handleSelectFolder(feedGroupId: TFolderID){
+    _handleSelectFolder(folderId: TFolderID){
         this.setState({
-            feedGroupId
+            folderId
         })
     }
 
@@ -114,7 +114,7 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
         this.setState({
             display: DISPLAY_FORM,
             feedInfo: {},
-            feedGroupId: "0",
+            folderId: "0",
             isValidatingURL: false
         })
     }
@@ -158,7 +158,7 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
                 this.setState({
                     formError: err.message,
                     feedInfo: {},
-                    feedGroupId: "0",
+                    folderId: "0",
                     isValidatingURL: false
                 });
             })
