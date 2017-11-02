@@ -5,15 +5,20 @@ import { Button, Header, Icon, Modal } from "semantic-ui-react";
 
 import { SortableGroupItem, SortableGroupList } from "./SortableComponents";
 
+import { beginReorderFeedGroups } from "../../redux/actions/feedgroups.actions";
 import { compareAscByProp } from "../../lib/sort";
 
-import {IFeedgroup, IRootStoreState, TFeedgroups} from "../../interfaces";
+import { IDispatch, IFeedgroup, IRootStoreState, TFeedgroups } from "../../interfaces";
 
 interface IMapStateToProps {
     groups: TFeedgroups
 }
 
-interface IReorderGroupsModalProps extends IMapStateToProps{
+interface IMapDispatchToProps {
+    beginReorderFeedGroups: (feedgroupsArr: IFeedgroup[])=>void
+}
+
+interface IReorderGroupsModalProps extends IMapStateToProps, IMapDispatchToProps{
 
 }
 
@@ -34,7 +39,8 @@ class ReorderGroupsModal extends React.Component<IReorderGroupsModalProps> {
 
         this._handleCloseModal = this._handleCloseModal.bind(this);
         this._handleOpenModal = this._handleOpenModal.bind(this);
-        this._reorderComplete = this._reorderComplete.bind(this);
+        this._handlePressOK = this._handlePressOK.bind(this);
+        this._onSortEnd = this._onSortEnd.bind(this);
     }
 
     componentWillReceiveProps(nextProps: IReorderGroupsModalProps){
@@ -59,23 +65,37 @@ class ReorderGroupsModal extends React.Component<IReorderGroupsModalProps> {
         });
     }
 
-    _reorderComplete(reorderedObj: any){
-        this.setState({
-            groupsAsArray: arrayMove(this.state.groupsAsArray, reorderedObj.oldIndex, reorderedObj.newIndex)
+    _handlePressOK(){
+        const { groupsAsArray } = this.state;
+        const orderedGroups = groupsAsArray.map((feedgroup, index)=>{
+            feedgroup.order = index + 1;
+            return feedgroup;
         });
+        this.props.beginReorderFeedGroups(groupsAsArray);
+        this._handleCloseModal();
     }
 
-    _buildReorderer(){
-        const { groupsAsArray } = this.state;
-        
-        return (
-            <SortableGroupList items={groupsAsArray} onSortEnd={this._reorderComplete}/>
-        );
+    _onSortEnd(reorderedObj: any){
+        const newGroupsArray = this._reorderGroupsArray(reorderedObj.oldIndex, reorderedObj.newIndex);
+        this.setState({
+            groupsAsArray: newGroupsArray
+        });
+    }
+    
+    _reorderGroupsArray(previousIndex: number, newIndex: number):IFeedgroup[] {
+        const array = this.state.groupsAsArray.slice(0);
+        if (newIndex >= array.length) {
+            let k = newIndex - array.length;
+            while (k-- + 1) {
+                array.push(undefined);
+            }
+        }
+        array.splice(newIndex, 0, array.splice(previousIndex, 1)[0]);
+        return array;
     }
 
     render() {
-        const { isModalOpen } = this.state;
-        const reorderer = this._buildReorderer();
+        const { groupsAsArray, isModalOpen } = this.state;
         return (
             <span>
                 <Button
@@ -89,12 +109,19 @@ class ReorderGroupsModal extends React.Component<IReorderGroupsModalProps> {
                 >
                     <Header icon="numbered list" content="Reorder Groups" />
                     <Modal.Content>
-                        {reorderer}
+                        <SortableGroupList items={groupsAsArray} onSortEnd={this._onSortEnd}/>
                     </Modal.Content>
                     <Modal.Actions>
                         <Button
-                            icon="checkmark"
+                            icon="cancel"
+                            inverted
                             onClick={this._handleCloseModal}
+                        />
+                        <Button
+                            icon="checkmark"
+                            color="green"
+                            inverted
+                            onClick={this._handlePressOK}
                         />
                     </Modal.Actions>
                 </Modal>
@@ -103,11 +130,17 @@ class ReorderGroupsModal extends React.Component<IReorderGroupsModalProps> {
     }
 }
 
-const mapStateToProps = (state: IRootStoreState)=>{
+const mapStateToProps = (state: IRootStoreState): IMapStateToProps =>{
     const { feedgroups } = state;
     return {
         groups: feedgroups.groups
     }
 };
 
-export default connect(mapStateToProps)(ReorderGroupsModal);
+const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps =>{
+    return {
+        beginReorderFeedGroups: (feedgroupsArr)=>dispatch(beginReorderFeedGroups(feedgroupsArr))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReorderGroupsModal);
