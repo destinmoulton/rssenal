@@ -74,8 +74,8 @@ class FeedGroupsController {
                     existingFeedgroup.name = updatedFeedgroup.name;
                     existingFeedgroup.order = updatedFeedgroup.order;
                     existingFeedgroup.save((err, newFeedgroup)=>{
-                        if(!err){
-                            newFeedgroups.push(newFeedgroup);
+                        if(err){
+                            // TODO Add err handler?
                         }
                     });
                 }
@@ -83,8 +83,7 @@ class FeedGroupsController {
         });
 
         res.json({
-            status: "success",
-            feedgroups: newFeedgroups
+            status: "success"
         })
     }
 }

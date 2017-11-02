@@ -76,6 +76,31 @@ var FeedGroupsController = function () {
                 });
             });
         }
+    }, {
+        key: 'update_multiple',
+        value: function update_multiple(req, res) {
+            var updatedFeedgroups = req.body.feedgroups;
+            var newFeedgroups = [];
+            updatedFeedgroups.map(function (updatedFeedgroup) {
+                _FeedGroups2.default.findById(updatedFeedgroup._id, function (err, existingFeedgroup) {
+                    if (err) {
+                        // TODO Add err handler?
+                    } else {
+                        existingFeedgroup.name = updatedFeedgroup.name;
+                        existingFeedgroup.order = updatedFeedgroup.order;
+                        existingFeedgroup.save(function (err, newFeedgroup) {
+                            if (err) {
+                                // TODO Add err handler?
+                            }
+                        });
+                    }
+                });
+            });
+
+            res.json({
+                status: "success"
+            });
+        }
     }]);
 
     return FeedGroupsController;
