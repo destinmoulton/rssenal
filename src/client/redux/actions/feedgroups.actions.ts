@@ -170,3 +170,26 @@ function deleteComplete(groupId: TFeedgroupID){
         groupId
     }
 }
+
+export function beginReorderFeedGroups(feedgroupsArr: IFeedgroup[]){
+    return (dispatch: IDispatch)=>{
+        const url = API_FEEDGROUPS_BASE;
+        const init = {
+            method: "PUT",
+            body: JSON.stringify({feedgroups: feedgroupsArr}),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }
+        fetch(url, init)
+            .then((res)=>{
+                return res.json();
+            })
+            .then((resObj)=>{
+                if(resObj.status==="success"){
+                    dispatch(getAllFeedGroups());
+                }
+            })
+    }
+}
