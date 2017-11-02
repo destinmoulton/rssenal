@@ -27,7 +27,7 @@ interface IReorderGroupsModalState {
     isModalOpen: boolean;
 }
 
-class ReorderGroupsModal extends React.Component<IReorderGroupsModalProps> {
+class ReorderFoldersModal extends React.Component<IReorderGroupsModalProps> {
 
     state: IReorderGroupsModalState = {
         groupsAsArray: [],
@@ -143,4 +143,4 @@ const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps =>{
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReorderGroupsModal);
+export default connect(mapStateToProps, mapDispatchToProps)(ReorderFoldersModal);

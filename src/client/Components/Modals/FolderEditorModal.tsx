@@ -25,7 +25,7 @@ interface IGroupEditorModalState {
     newGroup: any;
 }
 
-class GroupEditorModal extends React.Component<IGroupEditorModalProps> {
+class FolderEditorModal extends React.Component<IGroupEditorModalProps> {
 
     state: IGroupEditorModalState = {
         newGroup: {}
@@ -172,4 +172,4 @@ const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps=>{
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GroupEditorModal);
+export default connect(mapStateToProps, mapDispatchToProps)(FolderEditorModal);

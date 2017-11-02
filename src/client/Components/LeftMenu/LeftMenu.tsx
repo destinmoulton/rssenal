@@ -9,7 +9,7 @@ import { getAllFeeds } from "../../redux/actions/feeds.actions";
 import AddFeedModal from "../Modals/AddFeedModal";
 import ButtonBar from "./ButtonBar";
 import EditFeedModal from "../Modals/EditFeedModal";
-import GroupEditorModal from "../Modals/GroupEditorModal";
+import FolderEditorModal from "../Modals/FolderEditorModal";
 import GroupItem from "./GroupItem";
 
 import { compareAscByProp } from "../../lib/sort";
@@ -151,7 +151,7 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
                         isModalOpen={addFeedModalOpen}
                         onCloseModal={this._handleCloseAddFeedModal}
                     />
-                    <GroupEditorModal 
+                    <FolderEditorModal 
                         isModalOpen={editGroupModalOpen}
                         onCloseModal={this._handleCloseEditGroupModal}
                         folder={editGroup}

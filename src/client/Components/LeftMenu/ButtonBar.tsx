@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Button, Icon } from "semantic-ui-react";
 
-import ReorderGroupsModal from "../Modals/ReorderGroupsModal";
+import ReorderFoldersModal from "../Modals/ReorderFoldersModal";
 
 interface IButtonBarProps {
     openAddFeedModal: (newFeed: object)=>void;
@@ -38,7 +38,7 @@ class ButtonBar extends React.Component<IButtonBarProps> {
                         size="tiny"
                     />
                 </Button.Group>                
-                <ReorderGroupsModal />
+                <ReorderFoldersModal />
             </div>
         );
     }
