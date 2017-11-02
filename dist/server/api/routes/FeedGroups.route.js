@@ -18,8 +18,10 @@ var router = _express2.default.Router();
 
 router.get('/', _FeedGroups2.default.get_all);
 router.post('/', _FeedGroups2.default.add);
+router.put('/', _FeedGroups2.default.update_multiple);
 
 router.get('/:feedGroupId', _FeedGroups2.default.get_single);
 router.delete('/:feedGroupId', _FeedGroups2.default.delete_single);
 router.put('/:feedGroupId', _FeedGroups2.default.update_single);
+
 exports.default = router;
