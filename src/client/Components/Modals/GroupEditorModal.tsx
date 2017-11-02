@@ -87,7 +87,7 @@ class GroupEditorModal extends React.Component<IGroupEditorModalProps> {
             <input
                 autoFocus
                 value={newGroup.name}
-                placeholder="Group name..."
+                placeholder="Folder name..."
                 onKeyPress={this._handleInputKeyPress}
                 onChange={this._handleInputOnChange}
                 disabled={isSavingFolder}
@@ -132,10 +132,10 @@ class GroupEditorModal extends React.Component<IGroupEditorModalProps> {
         const { folder, isModalOpen } = this.props;
         const form = this._buildEditInput();
 
-        let modalHeader = "Add Group";
+        let modalHeader = "Add Folder";
         
         if(folder && folder._id !== ""){
-            modalHeader = "Edit Group";
+            modalHeader = "Edit Folder";
         }
 
         const buttons = this._buildButtons();

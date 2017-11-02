@@ -15,7 +15,7 @@ var FeedSchema = _mongoose2.default.Schema({
         type: String,
         required: [true, "The feed title is required."]
     },
-    feedgroup_id: {
+    folder_id: {
         type: String
     },
     url: {},

@@ -217,7 +217,7 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
                 <Segment attached="bottom">{description}</Segment>
 
                 <Header as='h5' attached='top'>
-                    Select Feed Group
+                    Select Feed Folder
                 </Header>
                 <Segment attached="bottom">
                     <SelectFolder onChange={this._handleSelectFolder} />

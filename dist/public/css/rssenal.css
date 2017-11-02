@@ -19,28 +19,28 @@ div.rss-body-left-container {
     height: 100%;
 }
 
-div.rss-feedgroups-feeditem {
+div.rss-folders-feeditem {
     padding-left: 5px;
     cursor: pointer;
 }
 
-span.rss-feedgroups-feeditem-title-active {
+span.rss-folders-feeditem-title-active {
     font-weight: bold;
     background-color: #EBEBEB;
 }
 
-div.rss-feedgroups-groupitem {
+div.rss-folders-groupitem {
     cursor: pointer;
     height: 20px;
     width: 100%;
 }
 
-span.rss-feedgroups-groupitem-title-active {
+span.rss-folders-groupitem-title-active {
     font-weight: bold;
     background-color: #EBEBEB;
 }
 
-span.rss-feedgroups-groupitem-options {
+span.rss-folders-groupitem-options {
     width: 100%;
 }
 input.rss-editfeed-input{

@@ -32,7 +32,7 @@ class ButtonBar extends React.Component<IButtonBarProps> {
                     />
                     <Button
                         color="olive"
-                        content="Group"
+                        content="Folder"
                         icon="plus"
                         onClick={this._handleAddGroup.bind(this)}
                         size="tiny"

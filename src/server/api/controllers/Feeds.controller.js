@@ -66,7 +66,7 @@ class FeedsController {
                 });
             } else {
                 feed.title = req.body.title;
-                feed.feedgroup_id = req.body.feedgroup_id;
+                feed.folder_id = req.body.folder_id;
                 feed.save((err, feedInfo)=>{
                     if(err) {
                         res.json({

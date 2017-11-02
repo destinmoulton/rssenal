@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 exports.default = function (app) {
     app.use('/api/entries', _Entries2.default);
-    app.use('/api/feedgroups', _FeedGroups2.default);
+    app.use('/api/folders', _Folders2.default);
     app.use('/api/feeds', _Feeds2.default);
     app.use('/api/validatefeedurl', _ValidateFeedURL2.default);
 };
@@ -15,9 +15,9 @@ var _Entries = require("./api/routes/Entries.route");
 
 var _Entries2 = _interopRequireDefault(_Entries);
 
-var _FeedGroups = require("./api/routes/FeedGroups.route");
+var _Folders = require("./api/routes/Folders.route");
 
-var _FeedGroups2 = _interopRequireDefault(_FeedGroups);
+var _Folders2 = _interopRequireDefault(_Folders);
 
 var _Feeds = require("./api/routes/Feeds.route");
 
