@@ -5,26 +5,26 @@ import { Button, Confirm, Icon } from "semantic-ui-react";
 
 import ListFeeds from "./ListFeeds";
 
-import { beginDeleteFeedGroup, beginSaveFeedGroup } from "../../redux/actions/feedgroups.actions";
+import { beginDeleteFolder, beginSaveFolder } from "../../redux/actions/folders.actions";
 import { changeFilter } from "../../redux/actions/filter.actions";
 
-import { IDispatch, IFeed, IFeedgroup, IFilter, IRootStoreState, TFeedgroupID, TFeedID, TFeeds } from "../../interfaces";
+import { IDispatch, IFeed, IFolder, IFilter, IRootStoreState, TFolderID, TFeedID, TFeeds } from "../../interfaces";
 
 interface IMapStateProps {
     filter: IFilter;
-    unreadMapGroups: Map<TFeedgroupID, number>;
+    unreadMapGroups: Map<TFolderID, number>;
     feeds: TFeeds;
 }
 
 interface IMapDispatchProps {
-    beginDeleteFeedGroup: (groupId: TFeedgroupID)=>void;
+    beginDeleteFolder: (groupId: TFolderID)=>void;
     changeFilter: (filter: IFilter)=>void;
 }
 
 interface IGroupItemProps extends IMapStateProps, IMapDispatchProps{
     editFeed: (feed: IFeed)=>void;
-    editGroup: (currentGroup: IFeedgroup)=>void;
-    group: IFeedgroup;
+    editGroup: (currentGroup: IFolder)=>void;
+    folder: IFolder;
 }
 
 interface IGroupItemState {
@@ -42,7 +42,7 @@ class GroupItem extends React.Component<IGroupItemProps> {
         optionsAreVisible: false,
         isEditing: false,
         isThisGroupSaving: false,
-        editGroupName: this.props.group.name
+        editGroupName: this.props.folder.name
     }
 
     constructor(props: IGroupItemProps){
@@ -69,23 +69,23 @@ class GroupItem extends React.Component<IGroupItemProps> {
     }
 
     _handleClickEdit(){
-        this.props.editGroup(this.props.group);
+        this.props.editGroup(this.props.folder);
     }
 
     _handleClickDelete(){
-        const { beginDeleteFeedGroup, group } = this.props;
-        const conf = confirm(`Are you sure you want to delete this (${group.name}) group?`)
+        const { beginDeleteFolder, folder } = this.props;
+        const conf = confirm(`Are you sure you want to delete this (${folder.name}) folder?`)
         if(conf){
-            beginDeleteFeedGroup(group._id);
+            beginDeleteFolder(folder._id);
         }
     }
 
     _handleClickGroupTitle(){
-        const { changeFilter, group } = this.props;
+        const { changeFilter, folder } = this.props;
 
         changeFilter({
-            limit: "group",
-            id: group._id
+            limit: "folder",
+            id: folder._id
         });
     }
 
@@ -97,7 +97,7 @@ class GroupItem extends React.Component<IGroupItemProps> {
 
     _buildOptionButtons(){
         return (
-            <span className="rss-feedgroups-groupitem-options">
+            <span className="rss-folders-groupitem-options">
                 <Icon 
                     name="pencil"
                     color="green" 
@@ -113,19 +113,19 @@ class GroupItem extends React.Component<IGroupItemProps> {
     }
 
     _buildGroupTitle(){
-        const { filter, group, unreadMapGroups } = this.props;
+        const { filter, folder, unreadMapGroups } = this.props;
 
         let className = "";
-        if(filter.limit === "group" && filter.id === group._id){
-            className = "rss-feedgroups-groupitem-title-active";
+        if(filter.limit === "folder" && filter.id === folder._id){
+            className = "rss-folders-groupitem-title-active";
         }
 
         let unread = "";
-        if(unreadMapGroups.has(group._id)){
-            unread = " [" + unreadMapGroups.get(group._id) + "]";
+        if(unreadMapGroups.has(folder._id)){
+            unread = " [" + unreadMapGroups.get(folder._id) + "]";
         }
         return (
-            <span className={className} onClick={this._handleClickGroupTitle}>{group.name}{unread}</span>
+            <span className={className} onClick={this._handleClickGroupTitle}>{folder.name}{unread}</span>
         );
     }
 
@@ -133,7 +133,7 @@ class GroupItem extends React.Component<IGroupItemProps> {
         const {
             editFeed,
             feeds,
-            group
+            folder
         } = this.props;
 
         const {
@@ -149,7 +149,7 @@ class GroupItem extends React.Component<IGroupItemProps> {
         let toggleFeedsIconClass = "caret right";
         if(feedsAreVisible){
             toggleFeedsIconClass = "caret down";
-            listFeeds = <ListFeeds groupId={group._id} editFeed={editFeed} feeds={feeds}/>;
+            listFeeds = <ListFeeds groupId={folder._id} editFeed={editFeed} feeds={feeds}/>;
         }
         toggleFeedsIcon = <Icon name={toggleFeedsIconClass} onClick={this._handleToggleFeedsVisible}/>;
 
@@ -162,7 +162,7 @@ class GroupItem extends React.Component<IGroupItemProps> {
         return (
             <div>
                 <div
-                    className="rss-feedgroups-groupitem"
+                    className="rss-folders-groupitem"
                     onMouseEnter={this._showOptions}
                     onMouseLeave={this._hideOptions}>
                     {toggleFeedsIcon}{title}&nbsp;{options}
@@ -178,14 +178,14 @@ const mapStateToProps = (state: IRootStoreState)=>{
 
     return {
         filter: filter.filter,
-        unreadMapGroups: feeds.unreadMap.groups,
+        unreadMapGroups: feeds.unreadMap.folders,
         feeds: feeds.feeds
     };
 }
 
 const mapDispatchToProps = (dispatch: IDispatch)=>{
     return {
-        beginDeleteFeedGroup: (groupId: TFeedgroupID)=> dispatch(beginDeleteFeedGroup(groupId)),
+        beginDeleteFolder: (groupId: TFolderID)=> dispatch(beginDeleteFolder(groupId)),
         changeFilter: (newFilter: IFilter)=> dispatch(changeFilter(newFilter))
     }
 }

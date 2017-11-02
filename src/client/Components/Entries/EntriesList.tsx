@@ -10,11 +10,11 @@ import SortMenu from "./SortMenu";
 
 import { beginGetEntries, updateReadState } from "../../redux/actions/entries.actions";
 
-import { IDispatch, IEntry, IFilter, IRootStoreState, TEntries, TEntryID, TFeedgroups, TFeeds} from "../../interfaces";
+import { IDispatch, IEntry, IFilter, IRootStoreState, TEntries, TEntryID, TFolders, TFeeds} from "../../interfaces";
 
 interface IMapStateProps {
     entries: TEntries;
-    groups: TFeedgroups;
+    folders: TFolders;
     feeds: TFeeds;
     filter: IFilter;
 }
@@ -50,7 +50,7 @@ class EntriesList extends React.Component<EntriesListProps> {
     }
 
     _filterAndSortEntries(props: EntriesListProps, sortBy: string){
-        const { entries, groups, feeds, filter } = props;
+        const { entries, folders, feeds, filter } = props;
 
         let filteredEntries = entries;
         let title = "All";
@@ -65,9 +65,9 @@ class EntriesList extends React.Component<EntriesListProps> {
 
                 title = activeFeed.title;
                 break;
-            case "group":
+            case "folder":
                 const feedIds = feeds.filter((feed)=>{
-                    return feed.feedgroup_id === filter.id;
+                    return feed.folder_id === filter.id;
                 }).map((feed)=>{
                     return feed._id;
                 });
@@ -76,7 +76,7 @@ class EntriesList extends React.Component<EntriesListProps> {
                     return feedIds.includes(entry.feed_id);
                 }).toOrderedMap();
 
-                const activeGroup = groups.get(filter.id);                
+                const activeGroup = folders.get(filter.id);                
 
                 title = activeGroup.name;
                 break;
@@ -238,10 +238,10 @@ class EntriesList extends React.Component<EntriesListProps> {
 }
 
 const mapStateToProps = (state: IRootStoreState): IMapStateProps =>{
-    const { entries, feedgroups, feeds, filter } = state;
+    const { entries, folders, feeds, filter } = state;
     return {
         entries: entries.entries,
-        groups: feedgroups.groups,
+        folders: folders.folders,
         feeds: feeds.feeds,
         filter: filter.filter
     }

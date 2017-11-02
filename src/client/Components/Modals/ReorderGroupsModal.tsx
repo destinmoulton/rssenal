@@ -5,17 +5,17 @@ import { Button, Header, Icon, Modal } from "semantic-ui-react";
 
 import { SortableGroupItem, SortableGroupList } from "./SortableComponents";
 
-import { beginReorderFeedGroups } from "../../redux/actions/feedgroups.actions";
+import { beginReorderFolders } from "../../redux/actions/folders.actions";
 import { compareAscByProp } from "../../lib/sort";
 
-import { IDispatch, IFeedgroup, IRootStoreState, TFeedgroups } from "../../interfaces";
+import { IDispatch, IFolder, IRootStoreState, TFolders } from "../../interfaces";
 
 interface IMapStateToProps {
-    groups: TFeedgroups
+    folders: TFolders
 }
 
 interface IMapDispatchToProps {
-    beginReorderFeedGroups: (feedgroupsArr: IFeedgroup[])=>void
+    beginReorderFolders: (foldersArr: IFolder[])=>void
 }
 
 interface IReorderGroupsModalProps extends IMapStateToProps, IMapDispatchToProps{
@@ -23,7 +23,7 @@ interface IReorderGroupsModalProps extends IMapStateToProps, IMapDispatchToProps
 }
 
 interface IReorderGroupsModalState {
-    groupsAsArray: IFeedgroup[];
+    groupsAsArray: IFolder[];
     isModalOpen: boolean;
 }
 
@@ -44,8 +44,8 @@ class ReorderGroupsModal extends React.Component<IReorderGroupsModalProps> {
     }
 
     componentWillReceiveProps(nextProps: IReorderGroupsModalProps){
-        let tmpArray = nextProps.groups.toArray().sort((a, b)=>compareAscByProp(a,b,"order"));
-        //Remove the "Uncategorized" group
+        let tmpArray = nextProps.folders.toArray().sort((a, b)=>compareAscByProp(a,b,"order"));
+        //Remove the "Uncategorized" folder
         tmpArray.pop();
 
         this.setState({
@@ -67,11 +67,11 @@ class ReorderGroupsModal extends React.Component<IReorderGroupsModalProps> {
 
     _handlePressOK(){
         const { groupsAsArray } = this.state;
-        const orderedGroups = groupsAsArray.map((feedgroup, index)=>{
-            feedgroup.order = index + 1;
-            return feedgroup;
+        const orderedGroups = groupsAsArray.map((folder, index)=>{
+            folder.order = index + 1;
+            return folder;
         });
-        this.props.beginReorderFeedGroups(groupsAsArray);
+        this.props.beginReorderFolders(groupsAsArray);
         this._handleCloseModal();
     }
 
@@ -82,7 +82,7 @@ class ReorderGroupsModal extends React.Component<IReorderGroupsModalProps> {
         });
     }
     
-    _reorderGroupsArray(previousIndex: number, newIndex: number):IFeedgroup[] {
+    _reorderGroupsArray(previousIndex: number, newIndex: number):IFolder[] {
         const array = this.state.groupsAsArray.slice(0);
         if (newIndex >= array.length) {
             let k = newIndex - array.length;
@@ -131,15 +131,15 @@ class ReorderGroupsModal extends React.Component<IReorderGroupsModalProps> {
 }
 
 const mapStateToProps = (state: IRootStoreState): IMapStateToProps =>{
-    const { feedgroups } = state;
+    const { folders } = state;
     return {
-        groups: feedgroups.groups
+        folders: folders.folders
     }
 };
 
 const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps =>{
     return {
-        beginReorderFeedGroups: (feedgroupsArr)=>dispatch(beginReorderFeedGroups(feedgroupsArr))
+        beginReorderFolders: (foldersArr)=>dispatch(beginReorderFolders(foldersArr))
     }
 }
 

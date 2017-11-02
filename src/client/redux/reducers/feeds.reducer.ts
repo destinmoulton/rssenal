@@ -16,7 +16,7 @@ import { compareAscByProp } from "../../lib/sort";
 
 const INITIAL_STATE: IReducerStateFeeds = {
     feeds: OrderedMap<TFeedID, IFeed>(),
-    unreadMap: {"feeds": Map<TFeedID, number>(), "groups": Map<string, number>()},
+    unreadMap: {"feeds": Map<TFeedID, number>(), "folders": Map<string, number>()},
     isAddingFeed: false,
     isUpdatingFeed: false
 }
@@ -42,7 +42,7 @@ function feedsReducer(state = INITIAL_STATE, action: IFeedsAction){
             const feed = feeds.get(feedId);
 
             let unreadFeeds = unreadMap.feeds;
-            let unreadGroups = unreadMap.groups;
+            let unreadGroups = unreadMap.folders;
 
             if(unreadFeeds.has(feedId)){
                 const unreadFeedCount = unreadFeeds.get(feedId);
@@ -50,13 +50,13 @@ function feedsReducer(state = INITIAL_STATE, action: IFeedsAction){
                 unreadFeeds = unreadFeeds.set(feedId, newCount);
             }
             
-            if(unreadGroups.has(feed.feedgroup_id)){
-                const unreadGroupCount = unreadGroups.get(feed.feedgroup_id);
+            if(unreadGroups.has(feed.folder_id)){
+                const unreadGroupCount = unreadGroups.get(feed.folder_id);
                 const newCount = (unreadGroupCount > 1) ? unreadGroupCount - 1 : 0;
-                unreadGroups = unreadGroups.set(feed.feedgroup_id, newCount);
+                unreadGroups = unreadGroups.set(feed.folder_id, newCount);
             }
 
-            const newUnreadMap = {"feeds": unreadFeeds, "groups": unreadGroups};
+            const newUnreadMap = {"feeds": unreadFeeds, "folders": unreadGroups};
             return {
                 ...state,
                 unreadMap: newUnreadMap
@@ -88,16 +88,16 @@ function feedsReducer(state = INITIAL_STATE, action: IFeedsAction){
                         unreadFeeds = unreadFeeds.set(feed._id, countUnread + 1);
                     }
 
-                    if(!unreadGroups.has(feed.feedgroup_id)){
-                        unreadGroups = unreadGroups.set(feed.feedgroup_id, 1);
+                    if(!unreadGroups.has(feed.folder_id)){
+                        unreadGroups = unreadGroups.set(feed.folder_id, 1);
                     } else {
-                        const countUnread: number = unreadGroups.get(feed.feedgroup_id);
-                        unreadGroups = unreadGroups.set(feed.feedgroup_id, countUnread + 1);
+                        const countUnread: number = unreadGroups.get(feed.folder_id);
+                        unreadGroups = unreadGroups.set(feed.folder_id, countUnread + 1);
                     }
                 }
             });
 
-            const newUnreadMap = {"feeds": unreadFeeds, "groups": unreadGroups};
+            const newUnreadMap = {"feeds": unreadFeeds, "folders": unreadGroups};
             return {
                 ...state,
                 unreadMap: newUnreadMap

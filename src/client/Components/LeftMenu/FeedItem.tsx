@@ -89,7 +89,7 @@ class FeedItem extends React.Component<IFeedItemProps> {
 
         let className = "";
         if(filter.limit === "feed" && filter.id === feed._id){
-            className = "rss-feedgroups-feeditem-title-active"
+            className = "rss-folders-feeditem-title-active"
         }
 
         let unreadEntriesCount = "";
@@ -104,7 +104,7 @@ class FeedItem extends React.Component<IFeedItemProps> {
         }
 
         return (
-            <div className="rss-feedgroups-feeditem"
+            <div className="rss-folders-feeditem"
                  onMouseEnter={this._handleShowOptions}
                  onMouseLeave={this._handleHideOptions}>{title}&nbsp;{options}</div>
         );

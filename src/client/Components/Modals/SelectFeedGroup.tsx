@@ -3,17 +3,17 @@ import { connect } from "react-redux";
 
 import { Dropdown } from "semantic-ui-react";
 
-import { IRootStoreState, TFeedgroups, TFeedgroupID } from "../../interfaces";
+import { IRootStoreState, TFolders, TFolderID } from "../../interfaces";
 interface IMapStateToProps{
-    feedgroups: TFeedgroups
+    folders: TFolders
 }
 
-interface ISelectFeedGroupProps extends IMapStateToProps{
-    onChange: (feedGroupId: TFeedgroupID)=>void;
+interface ISelectFolderProps extends IMapStateToProps{
+    onChange: (feedGroupId: TFolderID)=>void;
     selectedValue?: string;
 }
 
-class SelectFeedGroup extends React.Component<ISelectFeedGroupProps> {
+class SelectFolder extends React.Component<ISelectFolderProps> {
 
     static defaultProps = {
         selectedValue: "0"
@@ -23,13 +23,13 @@ class SelectFeedGroup extends React.Component<ISelectFeedGroupProps> {
         selectedValue: this.props.selectedValue
     }
 
-    constructor(props: ISelectFeedGroupProps){
+    constructor(props: ISelectFolderProps){
         super(props);
 
         this._handleOnChange = this._handleOnChange.bind(this);
     }
 
-    componentWillReceiveProps(nextProps: ISelectFeedGroupProps){
+    componentWillReceiveProps(nextProps: ISelectFolderProps){
         if(nextProps.hasOwnProperty("selectedValue")){
             this.setState({
                 selectedValue: nextProps.selectedValue
@@ -48,16 +48,16 @@ class SelectFeedGroup extends React.Component<ISelectFeedGroupProps> {
     }
 
     render() {
-        const { feedgroups } = this.props;
+        const { folders } = this.props;
         const { selectedValue } = this.state;
         
-        // Convert the feed groups Immutable list into
+        // Convert the feed folders Immutable list into
         // an array of key/value options.
-        let groupOptions = feedgroups.map((group)=>{
+        let groupOptions = folders.map((folder)=>{
             return {
-                key: group._id,
-                value: group._id,
-                text: group.name
+                key: folder._id,
+                value: folder._id,
+                text: folder.name
             };
         }).toArray();
 
@@ -75,10 +75,10 @@ class SelectFeedGroup extends React.Component<ISelectFeedGroupProps> {
     }
 }
 const mapStateToProps = (state: IRootStoreState)=>{
-    const { feedgroups } = state;
+    const { folders } = state;
     return {
-        feedgroups: feedgroups.groups
+        folders: folders.folders
     }
 }
 
-export default connect(mapStateToProps)(SelectFeedGroup);
+export default connect(mapStateToProps)(SelectFolder);

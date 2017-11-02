@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 
 import FeedItem from "./FeedItem";
 
-import { IFeed, TFeedID, TFeedgroupID, TFeeds } from "../../interfaces";
+import { IFeed, TFeedID, TFolderID, TFeeds } from "../../interfaces";
 
 interface IListFeedsProps {
     feeds: TFeeds;
     editFeed: (feed: IFeed)=>void;
-    groupId: TFeedgroupID;
+    groupId: TFolderID;
 }
 
 const ListFeeds = (props: IListFeedsProps)=>{
@@ -20,7 +20,7 @@ const ListFeeds = (props: IListFeedsProps)=>{
     } = props;
 
     const feedList = feeds.filter((feed: IFeed)=>{
-        return (feed.feedgroup_id === groupId);
+        return (feed.folder_id === groupId);
     }).toArray().map((feed: IFeed)=>{
         return <FeedItem key={feed._id} feed={feed} editFeed={editFeed}/>;
     });

@@ -2,11 +2,11 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { Button, Header, Icon, Modal } from "semantic-ui-react";
-import SelectFeedGroup from "./SelectFeedGroup";
+import SelectFolder from "./SelectFolder";
 
 import { beginUpdateFeed } from "../../redux/actions/feeds.actions";
 
-import {IDispatch, IFeed, IRootStoreState, TFeedgroupID} from "../../interfaces";
+import {IDispatch, IFeed, IRootStoreState, TFolderID} from "../../interfaces";
 
 interface IMapDispatchToProps {
     beginUpdateFeed: (feedInfo: any)=>void;
@@ -82,9 +82,9 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
         });
     }
 
-    _handleSelectGroupChange(feedgroupId: TFeedgroupID){
+    _handleSelectGroupChange(folderId: TFolderID){
         const { newFeed } = this.state;
-        newFeed.feedgroup_id = feedgroupId;
+        newFeed.folder_id = folderId;
         
         this.setState({
             newFeed
@@ -109,8 +109,8 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
                     />
                 </div>
                 <div>
-                    <SelectFeedGroup
-                        selectedValue={newFeed.feedgroup_id} 
+                    <SelectFolder
+                        selectedValue={newFeed.folder_id} 
                         onChange={this._handleSelectGroupChange}/>
                 </div>
             </div>

@@ -3,7 +3,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { beginGetEntries } from "../../redux/actions/entries.actions";
-import { getAllFeedGroups } from "../../redux/actions/feedgroups.actions";
+import { getAllFolders } from "../../redux/actions/folders.actions";
 import { getAllFeeds } from "../../redux/actions/feeds.actions";
 
 import AddFeedModal from "../Modals/AddFeedModal";
@@ -14,17 +14,17 @@ import GroupItem from "./GroupItem";
 
 import { compareAscByProp } from "../../lib/sort";
 
-import { TFeeds, IFeed, IFeedgroup, IDispatch, IRootStoreState, TFeedID, TFeedgroupID } from "../../interfaces";
+import { TFeeds, IFeed, IFolder, IDispatch, IRootStoreState, TFeedID, TFolderID } from "../../interfaces";
 
 interface IMapStateProps {
     feeds: TFeeds;
-    hasFeedGroups: boolean;
-    groups: OrderedMap<TFeedgroupID, IFeedgroup>;
+    hasFolders: boolean;
+    folders: OrderedMap<TFolderID, IFolder>;
 }
 
 interface IMapDispatchProps {
     beginGetEntries: ()=>void;
-    getAllFeedGroups: ()=>void;
+    getAllFolders: ()=>void;
     getAllFeeds: ()=>void;
 }
 
@@ -36,7 +36,7 @@ interface ILeftMenuState {
     addFeedModalOpen: boolean;
     editFeed: IFeed;
     editFeedModalOpen: boolean;
-    editGroup: IFeedgroup;
+    editGroup: IFolder;
     editGroupModalOpen: boolean;
 }
 class LeftMenu extends React.Component<ILeftMenuProps> {
@@ -63,13 +63,13 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
     componentWillMount(){
         const { 
             beginGetEntries,
-            getAllFeedGroups,
+            getAllFolders,
             getAllFeeds,
-            hasFeedGroups
+            hasFolders
         } = this.props;
 
-        if(!hasFeedGroups){
-            getAllFeedGroups();
+        if(!hasFolders){
+            getAllFolders();
             getAllFeeds();
             beginGetEntries();
         }
@@ -88,9 +88,9 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
         });
     }
 
-    _handleOpenEditGroupModal(group: IFeedgroup){
+    _handleOpenEditGroupModal(folder: IFolder){
         this.setState({
-            editGroup: group,
+            editGroup: folder,
             editGroupModalOpen: true
         })
     }
@@ -125,14 +125,14 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
             editGroupModalOpen,
         } = this.state;
 
-        const { groups } = this.props;
-        const sortedGroups = groups.sort((a: IFeedgroup, b: IFeedgroup)=>compareAscByProp(a, b, "order"));
+        const { folders } = this.props;
+        const sortedGroups = folders.sort((a: IFolder, b: IFolder)=>compareAscByProp(a, b, "order"));
 
-        let listFeedGroups = sortedGroups.toArray().map((group)=>{
+        let listFolders = sortedGroups.toArray().map((folder)=>{
             return (
-                <div key={group._id} >
+                <div key={folder._id} >
                     <GroupItem
-                        group={group}
+                        folder={folder}
                         editGroup={this._handleOpenEditGroupModal}
                         editFeed={this._handleOpenEditFeedModal}
                     />
@@ -154,7 +154,7 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
                     <GroupEditorModal 
                         isModalOpen={editGroupModalOpen}
                         onCloseModal={this._handleCloseEditGroupModal}
-                        group={editGroup}
+                        folder={editGroup}
                     />
                     <EditFeedModal
                         isModalOpen={editFeedModalOpen}
@@ -163,7 +163,7 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
                     />
                 </div>
                 <div>
-                    {listFeedGroups}
+                    {listFolders}
                 </div>
             </div>
         );
@@ -171,19 +171,19 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
 }
 
 const mapStateToProps = (state: IRootStoreState): IMapStateProps =>{
-    const { feedgroups, feeds } = state;
+    const { folders, feeds } = state;
 
     return {
         feeds: feeds.feeds,
-        hasFeedGroups: feedgroups.hasFeedGroups,
-        groups: feedgroups.groups
+        hasFolders: folders.hasFolders,
+        folders: folders.folders
     }
 }
 
 const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchProps=>{
     return {
         beginGetEntries: ()=>dispatch(beginGetEntries()),
-        getAllFeedGroups: ()=>dispatch(getAllFeedGroups()),
+        getAllFolders: ()=>dispatch(getAllFolders()),
         getAllFeeds: ()=>dispatch(getAllFeeds())
     }
 }

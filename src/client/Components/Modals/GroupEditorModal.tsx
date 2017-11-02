@@ -3,22 +3,22 @@ import { connect } from "react-redux";
 
 import { Button, Header, Icon, Modal } from "semantic-ui-react";
 
-import { beginSaveFeedGroup } from "../../redux/actions/feedgroups.actions";
+import { beginSaveFolder } from "../../redux/actions/folders.actions";
 
-import { IDispatch, IFeedgroup, IRootStoreState } from "../../interfaces";
+import { IDispatch, IFolder, IRootStoreState } from "../../interfaces";
 
 interface IMapStateToProps {
-    isSavingFeedGroup: boolean;
+    isSavingFolder: boolean;
 }
 
 interface IMapDispatchToProps {
-    beginSaveFeedGroup: (group: any)=>void;
+    beginSaveFolder: (folder: any)=>void;
 }
 
 interface IGroupEditorModalProps extends IMapDispatchToProps, IMapStateToProps{
     isModalOpen: boolean;
     onCloseModal: ()=>void;
-    group: IFeedgroup
+    folder: IFolder
 }
 
 interface IGroupEditorModalState {
@@ -41,11 +41,11 @@ class GroupEditorModal extends React.Component<IGroupEditorModalProps> {
     }
 
     componentWillReceiveProps(nextProps: IGroupEditorModalProps){
-        if(this.props.isSavingFeedGroup && !nextProps.isSavingFeedGroup){
+        if(this.props.isSavingFolder && !nextProps.isSavingFolder){
             this._handleClose();
         }
         this.setState({
-            newGroup: nextProps.group
+            newGroup: nextProps.folder
         });
     }
     
@@ -61,7 +61,7 @@ class GroupEditorModal extends React.Component<IGroupEditorModalProps> {
         const { newGroup } = this.state;
 
         if(newGroup.name !== ""){
-            this.props.beginSaveFeedGroup(newGroup);
+            this.props.beginSaveFolder(newGroup);
         }
     }
 
@@ -81,7 +81,7 @@ class GroupEditorModal extends React.Component<IGroupEditorModalProps> {
 
     _buildEditInput(){
         const { newGroup } = this.state;
-        const { isSavingFeedGroup } = this.props;
+        const { isSavingFolder } = this.props;
 
         return (
             <input
@@ -90,16 +90,16 @@ class GroupEditorModal extends React.Component<IGroupEditorModalProps> {
                 placeholder="Group name..."
                 onKeyPress={this._handleInputKeyPress}
                 onChange={this._handleInputOnChange}
-                disabled={isSavingFeedGroup}
+                disabled={isSavingFolder}
             />
         )
     }
 
     _buildButtons(){
-        const { isSavingFeedGroup } = this.props;
+        const { isSavingFolder } = this.props;
 
         let cancelButton = null;
-        if(!isSavingFeedGroup){
+        if(!isSavingFolder){
             cancelButton = <Button
                                 color="orange"
                                 content="Cancel"
@@ -120,7 +120,7 @@ class GroupEditorModal extends React.Component<IGroupEditorModalProps> {
                     icon="save"
                     floated="right"
                     inverted
-                    loading={isSavingFeedGroup}
+                    loading={isSavingFolder}
                     onClick={this._handleSave}
                     size="mini"
                 />
@@ -129,12 +129,12 @@ class GroupEditorModal extends React.Component<IGroupEditorModalProps> {
     }
 
     render() {
-        const { group, isModalOpen } = this.props;
+        const { folder, isModalOpen } = this.props;
         const form = this._buildEditInput();
 
         let modalHeader = "Add Group";
         
-        if(group && group._id !== ""){
+        if(folder && folder._id !== ""){
             modalHeader = "Edit Group";
         }
 
@@ -160,15 +160,15 @@ class GroupEditorModal extends React.Component<IGroupEditorModalProps> {
 }
 
 const mapStateToProps = (state: IRootStoreState): IMapStateToProps=>{
-    const { feedgroups } = state;
+    const { folders } = state;
     return {
-        isSavingFeedGroup: feedgroups.isSavingFeedGroup
+        isSavingFolder: folders.isSavingFolder
     };
 }
 
 const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps=>{
     return {
-        beginSaveFeedGroup: (groupInfo)=> dispatch(beginSaveFeedGroup(groupInfo))
+        beginSaveFolder: (groupInfo)=> dispatch(beginSaveFolder(groupInfo))
     }
 }
 

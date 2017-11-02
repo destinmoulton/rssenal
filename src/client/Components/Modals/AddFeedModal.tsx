@@ -2,20 +2,20 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { Button, Form, Icon, Header, Message, Modal, Segment } from "semantic-ui-react";
-import SelectFeedGroup from "./SelectFeedGroup";
+import SelectFolder from "./SelectFolder";
 
 import { API_FEEDVALIDATION_BASE } from "../../redux/apiendpoints";
 
 import { beginAddFeed } from "../../redux/actions/feeds.actions";
 
-import { IDispatch, IFeed, IRootStoreState, TFeedgroupID } from "../../interfaces";
+import { IDispatch, IFeed, IRootStoreState, TFolderID } from "../../interfaces";
 
 interface IAddFeedModalState {
     display: string;
     feedInfo: IFeed;
     isValidatingURL: boolean;
     feedURL: string;
-    feedGroupId: TFeedgroupID;
+    feedGroupId: TFolderID;
     formError: string;
 }
 
@@ -54,7 +54,7 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
         this._handleClickContinue = this._handleClickContinue.bind(this);
         this._handleChangeURLInput = this._handleChangeURLInput.bind(this);
         this._handleClose = this._handleClose.bind(this);
-        this._handleSelectFeedGroup = this._handleSelectFeedGroup.bind(this);
+        this._handleSelectFolder = this._handleSelectFolder.bind(this);
         this._transitionToDisplayFeed = this._transitionToDisplayFeed.bind(this);
         this._transitionToDisplayForm = this._transitionToDisplayForm.bind(this);
     }
@@ -98,13 +98,13 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
             title: feedInfo.title,
             description: feedInfo.description,
             link: feedInfo.link,
-            feedgroup_id: feedGroupId,
+            folder_id: feedGroupId,
             url: feedURL
         };
         this.props.beginAddFeed(dataToAdd);
     }
 
-    _handleSelectFeedGroup(feedGroupId: TFeedgroupID){
+    _handleSelectFolder(feedGroupId: TFolderID){
         this.setState({
             feedGroupId
         })
@@ -220,7 +220,7 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
                     Select Feed Group
                 </Header>
                 <Segment attached="bottom">
-                    <SelectFeedGroup onChange={this._handleSelectFeedGroup} />
+                    <SelectFolder onChange={this._handleSelectFolder} />
                 </Segment>
             </div>
         );

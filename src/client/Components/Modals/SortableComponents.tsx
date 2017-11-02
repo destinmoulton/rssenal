@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 
-import { IFeedgroup } from "../../interfaces";
+import { IFolder } from "../../interfaces";
 
 interface ISortableGroupItemProps {
     value: any;
@@ -12,12 +12,12 @@ export const SortableGroupItem = SortableElement((props: ISortableGroupItemProps
 });
 
 interface ISortableGroupListProps {
-    items: IFeedgroup[];
+    items: IFolder[];
     onSortEnd: any;
 };
 export const SortableGroupList = SortableContainer((props: ISortableGroupListProps)=>{
     const {items} = props;
-    const itemsList = items.map((value: IFeedgroup, index: number)=>{
+    const itemsList = items.map((value: IFolder, index: number)=>{
         return (
             <div className="rss-sortgroup-list-container" key={`item-${index}`}>
                 <SortableGroupItem key={`item-${index}`} index={index} value={value.name}/>

@@ -41,7 +41,7 @@ export type TFeedID = string;
 export interface IFeed {
     _id: TFeedID;
     title: string;
-    feedgroup_id: string;
+    folder_id: string;
     description: string;
     link: string;
     creation_date: string;
@@ -60,25 +60,25 @@ export interface IFeedsAction {
 
 export interface IFeedsUnreadMap {
     feeds: Map<TFeedID, number>;
-    groups: Map<TFeedgroupID, number>;
+    folders: Map<TFolderID, number>;
 }
 
-export type TFeedgroupID = string;
+export type TFolderID = string;
 
-export interface IFeedgroup {
-    _id: TFeedgroupID;
+export interface IFolder {
+    _id: TFolderID;
     name: string;
     order: number;
 }
 
-export interface IFeedgroupAction {
+export interface IFolderAction {
     type: string;
-    groupId?: TFeedgroupID;
-    groups?: IFeedgroup[];
-    group?: IFeedgroup;
+    groupId?: TFolderID;
+    folders?: IFolder[];
+    folder?: IFolder;
 }
 
-export type TFeedgroups = OrderedMap<TFeedgroupID, IFeedgroup>;
+export type Tfolders = OrderedMap<TFolderID, IFolder>;
 
 export interface IFilter {
     id?: string;
@@ -106,12 +106,12 @@ export interface IReducerStateFilter{
     filter: IFilter;    
 }
 
-export interface IReducerStateFeedgroups {
-    groups: TFeedgroups;
-    hasFeedGroups: boolean;
-    isDeletingFeedGroup: boolean;
-    isFetchingFeedGroups: boolean;
-    isSavingFeedGroup: boolean;
+export interface IReducerStateFolders {
+    folders: Tfolders;
+    hasFolders: boolean;
+    isDeletingFolder: boolean;
+    isFetchingFolders: boolean;
+    isSavingFolder: boolean;
 }
 
 export interface IReducerStateFeeds {
@@ -127,7 +127,7 @@ export interface IReducerStateSettings {
 
 export interface IRootStoreState {
     entries: IReducerStateEntries;
-    feedgroups: IReducerStateFeedgroups;    
+    folders: IReducerStateFolders;    
     feeds: IReducerStateFeeds;
     filter: IReducerStateFilter;
     settings: IReducerStateSettings;
