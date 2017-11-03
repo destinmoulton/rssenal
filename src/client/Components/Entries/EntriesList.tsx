@@ -198,8 +198,11 @@ class EntriesList extends React.Component<EntriesListProps> {
 
     _markRead(entryId: TEntryID){
         const { entries, markEntryRead } = this.props;
+        const entryToMark = entries.get(entryId);
 
-        markEntryRead(entries.get(entryId));
+        if(!entryToMark.has_read){
+            markEntryRead(entryToMark);
+        }
     }
 
     render() {
