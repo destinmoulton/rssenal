@@ -10,7 +10,7 @@ import AddFeedModal from "../Modals/AddFeedModal";
 import ButtonBar from "./ButtonBar";
 import EditFeedModal from "../Modals/EditFeedModal";
 import FolderEditorModal from "../Modals/FolderEditorModal";
-import GroupItem from "./GroupItem";
+import FolderItem from "./FolderItem";
 
 import { compareAscByProp } from "../../lib/sort";
 
@@ -36,16 +36,16 @@ interface ILeftMenuState {
     addFeedModalOpen: boolean;
     editFeed: IFeed;
     editFeedModalOpen: boolean;
-    editGroup: IFolder;
-    editGroupModalOpen: boolean;
+    editFolder: IFolder;
+    editFolderModalOpen: boolean;
 }
 class LeftMenu extends React.Component<ILeftMenuProps> {
     state: ILeftMenuState = {
         addFeedModalOpen: false,
         editFeed: null,
         editFeedModalOpen: false,
-        editGroup: null,
-        editGroupModalOpen: false
+        editFolder: null,
+        editFolderModalOpen: false
     };
 
     constructor(props: ILeftMenuProps){
@@ -53,10 +53,10 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
         
         this._handleCloseAddFeedModal = this._handleCloseAddFeedModal.bind(this);
         this._handleCloseEditFeedModal = this._handleCloseEditFeedModal.bind(this);
-        this._handleCloseEditGroupModal = this._handleCloseEditGroupModal.bind(this);
+        this._handleCloseEditFolderModal = this._handleCloseEditFolderModal.bind(this);
         this._handleOpenAddFeedModal = this._handleOpenAddFeedModal.bind(this);
         this._handleOpenEditFeedModal = this._handleOpenEditFeedModal.bind(this);
-        this._handleOpenEditGroupModal = this._handleOpenEditGroupModal.bind(this);
+        this._handleOpenEditFolderModal = this._handleOpenEditFolderModal.bind(this);
         
     }
 
@@ -88,17 +88,17 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
         });
     }
 
-    _handleOpenEditGroupModal(folder: IFolder){
+    _handleOpenEditFolderModal(folder: IFolder){
         this.setState({
-            editGroup: folder,
-            editGroupModalOpen: true
+            editFolder: folder,
+            editFolderModalOpen: true
         })
     }
 
-    _handleCloseEditGroupModal(){
+    _handleCloseEditFolderModal(){
         this.setState({
-            editGroup: {},
-            editGroupModalOpen: false
+            editFolder: {},
+            editFolderModalOpen: false
         });
     }
 
@@ -121,19 +121,19 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
             addFeedModalOpen,
             editFeed,
             editFeedModalOpen,
-            editGroup,
-            editGroupModalOpen,
+            editFolder,
+            editFolderModalOpen,
         } = this.state;
 
         const { folders } = this.props;
-        const sortedGroups = folders.sort((a: IFolder, b: IFolder)=>compareAscByProp(a, b, "order"));
+        const sortedFolders = folders.sort((a: IFolder, b: IFolder)=>compareAscByProp(a, b, "order"));
 
-        let listFolders = sortedGroups.toArray().map((folder)=>{
+        let listFolders = sortedFolders.toArray().map((folder)=>{
             return (
                 <div key={folder._id} >
-                    <GroupItem
+                    <FolderItem
                         folder={folder}
-                        editGroup={this._handleOpenEditGroupModal}
+                        editFolder={this._handleOpenEditFolderModal}
                         editFeed={this._handleOpenEditFeedModal}
                     />
                 </div>
@@ -144,7 +144,7 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
             <div>
                 <div>
                     <ButtonBar 
-                        openEditGroupModal={this._handleOpenEditGroupModal}
+                        openEditFolderModal={this._handleOpenEditFolderModal}
                         openAddFeedModal={this._handleOpenAddFeedModal}
                     />
                     <AddFeedModal 
@@ -152,9 +152,9 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
                         onCloseModal={this._handleCloseAddFeedModal}
                     />
                     <FolderEditorModal 
-                        isModalOpen={editGroupModalOpen}
-                        onCloseModal={this._handleCloseEditGroupModal}
-                        folder={editGroup}
+                        isModalOpen={editFolderModalOpen}
+                        onCloseModal={this._handleCloseEditFolderModal}
+                        folder={editFolder}
                     />
                     <EditFeedModal
                         isModalOpen={editFeedModalOpen}

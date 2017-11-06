@@ -17,42 +17,36 @@ interface IMapStateProps {
 }
 
 interface IMapDispatchProps {
-    beginDeleteFolder: (groupId: TFolderID)=>void;
+    beginDeleteFolder: (folderId: TFolderID)=>void;
     changeFilter: (filter: IFilter)=>void;
 }
 
-interface IGroupItemProps extends IMapStateProps, IMapDispatchProps{
+interface IFolderItemProps extends IMapStateProps, IMapDispatchProps{
     editFeed: (feed: IFeed)=>void;
-    editGroup: (currentGroup: IFolder)=>void;
+    editFolder: (currentFolder: IFolder)=>void;
     folder: IFolder;
 }
 
-interface IGroupItemState {
+interface IFolderItemState {
     feedsAreVisible: boolean;
     optionsAreVisible: boolean;
-    isEditing: boolean;
-    isThisGroupSaving: boolean;
-    editGroupName: string;
 }
 
-class GroupItem extends React.Component<IGroupItemProps> {
+class FolderItem extends React.Component<IFolderItemProps> {
 
-    state: IGroupItemState = {
+    state: IFolderItemState = {
         feedsAreVisible: false,
-        optionsAreVisible: false,
-        isEditing: false,
-        isThisGroupSaving: false,
-        editGroupName: this.props.folder.name
+        optionsAreVisible: false
     }
 
-    constructor(props: IGroupItemProps){
+    constructor(props: IFolderItemProps){
         super(props);
 
         this._showOptions = this._showOptions.bind(this);
         this._hideOptions = this._hideOptions.bind(this);
         this._handleClickDelete = this._handleClickDelete.bind(this);
         this._handleClickEdit = this._handleClickEdit.bind(this);
-        this._handleClickGroupTitle = this._handleClickGroupTitle.bind(this);
+        this._handleClickFolderTitle = this._handleClickFolderTitle.bind(this);
         this._handleToggleFeedsVisible = this._handleToggleFeedsVisible.bind(this);
     }
 
@@ -69,7 +63,7 @@ class GroupItem extends React.Component<IGroupItemProps> {
     }
 
     _handleClickEdit(){
-        this.props.editGroup(this.props.folder);
+        this.props.editFolder(this.props.folder);
     }
 
     _handleClickDelete(){
@@ -80,7 +74,7 @@ class GroupItem extends React.Component<IGroupItemProps> {
         }
     }
 
-    _handleClickGroupTitle(){
+    _handleClickFolderTitle(){
         const { changeFilter, folder } = this.props;
 
         changeFilter({
@@ -97,7 +91,7 @@ class GroupItem extends React.Component<IGroupItemProps> {
 
     _buildOptionButtons(){
         return (
-            <span className="rss-folders-groupitem-options">
+            <span className="rss-folders-folderitem-options">
                 <Icon 
                     name="pencil"
                     color="green" 
@@ -112,12 +106,12 @@ class GroupItem extends React.Component<IGroupItemProps> {
         );
     }
 
-    _buildGroupTitle(){
+    _buildFolderTitle(){
         const { filter, folder, unreadMapGroups } = this.props;
 
         let className = "";
         if(filter.limit === "folder" && filter.id === folder._id){
-            className = "rss-folders-groupitem-title-active";
+            className = "rss-folders-folderitem-title-active";
         }
 
         let unread = "";
@@ -125,7 +119,7 @@ class GroupItem extends React.Component<IGroupItemProps> {
             unread = " [" + unreadMapGroups.get(folder._id) + "]";
         }
         return (
-            <span className={className} onClick={this._handleClickGroupTitle}>{folder.name}{unread}</span>
+            <span className={className} onClick={this._handleClickFolderTitle}>{folder.name}{unread}</span>
         );
     }
 
@@ -145,24 +139,25 @@ class GroupItem extends React.Component<IGroupItemProps> {
         let listFeeds = null;
         let title = null;
         let options = null;
-        
+        console.log("folder item about to render");
         let toggleFeedsIconClass = "caret right";
         if(feedsAreVisible){
             toggleFeedsIconClass = "caret down";
-            listFeeds = <ListFeeds groupId={folder._id} editFeed={editFeed} feeds={feeds}/>;
+            listFeeds = <ListFeeds folderId={folder._id} editFeed={editFeed} feeds={feeds}/>;
         }
         toggleFeedsIcon = <Icon name={toggleFeedsIconClass} onClick={this._handleToggleFeedsVisible}/>;
-
-        title = this._buildGroupTitle();
+        console.log("after list feeds and icon");
+        title = this._buildFolderTitle();
 
         if(optionsAreVisible){
             options = this._buildOptionButtons();
         }
+        console.log("after options")
 
         return (
             <div>
                 <div
-                    className="rss-folders-groupitem"
+                    className="rss-folders-folderitem"
                     onMouseEnter={this._showOptions}
                     onMouseLeave={this._hideOptions}>
                     {toggleFeedsIcon}{title}&nbsp;{options}
@@ -173,7 +168,7 @@ class GroupItem extends React.Component<IGroupItemProps> {
     }
 }
 
-const mapStateToProps = (state: IRootStoreState)=>{
+const mapStateToProps = (state: IRootStoreState): IMapStateProps=>{
     const { feeds, filter } = state;
 
     return {
@@ -183,11 +178,11 @@ const mapStateToProps = (state: IRootStoreState)=>{
     };
 }
 
-const mapDispatchToProps = (dispatch: IDispatch)=>{
+const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchProps=>{
     return {
-        beginDeleteFolder: (groupId: TFolderID)=> dispatch(beginDeleteFolder(groupId)),
+        beginDeleteFolder: (folderId: TFolderID)=> dispatch(beginDeleteFolder(folderId)),
         changeFilter: (newFilter: IFilter)=> dispatch(changeFilter(newFilter))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GroupItem);
+export default connect(mapStateToProps, mapDispatchToProps)(FolderItem);
