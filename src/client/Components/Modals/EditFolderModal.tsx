@@ -22,13 +22,16 @@ interface IFolderEditorModalProps extends IMapDispatchToProps, IMapStateToProps{
 }
 
 interface IFolderEditorModalState {
-    newFolder: any;
+    editFolder: any;
 }
+
+const INITIAL_FOLDER = {name:"", _id:""};
+
 
 class EditFolderModal extends React.Component<IFolderEditorModalProps> {
 
     state: IFolderEditorModalState = {
-        newFolder: {}
+        editFolder: INITIAL_FOLDER
     }
 
     constructor(props: IFolderEditorModalProps){
@@ -40,28 +43,38 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
         this._handleInputOnChange = this._handleInputOnChange.bind(this);
     }
 
+    componentDidCatch(error: Error, info: any){
+        console.error(error, info);
+    }
+
     componentWillReceiveProps(nextProps: IFolderEditorModalProps){
         if(this.props.isSavingFolder && !nextProps.isSavingFolder){
             this._handleClose();
         }
-        this.setState({
-            newFolder: nextProps.folder
-        });
+
+        if(nextProps.folder.name !==""){
+            this.setState({
+                editFolder: nextProps.folder
+            });
+        } else if (nextProps.folder === null){
+            this.setState({
+                editFolder: INITIAL_FOLDER
+            });
+        }
     }
     
     _handleClose(){
         this.setState({
-            newFolder: {}
+            editFolder: INITIAL_FOLDER
         });
-
         this.props.onCloseModal();
     }
 
     _handleSave(){
-        const { newFolder } = this.state;
+        const { editFolder } = this.state;
 
-        if(newFolder.name !== ""){
-            this.props.beginSaveFolder(newFolder);
+        if(editFolder.name !== ""){
+            this.props.beginSaveFolder(editFolder);
         }
     }
 
@@ -72,21 +85,21 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
     }
 
     _handleInputOnChange(e: any){
-        const { newFolder } = this.state;
-        newFolder.name = e.target.value;
+        const { editFolder } = this.state;
+        editFolder.name = e.target.value;
         this.setState({
-            newFolder
+            editFolder
         });
     }
 
     _buildEditInput(){
-        const { newFolder } = this.state;
+        const { editFolder } = this.state;
         const { isSavingFolder } = this.props;
 
         return (
             <input
                 autoFocus
-                value={newFolder.name}
+                value={editFolder.name}
                 placeholder="Folder name..."
                 onKeyPress={this._handleInputKeyPress}
                 onChange={this._handleInputOnChange}
@@ -128,6 +141,7 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
         );
     }
 
+    
     render() {
         const { folder, isModalOpen } = this.props;
         const form = this._buildEditInput();
@@ -140,7 +154,6 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
 
         const buttons = this._buildButtons();
         return (
-            <span>
                 <Modal
                     open={isModalOpen}
                     onClose={this._handleClose}
@@ -154,7 +167,6 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
                         {buttons}
                     </Modal.Actions>
                 </Modal>
-            </span>
         );
     }
 }
