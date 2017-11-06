@@ -56,6 +56,9 @@ function addFeed(feedInfo: IFeed){
                     dispatch(beginGetEntries());
                 }
             })
+            .catch((err)=>{
+                console.error(err);
+            })
     }
 }
 
@@ -82,6 +85,9 @@ export function getAllFeeds(){
                 } else if(resObj.status==="success"){
                     dispatch(getAllFeedsComplete(resObj.feeds));
                 }
+            })
+            .catch((err)=>{
+                console.error(err);
             })
     }
 }
@@ -119,6 +125,9 @@ function deleteFeed(feedId: TFeedID){
             .then((resObj)=>{
                 dispatch(deleteFeedComplete(feedId));
                 dispatch(beginGetEntries());
+            })
+            .catch((err)=>{
+                console.error(err);
             })
     }
 }
@@ -165,6 +174,9 @@ function updateFeed(feedInfo: IFeed){
                 } else if(feedObj.status === "success"){
                     dispatch(updateFeedComplete(feedObj.feedInfo));
                 }
+            })
+            .catch((err)=>{
+                console.error(err);
             })
     }
 }

@@ -42,6 +42,9 @@ function fetchFolders(){
             .then((folders)=>{
                 dispatch(fetchingComplete(folders));
             })
+            .catch((err)=>{
+                console.error(err);
+            })
     }
 }
 
@@ -85,8 +88,15 @@ function addFolder(newFolderName: string){
             .then((res)=>{
                 return res.json();
             })
-            .then((newFolder)=>{
-                dispatch(addingFolderComplete(newFolder));
+            .then((resObj)=>{
+                if(resObj.status === "error"){
+                    return console.error(resObj);
+                } else {
+                    return dispatch(addingFolderComplete(resObj));
+                }
+            })
+            .catch((err)=>{
+                console.error(err);
             })
     }
 }
@@ -120,8 +130,15 @@ function updateFolder(folderId: TFolderID, newFolderName: string){
             .then((res)=>{
                 return res.json();
             })
-            .then((newFolder)=>{
-                dispatch(updatingComplete(newFolder))
+            .then((resObj)=>{
+                if(resObj.status === "error"){
+                    return console.error(resObj);
+                } else {
+                    return dispatch(updatingComplete(resObj));
+                }
+            })
+            .catch((err)=>{
+                console.error(err);
             })
     }
 }
@@ -158,8 +175,13 @@ function deleteFolder(folderId: TFolderID){
             })
             .then((resObj)=>{
                 if(resObj.status==="success"){
-                    dispatch(deleteComplete(folderId));
+                    return dispatch(deleteComplete(folderId));
+                } else {
+                    console.error(resObj);
                 }
+            })
+            .catch((err)=>{
+                console.error(err);
             })
     }
 }
@@ -188,8 +210,11 @@ export function beginReorderFolders(foldersArr: IFolder[]){
             })
             .then((resObj)=>{
                 if(resObj.status==="success"){
-                    dispatch(getAllFolders());
+                    return dispatch(getAllFolders());
                 }
+            })
+            .catch((err)=>{
+                console.error(err);
             })
     }
 }

@@ -56,6 +56,9 @@ function getEntries(){
                     dispatch(entriesUpdateUnreadCount(entries));
                 }
             })
+            .catch((err)=>{
+                console.error(err);
+            })
     }
 }
 
@@ -95,7 +98,10 @@ export function updateReadState(entry: IEntry, hasRead: boolean){
                     dispatch(feedsDecrementUnread(entry.feed_id));
                     dispatch(entryMarkReadComplete(resObj.entry));
                 }
-            });
+            })
+            .catch((err)=>{
+                console.error(err);
+            })
     }
 }
 
