@@ -29,18 +29,18 @@ span.rss-folders-feeditem-title-active {
     background-color: #EBEBEB;
 }
 
-div.rss-folders-groupitem {
+div.rss-folders-folderitem {
     cursor: pointer;
     height: 20px;
     width: 100%;
 }
 
-span.rss-folders-groupitem-title-active {
+span.rss-folders-folderitem-title-active {
     font-weight: bold;
     background-color: #EBEBEB;
 }
 
-span.rss-folders-groupitem-options {
+span.rss-folders-folderitem-options {
     width: 100%;
 }
 input.rss-editfeed-input{
@@ -119,7 +119,7 @@ div.rss-entrylist-menu-sortselect-container {
     margin-right: 15px;
 }
 
-div.rss-sortgroup-list-container{
+div.rss-sortfolder-list-container{
     position: relative;
     z-index: 0;
     background-color: #f3f3f3;
@@ -127,7 +127,7 @@ div.rss-sortgroup-list-container{
     border-radius: 3px;
     outline: none;
 }
-div.rss-sortgroup-list-item{
+div.rss-sortfolder-list-item{
     position: relative;
     display: flex;
     width: 100%;

@@ -52,14 +52,14 @@ function fetchingComplete(data: IFolder[]){
     }
 }
 
-export function beginSaveFolder(groupInfo: IFolder){
+export function beginSaveFolder(folderInfo: IFolder){
     return (dispatch: IDispatch)=>{
-        if(groupInfo._id !== ""){
+        if(folderInfo._id !== ""){
             dispatch(updatingInProgress());
-            dispatch(updateFolder(groupInfo._id, groupInfo.name));
+            dispatch(updateFolder(folderInfo._id, folderInfo.name));
         } else {
             dispatch(addingInProgress());
-            dispatch(addFolder(groupInfo.name));
+            dispatch(addFolder(folderInfo.name));
         }
     }
 }
@@ -70,12 +70,12 @@ function addingInProgress(){
     }
 }
 
-function addFolder(newGroupName: string){
+function addFolder(newFolderName: string){
     return (dispatch: IDispatch)=>{
         const url = API_FOLDERS_BASE;
         const init = {
             method: "POST",
-            body: JSON.stringify({name: newGroupName}),
+            body: JSON.stringify({name: newFolderName}),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -85,8 +85,8 @@ function addFolder(newGroupName: string){
             .then((res)=>{
                 return res.json();
             })
-            .then((newGroup)=>{
-                dispatch(addingFolderComplete(newGroup));
+            .then((newFolder)=>{
+                dispatch(addingFolderComplete(newFolder));
             })
     }
 }
@@ -104,12 +104,12 @@ function updatingInProgress(){
     };
 }
 
-function updateFolder(groupId: TFolderID, newGroupName: string){
+function updateFolder(folderId: TFolderID, newFolderName: string){
     return (dispatch: IDispatch)=>{
-        const url = API_FOLDERS_BASE + groupId;
+        const url = API_FOLDERS_BASE + folderId;
         const init = {
             method: "PUT",
-            body: JSON.stringify({name: newGroupName}),
+            body: JSON.stringify({name: newFolderName}),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -120,23 +120,23 @@ function updateFolder(groupId: TFolderID, newGroupName: string){
             .then((res)=>{
                 return res.json();
             })
-            .then((newGroup)=>{
-                dispatch(updatingComplete(newGroup))
+            .then((newFolder)=>{
+                dispatch(updatingComplete(newFolder))
             })
     }
 }
 
-function updatingComplete(newGroup: IFolder){
+function updatingComplete(newFolder: IFolder){
     return {
         type:FOLDERS_UPDATE_COMPLETE,
-        folder: newGroup
+        folder: newFolder
     }
 }
 
-export function beginDeleteFolder(groupId: TFolderID){
+export function beginDeleteFolder(folderId: TFolderID){
     return (dispatch: IDispatch)=>{
         dispatch(deleteInProgress());
-        dispatch(deleteFolder(groupId));
+        dispatch(deleteFolder(folderId));
     }
 }
 
@@ -146,9 +146,9 @@ function deleteInProgress(){
     }
 }
 
-function deleteFolder(groupId: TFolderID){
+function deleteFolder(folderId: TFolderID){
     return (dispatch: IDispatch)=>{
-        const url = API_FOLDERS_BASE + groupId;
+        const url = API_FOLDERS_BASE + folderId;
         const init = {
             method: "DELETE"
         }
@@ -158,16 +158,16 @@ function deleteFolder(groupId: TFolderID){
             })
             .then((resObj)=>{
                 if(resObj.status==="success"){
-                    dispatch(deleteComplete(groupId));
+                    dispatch(deleteComplete(folderId));
                 }
             })
     }
 }
 
-function deleteComplete(groupId: TFolderID){
+function deleteComplete(folderId: TFolderID){
     return {
         type:FOLDERS_DELETE_COMPLETE,
-        groupId
+        folderId
     }
 }
 

@@ -39,7 +39,7 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
         this._handleSave = this._handleSave.bind(this);
         this._handleInputKeyPress = this._handleInputKeyPress.bind(this);
         this._handleInputOnChange = this._handleInputOnChange.bind(this);
-        this._handleSelectGroupChange = this._handleSelectGroupChange.bind(this);
+        this._handleSelectFolderChange = this._handleSelectFolderChange.bind(this);
     }
 
     componentWillReceiveProps(nextProps: IEditFeedModalProps){
@@ -82,7 +82,7 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
         });
     }
 
-    _handleSelectGroupChange(folderId: TFolderID){
+    _handleSelectFolderChange(folderId: TFolderID){
         const { newFeed } = this.state;
         newFeed.folder_id = folderId;
         
@@ -111,7 +111,7 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
                 <div>
                     <SelectFolder
                         selectedValue={newFeed.folder_id} 
-                        onChange={this._handleSelectGroupChange}/>
+                        onChange={this._handleSelectFolderChange}/>
                 </div>
             </div>
         )

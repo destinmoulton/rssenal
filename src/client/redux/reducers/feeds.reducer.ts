@@ -42,7 +42,7 @@ function feedsReducer(state = INITIAL_STATE, action: IFeedsAction){
             const feed = feeds.get(feedId);
 
             let unreadFeeds = unreadMap.feeds;
-            let unreadGroups = unreadMap.folders;
+            let unreadFolders = unreadMap.folders;
 
             if(unreadFeeds.has(feedId)){
                 const unreadFeedCount = unreadFeeds.get(feedId);
@@ -50,13 +50,13 @@ function feedsReducer(state = INITIAL_STATE, action: IFeedsAction){
                 unreadFeeds = unreadFeeds.set(feedId, newCount);
             }
             
-            if(unreadGroups.has(feed.folder_id)){
-                const unreadGroupCount = unreadGroups.get(feed.folder_id);
-                const newCount = (unreadGroupCount > 1) ? unreadGroupCount - 1 : 0;
-                unreadGroups = unreadGroups.set(feed.folder_id, newCount);
+            if(unreadFolders.has(feed.folder_id)){
+                const unreadFolderCount = unreadFolders.get(feed.folder_id);
+                const newCount = (unreadFolderCount > 1) ? unreadFolderCount - 1 : 0;
+                unreadFolders = unreadFolders.set(feed.folder_id, newCount);
             }
 
-            const newUnreadMap = {"feeds": unreadFeeds, "folders": unreadGroups};
+            const newUnreadMap = {"feeds": unreadFeeds, "folders": unreadFolders};
             return {
                 ...state,
                 unreadMap: newUnreadMap
@@ -75,7 +75,7 @@ function feedsReducer(state = INITIAL_STATE, action: IFeedsAction){
         case FEEDS_SETALL_UNREAD_COUNT:{
             const { feeds } = state;
             let unreadFeeds = Map<string, number>();
-            let unreadGroups = Map<string, number>();
+            let unreadFolders = Map<string, number>();
 
             action.entries.map((entry: IEntry)=>{
                 if(!entry.has_read){
@@ -88,16 +88,16 @@ function feedsReducer(state = INITIAL_STATE, action: IFeedsAction){
                         unreadFeeds = unreadFeeds.set(feed._id, countUnread + 1);
                     }
 
-                    if(!unreadGroups.has(feed.folder_id)){
-                        unreadGroups = unreadGroups.set(feed.folder_id, 1);
+                    if(!unreadFolders.has(feed.folder_id)){
+                        unreadFolders = unreadFolders.set(feed.folder_id, 1);
                     } else {
-                        const countUnread: number = unreadGroups.get(feed.folder_id);
-                        unreadGroups = unreadGroups.set(feed.folder_id, countUnread + 1);
+                        const countUnread: number = unreadFolders.get(feed.folder_id);
+                        unreadFolders = unreadFolders.set(feed.folder_id, countUnread + 1);
                     }
                 }
             });
 
-            const newUnreadMap = {"feeds": unreadFeeds, "folders": unreadGroups};
+            const newUnreadMap = {"feeds": unreadFeeds, "folders": unreadFolders};
             return {
                 ...state,
                 unreadMap: newUnreadMap
@@ -110,8 +110,9 @@ function feedsReducer(state = INITIAL_STATE, action: IFeedsAction){
             }
         case FEEDS_UPDATE_COMPLETE:{
             const { feeds } = state;
-
+            
             const newFeeds = feeds.set(action.feed._id, action.feed).sort((a: IFeed, b: IFeed)=>compareAscByProp(a, b, "title"));
+            
             return {
                 ...state,
                 feeds: newFeeds,

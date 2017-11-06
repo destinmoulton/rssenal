@@ -73,7 +73,7 @@ export interface IFolder {
 
 export interface IFolderAction {
     type: string;
-    groupId?: TFolderID;
+    folderId?: TFolderID;
     folders?: IFolder[];
     folder?: IFolder;
 }

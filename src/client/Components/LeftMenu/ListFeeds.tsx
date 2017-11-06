@@ -9,18 +9,18 @@ import { IFeed, TFeedID, TFolderID, TFeeds } from "../../interfaces";
 interface IListFeedsProps {
     feeds: TFeeds;
     editFeed: (feed: IFeed)=>void;
-    groupId: TFolderID;
+    folderId: TFolderID;
 }
 
 const ListFeeds = (props: IListFeedsProps)=>{
     const {
         editFeed,
         feeds,
-        groupId
+        folderId
     } = props;
 
     const feedList = feeds.filter((feed: IFeed)=>{
-        return (feed.folder_id === groupId);
+        return (feed.folder_id === folderId);
     }).toArray().map((feed: IFeed)=>{
         return <FeedItem key={feed._id} feed={feed} editFeed={editFeed}/>;
     });

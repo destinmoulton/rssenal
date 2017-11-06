@@ -38,12 +38,12 @@ const foldersReducer = function(state = INITIAL_STATE, action: IFolderAction){
             const arrayMap = action.folders.map((folder)=>{
                 return [folder._id, folder];
             });
-            const mappedGroups = OrderedMap(arrayMap);
-            const fullGroups = mappedGroups.set(UNCATEGORIZED_FOLDER._id, UNCATEGORIZED_FOLDER);
+            const mappedFolders = OrderedMap(arrayMap);
+            const fullFolders = mappedFolders.set(UNCATEGORIZED_FOLDER._id, UNCATEGORIZED_FOLDER);
             
             return {
                 ...state,
-                folders: fullGroups,
+                folders: fullFolders,
                 hasFolders: true
             }
         case FOLDERS_ADD_BEGIN:
@@ -65,7 +65,7 @@ const foldersReducer = function(state = INITIAL_STATE, action: IFolderAction){
                 isDeletingFolder: true
             }
         case FOLDERS_DELETE_COMPLETE: {
-            const folders = state.folders.delete(action.groupId);
+            const folders = state.folders.delete(action.folderId);
 
             return {
                 ...state,

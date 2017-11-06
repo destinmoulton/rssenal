@@ -15,23 +15,23 @@ interface IMapDispatchToProps {
     beginSaveFolder: (folder: any)=>void;
 }
 
-interface IGroupEditorModalProps extends IMapDispatchToProps, IMapStateToProps{
+interface IFolderEditorModalProps extends IMapDispatchToProps, IMapStateToProps{
     isModalOpen: boolean;
     onCloseModal: ()=>void;
     folder: IFolder
 }
 
-interface IGroupEditorModalState {
-    newGroup: any;
+interface IFolderEditorModalState {
+    newFolder: any;
 }
 
-class FolderEditorModal extends React.Component<IGroupEditorModalProps> {
+class FolderEditorModal extends React.Component<IFolderEditorModalProps> {
 
-    state: IGroupEditorModalState = {
-        newGroup: {}
+    state: IFolderEditorModalState = {
+        newFolder: {}
     }
 
-    constructor(props: IGroupEditorModalProps){
+    constructor(props: IFolderEditorModalProps){
         super(props);
 
         this._handleClose = this._handleClose.bind(this);
@@ -40,28 +40,28 @@ class FolderEditorModal extends React.Component<IGroupEditorModalProps> {
         this._handleInputOnChange = this._handleInputOnChange.bind(this);
     }
 
-    componentWillReceiveProps(nextProps: IGroupEditorModalProps){
+    componentWillReceiveProps(nextProps: IFolderEditorModalProps){
         if(this.props.isSavingFolder && !nextProps.isSavingFolder){
             this._handleClose();
         }
         this.setState({
-            newGroup: nextProps.folder
+            newFolder: nextProps.folder
         });
     }
     
     _handleClose(){
         this.setState({
-            newGroup: {}
+            newFolder: {}
         });
 
         this.props.onCloseModal();
     }
 
     _handleSave(){
-        const { newGroup } = this.state;
+        const { newFolder } = this.state;
 
-        if(newGroup.name !== ""){
-            this.props.beginSaveFolder(newGroup);
+        if(newFolder.name !== ""){
+            this.props.beginSaveFolder(newFolder);
         }
     }
 
@@ -72,21 +72,21 @@ class FolderEditorModal extends React.Component<IGroupEditorModalProps> {
     }
 
     _handleInputOnChange(e: any){
-        const { newGroup } = this.state;
-        newGroup.name = e.target.value;
+        const { newFolder } = this.state;
+        newFolder.name = e.target.value;
         this.setState({
-            newGroup
+            newFolder
         });
     }
 
     _buildEditInput(){
-        const { newGroup } = this.state;
+        const { newFolder } = this.state;
         const { isSavingFolder } = this.props;
 
         return (
             <input
                 autoFocus
-                value={newGroup.name}
+                value={newFolder.name}
                 placeholder="Folder name..."
                 onKeyPress={this._handleInputKeyPress}
                 onChange={this._handleInputOnChange}
@@ -168,7 +168,7 @@ const mapStateToProps = (state: IRootStoreState): IMapStateToProps=>{
 
 const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps=>{
     return {
-        beginSaveFolder: (groupInfo)=> dispatch(beginSaveFolder(groupInfo))
+        beginSaveFolder: (folderInfo)=> dispatch(beginSaveFolder(folderInfo))
     }
 }
 

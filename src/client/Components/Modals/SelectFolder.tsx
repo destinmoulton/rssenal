@@ -53,7 +53,7 @@ class SelectFolder extends React.Component<ISelectFolderProps> {
         
         // Convert the feed folders Immutable list into
         // an array of key/value options.
-        let groupOptions = folders.map((folder)=>{
+        let folderOptions = folders.map((folder)=>{
             return {
                 key: folder._id,
                 value: folder._id,
@@ -62,12 +62,12 @@ class SelectFolder extends React.Component<ISelectFolderProps> {
         }).toArray();
 
         // Put "Uncategorized" first
-        groupOptions.unshift(groupOptions.pop());
+        folderOptions.unshift(folderOptions.pop());
         
         return (
             <Dropdown 
                 value={selectedValue}
-                options={groupOptions}
+                options={folderOptions}
                 onChange={this._handleOnChange}
                 selection
             />

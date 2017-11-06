@@ -3,24 +3,24 @@ import { SortableContainer, SortableElement } from "react-sortable-hoc";
 
 import { IFolder } from "../../interfaces";
 
-interface ISortableGroupItemProps {
+interface ISortableFolderItemProps {
     value: any;
 };
-export const SortableGroupItem = SortableElement((props: ISortableGroupItemProps)=>{
+export const SortableFolderItem = SortableElement((props: ISortableFolderItemProps)=>{
     const { value } = props;
-    return <div className="rss-sortgroup-list-item">{value}</div>;
+    return <div className="rss-sortfolder-list-item">{value}</div>;
 });
 
-interface ISortableGroupListProps {
+interface ISortableFolderListProps {
     items: IFolder[];
     onSortEnd: any;
 };
-export const SortableGroupList = SortableContainer((props: ISortableGroupListProps)=>{
+export const SortableFolderList = SortableContainer((props: ISortableFolderListProps)=>{
     const {items} = props;
     const itemsList = items.map((value: IFolder, index: number)=>{
         return (
-            <div className="rss-sortgroup-list-container" key={`item-${index}`}>
-                <SortableGroupItem key={`item-${index}`} index={index} value={value.name}/>
+            <div className="rss-sortfolder-list-container" key={`item-${index}`}>
+                <SortableFolderItem key={`item-${index}`} index={index} value={value.name}/>
             </div>
         );
     });

@@ -76,9 +76,9 @@ class EntriesList extends React.Component<EntriesListProps> {
                     return feedIds.includes(entry.feed_id);
                 }).toOrderedMap();
 
-                const activeGroup = folders.get(filter.id);                
+                const activeFolder = folders.get(filter.id);                
 
-                title = activeGroup.name;
+                title = activeFolder.name;
                 break;
         }
 

@@ -6,12 +6,12 @@ import ReorderFoldersModal from "../Modals/ReorderFoldersModal";
 
 interface IButtonBarProps {
     openAddFeedModal: (newFeed: object)=>void;
-    openEditGroupModal: (groupDefault: object)=>void;
+    openEditFolderModal: (folderDefault: object)=>void;
 }
 
 class ButtonBar extends React.Component<IButtonBarProps> {
-    _handleAddGroup(){
-        this.props.openEditGroupModal({_id:"", name:""});
+    _handleAddFolder(){
+        this.props.openEditFolderModal({_id:"", name:""});
     }
 
     _handleAddFeed(){
@@ -34,7 +34,7 @@ class ButtonBar extends React.Component<IButtonBarProps> {
                         color="olive"
                         content="Folder"
                         icon="plus"
-                        onClick={this._handleAddGroup.bind(this)}
+                        onClick={this._handleAddFolder.bind(this)}
                         size="tiny"
                     />
                 </Button.Group>                

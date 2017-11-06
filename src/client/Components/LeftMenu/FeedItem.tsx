@@ -86,7 +86,7 @@ class FeedItem extends React.Component<IFeedItemProps> {
     render() {
         const { feed, filter, unreadMapFeeds} = this.props;
         const { isOptionsVisible } = this.state;
-
+        
         let className = "";
         if(filter.limit === "feed" && filter.id === feed._id){
             className = "rss-folders-feeditem-title-active"

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { arrayMove } from "react-sortable-hoc";
 import { Button, Header, Icon, Modal } from "semantic-ui-react";
 
-import { SortableGroupItem, SortableGroupList } from "./SortableComponents";
+import { SortableFolderItem, SortableFolderList } from "./SortableComponents";
 
 import { beginReorderFolders } from "../../redux/actions/folders.actions";
 import { compareAscByProp } from "../../lib/sort";
@@ -18,23 +18,23 @@ interface IMapDispatchToProps {
     beginReorderFolders: (foldersArr: IFolder[])=>void
 }
 
-interface IReorderGroupsModalProps extends IMapStateToProps, IMapDispatchToProps{
+interface IReorderFoldersModalProps extends IMapStateToProps, IMapDispatchToProps{
 
 }
 
-interface IReorderGroupsModalState {
-    groupsAsArray: IFolder[];
+interface IReorderFoldersModalState {
+    foldersAsArray: IFolder[];
     isModalOpen: boolean;
 }
 
-class ReorderFoldersModal extends React.Component<IReorderGroupsModalProps> {
+class ReorderFoldersModal extends React.Component<IReorderFoldersModalProps> {
 
-    state: IReorderGroupsModalState = {
-        groupsAsArray: [],
+    state: IReorderFoldersModalState = {
+        foldersAsArray: [],
         isModalOpen: false
     }
 
-    constructor(props: IReorderGroupsModalProps){
+    constructor(props: IReorderFoldersModalProps){
         super(props);
 
         this._handleCloseModal = this._handleCloseModal.bind(this);
@@ -43,13 +43,13 @@ class ReorderFoldersModal extends React.Component<IReorderGroupsModalProps> {
         this._onSortEnd = this._onSortEnd.bind(this);
     }
 
-    componentWillReceiveProps(nextProps: IReorderGroupsModalProps){
+    componentWillReceiveProps(nextProps: IReorderFoldersModalProps){
         let tmpArray = nextProps.folders.toArray().sort((a, b)=>compareAscByProp(a,b,"order"));
         //Remove the "Uncategorized" folder
         tmpArray.pop();
 
         this.setState({
-            groupsAsArray: tmpArray
+            foldersAsArray: tmpArray
         });
     }
 
@@ -66,24 +66,24 @@ class ReorderFoldersModal extends React.Component<IReorderGroupsModalProps> {
     }
 
     _handlePressOK(){
-        const { groupsAsArray } = this.state;
-        const orderedGroups = groupsAsArray.map((folder, index)=>{
+        const { foldersAsArray } = this.state;
+        const orderedFolders = foldersAsArray.map((folder, index)=>{
             folder.order = index + 1;
             return folder;
         });
-        this.props.beginReorderFolders(groupsAsArray);
+        this.props.beginReorderFolders(orderedFolders);
         this._handleCloseModal();
     }
 
     _onSortEnd(reorderedObj: any){
-        const newGroupsArray = this._reorderGroupsArray(reorderedObj.oldIndex, reorderedObj.newIndex);
+        const newFoldersArray = this._reorderFoldersArray(reorderedObj.oldIndex, reorderedObj.newIndex);
         this.setState({
-            groupsAsArray: newGroupsArray
+            foldersAsArray: newFoldersArray
         });
     }
     
-    _reorderGroupsArray(previousIndex: number, newIndex: number):IFolder[] {
-        const array = this.state.groupsAsArray.slice(0);
+    _reorderFoldersArray(previousIndex: number, newIndex: number):IFolder[] {
+        const array = this.state.foldersAsArray.slice(0);
         if (newIndex >= array.length) {
             let k = newIndex - array.length;
             while (k-- + 1) {
@@ -95,7 +95,7 @@ class ReorderFoldersModal extends React.Component<IReorderGroupsModalProps> {
     }
 
     render() {
-        const { groupsAsArray, isModalOpen } = this.state;
+        const { foldersAsArray, isModalOpen } = this.state;
         return (
             <span>
                 <Button
@@ -107,9 +107,9 @@ class ReorderFoldersModal extends React.Component<IReorderGroupsModalProps> {
                     onClose={this._handleCloseModal}
                     size="tiny"
                 >
-                    <Header icon="numbered list" content="Reorder Groups" />
+                    <Header icon="numbered list" content="Reorder Folders" />
                     <Modal.Content>
-                        <SortableGroupList items={groupsAsArray} onSortEnd={this._onSortEnd}/>
+                        <SortableFolderList items={foldersAsArray} onSortEnd={this._onSortEnd}/>
                     </Modal.Content>
                     <Modal.Actions>
                         <Button
