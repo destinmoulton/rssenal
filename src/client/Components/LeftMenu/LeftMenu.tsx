@@ -9,7 +9,7 @@ import { getAllFeeds } from "../../redux/actions/feeds.actions";
 import AddFeedModal from "../Modals/AddFeedModal";
 import ButtonBar from "./ButtonBar";
 import EditFeedModal from "../Modals/EditFeedModal";
-import FolderEditorModal from "../Modals/FolderEditorModal";
+import EditFolderModal from "../Modals/EditFolderModal";
 import FolderItem from "./FolderItem";
 
 import { compareAscByProp } from "../../lib/sort";
@@ -127,7 +127,7 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
 
         const { folders } = this.props;
         const sortedFolders = folders.sort((a: IFolder, b: IFolder)=>compareAscByProp(a, b, "order"));
-
+        
         let listFolders = sortedFolders.toArray().map((folder)=>{
             return (
                 <div key={folder._id} >
@@ -151,7 +151,7 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
                         isModalOpen={addFeedModalOpen}
                         onCloseModal={this._handleCloseAddFeedModal}
                     />
-                    <FolderEditorModal 
+                    <EditFolderModal 
                         isModalOpen={editFolderModalOpen}
                         onCloseModal={this._handleCloseEditFolderModal}
                         folder={editFolder}

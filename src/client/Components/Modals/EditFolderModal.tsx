@@ -25,7 +25,7 @@ interface IFolderEditorModalState {
     newFolder: any;
 }
 
-class FolderEditorModal extends React.Component<IFolderEditorModalProps> {
+class EditFolderModal extends React.Component<IFolderEditorModalProps> {
 
     state: IFolderEditorModalState = {
         newFolder: {}
@@ -172,4 +172,4 @@ const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps=>{
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FolderEditorModal);
+export default connect(mapStateToProps, mapDispatchToProps)(EditFolderModal);
