@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Folders = require('../models/Folders.model');
+var _Folders = require("../models/Folders.model");
 
 var _Folders2 = _interopRequireDefault(_Folders);
 
@@ -20,15 +20,21 @@ var FoldersController = function () {
     }
 
     _createClass(FoldersController, [{
-        key: 'get_all',
+        key: "get_all",
         value: function get_all(req, res) {
             _Folders2.default.find({}, function (err, folders) {
-                if (err) res.send(err);
-                res.send(folders);
+                if (err) {
+                    res.json({
+                        status: "error",
+                        message: "There was a problem getting all Folders."
+                    });
+                } else {
+                    res.json(folders);
+                }
             }).sort({ order: 'asc' });
         }
     }, {
-        key: 'add',
+        key: "add",
         value: function add(req, res) {
             // Add a new feed folder as the last in order
             _Folders2.default.find({}, function (err, maxOrderedFolder) {
@@ -42,42 +48,73 @@ var FoldersController = function () {
                 data['order'] = order;
                 var newFolder = new _Folders2.default(data);
                 newFolder.save(function (err, folder) {
-                    if (err) res.send(err);
-                    res.json(folder);
+                    if (err) {
+                        res.json({
+                            status: "error",
+                            message: "There was a problem getting adding the folder."
+                        });
+                    } else {
+                        res.json(folder);
+                    }
                 });
             }).sort({ order: 'desc' }).limit(1);
         }
     }, {
-        key: 'get_single',
+        key: "get_single",
         value: function get_single(req, res) {
             _Folders2.default.findById(req.params.folderId, function (err, folder) {
-                if (err) res.send(err);
-                res.json(folder);
+                if (err) {
+                    res.json({
+                        status: "error",
+                        message: "There was a problem getting a single folder."
+                    });
+                } else {
+                    res.json(folder);
+                }
             });
         }
     }, {
-        key: 'delete_single',
+        key: "delete_single",
         value: function delete_single(req, res) {
             _Folders2.default.remove({ _id: req.params.folderId }, function (err) {
-                if (err) res.send(err);
-                res.json({ message: "Folder deleted.", _id: req.params.folderId, status: "success" });
+                if (err) {
+                    res.json({
+                        status: "error",
+                        message: "There was a problem deleting the folder."
+                    });
+                } else {
+                    res.json({
+                        status: "success",
+                        _id: req.params.folderId
+                    });
+                }
             });
         }
     }, {
-        key: 'update_single',
+        key: "update_single",
         value: function update_single(req, res) {
             _Folders2.default.findById(req.params.folderId, function (err, folder) {
-                if (err) res.send(err);
+                if (err) {
+                    res.json({
+                        status: "error",
+                        message: "There was a problem finding the folder to update."
+                    });
+                }
                 folder.name = req.body.name;
                 folder.save(function (err, updatedFolder) {
-                    if (err) res.send(err);
-
-                    res.json(updatedFolder);
+                    if (err) {
+                        res.json({
+                            status: "error",
+                            message: "There was a problem saving the updated folder."
+                        });
+                    } else {
+                        res.json(updatedFolder);
+                    }
                 });
             });
         }
     }, {
-        key: 'update_multiple',
+        key: "update_multiple",
         value: function update_multiple(req, res) {
             var updatedFolders = req.body.folders;
             var newFolders = [];

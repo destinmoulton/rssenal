@@ -4,9 +4,15 @@ class FoldersController {
     get_all(req, res){
         Folders
             .find({}, (err, folders)=>{
-                if(err) 
-                    res.send(err);
-                res.send(folders);
+                if(err) {
+                    res.json({
+                        status: "error",
+                        message: "There was a problem getting all Folders."
+                    });
+                } else {
+                    res.json(folders);
+                }
+                
             })
             .sort({order: 'asc'});
     }
@@ -24,9 +30,14 @@ class FoldersController {
             data['order'] = order;
             let newFolder = new Folders(data);
                 newFolder.save((err, folder)=>{
-                    if(err)
-                        res.send(err);
-                    res.json(folder);
+                    if(err) {
+                        res.json({
+                            status: "error",
+                            message: "There was a problem getting adding the folder."
+                        });
+                    } else {
+                        res.json(folder);
+                    }
                 });
             })
         .sort({order:'desc'})
@@ -35,30 +46,51 @@ class FoldersController {
 
     get_single(req, res){
         Folders.findById(req.params.folderId, (err, folder)=>{
-            if(err)
-                res.send(err);
-            res.json(folder);
+            if(err) {
+                res.json({
+                    status: "error",
+                    message: "There was a problem getting a single folder."
+                });
+            } else {
+                res.json(folder);
+            }
         });
     }
 
     delete_single(req, res){
         Folders.remove({_id: req.params.folderId}, (err)=>{
-            if(err)
-                res.send(err);
-            res.json({message: "Folder deleted.", _id:req.params.folderId, status: "success"});
+            if(err) {
+                res.json({
+                    status: "error",
+                    message: "There was a problem deleting the folder."
+                });
+            } else {
+                res.json({
+                    status: "success",
+                    _id: req.params.folderId
+                });
+            }
         })
     }
 
     update_single(req, res){
         Folders.findById(req.params.folderId, (err, folder)=>{
-            if(err)
-                res.send(err);
+            if(err) {
+                res.json({
+                    status: "error",
+                    message: "There was a problem finding the folder to update."
+                });
+            }
             folder.name = req.body.name;
             folder.save((err, updatedFolder)=>{
-                if(err)
-                    res.send(err);
-                
-                res.json(updatedFolder);
+                if(err) {
+                    res.json({
+                        status: "error",
+                        message: "There was a problem saving the updated folder."
+                    });
+                } else {
+                    res.json(updatedFolder);
+                }
             })
         });
     }

@@ -37,19 +37,33 @@ class FeedsController {
 
     get_single(req, res){
         Feeds.findById(req.params.feedId, (err, feed)=>{
-            if(err)
-                res.send(err);
-            res.json(feed);
+            if(err){
+                res.json({
+                    status: "error",
+                    error: "Unable to get single feed."
+                });
+            } else {
+                res.json(feed);
+            }
         });
     }
 
     delete_single(req, res){
         Entries.remove({feed_id: req.params.feedId}, (err)=>{
             // TODO: Add err handler?
+            if(err){
+                return res.json({
+                    status: "error",
+                    error: "Unable to remove entries for feed."
+                });
+            }
 
             Feeds.remove({_id: req.params.feedId}, (err)=>{
                 if(err){
-                    return res.send({status: "error"});
+                    return res.json({
+                        status: "error",
+                        error: "Unable to remove the feed."
+                    });
                 }
                 res.json({status: "success"});
             })

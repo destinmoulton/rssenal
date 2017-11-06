@@ -60,8 +60,14 @@ var FeedsController = function () {
         key: "get_single",
         value: function get_single(req, res) {
             _Feeds2.default.findById(req.params.feedId, function (err, feed) {
-                if (err) res.send(err);
-                res.json(feed);
+                if (err) {
+                    res.json({
+                        status: "error",
+                        error: "Unable to get single feed."
+                    });
+                } else {
+                    res.json(feed);
+                }
             });
         }
     }, {
@@ -69,10 +75,19 @@ var FeedsController = function () {
         value: function delete_single(req, res) {
             _Entries2.default.remove({ feed_id: req.params.feedId }, function (err) {
                 // TODO: Add err handler?
+                if (err) {
+                    return res.json({
+                        status: "error",
+                        error: "Unable to remove entries for feed."
+                    });
+                }
 
                 _Feeds2.default.remove({ _id: req.params.feedId }, function (err) {
                     if (err) {
-                        return res.send({ status: "error" });
+                        return res.json({
+                            status: "error",
+                            error: "Unable to remove the feed."
+                        });
                     }
                     res.json({ status: "success" });
                 });
