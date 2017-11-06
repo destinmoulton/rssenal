@@ -5,6 +5,7 @@ import { Button, Form, Icon, Header, Message, Modal, Segment } from "semantic-ui
 import SelectFolder from "./SelectFolder";
 
 import { API_FEEDVALIDATION_BASE } from "../../redux/apiendpoints";
+import { JSON_HEADERS } from "../../lib/headers";
 
 import { beginAddFeed } from "../../redux/actions/feeds.actions";
 
@@ -132,12 +133,9 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
 
         const url = API_FEEDVALIDATION_BASE;
         const init = {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              method: "POST",
-              body: JSON.stringify({feedURL})
+            headers: JSON_HEADERS,
+            method: "POST",
+            body: JSON.stringify({feedURL})
         };
         
         fetch(url, init)

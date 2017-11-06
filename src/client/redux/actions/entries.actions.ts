@@ -11,6 +11,10 @@ import {
     API_ENTRIES_BASE
 } from "../apiendpoints";
 
+import {
+    JSON_HEADERS
+} from "../../lib/headers";
+
 import { feedsDecrementUnread, feedsSetAllUnreadCount } from "./feeds.actions";
 
 import { IDispatch, IEntry, IGetState, TEntries } from "../../interfaces";
@@ -81,10 +85,7 @@ export function updateReadState(entry: IEntry, hasRead: boolean){
         const init = {
             method: "PUT",
             body: JSON.stringify({has_read: hasRead}),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
+            headers: JSON_HEADERS
         };
 
         fetch(url, init)

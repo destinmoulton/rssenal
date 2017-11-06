@@ -15,6 +15,10 @@ import {
     API_FEEDS_BASE
 } from "../apiendpoints";
 
+import {
+    JSON_HEADERS
+} from "../../lib/headers";
+
 import {beginGetEntries} from "./entries.actions";
 
 import { IDispatch, IFeed, TFeedID, TEntries } from "../../interfaces";
@@ -38,10 +42,7 @@ function addFeed(feedInfo: IFeed){
         const init = {
             method: "POST",
             body: JSON.stringify({...feedInfo}),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
+            headers: JSON_HEADERS
         }
 
         fetch(url, init)
@@ -158,10 +159,7 @@ function updateFeed(feedInfo: IFeed){
         const init = {
             method: "PUT",
             body: JSON.stringify({title: feedInfo.title, folder_id: feedInfo.folder_id}),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
+            headers: JSON_HEADERS
         }
 
         fetch(url, init)

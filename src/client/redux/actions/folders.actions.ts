@@ -14,6 +14,10 @@ import {
     API_FOLDERS_GET_ALL
 } from "../apiendpoints";
 
+import {
+    JSON_HEADERS
+} from "../../lib/headers";
+
 import { IDispatch, IFolder, TFolderID } from "../../interfaces";
 
 export function getAllFolders(){
@@ -79,10 +83,7 @@ function addFolder(newFolderName: string){
         const init = {
             method: "POST",
             body: JSON.stringify({name: newFolderName}),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
+            headers: JSON_HEADERS
         }
         fetch(url, init)
             .then((res)=>{
@@ -120,10 +121,7 @@ function updateFolder(folderId: TFolderID, newFolderName: string){
         const init = {
             method: "PUT",
             body: JSON.stringify({name: newFolderName}),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
+            headers: JSON_HEADERS
         };
 
         fetch(url, init)
@@ -199,10 +197,7 @@ export function beginReorderFolders(foldersArr: IFolder[]){
         const init = {
             method: "PUT",
             body: JSON.stringify({folders: foldersArr}),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
+            headers: JSON_HEADERS
         }
         fetch(url, init)
             .then((res)=>{
