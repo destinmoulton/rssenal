@@ -1,7 +1,7 @@
 import { Map, OrderedMap } from "immutable";
 import * as React from "react";
 import { connect } from "react-redux";
-import { Button, Confirm, Icon } from "semantic-ui-react";
+import { Button, Confirm, Icon, SemanticICONS } from "semantic-ui-react";
 
 import ListFeeds from "./ListFeeds";
 
@@ -135,24 +135,23 @@ class FolderItem extends React.Component<IFolderItemProps> {
             optionsAreVisible
         } = this.state;
 
-        let toggleFeedsIcon = null;
         let listFeeds = null;
         let title = null;
         let options = null;
-        console.log("folder item about to render");
-        let toggleFeedsIconClass = "caret right";
+
+        var toggleFeedsIconClass: SemanticICONS = "caret right";
         if(feedsAreVisible){
             toggleFeedsIconClass = "caret down";
             listFeeds = <ListFeeds folderId={folder._id} editFeed={editFeed} feeds={feeds}/>;
         }
-        toggleFeedsIcon = <Icon name={toggleFeedsIconClass} onClick={this._handleToggleFeedsVisible}/>;
-        console.log("after list feeds and icon");
+        
+        let toggleFeedsIcon = <span><Icon name={toggleFeedsIconClass} onClick={this._handleToggleFeedsVisible} /></span>;
+
         title = this._buildFolderTitle();
 
         if(optionsAreVisible){
             options = this._buildOptionButtons();
         }
-        console.log("after options")
 
         return (
             <div>
