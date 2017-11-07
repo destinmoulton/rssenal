@@ -97,22 +97,21 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
         
         return (
             <div>
-                <div>
-                    <input
-                        autoFocus
-                        value={newFeed.title}
-                        placeholder="Feed name..."
-                        onKeyPress={this._handleInputKeyPress}
-                        onChange={this._handleInputOnChange}
-                        disabled={isUpdatingFeed}
-                        className="rss-editfeed-input"
-                    />
-                </div>
-                <div>
-                    <SelectFolder
-                        selectedValue={newFeed.folder_id} 
-                        onChange={this._handleSelectFolderChange}/>
-                </div>
+                <label>Feed Name</label>
+                <input
+                    autoFocus
+                    value={newFeed.title}
+                    placeholder="Feed name..."
+                    onKeyPress={this._handleInputKeyPress}
+                    onChange={this._handleInputOnChange}
+                    disabled={isUpdatingFeed}
+                    className="rss-editfeed-input"
+                />
+                <br/><br/>
+                <label>Folder</label><br/>
+                <SelectFolder
+                    selectedValue={newFeed.folder_id} 
+                    onChange={this._handleSelectFolderChange}/>
             </div>
         )
     }
