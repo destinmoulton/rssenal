@@ -113,17 +113,23 @@ class ReorderFoldersModal extends React.Component<IReorderFoldersModalProps> {
                         <SortableFolderList items={foldersAsArray} onSortEnd={this._onSortEnd}/>
                     </Modal.Content>
                     <Modal.Actions>
+                        <div>
                         <Button
                             icon="cancel"
+                            color="orange"
+                            floated="left"
                             inverted
+                            content="cancel"
                             onClick={this._handleCloseModal}
                         />
                         <Button
                             icon="checkmark"
-                            color="green"
                             inverted
+                            color="green"
+                            content="Reorder"
                             onClick={this._handlePressOK}
                         />
+                        </div>
                     </Modal.Actions>
                 </Modal>
             </span>

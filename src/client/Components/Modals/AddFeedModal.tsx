@@ -228,17 +228,20 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
         const { isAddingFeed } = this.props;
         return (
             <span>
-                <Button color="blue"
+                <Button
+                    color="blue"
+                    content="Back"
+                    icon="chevron left"
+                    inverted
                     onClick={this._transitionToDisplayForm}
-                    inverted>
-                    <Icon name="chevron left" />&nbsp;&nbsp;&nbsp;Back
-                </Button>
-                <Button color="green"
+                />
+                <Button 
+                    color="green"
                     onClick={this._handleClickAddFeed}
                     inverted
-                    loading={isAddingFeed}>
-                    <Icon name="checkmark" />&nbsp;&nbsp;&nbsp;This Is It!
-                </Button>
+                    loading={isAddingFeed}
+                    icon="checkmark"
+                    content="This is it!" />
             </span>
         );
     }
@@ -273,9 +276,13 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
                     {content}
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button color="orange" onClick={this._handleClose} inverted>
-                        <Icon name="close" /> Cancel
-                    </Button>
+                    <Button 
+                        color="orange"
+                        onClick={this._handleClose}
+                        inverted
+                        floated="left"
+                        icon="close"
+                        content="Cancel"/>
                     {buttons}
                 </Modal.Actions>
             </Modal>

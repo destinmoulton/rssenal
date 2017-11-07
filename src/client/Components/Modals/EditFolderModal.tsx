@@ -120,25 +120,19 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
                                 icon="cancel"
                                 inverted
                                 onClick={this._handleClose}
-                                size="mini"
                             />;
         }
 
-        return (
-            <div>
-                {cancelButton}
-                <Button 
-                    color="green"
-                    content="Save"
-                    icon="save"
-                    floated="right"
-                    inverted
-                    loading={isSavingFolder}
-                    onClick={this._handleSave}
-                    size="mini"
-                />
-            </div>
-        );
+        let saveButton = <Button 
+                            color="green"
+                            content="Create"
+                            icon="checkmark"
+                            inverted
+                            loading={isSavingFolder}
+                            onClick={this._handleSave}
+                        />;
+
+        return [cancelButton, saveButton];
     }
 
     

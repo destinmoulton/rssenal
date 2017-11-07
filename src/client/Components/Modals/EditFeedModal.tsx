@@ -129,7 +129,6 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
                                 icon="cancel"
                                 inverted
                                 onClick={this._handleClose}
-                                size="mini"
                             />;
         }
 
@@ -140,11 +139,9 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
                     color="green"
                     content="Save"
                     icon="save"
-                    floated="right"
                     inverted
                     loading={isUpdatingFeed}
                     onClick={this._handleSave}
-                    size="mini"
                 />
             </div>
         );
