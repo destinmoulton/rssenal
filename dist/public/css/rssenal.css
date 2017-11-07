@@ -174,4 +174,6 @@ div.rss-sortfolder-list-item{
     height: 30px;
     background-color: white;
     padding: 3px;
+    cursor: pointer;
+    z-index: 30;
 }
