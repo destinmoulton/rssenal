@@ -36,14 +36,14 @@ div.rss-folders-feeditem-active {
 
 div.rss-folders-feeditem-title {
     float: left;
-    width: 70%;
+    width: 68%;
     overflow-x: hidden;
     white-space: nowrap;
 }
 
 div.rss-folders-feeditem-unread {
     float: left;
-
+    margin-left: 3px;
 }
 
 div.rss-folders-feeditem-options {
