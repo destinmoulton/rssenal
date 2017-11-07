@@ -57,7 +57,7 @@ function getEntries(){
                 } else {
                     let entries = resObj.entries;
                     dispatch(getEntriesComplete(entries));
-                    dispatch(entriesUpdateUnreadCount(entries));
+                    dispatch(feedsSetAllUnreadCount(entries));
                 }
             })
             .catch((err)=>{
@@ -70,12 +70,6 @@ function getEntriesComplete(entries: TEntries){
     return {
         type: ENTRIES_GET_COMPLETE,
         entries
-    }
-}
-
-function entriesUpdateUnreadCount(entries: TEntries){
-    return (dispatch: IDispatch)=>{
-        dispatch(feedsSetAllUnreadCount(entries));
     }
 }
 
