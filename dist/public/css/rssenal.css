@@ -49,22 +49,34 @@ div.rss-folders-feeditem-unread {
 
 div.rss-folders-feeditem-options {
     float: right;
-
 }
 
 div.rss-folders-folderitem {
     cursor: pointer;
     height: 20px;
     width: 100%;
+    float:left;
 }
 
-span.rss-folders-folderitem-title-active {
+div.rss-folders-folderitem-active {
     font-weight: bold;
     background-color: #EBEBEB;
 }
+div.rss-folders-folderitem-icon {
+    float:left;
+}
+div.rss-folders-folderitem-title {
+    float: left;
+    width: 62%;
+}
 
-span.rss-folders-folderitem-options {
-    width: 100%;
+div.rss-folders-folderitem-unread {
+    float:left;
+    margin-left: 3px;
+}
+
+div.rss-folders-folderitem-options {
+    float: right;
 }
 input.rss-editfeed-input{
     width: 100%;

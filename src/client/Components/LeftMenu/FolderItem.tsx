@@ -89,9 +89,9 @@ class FolderItem extends React.Component<IFolderItemProps> {
         });
     }
 
-    _buildOptionButtons(){
+    _domOptionButtons(){
         return (
-            <span className="rss-folders-folderitem-options">
+            <div className="rss-folders-folderitem-options">
                 <Icon 
                     name="pencil"
                     color="green" 
@@ -102,31 +102,35 @@ class FolderItem extends React.Component<IFolderItemProps> {
                     color="red" 
                     onClick={this._handleClickDelete}
                 />
-            </span>
+            </div>
         );
     }
 
-    _buildFolderTitle(){
-        const { filter, folder, unreadMapGroups } = this.props;
+    _domFolderTitle(){
+        const { folder } = this.props;
+        
+        return (
+            <div className="rss-folders-folderitem-title" onClick={this._handleClickFolderTitle}>{folder.name}</div>
+        );
+    }
 
-        let className = "";
-        if(filter.limit === "folder" && filter.id === folder._id){
-            className = "rss-folders-folderitem-title-active";
-        }
-
+    _domUnreadCount(){
+        const { folder, unreadMapGroups } = this.props;
         let unread = "";
         if(unreadMapGroups.has(folder._id)){
             unread = " [" + unreadMapGroups.get(folder._id) + "]";
         }
+
         return (
-            <span className={className} onClick={this._handleClickFolderTitle}>{folder.name}{unread}</span>
-        );
+            <div className="rss-folders-folderitem-unread">{unread}</div>
+        )
     }
 
     render(){
         const {
             editFeed,
             feeds,
+            filter,
             folder
         } = this.props;
 
@@ -136,31 +140,37 @@ class FolderItem extends React.Component<IFolderItemProps> {
         } = this.state;
 
         let listFeeds = null;
-        let title = null;
-        let options = null;
-
         var toggleFeedsIconClass: SemanticICONS = "caret right";
         if(feedsAreVisible){
             toggleFeedsIconClass = "caret down";
             listFeeds = <ListFeeds folderId={folder._id} editFeed={editFeed} feeds={feeds}/>;
         }
         
-        let toggleFeedsIcon = <span><Icon name={toggleFeedsIconClass} onClick={this._handleToggleFeedsVisible} /></span>;
+        let toggleFeedsIcon = <div className="rss-folders-folderitem-icon"><Icon name={toggleFeedsIconClass} onClick={this._handleToggleFeedsVisible} /></div>;
+        
+        let title = this._domFolderTitle();
 
-        title = this._buildFolderTitle();
+        let unread = this._domUnreadCount();
 
+        let options = null;
         if(optionsAreVisible){
-            options = this._buildOptionButtons();
+            options = this._domOptionButtons();
+        }
+
+        let className = "rss-folders-folderitem";
+        if(filter.limit === "folder" && filter.id === folder._id){
+            className += " rss-folders-folderitem-active";
         }
 
         return (
             <div>
                 <div
-                    className="rss-folders-folderitem"
+                    className={className}
                     onMouseEnter={this._showOptions}
                     onMouseLeave={this._hideOptions}>
-                    {toggleFeedsIcon}{title}&nbsp;{options}
+                    {toggleFeedsIcon}{title}{unread}{options}
                 </div>
+                <div className="clear"></div>
                 {listFeeds}
             </div>
         );
