@@ -21,7 +21,7 @@ import {
 
 import {beginGetEntries} from "./entries.actions";
 
-import { IDispatch, IFeed, TFeedID, TEntries } from "../../interfaces";
+import { IDispatch, IFeed, TFeedID, TEntries, IRootStoreState } from "../../interfaces";
 
 export function beginAddFeed(feedInfo: IFeed){
     return (dispatch: IDispatch)=>{
@@ -154,7 +154,7 @@ function beginUpdateFeedProcess(){
 }
 
 function updateFeed(feedInfo: IFeed){
-    return (dispatch: IDispatch)=>{
+    return (dispatch: IDispatch, getState: ()=>IRootStoreState)=>{
         const url = API_FEEDS_BASE + feedInfo._id;
         const init = {
             method: "PUT",
@@ -171,6 +171,7 @@ function updateFeed(feedInfo: IFeed){
                     console.error(feedObj.error);
                 } else if(feedObj.status === "success"){
                     dispatch(updateFeedComplete(feedObj.feedInfo));
+                    dispatch(feedsSetAllUnreadCount(getState().entries.entries));
                 }
             })
             .catch((err)=>{
