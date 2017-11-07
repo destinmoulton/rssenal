@@ -117,7 +117,7 @@ class FolderItem extends React.Component<IFolderItemProps> {
     _domUnreadCount(){
         const { folder, unreadMapGroups } = this.props;
         let unread = "";
-        if(unreadMapGroups.has(folder._id)){
+        if(unreadMapGroups.has(folder._id) && unreadMapGroups.get(folder._id)>0){
             unread = " [" + unreadMapGroups.get(folder._id) + "]";
         }
 
