@@ -3,6 +3,10 @@
  * @author Destin Moulton
  **/
 
+ .clear{
+     clear: both;
+ }
+
 
 div.rss-body-left-container {
     position: absolute;
@@ -22,11 +26,29 @@ div.rss-body-left-container {
 div.rss-folders-feeditem {
     padding-left: 15px;
     cursor: pointer;
+    width: 100%;
 }
 
-span.rss-folders-feeditem-title-active {
+div.rss-folders-feeditem-active {
     font-weight: bold;
     background-color: #EBEBEB;
+}
+
+div.rss-folders-feeditem-title {
+    float: left;
+    width: 70%;
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+
+div.rss-folders-feeditem-unread {
+    float: left;
+
+}
+
+div.rss-folders-feeditem-options {
+    float: right;
+
 }
 
 div.rss-folders-folderitem {

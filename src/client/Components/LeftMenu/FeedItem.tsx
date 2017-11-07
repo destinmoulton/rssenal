@@ -68,7 +68,7 @@ class FeedItem extends React.Component<IFeedItemProps> {
 
     _buildOptions(){
         return (
-            <span>
+            <div className="rss-folders-feeditem-options">
                 <Icon 
                     name="pencil"
                     color="green" 
@@ -79,7 +79,7 @@ class FeedItem extends React.Component<IFeedItemProps> {
                     color="red"
                     onClick={this._handleClickDelete}
                 />
-            </span>
+            </div>
         );
     }
 
@@ -87,16 +87,20 @@ class FeedItem extends React.Component<IFeedItemProps> {
         const { feed, filter, unreadMapFeeds} = this.props;
         const { isOptionsVisible } = this.state;
         
-        let className = "";
+        let className = "rss-folders-feeditem";
         if(filter.limit === "feed" && filter.id === feed._id){
-            className = "rss-folders-feeditem-title-active"
+            className = "rss-folders-feeditem rss-folders-feeditem-active"
         }
-
+        
+        let title = <div
+                        className="rss-folders-feeditem-title"
+                        onClick={this._handleClickTitle} >{feed.title}</div>;
+        
         let unreadEntriesCount = "";
         if(unreadMapFeeds.has(feed._id)){
             unreadEntriesCount = " [" + unreadMapFeeds.get(feed._id) + "]";
         }
-        let title = <span onClick={this._handleClickTitle} className={className}>{feed.title}{unreadEntriesCount}</span>;
+        let unread = <div className="rss-folders-feeditem-unread">{unreadEntriesCount}</div>;
 
         let options: any = "";
         if(isOptionsVisible){
@@ -104,9 +108,9 @@ class FeedItem extends React.Component<IFeedItemProps> {
         }
 
         return (
-            <div className="rss-folders-feeditem"
+            <div className={className}
                  onMouseEnter={this._handleShowOptions}
-                 onMouseLeave={this._handleHideOptions}>{title}&nbsp;{options}</div>
+                 onMouseLeave={this._handleHideOptions}>{title}{unread}{options}</div>
         );
     }
 }

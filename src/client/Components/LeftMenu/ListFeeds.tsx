@@ -28,6 +28,7 @@ const ListFeeds = (props: IListFeedsProps)=>{
     return (
         <div>
             {feedList}
+            <div className="clear"></div>
         </div>
     );
 }
