@@ -13,7 +13,6 @@ interface IMapDispatchToProps {
 }
 
 interface IMapStateToProps {
-    isUpdatingFeed: boolean;
 }
 
 interface IEditFeedModalProps extends IMapDispatchToProps, IMapStateToProps{
@@ -43,10 +42,6 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
     }
 
     componentWillReceiveProps(nextProps: IEditFeedModalProps){
-        if(this.props.isUpdatingFeed && !nextProps.isUpdatingFeed){
-            this._handleClose();
-        }
-
         this.setState({
             newFeed: nextProps.feed
         });
@@ -65,6 +60,7 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
 
         if(newFeed.name !== ""){
             this.props.beginUpdateFeed(newFeed);
+            this._handleClose();
         }
     }
 
@@ -93,7 +89,6 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
 
     _buildEditInput(){
         const { newFeed } = this.state;
-        const { isUpdatingFeed } = this.props;
         
         return (
             <div>
@@ -104,7 +99,6 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
                     placeholder="Feed name..."
                     onKeyPress={this._handleInputKeyPress}
                     onChange={this._handleInputOnChange}
-                    disabled={isUpdatingFeed}
                     className="rss-editfeed-input"
                 />
                 <br/><br/>
@@ -117,29 +111,21 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
     }
 
     _buildButtons(){
-        const { isUpdatingFeed } = this.props;
-
-        let cancelButton = null;
-        if(!isUpdatingFeed){
-            cancelButton = <Button
-                                color="orange"
-                                content="Cancel"
-                                floated="left"
-                                icon="cancel"
-                                inverted
-                                onClick={this._handleClose}
-                            />;
-        }
-
         return (
             <div>
-                {cancelButton}
-                <Button 
+                <Button
+                    color="orange"
+                    content="Cancel"
+                    floated="left"
+                    icon="cancel"
+                    inverted
+                    onClick={this._handleClose}
+                />
+                <Button
                     color="green"
                     content="Save"
                     icon="save"
                     inverted
-                    loading={isUpdatingFeed}
                     onClick={this._handleSave}
                 />
             </div>
@@ -171,10 +157,7 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
     }
 }
 const mapStateToProps = (state: IRootStoreState): IMapStateToProps=>{
-    const { feeds } = state;
-    return {
-        isUpdatingFeed: feeds.isUpdatingFeed
-    };
+    return {};
 }
 
 const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps=>{

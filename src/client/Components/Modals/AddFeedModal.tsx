@@ -21,7 +21,7 @@ interface IAddFeedModalState {
 }
 
 interface IMapStateToProps{
-    isAddingFeed: boolean;
+    
 }
 
 interface IMapDispatchToProps{
@@ -60,14 +60,6 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
         this._transitionToDisplayForm = this._transitionToDisplayForm.bind(this);
     }
 
-    componentWillReceiveProps(nextProps: IAddFeedModalProps){
-        if(this.props.isAddingFeed && !nextProps.isAddingFeed){
-            // The feed was added so reset the state 
-            // and thus close the modal
-            this._handleClose();
-        }
-    }
-
     _handleChangeURLInput(e: React.FormEvent<HTMLInputElement>){
         this.setState({
             feedURL: e.currentTarget.value
@@ -103,6 +95,7 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
             url: feedURL
         };
         this.props.beginAddFeed(dataToAdd);
+        this._handleClose();
     }
 
     _handleSelectFolder(folderId: TFolderID){
@@ -225,7 +218,6 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
     }
 
     _buildFeedInfoButtons(){
-        const { isAddingFeed } = this.props;
         return (
             <span>
                 <Button
@@ -239,7 +231,6 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
                     color="green"
                     onClick={this._handleClickAddFeed}
                     inverted
-                    loading={isAddingFeed}
                     icon="checkmark"
                     content="This is it!" />
             </span>
@@ -266,6 +257,7 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
         }
 
         return (
+            <div>
             <Modal
                 open={isModalOpen}
                 onClose={this._handleClose}
@@ -286,15 +278,13 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
                     {buttons}
                 </Modal.Actions>
             </Modal>
+            </div>
         );
     }
 }
 
 const mapStateToProps = (state: IRootStoreState): IMapStateToProps=>{
-    const { feeds } = state;
-    return {
-        isAddingFeed: feeds.isAddingFeed
-    }
+    return {}
 }
 
 const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps=>{

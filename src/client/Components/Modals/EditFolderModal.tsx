@@ -8,7 +8,6 @@ import { beginSaveFolder } from "../../redux/actions/folders.actions";
 import { IDispatch, IFolder, IRootStoreState } from "../../interfaces";
 
 interface IMapStateToProps {
-    isSavingFolder: boolean;
 }
 
 interface IMapDispatchToProps {
@@ -48,9 +47,6 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
     }
 
     componentWillReceiveProps(nextProps: IFolderEditorModalProps){
-        if(this.props.isSavingFolder && !nextProps.isSavingFolder){
-            this._handleClose();
-        }
 
         if(nextProps.folder.name !==""){
             this.setState({
@@ -75,6 +71,7 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
 
         if(editFolder.name !== ""){
             this.props.beginSaveFolder(editFolder);
+            this._handleClose();
         }
     }
 
@@ -94,7 +91,6 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
 
     _buildEditInput(){
         const { editFolder } = this.state;
-        const { isSavingFolder } = this.props;
 
         return (
             <input
@@ -103,36 +99,30 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
                 placeholder="Folder name..."
                 onKeyPress={this._handleInputKeyPress}
                 onChange={this._handleInputOnChange}
-                disabled={isSavingFolder}
             />
         )
     }
 
     _buildButtons(){
-        const { isSavingFolder } = this.props;
-
-        let cancelButton = null;
-        if(!isSavingFolder){
-            cancelButton = <Button
-                                color="orange"
-                                content="Cancel"
-                                floated="left"
-                                icon="cancel"
-                                inverted
-                                onClick={this._handleClose}
-                            />;
-        }
-
-        let saveButton = <Button 
-                            color="green"
-                            content="Create"
-                            icon="checkmark"
-                            inverted
-                            loading={isSavingFolder}
-                            onClick={this._handleSave}
-                        />;
-
-        return [cancelButton, saveButton];
+        return (
+            <div>
+            <Button
+                color="orange"
+                content="Cancel"
+                floated="left"
+                icon="cancel"
+                inverted
+                onClick={this._handleClose}
+            />
+            <Button
+                color="green"
+                content="Create"
+                icon="checkmark"
+                inverted
+                onClick={this._handleSave}
+            />
+            </div>
+        )
     }
 
     
@@ -165,10 +155,8 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
     }
 }
 
-const mapStateToProps = (state: IRootStoreState): IMapStateToProps=>{
-    const { folders } = state;
+const mapStateToProps = (state: IRootStoreState)=>{
     return {
-        isSavingFolder: folders.isSavingFolder
     };
 }
 
