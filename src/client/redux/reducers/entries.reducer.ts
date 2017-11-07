@@ -12,17 +12,23 @@ const INITIAL_STATE: IReducerStateEntries = {
     entries: OrderedMap<TEntryID, IEntry>()
 };
 
+type EntryTuple = [TEntryID, IEntry];
+
 function entriesReducer(state = INITIAL_STATE, action: IEntriesAction){
     switch(action.type){
         case ENTRIES_GET_COMPLETE: {
-            const arrayMap = action.entries.map((entry)=>{
-                return [entry._id, entry];
-            });
-            const mappedEntries = OrderedMap(arrayMap);
+            const { entries } = state;
 
+            let newMappedEntries = entries;
+            action.entries.forEach((entry)=>{
+                if(!newMappedEntries.has(entry._id)){
+                    newMappedEntries = newMappedEntries.set(entry._id, entry);
+                }
+            });
+            
             return {
                 ...state,
-                entries: mappedEntries
+                entries: newMappedEntries
             }
         }
 
