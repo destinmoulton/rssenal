@@ -11,14 +11,14 @@
 div.rss-body-left-container {
     position: absolute;
     left: 0px;
-    width: 250px;
+    width: 260px;
     height: 100%;
     border-right: 2px solid gray;
 }
 
  div.rss-body-right-container {
     position: absolute;
-    left: 250px;
+    left: 260px;
     right: 0px;
     height: 100%;
 }
@@ -27,6 +27,7 @@ div.rss-folders-feeditem {
     padding-left: 15px;
     cursor: pointer;
     width: 100%;
+    float:left;
 }
 
 div.rss-folders-feeditem-active {
@@ -139,6 +140,10 @@ div.rss-entrylist-menu-title-container {
 div.rss-entrylist-menu-sortselect-container {
     float: right;
     margin-right: 15px;
+}
+
+div.rss-leftmenu-buttonbar-container{
+    padding: 5px;
 }
 
 div.rss-sortfolder-list-container{
