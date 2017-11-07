@@ -140,6 +140,7 @@ div.rss-entrylist-menu-title-container {
 div.rss-entrylist-menu-sortselect-container {
     float: right;
     margin-right: 15px;
+    padding-top: 4px;
 }
 
 div.rss-leftmenu-buttonbar-container{

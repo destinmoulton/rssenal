@@ -227,6 +227,7 @@ class EntriesList extends React.Component<EntriesListProps> {
                         <Button
                             icon="refresh"
                             onClick={this._handleClickRefresh}
+                            size="tiny"
                         />
                         <SortMenu onChange={this._handleChangeSort} currentSortBy={sortBy}/>
                         <SettingsModal />
