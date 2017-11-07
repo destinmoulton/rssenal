@@ -97,7 +97,7 @@ class FeedItem extends React.Component<IFeedItemProps> {
                         onClick={this._handleClickTitle} >{feed.title}</div>;
         
         let unreadEntriesCount = "";
-        if(unreadMapFeeds.has(feed._id)){
+        if(unreadMapFeeds.has(feed._id) && unreadMapFeeds.get(feed._id) > 0){
             unreadEntriesCount = " [" + unreadMapFeeds.get(feed._id) + "]";
         }
         let unread = <div className="rss-folders-feeditem-unread">{unreadEntriesCount}</div>;
