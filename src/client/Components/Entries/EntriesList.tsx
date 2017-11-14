@@ -210,7 +210,7 @@ class EntriesList extends React.Component<EntriesListProps> {
 
     _scrollToEntry(entryId: TEntryID){
         const entryEl = document.getElementById("rss-entry-item-" + entryId);
-        console.log(entryEl.offsetTop);
+        
         document.querySelector(".rss-entrylist-container").scrollTo(0, entryEl.offsetTop);
     }
 
