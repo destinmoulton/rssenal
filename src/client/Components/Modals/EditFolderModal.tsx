@@ -47,16 +47,9 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
     }
 
     componentWillReceiveProps(nextProps: IFolderEditorModalProps){
-
-        if(nextProps.folder.name !==""){
-            this.setState({
-                editFolder: nextProps.folder
-            });
-        } else if (nextProps.folder === null){
-            this.setState({
-                editFolder: INITIAL_FOLDER
-            });
-        }
+        this.setState({
+            editFolder: nextProps.folder
+        });
     }
     
     _handleClose(){
@@ -69,7 +62,7 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
     _handleSave(){
         const { editFolder } = this.state;
 
-        if(editFolder.name !== ""){
+        if(editFolder.name.trim() !== ""){
             this.props.beginSaveFolder(editFolder);
             this._handleClose();
         }
