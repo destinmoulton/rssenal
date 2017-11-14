@@ -126,9 +126,10 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
         } = this.state;
 
         const { folders } = this.props;
-        const sortedFolders = folders.sort((a: IFolder, b: IFolder)=>compareAscByProp(a, b, "order"));
-        
-        let listFolders = sortedFolders.toArray().map((folder)=>{
+        const sortedFolders = folders.sort((a: IFolder, b: IFolder)=>compareAscByProp(a, b, "order")).toArray();
+        sortedFolders.unshift({name: "All", _id:"all", order:-1});
+
+        let listFolders = sortedFolders.map((folder)=>{
             return (
                 <div key={folder._id} >
                     <FolderItem

@@ -66,19 +66,21 @@ class EntriesList extends React.Component<EntriesListProps> {
                 title = activeFeed.title;
                 break;
             case "folder":
-                const feedIds = feeds.filter((feed)=>{
-                    return feed.folder_id === filter.id;
-                }).map((feed)=>{
-                    return feed._id;
-                });
+                if(filter.id !== "all"){
+                    const feedIds = feeds.filter((feed)=>{
+                        return feed.folder_id === filter.id;
+                    }).map((feed)=>{
+                        return feed._id;
+                    });
 
-                filteredEntries = entries.filter((entry)=>{
-                    return feedIds.includes(entry.feed_id);
-                }).toOrderedMap();
+                    filteredEntries = entries.filter((entry)=>{
+                        return feedIds.includes(entry.feed_id);
+                    }).toOrderedMap();
 
-                const activeFolder = folders.get(filter.id);                
+                    const activeFolder = folders.get(filter.id);                
 
-                title = activeFolder.name;
+                    title = activeFolder.name;
+                }
                 break;
         }
 

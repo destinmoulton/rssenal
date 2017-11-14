@@ -6,7 +6,7 @@ import {
 import { IFilterAction, IReducerStateFilter } from "../../interfaces";
 
 const INITIAL_STATE: IReducerStateFilter = {
-    filter: {limit: "all"}
+    filter: {limit: "folder", id: "all"}
 };
 
 function filterReducer(state = INITIAL_STATE, action: IFilterAction){

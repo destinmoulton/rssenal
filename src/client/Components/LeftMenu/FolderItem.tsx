@@ -162,9 +162,10 @@ class FolderItem extends React.Component<IFolderItemProps> {
         let options = null;
         let listFeeds = null;
 
+        title = this._domFolderTitle();
         if(folder._id !== "all"){
             toggleFeedsIcon = this._domToggleIcon();
-            title = this._domFolderTitle();
+            
             unread = this._domUnreadCount();
             if(feedsAreVisible){
                 listFeeds = <ListFeeds folderId={folder._id} editFeed={editFeed} feeds={feeds}/>;
