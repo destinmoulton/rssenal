@@ -51,9 +51,13 @@ class FolderItem extends React.Component<IFolderItemProps> {
     }
 
     _showOptions(){
-        this.setState({
-            optionsAreVisible: true
-        })
+        const { folder } = this.props;
+
+        if(folder._id != ""){
+            this.setState({
+                optionsAreVisible: true
+            })
+        }
     }
 
     _hideOptions(){

@@ -22,7 +22,7 @@ const INITIAL_STATE: IReducerStateFolders = {
 };
 
 const UNCATEGORIZED_FOLDER = {
-    _id: "0",
+    _id: "",
     name: "Uncategorized",
     order: Infinity
 };
