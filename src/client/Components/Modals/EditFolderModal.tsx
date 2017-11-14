@@ -103,7 +103,7 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
         )
     }
 
-    _buildButtons(){
+    _buildButtons(saveText: string){
         return (
             <div>
             <Button
@@ -116,7 +116,7 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
             />
             <Button
                 color="green"
-                content="Create"
+                content={saveText}
                 icon="checkmark"
                 inverted
                 onClick={this._handleSave}
@@ -132,11 +132,13 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
 
         let modalHeader = "Add Folder";
         
+        let saveText = "Create";
         if(folder && folder._id !== ""){
             modalHeader = "Edit Folder";
+            saveText = "Save";
         }
 
-        const buttons = this._buildButtons();
+        const buttons = this._buildButtons(saveText);
         return (
                 <Modal
                     open={isModalOpen}
