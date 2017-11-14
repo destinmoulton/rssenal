@@ -47,6 +47,14 @@ class EntriesList extends React.Component<EntriesListProps> {
 
     componentWillReceiveProps(nextProps: EntriesListProps){
         this._filterAndSortEntries(nextProps, this.state.sortBy);
+
+        if(nextProps.filter.id !== this.props.filter.id){
+            document.querySelector(".rss-entrylist-container").scrollTo(0,0);
+
+            this.setState({
+                activeEntryId: ""
+            });
+        }
     }
 
     _filterAndSortEntries(props: EntriesListProps, sortBy: string){
@@ -178,6 +186,8 @@ class EntriesList extends React.Component<EntriesListProps> {
 
         this._markRead(sibling._id);
 
+        this._scrollToEntry(sibling._id);
+        
         this.setState({
             activeEntryId: sibling._id
         });
@@ -192,10 +202,16 @@ class EntriesList extends React.Component<EntriesListProps> {
         if(nextActiveEntryId !== ""){
             this._markRead(nextActiveEntryId);
         }
-
+        
         this.setState({
             activeEntryId: nextActiveEntryId
         });
+    }
+
+    _scrollToEntry(entryId: TEntryID){
+        const entryEl = document.getElementById("rss-entry-item-" + entryId);
+        console.log(entryEl.offsetTop);
+        document.querySelector(".rss-entrylist-container").scrollTo(0, entryEl.offsetTop);
     }
 
     _markRead(entryId: TEntryID){
