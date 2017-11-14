@@ -129,6 +129,18 @@ class FolderItem extends React.Component<IFolderItemProps> {
             <div className="rss-folders-folderitem-unread">{unread}</div>
         )
     }
+    
+    _domToggleIcon(){
+        const { feedsAreVisible } = this.state;
+
+        var toggleFeedsIconClass: SemanticICONS = feedsAreVisible ? "caret down" : "caret right";
+
+        return (
+            <div className="rss-folders-folderitem-icon">
+                <Icon name={toggleFeedsIconClass} onClick={this._handleToggleFeedsVisible} />
+            </div>
+        )
+    }
 
     render(){
         const {
@@ -143,22 +155,24 @@ class FolderItem extends React.Component<IFolderItemProps> {
             optionsAreVisible
         } = this.state;
 
-        let listFeeds = null;
-        var toggleFeedsIconClass: SemanticICONS = "caret right";
-        if(feedsAreVisible){
-            toggleFeedsIconClass = "caret down";
-            listFeeds = <ListFeeds folderId={folder._id} editFeed={editFeed} feeds={feeds}/>;
-        }
         
-        let toggleFeedsIcon = <div className="rss-folders-folderitem-icon"><Icon name={toggleFeedsIconClass} onClick={this._handleToggleFeedsVisible} /></div>;
-        
-        let title = this._domFolderTitle();
-
-        let unread = this._domUnreadCount();
-
+        let toggleFeedsIcon = null;
+        let title = null;
+        let unread = null;
         let options = null;
-        if(optionsAreVisible){
-            options = this._domOptionButtons();
+        let listFeeds = null;
+
+        if(folder._id !== "all"){
+            toggleFeedsIcon = this._domToggleIcon();
+            title = this._domFolderTitle();
+            unread = this._domUnreadCount();
+            if(feedsAreVisible){
+                listFeeds = <ListFeeds folderId={folder._id} editFeed={editFeed} feeds={feeds}/>;
+            }
+            
+            if(optionsAreVisible){
+                options = this._domOptionButtons();
+            }
         }
 
         let className = "rss-folders-folderitem";
