@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Button, Menu } from "semantic-ui-react";
 
 import EntryItem from "./EntryItem";
-import SettingsModal from "./SettingsModal";
+import SettingsModal from "../Modals/SettingsModal";
 import SortMenu from "./SortMenu";
 
 import { beginGetEntries, updateReadState } from "../../redux/actions/entries.actions";
