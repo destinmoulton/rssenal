@@ -48,7 +48,7 @@ class SettingsModal extends React.Component<ISettingsModalProps> {
 
     _buildRadioToggle(setting: ISetting){
         return (
-            <div key={setting.key}>
+            <div className="rss-settings-toggle-box" key={setting.key}>
                 <Radio 
                     checked={setting.value}
                     toggle

@@ -159,6 +159,10 @@ div.rss-leftmenu-buttonbar-container{
     padding: 5px;
 }
 
+div.rss-settings-toggle-box {
+    margin-top:6px;
+}
+
 div.rss-sortfolder-list-container{
     position: relative;
     z-index: 0;
