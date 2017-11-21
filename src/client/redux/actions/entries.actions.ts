@@ -56,7 +56,7 @@ function getEntries(){
                     console.error(resObj.error);
                 } else {
                     let entries = resObj.entries;
-                    dispatch(getEntriesComplete(entries));
+                    dispatch(getEntriesComplete(entries, showUnread));
                     dispatch(feedsSetAllUnreadCount(entries));
                 }
             })
@@ -66,10 +66,11 @@ function getEntries(){
     }
 }
 
-function getEntriesComplete(entries: TEntries){
+function getEntriesComplete(entries: TEntries, showUnread: boolean){
     return {
         type: ENTRIES_GET_COMPLETE,
-        entries
+        entries,
+        showUnread
     }
 }
 

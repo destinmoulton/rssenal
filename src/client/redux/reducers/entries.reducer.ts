@@ -21,7 +21,13 @@ function entriesReducer(state = INITIAL_STATE, action: IEntriesAction){
 
             let newMappedEntries = entries;
             action.entries.forEach((entry)=>{
-                if(!newMappedEntries.has(entry._id)){
+                if(newMappedEntries.has(entry._id)){
+                    if(!action.showUnread === entry.has_read){
+                        newMappedEntries = newMappedEntries.set(entry._id, entry);
+                    } else {
+                        newMappedEntries = newMappedEntries.delete(entry._id);
+                    }
+                } else {
                     newMappedEntries = newMappedEntries.set(entry._id, entry);
                 }
             });

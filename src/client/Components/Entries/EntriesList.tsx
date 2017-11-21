@@ -17,6 +17,7 @@ interface IMapStateProps {
     folders: TFolders;
     feeds: TFeeds;
     filter: IFilter;
+    showUnread: boolean;
 }
 
 interface IMapDispatchProps {
@@ -24,9 +25,9 @@ interface IMapDispatchProps {
     getEntries: ()=>void;
 }
 
-interface EntriesListProps extends IMapStateProps, IMapDispatchProps{};
+interface IEntriesListProps extends IMapStateProps, IMapDispatchProps{};
 
-class EntriesList extends React.Component<EntriesListProps> {
+class EntriesList extends React.Component<IEntriesListProps> {
     state = {
         sortBy: "publish_date:asc",
         activeEntryId: "",
@@ -34,7 +35,7 @@ class EntriesList extends React.Component<EntriesListProps> {
         processedEntries: OrderedMap<TEntryID, IEntry>()
     };
 
-    constructor(props: EntriesListProps){
+    constructor(props: IEntriesListProps){
         super(props);
 
         // Setup the global/document level keypress events
@@ -45,10 +46,11 @@ class EntriesList extends React.Component<EntriesListProps> {
         this._toggleEntry = this._toggleEntry.bind(this);
     }
 
-    componentWillReceiveProps(nextProps: EntriesListProps){
+    componentWillReceiveProps(nextProps: IEntriesListProps){
         this._filterAndSortEntries(nextProps, this.state.sortBy);
 
         if(nextProps.filter.id !== this.props.filter.id){
+            // Reset scroll to top
             document.querySelector(".rss-entrylist-container").scrollTo(0,0);
 
             this.setState({
@@ -57,10 +59,11 @@ class EntriesList extends React.Component<EntriesListProps> {
         }
     }
 
-    _filterAndSortEntries(props: EntriesListProps, sortBy: string){
-        const { entries, folders, feeds, filter } = props;
+    _filterAndSortEntries(props: IEntriesListProps, sortBy: string){
+        const { entries, folders, feeds, filter, showUnread } = props;
 
         let filteredEntries = entries;
+
         let title = "All";
 
         switch(filter.limit){
@@ -260,12 +263,19 @@ class EntriesList extends React.Component<EntriesListProps> {
 }
 
 const mapStateToProps = (state: IRootStoreState): IMapStateProps =>{
-    const { entries, folders, feeds, filter } = state;
+    const { entries, folders, feeds, filter, settings } = state;
+
+    const showUnreadSetting = settings.settings.filter((setting)=>{
+        return setting.key === "show_unread";
+    });
+    console.log(showUnreadSetting);
+
     return {
         entries: entries.entries,
         folders: folders.folders,
         feeds: feeds.feeds,
-        filter: filter.filter
+        filter: filter.filter,
+        showUnread: showUnreadSetting[0].value
     }
 }
 
