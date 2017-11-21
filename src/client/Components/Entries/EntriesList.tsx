@@ -2,7 +2,7 @@ import { OrderedMap } from "immutable";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { Button, Menu } from "semantic-ui-react";
+import { Button, Loader, Menu } from "semantic-ui-react";
 
 import EntryItem from "./EntryItem";
 import SettingsModal from "../Modals/SettingsModal";
@@ -17,7 +17,7 @@ interface IMapStateProps {
     folders: TFolders;
     feeds: TFeeds;
     filter: IFilter;
-    showUnread: boolean;
+    isGettingEntries: boolean;
 }
 
 interface IMapDispatchProps {
@@ -60,7 +60,7 @@ class EntriesList extends React.Component<IEntriesListProps> {
     }
 
     _filterAndSortEntries(props: IEntriesListProps, sortBy: string){
-        const { entries, folders, feeds, filter, showUnread } = props;
+        const { entries, folders, feeds, filter } = props;
 
         let filteredEntries = entries;
 
@@ -227,18 +227,25 @@ class EntriesList extends React.Component<IEntriesListProps> {
     }
 
     render() {
+        const { isGettingEntries } = this.props;
         const { activeEntryId, currentTitle, processedEntries, sortBy } = this.state;
 
-        const entryList = processedEntries.toArray().map((entry)=>{
-            const isActive = (entry._id === activeEntryId);
-            return (
-                <EntryItem 
-                    key={entry._id}
-                    entry={entry}
-                    toggleEntry={this._toggleEntry}
-                    isActive={isActive}/>
-            )
-        })
+        let entryList = null;
+
+        if(isGettingEntries){
+            entryList = <Loader active/>;
+        } else {
+            entryList = processedEntries.toArray().map((entry)=>{
+                const isActive = (entry._id === activeEntryId);
+                return (
+                    <EntryItem 
+                        key={entry._id}
+                        entry={entry}
+                        toggleEntry={this._toggleEntry}
+                        isActive={isActive}/>
+                )
+            });
+        }
         
         return (
             <div>
@@ -265,16 +272,12 @@ class EntriesList extends React.Component<IEntriesListProps> {
 const mapStateToProps = (state: IRootStoreState): IMapStateProps =>{
     const { entries, folders, feeds, filter, settings } = state;
 
-    const showUnreadSetting = settings.settings.filter((setting)=>{
-        return setting.key === "show_unread";
-    });
-
     return {
         entries: entries.entries,
         folders: folders.folders,
         feeds: feeds.feeds,
         filter: filter.filter,
-        showUnread: showUnreadSetting[0].value
+        isGettingEntries: entries.isGettingEntries
     }
 }
 
