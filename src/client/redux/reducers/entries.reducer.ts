@@ -3,19 +3,26 @@ import { OrderedMap } from "immutable";
 
 import {
     ENTRIES_GET_COMPLETE,
-    ENTRIES_MARKREAD_COMPLETE
+    ENTRIES_MARKREAD_COMPLETE,
+    ENTRIES_GET_BEGIN
 } from "../actiontypes";
 
 import { TEntryID, IEntry, IEntriesAction, IReducerStateEntries } from "../../interfaces";
 
 const INITIAL_STATE: IReducerStateEntries = {
-    entries: OrderedMap<TEntryID, IEntry>()
+    entries: OrderedMap<TEntryID, IEntry>(),
+    isGettingEntries: false
 };
 
 type IEntryTuple = [TEntryID, IEntry];
 
 function entriesReducer(state = INITIAL_STATE, action: IEntriesAction){
     switch(action.type){
+        case ENTRIES_GET_BEGIN: 
+            return {
+                ...state,
+                isGettingEntries: true
+            }
         case ENTRIES_GET_COMPLETE: {
             const { entries } = state;
 
@@ -26,10 +33,10 @@ function entriesReducer(state = INITIAL_STATE, action: IEntriesAction){
             
             return {
                 ...state,
-                entries: OrderedMap(tuples)
+                entries: OrderedMap(tuples),
+                isGettingEntries: false
             }
         }
-
         case ENTRIES_MARKREAD_COMPLETE:{
             const { entries } = state;
             const newEntries = entries.set(action.newEntry._id, action.newEntry);
