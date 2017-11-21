@@ -32,6 +32,7 @@ export interface IEntriesAction {
     type: string;
     entries?: IEntry[];
     newEntry?: IEntry;
+    showUnread?: boolean;
 }
 
 export type TEntries = OrderedMap<TEntryID, IEntry>;
