@@ -101,6 +101,7 @@ export interface ISettingsAction{
 
 export interface IReducerStateEntries{
     entries: TEntries;
+    isGettingEntries: boolean;
 }
 
 export interface IReducerStateFilter{
