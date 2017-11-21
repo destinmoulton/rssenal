@@ -268,7 +268,6 @@ const mapStateToProps = (state: IRootStoreState): IMapStateProps =>{
     const showUnreadSetting = settings.settings.filter((setting)=>{
         return setting.key === "show_unread";
     });
-    console.log(showUnreadSetting);
 
     return {
         entries: entries.entries,

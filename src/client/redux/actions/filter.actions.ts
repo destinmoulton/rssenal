@@ -8,8 +8,8 @@ import { IDispatch, IFilter } from "../../interfaces";
 
 export function changeFilter(newFilter: IFilter){
     return (dispatch: IDispatch)=>{
-        dispatch(beginGetEntries);
-        dispatch(setNewFilter);
+        dispatch(beginGetEntries());
+        dispatch(setNewFilter(newFilter));
     }
 }
 
