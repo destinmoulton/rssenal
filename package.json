@@ -1,6 +1,6 @@
 {
   "name": "rssenal",
-  "version": "0.0.1",
+  "version": "0.5.0",
   "description": "RSS reader.",
   "main": "index.js",
   "scripts": {
