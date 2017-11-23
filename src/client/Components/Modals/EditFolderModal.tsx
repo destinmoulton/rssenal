@@ -92,6 +92,7 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
                 placeholder="Folder name..."
                 onKeyPress={this._handleInputKeyPress}
                 onChange={this._handleInputOnChange}
+                className="rss-foldermodal-name"
             />
         )
     }

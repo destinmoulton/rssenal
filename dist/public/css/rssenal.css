@@ -23,6 +23,10 @@ div.rss-body-left-container {
     height: 100%;
 }
 
+input.rss-foldermodal-name{
+    width: 100%;
+}
+
 div.rss-folders-feeditem {
     padding-left: 15px;
     cursor: pointer;
