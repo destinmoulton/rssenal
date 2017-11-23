@@ -29,11 +29,6 @@ class EntryItem extends React.Component<IEntryItemProps> {
         shouldShowImages: false
     };
 
-    constructor(props: IEntryItemProps){
-        super(props);
-
-    }
-
     componentWillReceiveProps({ settings }: IEntryItemProps){
         let shouldShowImages = false;
         settings.forEach((setting)=>{
@@ -123,4 +118,5 @@ const mapStateToProps = (state: IRootStoreState)=>{
         settings: settings.settings
     }
 }
+
 export default connect(mapStateToProps)(EntryItem);
