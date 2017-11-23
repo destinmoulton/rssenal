@@ -7,14 +7,11 @@ import { beginSaveFolder } from "../../redux/actions/folders.actions";
 
 import { IDispatch, IFolder, IRootStoreState } from "../../interfaces";
 
-interface IMapStateToProps {
-}
-
 interface IMapDispatchToProps {
     beginSaveFolder: (folder: any)=>void;
 }
 
-interface IFolderEditorModalProps extends IMapDispatchToProps, IMapStateToProps{
+interface IFolderEditorModalProps extends IMapDispatchToProps {
     isModalOpen: boolean;
     onCloseModal: ()=>void;
     folder: IFolder
@@ -25,7 +22,6 @@ interface IFolderEditorModalState {
 }
 
 const INITIAL_FOLDER = {name:"", _id:""};
-
 
 class EditFolderModal extends React.Component<IFolderEditorModalProps> {
 
@@ -100,21 +96,21 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
     _buildButtons(saveText: string){
         return (
             <div>
-            <Button
-                color="orange"
-                content="Cancel"
-                floated="left"
-                icon="cancel"
-                inverted
-                onClick={this._handleClose}
-            />
-            <Button
-                color="green"
-                content={saveText}
-                icon="checkmark"
-                inverted
-                onClick={this._handleSave}
-            />
+                <Button
+                    color="orange"
+                    content="Cancel"
+                    floated="left"
+                    icon="cancel"
+                    inverted
+                    onClick={this._handleClose}
+                />
+                <Button
+                    color="green"
+                    content={saveText}
+                    icon="checkmark"
+                    inverted
+                    onClick={this._handleSave}
+                />
             </div>
         )
     }
@@ -152,8 +148,7 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
 }
 
 const mapStateToProps = (state: IRootStoreState)=>{
-    return {
-    };
+    return { };
 }
 
 const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps=>{
