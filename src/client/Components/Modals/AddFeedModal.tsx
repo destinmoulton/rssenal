@@ -20,9 +20,7 @@ interface IAddFeedModalState {
     formError: string;
 }
 
-interface IMapStateToProps{
-    
-}
+interface IMapStateToProps { }
 
 interface IMapDispatchToProps{
     beginAddFeed: (feedInfo: any)=>void

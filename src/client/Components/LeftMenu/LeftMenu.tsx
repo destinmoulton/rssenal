@@ -28,9 +28,7 @@ interface IMapDispatchProps {
     getAllFeeds: ()=>void;
 }
 
-interface ILeftMenuProps extends IMapStateProps, IMapDispatchProps{
-
-}
+interface ILeftMenuProps extends IMapStateProps, IMapDispatchProps{ }
 
 interface ILeftMenuState {
     addFeedModalOpen: boolean;
@@ -40,6 +38,7 @@ interface ILeftMenuState {
     editFolderModalOpen: boolean;
 }
 class LeftMenu extends React.Component<ILeftMenuProps> {
+
     state: ILeftMenuState = {
         addFeedModalOpen: false,
         editFeed: null,
@@ -57,7 +56,6 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
         this._handleOpenAddFeedModal = this._handleOpenAddFeedModal.bind(this);
         this._handleOpenEditFeedModal = this._handleOpenEditFeedModal.bind(this);
         this._handleOpenEditFolderModal = this._handleOpenEditFolderModal.bind(this);
-        
     }
 
     componentWillMount(){
