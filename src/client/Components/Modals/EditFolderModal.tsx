@@ -21,7 +21,7 @@ interface IFolderEditorModalProps extends IMapDispatchToProps, IMapStateToProps{
 }
 
 interface IFolderEditorModalState {
-    editFolder: any;
+    folderInfo: any;
 }
 
 const INITIAL_FOLDER = {name:"", _id:""};
@@ -30,7 +30,7 @@ const INITIAL_FOLDER = {name:"", _id:""};
 class EditFolderModal extends React.Component<IFolderEditorModalProps> {
 
     state: IFolderEditorModalState = {
-        editFolder: INITIAL_FOLDER
+        folderInfo: INITIAL_FOLDER
     }
 
     constructor(props: IFolderEditorModalProps){
@@ -48,22 +48,22 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
 
     componentWillReceiveProps(nextProps: IFolderEditorModalProps){
         this.setState({
-            editFolder: nextProps.folder
+            folderInfo: nextProps.folder
         });
     }
     
     _handleClose(){
         this.setState({
-            editFolder: INITIAL_FOLDER
+            folderInfo: INITIAL_FOLDER
         });
         this.props.onCloseModal();
     }
 
     _handleSave(){
-        const { editFolder } = this.state;
+        const { folderInfo } = this.state;
 
-        if(editFolder.name.trim() !== ""){
-            this.props.beginSaveFolder(editFolder);
+        if(folderInfo.name.trim() !== ""){
+            this.props.beginSaveFolder(folderInfo);
             this._handleClose();
         }
     }
@@ -75,20 +75,20 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
     }
 
     _handleInputOnChange(e: any){
-        const { editFolder } = this.state;
-        editFolder.name = e.target.value;
+        const { folderInfo } = this.state;
+        folderInfo.name = e.target.value;
         this.setState({
-            editFolder
+            folderInfo
         });
     }
 
     _buildEditInput(){
-        const { editFolder } = this.state;
+        const { folderInfo } = this.state;
 
         return (
             <input
                 autoFocus
-                value={editFolder.name}
+                value={folderInfo.name}
                 placeholder="Folder name..."
                 onKeyPress={this._handleInputKeyPress}
                 onChange={this._handleInputOnChange}
