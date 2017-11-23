@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Dropdown } from "semantic-ui-react";
 
 import { IRootStoreState, TFolders, TFolderID } from "../../interfaces";
+
 interface IMapStateToProps{
     folders: TFolders
 }
@@ -38,7 +39,6 @@ class SelectFolder extends React.Component<ISelectFolderProps> {
     }
 
     _handleOnChange(e: any, dropdown: any){
-        
         const selectedValue = dropdown.value;
         this.setState({
             selectedValue

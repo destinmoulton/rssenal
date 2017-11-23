@@ -18,9 +18,7 @@ interface IMapDispatchToProps {
     beginReorderFolders: (foldersArr: IFolder[])=>void
 }
 
-interface IReorderFoldersModalProps extends IMapStateToProps, IMapDispatchToProps{
-
-}
+interface IReorderFoldersModalProps extends IMapStateToProps, IMapDispatchToProps {}
 
 interface IReorderFoldersModalState {
     foldersAsArray: IFolder[];
