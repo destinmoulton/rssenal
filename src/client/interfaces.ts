@@ -103,6 +103,9 @@ export interface IFolderAction {
 export interface IMessage {
     message: string;
     type: string;
+    uid?: number;
+    onRemove?: (message:IMessage)=>void;
+    position?: "br" | "tr" | "tl" | "tc" | "bl" | "bc";
 }
 
 export type TMessages = List<IMessage>;
@@ -144,6 +147,7 @@ export interface IReducerStateFolders {
 
 export interface IReducerStateMessages {
     messages: TMessages;
+    lastUID: 0;
 }
 
 export interface IRootStoreState {
