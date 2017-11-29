@@ -6,6 +6,7 @@ import entriesReducer from "./reducers/entries.reducer";
 import filterReducer from "./reducers/filter.reducer";
 import feedsReducer from "./reducers/feeds.reducer";
 import foldersReducer from "./reducers/folders.reducer";
+import messagesReducer from "./reducers/messages.reducer";
 import settingsReducer from "./reducers/settings.reducer";
 
 const store = createStore(
@@ -14,6 +15,7 @@ const store = createStore(
     filter: filterReducer,
     folders: foldersReducer,
     feeds: feedsReducer,
+    messages: messagesReducer,
     settings: settingsReducer
   }),
   applyMiddleware(
