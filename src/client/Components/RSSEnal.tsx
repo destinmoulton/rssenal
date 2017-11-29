@@ -3,6 +3,7 @@ import { Grid, Menu, Segment } from "semantic-ui-react";
 
 import EntriesList from "./Entries/EntriesList";
 import LeftMenu from "./LeftMenu/LeftMenu";
+import Messages from "./Messages";
 
 import { IFilter} from "../interfaces";
 
@@ -42,6 +43,7 @@ class RSSEnal extends React.Component {
                 <div className="rss-body-right-container">
                     <EntriesList />
                 </div>
+                <Messages />
             </div>
         )
     }
