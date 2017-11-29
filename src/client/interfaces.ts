@@ -1,4 +1,4 @@
-import { Map, OrderedMap } from "immutable";
+import { List, Map, OrderedMap } from "immutable";
 
 /** Redux Interfaces */
 export interface IDispatch {
@@ -37,6 +37,9 @@ export interface IEntriesAction {
 
 export type TEntries = OrderedMap<TEntryID, IEntry>;
 
+
+/** Feeds Interfaces & Types */
+
 export type TFeedID = string;
 
 export interface IFeed {
@@ -64,22 +67,8 @@ export interface IFeedsUnreadMap {
     folders: Map<TFolderID, number>;
 }
 
-export type TFolderID = string;
 
-export interface IFolder {
-    _id: TFolderID;
-    name: string;
-    order: number;
-}
-
-export interface IFolderAction {
-    type: string;
-    folderId?: TFolderID;
-    folders?: IFolder[];
-    folder?: IFolder;
-}
-
-export type TFolders = OrderedMap<TFolderID, IFolder>;
+/** Filter Interfaces */
 
 export interface IFilter {
     id?: string;
@@ -90,18 +79,55 @@ export interface IFilterAction {
     newFilter: object;
 }
 
-export interface ISettingsAction{
-    type: string;
-    setting_key: string;
-    setting_value: any;
+
+/** Folders Interfaces & Types */
+
+export type TFolderID = string;
+
+export interface IFolder {
+    _id: TFolderID;
+    name: string;
+    order: number;
 }
 
+export type TFolders = OrderedMap<TFolderID, IFolder>;
+
+export interface IFolderAction {
+    type: string;
+    folderId?: TFolderID;
+    folders?: IFolder[];
+    folder?: IFolder;
+}
+
+/** Messages Interfaces */
+export interface IMessage {
+    message: string;
+    type: string;
+}
+
+export type TMessages = List<IMessage>;
+
+export interface IMessageAction {
+    type: string;
+    message?: IMessage;
+}
 
 /** Redux Reducer Interfaces */
 
 export interface IReducerStateEntries{
     entries: TEntries;
     isGettingEntries: boolean;
+}
+
+export interface IReducerStateFeeds {
+    feeds: TFeeds;
+    unreadMap: IFeedsUnreadMap;
+    isAddingFeed: boolean;
+    isUpdatingFeed: boolean;
+}
+
+export interface IReducerStateSettings {
+    settings: ISetting[];
 }
 
 export interface IReducerStateFilter{
@@ -116,28 +142,30 @@ export interface IReducerStateFolders {
     isSavingFolder: boolean;
 }
 
-export interface IReducerStateFeeds {
-    feeds: TFeeds;
-    unreadMap: IFeedsUnreadMap;
-    isAddingFeed: boolean;
-    isUpdatingFeed: boolean;
-}
-
-export interface IReducerStateSettings {
-    settings: ISetting[];
+export interface IReducerStateMessages {
+    messages: TMessages;
 }
 
 export interface IRootStoreState {
     entries: IReducerStateEntries;
-    folders: IReducerStateFolders;    
     feeds: IReducerStateFeeds;
     filter: IReducerStateFilter;
+    folders: IReducerStateFolders;    
+    messages: IReducerStateMessages;
     settings: IReducerStateSettings;
 }
+
+/** Settings Interfaces */
 
 export interface ISetting {
     key: string;
     name: string;
     type: string;
     value: any;
+}
+
+export interface ISettingsAction{
+    type: string;
+    setting_key: string;
+    setting_value: any;
 }
