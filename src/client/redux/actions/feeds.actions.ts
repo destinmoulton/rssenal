@@ -19,7 +19,8 @@ import {
     JSON_HEADERS
 } from "../../lib/headers";
 
-import {beginGetEntries} from "./entries.actions";
+import { beginGetEntries } from "./entries.actions";
+import { message } from "./messages.actions";
 
 import { IDispatch, IFeed, TFeedID, TEntries, IRootStoreState } from "../../interfaces";
 
@@ -53,6 +54,7 @@ function addFeed(feedInfo: IFeed){
                 if(feedObj.status === "error"){
                     console.error(feedObj.error);
                 } else if(feedObj.status === "success"){
+                    dispatch(message("Feed added.", "success"));
                     dispatch(addFeedComplete(feedObj.feedInfo));
                     dispatch(beginGetEntries());
                 }
