@@ -11,4 +11,4 @@ router.get('/:folderId', folders.get_single);
 router.delete('/:folderId', folders.delete_single);
 router.put('/:folderId', folders.update_single);
 
-export default router;
+module.exports = router;
