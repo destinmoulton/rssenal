@@ -5,4 +5,4 @@ import validateFeedURL from "../controllers/ValidateFeedURL.controller";
 
 router.post('/', validateFeedURL.validate_single);
 
-export default router;
+module.exports = router;
