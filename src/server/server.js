@@ -3,8 +3,6 @@ import express from "express";
 import mongoose from "mongoose";
 import path from "path";
 
-import ApiRoutes from "./api.routes";
-
 const PORT = process.env.PORT || 3000;
 const PUBLIC_PATH = path.resolve(__dirname, '../public');
 
@@ -20,8 +18,8 @@ app.use(bodyParser.json());
 
 app.use(express.static(PUBLIC_PATH));
 
-// Setup the api routes
-ApiRoutes(app);
+// Setup the routes
+app.use("/", require("./routes"));
 
 // Allow all URI's; handle by react router
 app.get('*', (req, res)=>{
