@@ -19,6 +19,7 @@ import {
 } from "../../lib/headers";
 
 import { IDispatch, IFolder, TFolderID } from "../../interfaces";
+import { message } from "./messages.actions";
 
 export function getAllFolders(){
     return (dispatch: IDispatch)=>{
@@ -93,6 +94,7 @@ function addFolder(newFolderName: string){
                 if(resObj.status === "error"){
                     return console.error(resObj);
                 } else {
+                    dispatch(message("Folder added.", "success"));
                     return dispatch(addingFolderComplete(resObj));
                 }
             })
@@ -132,6 +134,7 @@ function updateFolder(folderId: TFolderID, newFolderName: string){
                 if(resObj.status === "error"){
                     return console.error(resObj);
                 } else {
+                    dispatch(message("Folder saved.", "success"));
                     return dispatch(updatingComplete(resObj));
                 }
             })
@@ -173,6 +176,7 @@ function deleteFolder(folderId: TFolderID){
             })
             .then((resObj)=>{
                 if(resObj.status==="success"){
+                    dispatch(message("Folder removed.", "success"));
                     return dispatch(deleteComplete(folderId));
                 } else {
                     console.error(resObj);
@@ -205,6 +209,7 @@ export function beginReorderFolders(foldersArr: IFolder[]){
             })
             .then((resObj)=>{
                 if(resObj.status==="success"){
+                    dispatch(message("Folders reordered.", "success"));
                     return dispatch(getAllFolders());
                 }
             })

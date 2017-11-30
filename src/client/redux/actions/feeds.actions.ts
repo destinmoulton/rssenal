@@ -126,6 +126,7 @@ function deleteFeed(feedId: TFeedID){
                 return res.json();
             })
             .then((resObj)=>{
+                dispatch(message("Feed removed.", "success"));
                 dispatch(deleteFeedComplete(feedId));
                 dispatch(beginGetEntries());
             })
@@ -172,6 +173,7 @@ function updateFeed(feedInfo: IFeed){
                 if(feedObj.status === "error"){
                     console.error(feedObj.error);
                 } else if(feedObj.status === "success"){
+                    dispatch(message("Feed saved.", "success"));
                     dispatch(updateFeedComplete(feedObj.feedInfo));
                     dispatch(feedsSetAllUnreadCount(getState().entries.entries));
                 }
