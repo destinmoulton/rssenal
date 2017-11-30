@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile:react": "webpack --config webpack.config.js -d --watch",
     "clean:server": "rm -rf dist/server/*",
-    "compile:server": "npm run clean:server && babel --watch src/server --out-dir dist/server",
+    "compile:server": "npm run clean:server && babel --watch src/server --out-dir dist/server --source-maps inline",
     "start:server": "pm2 start pm2.config.json"
   },
   "keywords": [
