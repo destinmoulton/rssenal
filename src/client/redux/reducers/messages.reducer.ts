@@ -17,7 +17,8 @@ const messagesReducer = function(state = INITIAL_STATE, action: IMessageAction){
             newMessage.uid = nextUID;
             return {
                 ...state,
-                messages: state.messages.push(newMessage)
+                messages: state.messages.push(newMessage),
+                lastUID: nextUID
             }
         case MESSAGES_REMOVE:
             const index = state.messages.findIndex((message: IMessage)=>{
