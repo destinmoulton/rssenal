@@ -1,5 +1,6 @@
 import bodyParser from "body-parser";
 import express from "express";
+import jwt from "express-jwt";
 import mongoose from "mongoose";
 import path from "path";
 
@@ -19,6 +20,9 @@ mongoose.connect(CONFIG.mongo.uri, {
 // Setup body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// Setup the jwt middleware
+app.use(jwt({ secret: CONFIG.jwt.secret }));
 
 app.use(express.static(PUBLIC_PATH));
 
