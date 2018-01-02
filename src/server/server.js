@@ -3,7 +3,8 @@ import express from "express";
 import mongoose from "mongoose";
 import path from "path";
 
-const PORT = process.env.PORT || 3000;
+import CONFIG from "./config/config";
+
 const PUBLIC_PATH = path.resolve(__dirname, "../public");
 
 const app = express();
@@ -29,9 +30,9 @@ app.get("*", (req, res) => {
     res.sendFile(path.join(PUBLIC_PATH, "/index.html"));
 });
 
-app.listen(PORT);
+app.listen(CONFIG.port);
 
 // Output the server listening message
 console.log("-".repeat(50));
-console.log("--- rssenal server listening on http://127.0.0.1:" + PORT);
+console.log("--- rssenal server listening on http://127.0.0.1:" + CONFIG.port);
 console.log("-".repeat(50));
