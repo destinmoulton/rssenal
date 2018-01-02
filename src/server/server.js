@@ -11,7 +11,7 @@ const app = express();
 
 // Connect mongoose
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/rssenal", {
+mongoose.connect(CONFIG.mongo.uri, {
     useMongoClient: true,
     promiseLibrary: global.Promise
 });
