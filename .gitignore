@@ -1,1 +1,4 @@
 node_modules
+
+src/server/config/config.js
+dist/server/config/config.js
