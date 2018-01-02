@@ -8,11 +8,18 @@ You can organize your subscriptions into groups (categories). Navigate your feed
 
 I wanted a simple hosted RSS feed reader. I used to LOVE Google Reader. I like feedly, but I don't like all the unnecessary features that interfere with my reading experience.
 
-### What RSSenal is __Not__
+### What RSSenal is **Not**
 
-RSSenal was __not__ built with multiple users in mind. There is a login, but the login information is statically configured via a configuration file.
+RSSenal was **not** built with multiple users in mind. There is a login, but the login information is statically configured via a configuration file.
 
-There are __no__ options to share a post on Facebook, Twitter, or any other social platforms. Copying a link is easy enough.
+There are **no** options to share a post on Facebook, Twitter, or any other social platforms. Copying a link is easy enough.
+
+### Instructions
+
+Copy the contents of src/config/config.template.js into its own file src/config/config.js. Change the configured values to match your own setup.
+
+Compile the server code:
+`$ npm run compile:server`
 
 ### License
 
