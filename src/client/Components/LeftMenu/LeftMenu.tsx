@@ -14,7 +14,15 @@ import FolderItem from "./FolderItem";
 
 import { compareAscByProp } from "../../lib/sort";
 
-import { TFeeds, IFeed, IFolder, IDispatch, IRootStoreState, TFeedID, TFolderID } from "../../interfaces";
+import {
+    TFeeds,
+    IFeed,
+    IFolder,
+    IDispatch,
+    IRootStoreState,
+    TFeedID,
+    TFolderID
+} from "../../interfaces";
 
 interface IMapStateProps {
     feeds: TFeeds;
@@ -23,12 +31,12 @@ interface IMapStateProps {
 }
 
 interface IMapDispatchProps {
-    beginGetEntries: ()=>void;
-    getAllFolders: ()=>void;
-    getAllFeeds: ()=>void;
+    beginGetEntries: () => void;
+    getAllFolders: () => void;
+    getAllFeeds: () => void;
 }
 
-interface ILeftMenuProps extends IMapStateProps, IMapDispatchProps{ }
+interface ILeftMenuProps extends IMapStateProps, IMapDispatchProps {}
 
 interface ILeftMenuState {
     addFeedModalOpen: boolean;
@@ -38,7 +46,6 @@ interface ILeftMenuState {
     editFolderModalOpen: boolean;
 }
 class LeftMenu extends React.Component<ILeftMenuProps> {
-
     state: ILeftMenuState = {
         addFeedModalOpen: false,
         editFeed: null,
@@ -47,89 +54,101 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
         editFolderModalOpen: false
     };
 
-    constructor(props: ILeftMenuProps){
+    constructor(props: ILeftMenuProps) {
         super(props);
-        
-        this._handleCloseAddFeedModal = this._handleCloseAddFeedModal.bind(this);
-        this._handleCloseEditFeedModal = this._handleCloseEditFeedModal.bind(this);
-        this._handleCloseEditFolderModal = this._handleCloseEditFolderModal.bind(this);
+
+        this._handleCloseAddFeedModal = this._handleCloseAddFeedModal.bind(
+            this
+        );
+        this._handleCloseEditFeedModal = this._handleCloseEditFeedModal.bind(
+            this
+        );
+        this._handleCloseEditFolderModal = this._handleCloseEditFolderModal.bind(
+            this
+        );
         this._handleOpenAddFeedModal = this._handleOpenAddFeedModal.bind(this);
-        this._handleOpenEditFeedModal = this._handleOpenEditFeedModal.bind(this);
-        this._handleOpenEditFolderModal = this._handleOpenEditFolderModal.bind(this);
+        this._handleOpenEditFeedModal = this._handleOpenEditFeedModal.bind(
+            this
+        );
+        this._handleOpenEditFolderModal = this._handleOpenEditFolderModal.bind(
+            this
+        );
     }
 
-    componentWillMount(){
-        const { 
+    componentWillMount() {
+        const {
             beginGetEntries,
             getAllFolders,
             getAllFeeds,
             hasFolders
         } = this.props;
 
-        if(!hasFolders){
+        if (!hasFolders) {
             getAllFolders();
             getAllFeeds();
             beginGetEntries();
         }
     }
 
-    _handleOpenAddFeedModal(feed: IFeed){
+    _handleOpenAddFeedModal(feed: IFeed) {
         this.setState({
             editFeed: feed,
             addFeedModalOpen: true
         });
     }
 
-    _handleCloseAddFeedModal(){
+    _handleCloseAddFeedModal() {
         this.setState({
             addFeedModalOpen: false
         });
     }
 
-    _handleOpenEditFolderModal(folder: IFolder){
+    _handleOpenEditFolderModal(folder: IFolder) {
         this.setState({
             editFolder: folder,
             editFolderModalOpen: true
-        })
+        });
     }
 
-    _handleCloseEditFolderModal(){
+    _handleCloseEditFolderModal() {
         this.setState({
             editFolder: {},
             editFolderModalOpen: false
         });
     }
 
-    _handleOpenEditFeedModal(feed: IFeed){
+    _handleOpenEditFeedModal(feed: IFeed) {
         this.setState({
             editFeed: feed,
             editFeedModalOpen: true
         });
     }
 
-    _handleCloseEditFeedModal(){
+    _handleCloseEditFeedModal() {
         this.setState({
             editFeed: {},
             editFeedModalOpen: false
         });
-    }   
+    }
 
-    render(){
+    render() {
         const {
             addFeedModalOpen,
             editFeed,
             editFeedModalOpen,
             editFolder,
-            editFolderModalOpen,
+            editFolderModalOpen
         } = this.state;
 
         const { folders } = this.props;
-        const sortedFolders = folders.sort((a: IFolder, b: IFolder)=>compareAscByProp(a, b, "order")).toArray();
-        sortedFolders.unshift({name: "All", _id:"all", order:-1});
+        const sortedFolders = folders
+            .sort((a: IFolder, b: IFolder) => compareAscByProp(a, b, "order"))
+            .toArray();
+        sortedFolders.unshift({ name: "All", _id: "all", order: -1 });
 
-        let listFolders = sortedFolders.map((folder)=>{
+        let listFolders = sortedFolders.map(folder => {
             return (
-                <div key={folder._id} >
+                <div key={folder._id}>
                     <FolderItem
                         folder={folder}
                         editFolder={this._handleOpenEditFolderModal}
@@ -137,20 +156,20 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
                     />
                 </div>
             );
-        })
-        
-        return(
+        });
+
+        return (
             <div>
                 <div>
-                    <ButtonBar 
+                    <ButtonBar
                         openEditFolderModal={this._handleOpenEditFolderModal}
                         openAddFeedModal={this._handleOpenAddFeedModal}
                     />
-                    <AddFeedModal 
+                    <AddFeedModal
                         isModalOpen={addFeedModalOpen}
                         onCloseModal={this._handleCloseAddFeedModal}
                     />
-                    <EditFolderModal 
+                    <EditFolderModal
                         isModalOpen={editFolderModalOpen}
                         onCloseModal={this._handleCloseEditFolderModal}
                         folder={editFolder}
@@ -161,30 +180,28 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
                         feed={editFeed}
                     />
                 </div>
-                <div>
-                    {listFolders}
-                </div>
+                <div>{listFolders}</div>
             </div>
         );
     }
 }
 
-const mapStateToProps = (state: IRootStoreState): IMapStateProps =>{
+const mapStateToProps = (state: IRootStoreState): IMapStateProps => {
     const { folders, feeds } = state;
 
     return {
         feeds: feeds.feeds,
         hasFolders: folders.hasFolders,
         folders: folders.folders
-    }
-}
+    };
+};
 
-const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchProps=>{
+const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchProps => {
     return {
-        beginGetEntries: ()=>dispatch(beginGetEntries()),
-        getAllFolders: ()=>dispatch(getAllFolders()),
-        getAllFeeds: ()=>dispatch(getAllFeeds())
-    }
-}
+        beginGetEntries: () => dispatch(beginGetEntries()),
+        getAllFolders: () => dispatch(getAllFolders()),
+        getAllFeeds: () => dispatch(getAllFeeds())
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeftMenu);

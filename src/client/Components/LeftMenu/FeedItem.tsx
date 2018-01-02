@@ -7,13 +7,20 @@ import { Icon } from "semantic-ui-react";
 import { beginDeleteFeed } from "../../redux/actions/feeds.actions";
 import { changeFilter } from "../../redux/actions/filter.actions";
 
-import { IDispatch, TFeedID, IFeed, IFeedsUnreadMap, IFilter, IRootStoreState } from "../../interfaces";
+import {
+    IDispatch,
+    TFeedID,
+    IFeed,
+    IFeedsUnreadMap,
+    IFilter,
+    IRootStoreState
+} from "../../interfaces";
 
 interface IFeedItemProps {
-    editFeed: (feed: IFeed)=>void;
+    editFeed: (feed: IFeed) => void;
     feed: IFeed;
-    beginDeleteFeed: (feedId: TFeedID)=>void;
-    changeFilter: (newFilter: object)=>void;
+    beginDeleteFeed: (feedId: TFeedID) => void;
+    changeFilter: (newFilter: object) => void;
     filter: IFilter;
     unreadMapFeeds: Map<TFeedID, number>;
 }
@@ -23,7 +30,7 @@ class FeedItem extends React.Component<IFeedItemProps> {
         isOptionsVisible: false
     };
 
-    constructor(props: IFeedItemProps){
+    constructor(props: IFeedItemProps) {
         super(props);
 
         this._handleClickDelete = this._handleClickDelete.bind(this);
@@ -33,31 +40,33 @@ class FeedItem extends React.Component<IFeedItemProps> {
         this._handleShowOptions = this._handleShowOptions.bind(this);
     }
 
-    _handleShowOptions(){
+    _handleShowOptions() {
         this.setState({
             isOptionsVisible: true
         });
     }
 
-    _handleHideOptions(){
+    _handleHideOptions() {
         this.setState({
             isOptionsVisible: false
-        })
+        });
     }
 
-    _handleClickDelete(){
+    _handleClickDelete() {
         const { beginDeleteFeed, feed } = this.props;
-        const conf = confirm(`Are you sure you want to delete "${feed.title}"?`);
-        if(conf){
+        const conf = confirm(
+            `Are you sure you want to delete "${feed.title}"?`
+        );
+        if (conf) {
             beginDeleteFeed(feed._id);
         }
     }
 
-    _handleClickEdit(){
+    _handleClickEdit() {
         this.props.editFeed(this.props.feed);
     }
 
-    _handleClickTitle(){
+    _handleClickTitle() {
         const { changeFilter, feed } = this.props;
 
         changeFilter({
@@ -66,15 +75,15 @@ class FeedItem extends React.Component<IFeedItemProps> {
         });
     }
 
-    _buildOptions(){
+    _buildOptions() {
         return (
             <div className="rss-folders-feeditem-options">
-                <Icon 
+                <Icon
                     name="pencil"
-                    color="green" 
+                    color="green"
                     onClick={this._handleClickEdit}
                 />
-                <Icon  
+                <Icon
                     name="trash"
                     color="red"
                     onClick={this._handleClickDelete}
@@ -84,49 +93,64 @@ class FeedItem extends React.Component<IFeedItemProps> {
     }
 
     render() {
-        const { feed, filter, unreadMapFeeds} = this.props;
+        const { feed, filter, unreadMapFeeds } = this.props;
         const { isOptionsVisible } = this.state;
-        
+
         let className = "rss-folders-feeditem";
-        if(filter.limit === "feed" && filter.id === feed._id){
-            className = "rss-folders-feeditem rss-folders-feeditem-active"
+        if (filter.limit === "feed" && filter.id === feed._id) {
+            className = "rss-folders-feeditem rss-folders-feeditem-active";
         }
-        
-        let title = <div
-                        className="rss-folders-feeditem-title"
-                        onClick={this._handleClickTitle} >{feed.title}</div>;
-        
+
+        let title = (
+            <div
+                className="rss-folders-feeditem-title"
+                onClick={this._handleClickTitle}
+            >
+                {feed.title}
+            </div>
+        );
+
         let unreadEntriesCount = "";
-        if(unreadMapFeeds.has(feed._id) && unreadMapFeeds.get(feed._id) > 0){
+        if (unreadMapFeeds.has(feed._id) && unreadMapFeeds.get(feed._id) > 0) {
             unreadEntriesCount = " [" + unreadMapFeeds.get(feed._id) + "]";
         }
-        let unread = <div className="rss-folders-feeditem-unread">{unreadEntriesCount}</div>;
+        let unread = (
+            <div className="rss-folders-feeditem-unread">
+                {unreadEntriesCount}
+            </div>
+        );
 
         let options: any = "";
-        if(isOptionsVisible){
+        if (isOptionsVisible) {
             options = this._buildOptions();
         }
 
         return (
-            <div className={className}
-                 onMouseEnter={this._handleShowOptions}
-                 onMouseLeave={this._handleHideOptions}>{title}{unread}{options}</div>
+            <div
+                className={className}
+                onMouseEnter={this._handleShowOptions}
+                onMouseLeave={this._handleHideOptions}
+            >
+                {title}
+                {unread}
+                {options}
+            </div>
         );
     }
 }
-const mapStateToProps = (state: IRootStoreState)=>{
+const mapStateToProps = (state: IRootStoreState) => {
     const { feeds, filter } = state;
     return {
         unreadMapFeeds: feeds.unreadMap.feeds,
         filter: filter.filter
-    }
+    };
 };
 
-const mapDispatchToProps = (dispatch: IDispatch)=>{
+const mapDispatchToProps = (dispatch: IDispatch) => {
     return {
-        beginDeleteFeed: (feedId: TFeedID)=>dispatch(beginDeleteFeed(feedId)),
-        changeFilter: (newFilter: IFilter)=>dispatch(changeFilter(newFilter))
-    }
-}
+        beginDeleteFeed: (feedId: TFeedID) => dispatch(beginDeleteFeed(feedId)),
+        changeFilter: (newFilter: IFilter) => dispatch(changeFilter(newFilter))
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(FeedItem);

@@ -5,35 +5,32 @@ import EntriesList from "./Entries/EntriesList";
 import LeftMenu from "./LeftMenu/LeftMenu";
 import Messages from "./Messages";
 
-import { IFilter} from "../interfaces";
+import { IFilter } from "../interfaces";
 
-interface IRSSEnalProps {
-
-}
+interface IRSSEnalProps {}
 interface IRSSEnalState {
     entriesFilter: IFilter;
 }
 class RSSEnal extends React.Component {
-
     state: IRSSEnalState = {
-        entriesFilter: {limit: ""},
+        entriesFilter: { limit: "" }
     };
 
-    constructor(props: IRSSEnalProps){
+    constructor(props: IRSSEnalProps) {
         super(props);
-        this._handleChangeEntriesFilter = this._handleChangeEntriesFilter.bind(this);
+        this._handleChangeEntriesFilter = this._handleChangeEntriesFilter.bind(
+            this
+        );
     }
 
-    _handleChangeEntriesFilter(newFilter: IFilter){
+    _handleChangeEntriesFilter(newFilter: IFilter) {
         this.setState({
             entriesFilter: newFilter
         });
     }
 
-    render(){
-        const { 
-            entriesFilter
-        } = this.state;
+    render() {
+        const { entriesFilter } = this.state;
 
         return (
             <div>
@@ -45,9 +42,8 @@ class RSSEnal extends React.Component {
                 </div>
                 <Messages />
             </div>
-        )
+        );
     }
-    
 }
 
 export default RSSEnal;
