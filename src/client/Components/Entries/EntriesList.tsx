@@ -8,9 +8,21 @@ import EntryItem from "./EntryItem";
 import SettingsModal from "../Modals/SettingsModal";
 import SortMenu from "./SortMenu";
 
-import { beginGetEntries, updateReadState } from "../../redux/actions/entries.actions";
+import {
+    beginGetEntries,
+    updateReadState
+} from "../../redux/actions/entries.actions";
 
-import { IDispatch, IEntry, IFilter, IRootStoreState, TEntries, TEntryID, TFolders, TFeeds} from "../../interfaces";
+import {
+    IDispatch,
+    IEntry,
+    IFilter,
+    IRootStoreState,
+    TEntries,
+    TEntryID,
+    TFolders,
+    TFeeds
+} from "../../interfaces";
 
 interface IMapStateProps {
     entries: TEntries;
@@ -21,11 +33,11 @@ interface IMapStateProps {
 }
 
 interface IMapDispatchProps {
-    markEntryRead: (entry: IEntry)=>void;
-    getEntries: ()=>void;
+    markEntryRead: (entry: IEntry) => void;
+    getEntries: () => void;
 }
 
-interface IEntriesListProps extends IMapStateProps, IMapDispatchProps{};
+interface IEntriesListProps extends IMapStateProps, IMapDispatchProps {}
 
 class EntriesList extends React.Component<IEntriesListProps> {
     state = {
@@ -35,7 +47,7 @@ class EntriesList extends React.Component<IEntriesListProps> {
         processedEntries: OrderedMap<TEntryID, IEntry>()
     };
 
-    constructor(props: IEntriesListProps){
+    constructor(props: IEntriesListProps) {
         super(props);
 
         // Setup the global/document level keypress events
@@ -46,12 +58,12 @@ class EntriesList extends React.Component<IEntriesListProps> {
         this._toggleEntry = this._toggleEntry.bind(this);
     }
 
-    componentWillReceiveProps(nextProps: IEntriesListProps){
+    componentWillReceiveProps(nextProps: IEntriesListProps) {
         this._filterAndSortEntries(nextProps, this.state.sortBy);
 
-        if(nextProps.filter.id !== this.props.filter.id){
+        if (nextProps.filter.id !== this.props.filter.id) {
             // Reset scroll to top
-            document.querySelector(".rss-entrylist-container").scrollTo(0,0);
+            document.querySelector(".rss-entrylist-container").scrollTo(0, 0);
 
             this.setState({
                 activeEntryId: ""
@@ -59,36 +71,42 @@ class EntriesList extends React.Component<IEntriesListProps> {
         }
     }
 
-    _filterAndSortEntries(props: IEntriesListProps, sortBy: string){
+    _filterAndSortEntries(props: IEntriesListProps, sortBy: string) {
         const { entries, folders, feeds, filter } = props;
 
         let filteredEntries = entries;
 
         let title = "All";
 
-        switch(filter.limit){
+        switch (filter.limit) {
             case "feed":
-                filteredEntries = filteredEntries.filter((entry)=>{
-                    return entry.feed_id === filter.id
-                }).toOrderedMap();
+                filteredEntries = filteredEntries
+                    .filter(entry => {
+                        return entry.feed_id === filter.id;
+                    })
+                    .toOrderedMap();
 
                 const activeFeed = feeds.get(filter.id);
 
                 title = activeFeed.title;
                 break;
             case "folder":
-                if(filter.id !== "all"){
-                    const feedIds = feeds.filter((feed)=>{
-                        return feed.folder_id === filter.id;
-                    }).map((feed)=>{
-                        return feed._id;
-                    });
+                if (filter.id !== "all") {
+                    const feedIds = feeds
+                        .filter(feed => {
+                            return feed.folder_id === filter.id;
+                        })
+                        .map(feed => {
+                            return feed._id;
+                        });
 
-                    filteredEntries = entries.filter((entry)=>{
-                        return feedIds.includes(entry.feed_id);
-                    }).toOrderedMap();
+                    filteredEntries = entries
+                        .filter(entry => {
+                            return feedIds.includes(entry.feed_id);
+                        })
+                        .toOrderedMap();
 
-                    const activeFolder = folders.get(filter.id);                
+                    const activeFolder = folders.get(filter.id);
 
                     title = activeFolder.name;
                 }
@@ -96,30 +114,42 @@ class EntriesList extends React.Component<IEntriesListProps> {
         }
 
         const processedEntries = this._sortEntries(filteredEntries, sortBy);
-        
+
         this.setState({
             currentTitle: title,
             processedEntries
         });
     }
 
-    _sortEntries(entries: TEntries, sortBy: string){
+    _sortEntries(entries: TEntries, sortBy: string) {
         const sortParams = sortBy.split(":");
-        return entries.sort((a,b)=>this._compareEntries(a, b, sortParams[0], sortParams[1]));
+        return entries.sort((a, b) =>
+            this._compareEntries(a, b, sortParams[0], sortParams[1])
+        );
     }
 
-    _compareEntries(a: any, b: any, field: string, order: string){
-        if(order === "asc"){
-            if(a[field] < b[field]){ return -1; }
-            if(a[field] > b[field]){ return 1; }
-        } else if(order === "desc"){
-            if(a[field] > b[field]){ return -1; }
-            if(a[field] < b[field]){ return 1; }
+    _compareEntries(a: any, b: any, field: string, order: string) {
+        if (order === "asc") {
+            if (a[field] < b[field]) {
+                return -1;
+            }
+            if (a[field] > b[field]) {
+                return 1;
+            }
+        } else if (order === "desc") {
+            if (a[field] > b[field]) {
+                return -1;
+            }
+            if (a[field] < b[field]) {
+                return 1;
+            }
         }
-        if(a[field] === b[field]){ return 0;}
+        if (a[field] === b[field]) {
+            return 0;
+        }
     }
 
-    _handleChangeSort(e: any){
+    _handleChangeSort(e: any) {
         this.setState({
             sortBy: e.currentTarget.value
         });
@@ -127,12 +157,12 @@ class EntriesList extends React.Component<IEntriesListProps> {
         this._filterAndSortEntries(this.props, e.currentTarget.value);
     }
 
-    _handleClickRefresh(){
+    _handleClickRefresh() {
         this.props.getEntries();
     }
 
-    _handleKeyDown(e: any){
-        switch(e.key){
+    _handleKeyDown(e: any) {
+        switch (e.key) {
             case "ArrowDown":
             case "j":
                 e.preventDefault();
@@ -146,40 +176,39 @@ class EntriesList extends React.Component<IEntriesListProps> {
         }
     }
 
-    _activateSiblingEntry(direction: string){
+    _activateSiblingEntry(direction: string) {
         const { activeEntryId, processedEntries } = this.state;
 
         let sibling: IEntry = null;
 
-        if(activeEntryId === ""){
+        if (activeEntryId === "") {
             sibling = processedEntries.first();
         } else {
             let previousEntry: IEntry = null;
             let nextEntry: IEntry = null;
             let found = false;
-            processedEntries.map((entry)=>{
-                if(found && !nextEntry){
+            processedEntries.map(entry => {
+                if (found && !nextEntry) {
                     nextEntry = entry;
                 }
 
-                if(entry._id === activeEntryId){
+                if (entry._id === activeEntryId) {
                     found = true;
                 }
 
-                if(!found){
+                if (!found) {
                     previousEntry = entry;
                 }
-                
             });
 
-            if(direction === "next"){
-                if(nextEntry !== null){
+            if (direction === "next") {
+                if (nextEntry !== null) {
                     sibling = nextEntry;
                 } else {
                     sibling = processedEntries.last();
                 }
-            } else if(direction === "previous"){
-                if(previousEntry !== null){
+            } else if (direction === "previous") {
+                if (previousEntry !== null) {
                     sibling = previousEntry;
                 } else {
                     sibling = processedEntries.first();
@@ -190,86 +219,97 @@ class EntriesList extends React.Component<IEntriesListProps> {
         this._markRead(sibling._id);
 
         this._scrollToEntry(sibling._id);
-        
+
         this.setState({
             activeEntryId: sibling._id
         });
     }
 
-    _toggleEntry(entryId: TEntryID){
+    _toggleEntry(entryId: TEntryID) {
         let nextActiveEntryId = entryId;
-        if(this.state.activeEntryId === entryId){
+        if (this.state.activeEntryId === entryId) {
             nextActiveEntryId = "";
         }
 
-        if(nextActiveEntryId !== ""){
+        if (nextActiveEntryId !== "") {
             this._markRead(nextActiveEntryId);
         }
-        
+
         this.setState({
             activeEntryId: nextActiveEntryId
         });
     }
 
-    _scrollToEntry(entryId: TEntryID){
+    _scrollToEntry(entryId: TEntryID) {
         const entryEl = document.getElementById("rss-entry-item-" + entryId);
-        
-        document.querySelector(".rss-entrylist-container").scrollTo(0, entryEl.offsetTop);
+
+        document
+            .querySelector(".rss-entrylist-container")
+            .scrollTo(0, entryEl.offsetTop);
     }
 
-    _markRead(entryId: TEntryID){
+    _markRead(entryId: TEntryID) {
         const { entries, markEntryRead } = this.props;
         const entryToMark = entries.get(entryId);
 
-        if(!entryToMark.has_read){
+        if (!entryToMark.has_read) {
             markEntryRead(entryToMark);
         }
     }
 
     render() {
         const { isGettingEntries } = this.props;
-        const { activeEntryId, currentTitle, processedEntries, sortBy } = this.state;
+        const {
+            activeEntryId,
+            currentTitle,
+            processedEntries,
+            sortBy
+        } = this.state;
 
         let entryList = null;
 
-        if(isGettingEntries){
-            entryList = <Loader active/>;
+        if (isGettingEntries) {
+            entryList = <Loader active />;
         } else {
-            entryList = processedEntries.toArray().map((entry)=>{
-                const isActive = (entry._id === activeEntryId);
+            entryList = processedEntries.toArray().map(entry => {
+                const isActive = entry._id === activeEntryId;
                 return (
-                    <EntryItem 
+                    <EntryItem
                         key={entry._id}
                         entry={entry}
                         toggleEntry={this._toggleEntry}
-                        isActive={isActive}/>
-                )
+                        isActive={isActive}
+                    />
+                );
             });
         }
-        
+
         return (
             <div>
                 <div className="rss-entrylist-menu">
-                    <div className="rss-entrylist-menu-title-container">{currentTitle}</div>
+                    <div className="rss-entrylist-menu-title-container">
+                        {currentTitle}
+                    </div>
                     <div className="rss-entrylist-menu-sortselect-container">
                         <Button
                             icon="refresh"
                             onClick={this._handleClickRefresh}
                             size="tiny"
                         />
-                        <SortMenu onChange={this._handleChangeSort} currentSortBy={sortBy}/>
+                        <SortMenu
+                            onChange={this._handleChangeSort}
+                            currentSortBy={sortBy}
+                        />
                         <SettingsModal />
                     </div>
                 </div>
-                <div className="rss-entrylist-container">
-                    {entryList}
-                </div>
+                <div className="rss-entrylist-container">{entryList}</div>
             </div>
         );
     }
 }
 
-const mapStateToProps = (state: IRootStoreState): IMapStateProps =>{
+const mapStateToProps = (state: IRootStoreState): IMapStateProps => {
     const { entries, folders, feeds, filter, settings } = state;
 
     return {
@@ -278,13 +318,13 @@ const mapStateToProps = (state: IRootStoreState): IMapStateProps =>{
         feeds: feeds.feeds,
         filter: filter.filter,
         isGettingEntries: entries.isGettingEntries
-    }
-}
+    };
+};
 
-const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchProps =>{
+const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchProps => {
     return {
-        markEntryRead: (entry)=>dispatch(updateReadState(entry, true)),
-        getEntries: ()=>dispatch(beginGetEntries())
-    }
-}
+        markEntryRead: entry => dispatch(updateReadState(entry, true)),
+        getEntries: () => dispatch(beginGetEntries())
+    };
+};
 export default connect(mapStateToProps, mapDispatchToProps)(EntriesList);
