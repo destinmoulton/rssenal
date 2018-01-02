@@ -2,7 +2,9 @@ import { List, Map, OrderedMap } from "immutable";
 
 /** Redux Interfaces */
 export interface IDispatch {
-    <R>(asyncAction: (dispatch: IDispatch, getState: () => IRootStoreState) => R): R;
+    <R>(
+        asyncAction: (dispatch: IDispatch, getState: () => IRootStoreState) => R
+    ): R;
     <R>(asyncAction: (dispatch: IDispatch) => R): R;
     // (neverAction: (dispatch: Dispatch, getState: () => GetState) => never): never;
     (action: object): void;
@@ -10,7 +12,7 @@ export interface IDispatch {
 }
 
 export interface IGetState {
-    ():IRootStoreState;
+    (): IRootStoreState;
 }
 
 export type TEntryID = string;
@@ -36,7 +38,6 @@ export interface IEntriesAction {
 }
 
 export type TEntries = OrderedMap<TEntryID, IEntry>;
-
 
 /** Feeds Interfaces & Types */
 
@@ -67,7 +68,6 @@ export interface IFeedsUnreadMap {
     folders: Map<TFolderID, number>;
 }
 
-
 /** Filter Interfaces */
 
 export interface IFilter {
@@ -78,7 +78,6 @@ export interface IFilterAction {
     type: string;
     newFilter: object;
 }
-
 
 /** Folders Interfaces & Types */
 
@@ -104,7 +103,7 @@ export interface IMessage {
     message: string;
     type: string;
     uid?: number;
-    onRemove?: (message:IMessage)=>void;
+    onRemove?: (message: IMessage) => void;
     position?: "br" | "tr" | "tl" | "tc" | "bl" | "bc";
 }
 
@@ -117,7 +116,7 @@ export interface IMessageAction {
 
 /** Redux Reducer Interfaces */
 
-export interface IReducerStateEntries{
+export interface IReducerStateEntries {
     entries: TEntries;
     isGettingEntries: boolean;
 }
@@ -133,8 +132,8 @@ export interface IReducerStateSettings {
     settings: ISetting[];
 }
 
-export interface IReducerStateFilter{
-    filter: IFilter;    
+export interface IReducerStateFilter {
+    filter: IFilter;
 }
 
 export interface IReducerStateFolders {
@@ -154,7 +153,7 @@ export interface IRootStoreState {
     entries: IReducerStateEntries;
     feeds: IReducerStateFeeds;
     filter: IReducerStateFilter;
-    folders: IReducerStateFolders;    
+    folders: IReducerStateFolders;
     messages: IReducerStateMessages;
     settings: IReducerStateSettings;
 }
@@ -168,7 +167,7 @@ export interface ISetting {
     value: any;
 }
 
-export interface ISettingsAction{
+export interface ISettingsAction {
     type: string;
     setting_key: string;
     setting_value: any;

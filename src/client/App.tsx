@@ -8,7 +8,7 @@ import store from "./redux/store";
 import RSSEnal from "./Components/RSSEnal";
 
 class App {
-    run(){
+    run() {
         const container = document.getElementById("react-app");
 
         const routing = (
