@@ -17,7 +17,9 @@ export interface IGetState {
 
 export interface IAuthAction {
     type: string;
-    isAuthorized?: boolean;
+    username?: string;
+    password?: string;
+    message?: string;
 }
 
 export type TEntryID = string;
@@ -122,6 +124,7 @@ export interface IMessageAction {
 /** Redux Reducer Interfaces */
 
 export interface IReducerStateAuth {
+    authenticationError: string;
     isAuthorized: boolean;
     jwtSecret: string;
 }
