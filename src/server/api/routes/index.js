@@ -1,6 +1,7 @@
 import express from "express";
 const router = express.Router();
 
+router.use("/auth", require("./auth.route"));
 router.use("/entries", require("./entries.route"));
 router.use("/feeds", require("./feeds.route"));
 router.use("/folders", require("./folders.route"));
