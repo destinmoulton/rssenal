@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import store from "./redux/store";
 
-import RSSEnal from "./Components/RSSEnal";
+import Window from "./Components/Window";
 
 class App {
     run() {
@@ -14,7 +14,7 @@ class App {
         const routing = (
             <Provider store={store}>
                 <BrowserRouter>
-                    <RSSEnal />
+                    <Window />
                 </BrowserRouter>
             </Provider>
         );
