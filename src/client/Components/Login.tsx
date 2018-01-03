@@ -1,4 +1,5 @@
 import * as React from "react";
+import { connect } from "react-redux";
 import {
     Button,
     Form,
@@ -8,13 +9,42 @@ import {
     Message,
     Segment
 } from "semantic-ui-react";
-import { IDispatch } from "../interfaces";
 
+import { authenticateUser } from "../redux/actions/auth.actions";
+
+import { IDispatch, IRootStoreState } from "../interfaces";
+
+interface IMapStateToProps {}
 interface IMapDispatchToProps {
-    authorizeUser: () => {};
+    authenticateUser: (username: string, password: string) => void;
 }
-interface ILogin extends IMapDispatchToProps {}
-class Login extends React.Component<ILogin> {
+
+interface ILoginProps extends IMapStateToProps, IMapDispatchToProps {}
+
+class Login extends React.Component<ILoginProps> {
+    state = {
+        username: "",
+        password: ""
+    };
+
+    constructor(props: ILoginProps) {
+        super(props);
+
+        this._authenticateUser = this._authenticateUser.bind(this);
+        this._changeInput = this._changeInput.bind(this);
+    }
+
+    _changeInput(e: any) {
+        this.setState({ [e.target.name]: e.target.value.trim() });
+    }
+
+    _authenticateUser() {
+        const { username, password } = this.state;
+
+        if (username && password) {
+            this.props.authenticateUser(username, password);
+        }
+    }
     render() {
         return (
             <div className="login-form">
@@ -41,6 +71,8 @@ class Login extends React.Component<ILogin> {
                                     icon="user"
                                     iconPosition="left"
                                     placeholder="Username"
+                                    name="username"
+                                    onChange={this._changeInput}
                                 />
                                 <Form.Input
                                     fluid
@@ -48,8 +80,15 @@ class Login extends React.Component<ILogin> {
                                     iconPosition="left"
                                     placeholder="Password"
                                     type="password"
+                                    name="password"
+                                    onChange={this._changeInput}
                                 />
-                                <Button color="teal" fluid size="large">
+                                <Button
+                                    color="teal"
+                                    fluid
+                                    size="large"
+                                    onClick={this._authenticateUser}
+                                >
                                     Login
                                 </Button>
                             </Segment>
@@ -60,6 +99,15 @@ class Login extends React.Component<ILogin> {
         );
     }
 }
+const mapStateToProps = (state: IRootStoreState): IMapStateToProps => {
+    return {};
+};
 
-const mapDispatchToProps = (dispatch: IDispatch) => {};
-export default Login;
+const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
+    return {
+        authenticateUser: (username: string, password: string) => {
+            return dispatch(authenticateUser(username, password));
+        }
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
