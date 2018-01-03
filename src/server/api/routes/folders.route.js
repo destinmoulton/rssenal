@@ -1,14 +1,15 @@
 import express from "express";
 const router = express.Router();
 
+import requireJWT from "../../lib/requireJWT";
 import folders from "../controllers/Folders.controller";
 
-router.get("/", folders.get_all);
-router.post("/", folders.add);
-router.put("/", folders.update_multiple);
+router.get("/", requireJWT, folders.get_all);
+router.post("/", requireJWT, folders.add);
+router.put("/", requireJWT, folders.update_multiple);
 
-router.get("/:folderId", folders.get_single);
-router.delete("/:folderId", folders.delete_single);
-router.put("/:folderId", folders.update_single);
+router.get("/:folderId", requireJWT, folders.get_single);
+router.delete("/:folderId", requireJWT, folders.delete_single);
+router.put("/:folderId", requireJWT, folders.update_single);
 
 module.exports = router;

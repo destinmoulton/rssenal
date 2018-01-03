@@ -1,15 +1,14 @@
 import express from "express";
 const router = express.Router();
 
+import requireJWT from "../../lib/requireJWT";
+
 import feeds from "../controllers/Feeds.controller";
 
-router.get("/", (req, res) => {
-    if (!req.user) res.status(401).send("Invalid token.");
-    feeds.get_all(req, res);
-});
-router.post("/", feeds.add);
+router.get("/", requireJWT, feeds.get_all);
+router.post("/", requireJWT, feeds.add);
 
-router.get("/:feedId", feeds.get_single);
-router.delete("/:feedId", feeds.delete_single);
-router.put("/:feedId", feeds.update_single);
+router.get("/:feedId", requireJWT, feeds.get_single);
+router.delete("/:feedId", requireJWT, feeds.delete_single);
+router.put("/:feedId", requireJWT, feeds.update_single);
 module.exports = router;
