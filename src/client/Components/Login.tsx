@@ -14,7 +14,9 @@ import { authenticateUser } from "../redux/actions/auth.actions";
 
 import { IDispatch, IRootStoreState } from "../interfaces";
 
-interface IMapStateToProps {}
+interface IMapStateToProps {
+    authenticationError: string;
+}
 interface IMapDispatchToProps {
     authenticateUser: (username: string, password: string) => void;
 }
@@ -46,6 +48,16 @@ class Login extends React.Component<ILoginProps> {
         }
     }
     render() {
+        const { authenticationError } = this.props;
+
+        let message = null;
+        if (authenticationError !== "") {
+            message = (
+                <Message negative>
+                    <p>{authenticationError}</p>
+                </Message>
+            );
+        }
         return (
             <div className="login-form">
                 <style>{`
@@ -83,6 +95,7 @@ class Login extends React.Component<ILoginProps> {
                                     name="password"
                                     onChange={this._changeInput}
                                 />
+                                {message}
                                 <Button
                                     color="teal"
                                     fluid
@@ -100,7 +113,9 @@ class Login extends React.Component<ILoginProps> {
     }
 }
 const mapStateToProps = (state: IRootStoreState): IMapStateToProps => {
-    return {};
+    return {
+        authenticationError: state.auth.authenticationError
+    };
 };
 
 const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
