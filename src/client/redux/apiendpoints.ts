@@ -1,6 +1,6 @@
 export const API_BASE = "/api";
 
-export const API_AUTH = "/auth/";
+export const API_AUTH = API_BASE + "/auth/";
 
 export const API_ENTRIES_BASE = API_BASE + "/entries/";
 
