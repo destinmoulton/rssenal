@@ -21,8 +21,15 @@ mongoose.connect(CONFIG.mongo.uri, {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Setup the jwt middleware
-app.use(jwt({ secret: CONFIG.jwt.secret }));
+// Setup the jwt middleware...
+//    NOTE: Credentials are NOT required and must be
+//    checked on a per use basis for the routes.
+app.use(
+    jwt({
+        secret: CONFIG.jwt.secret,
+        credentialsRequired: false
+    })
+);
 
 app.use(express.static(PUBLIC_PATH));
 
