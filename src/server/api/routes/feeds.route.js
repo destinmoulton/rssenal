@@ -3,7 +3,10 @@ const router = express.Router();
 
 import feeds from "../controllers/Feeds.controller";
 
-router.get("/", feeds.get_all);
+router.get("/", (req, res) => {
+    if (!req.user) res.status(401).send("Invalid token.");
+    feeds.get_all(req, res);
+});
 router.post("/", feeds.add);
 
 router.get("/:feedId", feeds.get_single);
