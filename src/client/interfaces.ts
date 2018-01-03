@@ -15,6 +15,11 @@ export interface IGetState {
     (): IRootStoreState;
 }
 
+export interface IAuthAction {
+    type: string;
+    isAuthorized?: boolean;
+}
+
 export type TEntryID = string;
 
 export interface IEntry {
@@ -116,6 +121,11 @@ export interface IMessageAction {
 
 /** Redux Reducer Interfaces */
 
+export interface IReducerStateAuth {
+    isAuthorized: boolean;
+    jwtSecret: string;
+}
+
 export interface IReducerStateEntries {
     entries: TEntries;
     isGettingEntries: boolean;
@@ -150,6 +160,7 @@ export interface IReducerStateMessages {
 }
 
 export interface IRootStoreState {
+    auth: IReducerStateAuth;
     entries: IReducerStateEntries;
     feeds: IReducerStateFeeds;
     filter: IReducerStateFilter;
