@@ -7,16 +7,16 @@ import Messages from "./Messages";
 
 import { IFilter } from "../interfaces";
 
-interface IRSSEnalProps {}
-interface IRSSEnalState {
+interface IBrowserProps {}
+interface IBrowserState {
     entriesFilter: IFilter;
 }
-class RSSEnal extends React.Component {
-    state: IRSSEnalState = {
+class Browser extends React.Component {
+    state: IBrowserState = {
         entriesFilter: { limit: "" }
     };
 
-    constructor(props: IRSSEnalProps) {
+    constructor(props: IBrowserProps) {
         super(props);
         this._handleChangeEntriesFilter = this._handleChangeEntriesFilter.bind(
             this
@@ -46,4 +46,4 @@ class RSSEnal extends React.Component {
     }
 }
 
-export default RSSEnal;
+export default Browser;
