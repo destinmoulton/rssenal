@@ -25,7 +25,7 @@ export function authenticateUser(username: string, password: string) {
             .then(auth => {
                 if (auth.status === "success") {
                     localStorage.setItem("jwt_token", auth.token);
-                    dispatch(userAuthenticated(username, password));
+                    dispatch(userIsAuthentic());
                 } else {
                     dispatch(
                         authenticationError(
@@ -38,11 +38,9 @@ export function authenticateUser(username: string, password: string) {
     };
 }
 
-function userAuthenticated(username: string, password: string) {
+export function userIsAuthentic() {
     return {
-        type: AUTH_USER_IS_AUTHENTIC,
-        username,
-        password
+        type: AUTH_USER_IS_AUTHENTIC
     };
 }
 
@@ -54,6 +52,7 @@ function authenticationError(message: string) {
 }
 
 export function logoutUser() {
+    localStorage.removeItem("jwt_token");
     return {
         type: AUTH_LOGOUT
     };
