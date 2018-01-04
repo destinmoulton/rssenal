@@ -6,13 +6,29 @@ import Login from "./Login";
 
 import { IDispatch, IRootStoreState } from "../interfaces";
 
+import { validateToken } from "../redux/actions/auth.actions";
+
 interface IWindowMapStateToProps {
     isAuthorized: boolean;
 }
 
-interface IWindow extends IWindowMapStateToProps {}
+interface IWindowMapDispatchToProps {
+    validateToken: () => void;
+}
+
+interface IWindow extends IWindowMapStateToProps, IWindowMapDispatchToProps {}
 
 class Window extends React.Component<IWindow> {
+    constructor(props: IWindow) {
+        super(props);
+    }
+
+    componentWillMount() {
+        if (localStorage.getItem("jwt_token")) {
+            this.props.validateToken();
+        }
+    }
+
     render() {
         const { isAuthorized } = this.props;
 
@@ -28,8 +44,10 @@ const mapStateToProps = (state: IRootStoreState): IWindowMapStateToProps => {
     };
 };
 
-const mapDispatchToProps = (dispatch: IDispatch) => {
-    return {};
+const mapDispatchToProps = (dispatch: IDispatch): IWindowMapDispatchToProps => {
+    return {
+        validateToken: () => dispatch(validateToken())
+    };
 };
 
-export default connect(mapStateToProps)(Window);
+export default connect(mapStateToProps, mapDispatchToProps)(Window);
