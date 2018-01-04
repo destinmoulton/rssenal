@@ -1,5 +1,5 @@
-import { API_AUTH } from "../apiendpoints";
-import { JSON_HEADERS } from "../../lib/headers";
+import { API_AUTH_LOGIN, API_AUTH_VALIDATE_TOKEN } from "../apiendpoints";
+import { JSON_HEADERS, generateJWTHeaders } from "../../lib/headers";
 
 import {
     AUTH_ERROR,
@@ -9,9 +9,33 @@ import {
 
 import { IDispatch } from "../../interfaces";
 
+export function validateToken() {
+    return (dispatch: IDispatch) => {
+        const url = API_AUTH_VALIDATE_TOKEN;
+        const init = {
+            method: "GET",
+            headers: generateJWTHeaders()
+        };
+        fetch(url, init)
+            .then(res => {
+                return res.json();
+            })
+            .then(auth => {
+                if (auth.status === "valid") {
+                    dispatch(userIsAuthentic());
+                } else {
+                    dispatch(logoutUser());
+                }
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    };
+}
+
 export function loginUser(username: string, password: string) {
     return (dispatch: IDispatch) => {
-        const url = API_AUTH;
+        const url = API_AUTH_LOGIN;
         const init = {
             method: "POST",
             body: JSON.stringify({ username, password }),
