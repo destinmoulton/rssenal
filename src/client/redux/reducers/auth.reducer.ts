@@ -7,8 +7,7 @@ import { IAuthAction, IReducerStateAuth } from "../../interfaces";
 
 const INITIAL_STATE: IReducerStateAuth = {
     authenticationError: "",
-    isAuthorized: false,
-    jwtSecret: ""
+    isAuthorized: false
 };
 
 const authReducer = (state = INITIAL_STATE, action: IAuthAction) => {
@@ -21,15 +20,13 @@ const authReducer = (state = INITIAL_STATE, action: IAuthAction) => {
         case AUTH_LOGOUT:
             return {
                 ...state,
-                isAuthorized: false,
-                jwtSecret: ""
+                isAuthorized: false
             };
         case AUTH_USER_IS_AUTHENTIC:
             return {
                 ...state,
                 authenticationError: "",
-                isAuthorized: true,
-                jwtSecret: action.username + action.password
+                isAuthorized: true
             };
         default:
             return { ...state };
