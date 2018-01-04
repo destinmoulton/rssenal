@@ -57,7 +57,7 @@ class FolderItem extends React.Component<IFolderItemProps> {
         this._hideOptions = this._hideOptions.bind(this);
         this._handleClickDelete = this._handleClickDelete.bind(this);
         this._handleClickEdit = this._handleClickEdit.bind(this);
-        this._handleClickFolderTitle = this._handleClickFolderTitle.bind(this);
+        this._handleClickFolder = this._handleClickFolder.bind(this);
         this._handleToggleFeedsVisible = this._handleToggleFeedsVisible.bind(
             this
         );
@@ -93,7 +93,7 @@ class FolderItem extends React.Component<IFolderItemProps> {
         }
     }
 
-    _handleClickFolderTitle() {
+    _handleClickFolder() {
         const { changeFilter, folder } = this.props;
 
         changeFilter({
@@ -131,7 +131,7 @@ class FolderItem extends React.Component<IFolderItemProps> {
         return (
             <div
                 className="rss-folders-folderitem-title"
-                onClick={this._handleClickFolderTitle}
+                onClick={this._handleClickFolder}
             >
                 {folder.name}
             </div>
@@ -148,7 +148,14 @@ class FolderItem extends React.Component<IFolderItemProps> {
             unread = " [" + unreadMapGroups.get(folder._id) + "]";
         }
 
-        return <div className="rss-folders-folderitem-unread">{unread}</div>;
+        return (
+            <div
+                className="rss-folders-folderitem-unread"
+                onClick={this._handleClickFolder}
+            >
+                {unread}
+            </div>
+        );
     }
 
     _domToggleIcon() {
