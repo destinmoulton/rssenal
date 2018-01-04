@@ -4,7 +4,9 @@ import { JSON_HEADERS, generateJWTHeaders } from "../../lib/headers";
 import {
     AUTH_ERROR,
     AUTH_LOGOUT,
-    AUTH_USER_IS_AUTHENTIC
+    AUTH_USER_IS_AUTHENTIC,
+    AUTH_TOKEN_IS_VALIDATING,
+    AUTH_TOKEN_VALIDATION_COMPLETE
 } from "../actiontypes";
 
 import { IDispatch } from "../../interfaces";
@@ -30,6 +32,18 @@ export function validateToken() {
             .catch(err => {
                 console.error(err);
             });
+    };
+}
+
+function tokenValidationInProgress() {
+    return {
+        type: AUTH_TOKEN_IS_VALIDATING
+    };
+}
+
+function tokenValidationComplete() {
+    return {
+        type: AUTH_TOKEN_VALIDATION_COMPLETE
     };
 }
 
