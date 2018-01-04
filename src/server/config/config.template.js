@@ -9,6 +9,6 @@ export default (config = {
         uri: "mongodb://localhost/rssenal"
     },
     jwt: {
-        secret: auth.username + auth.password
+        secret: "SOMETHINGSUPERSECRET!"
     }
 });
