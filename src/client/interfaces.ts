@@ -126,7 +126,6 @@ export interface IMessageAction {
 export interface IReducerStateAuth {
     authenticationError: string;
     isAuthorized: boolean;
-    jwtSecret: string;
 }
 
 export interface IReducerStateEntries {
