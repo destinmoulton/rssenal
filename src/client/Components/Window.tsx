@@ -1,5 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import { Loader } from "semantic-ui-react";
 
 import Browser from "./Browser";
 import Login from "./Login";
@@ -10,6 +11,7 @@ import { validateToken } from "../redux/actions/auth.actions";
 
 interface IWindowMapStateToProps {
     isAuthorized: boolean;
+    isValidatingToken: boolean;
 }
 
 interface IWindowMapDispatchToProps {
@@ -30,9 +32,16 @@ class Window extends React.Component<IWindow> {
     }
 
     render() {
-        const { isAuthorized } = this.props;
+        const { isAuthorized, isValidatingToken } = this.props;
 
-        let display = isAuthorized ? <Browser /> : <Login />;
+        let display = null;
+        if (isAuthorized) {
+            display = <Browser />;
+        } else if (isValidatingToken) {
+            display = <Loader />;
+        } else {
+            display = <Login />;
+        }
 
         return display;
     }
@@ -40,7 +49,8 @@ class Window extends React.Component<IWindow> {
 
 const mapStateToProps = (state: IRootStoreState): IWindowMapStateToProps => {
     return {
-        isAuthorized: state.auth.isAuthorized
+        isAuthorized: state.auth.isAuthorized,
+        isValidatingToken: state.auth.isValidatingToken
     };
 };
 
