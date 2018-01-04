@@ -10,7 +10,7 @@ import {
     Segment
 } from "semantic-ui-react";
 
-import { authenticateUser } from "../redux/actions/auth.actions";
+import { loginUser } from "../redux/actions/auth.actions";
 
 import { IDispatch, IRootStoreState } from "../interfaces";
 
@@ -18,7 +18,7 @@ interface IMapStateToProps {
     authenticationError: string;
 }
 interface IMapDispatchToProps {
-    authenticateUser: (username: string, password: string) => void;
+    loginUser: (username: string, password: string) => void;
 }
 
 interface ILoginProps extends IMapStateToProps, IMapDispatchToProps {}
@@ -44,7 +44,7 @@ class Login extends React.Component<ILoginProps> {
         const { username, password } = this.state;
 
         if (username && password) {
-            this.props.authenticateUser(username, password);
+            this.props.loginUser(username, password);
         }
     }
     render() {
@@ -120,8 +120,8 @@ const mapStateToProps = (state: IRootStoreState): IMapStateToProps => {
 
 const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
     return {
-        authenticateUser: (username: string, password: string) => {
-            return dispatch(authenticateUser(username, password));
+        loginUser: (username: string, password: string) => {
+            return dispatch(loginUser(username, password));
         }
     };
 };

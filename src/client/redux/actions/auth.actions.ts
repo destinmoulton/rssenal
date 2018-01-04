@@ -9,7 +9,7 @@ import {
 
 import { IDispatch } from "../../interfaces";
 
-export function authenticateUser(username: string, password: string) {
+export function loginUser(username: string, password: string) {
     return (dispatch: IDispatch) => {
         const url = API_AUTH;
         const init = {
