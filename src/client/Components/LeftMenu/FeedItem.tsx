@@ -35,7 +35,7 @@ class FeedItem extends React.Component<IFeedItemProps> {
 
         this._handleClickDelete = this._handleClickDelete.bind(this);
         this._handleClickEdit = this._handleClickEdit.bind(this);
-        this._handleClickTitle = this._handleClickTitle.bind(this);
+        this._handleClickFeed = this._handleClickFeed.bind(this);
         this._handleHideOptions = this._handleHideOptions.bind(this);
         this._handleShowOptions = this._handleShowOptions.bind(this);
     }
@@ -66,7 +66,7 @@ class FeedItem extends React.Component<IFeedItemProps> {
         this.props.editFeed(this.props.feed);
     }
 
-    _handleClickTitle() {
+    _handleClickFeed() {
         const { changeFilter, feed } = this.props;
 
         changeFilter({
@@ -104,7 +104,7 @@ class FeedItem extends React.Component<IFeedItemProps> {
         let title = (
             <div
                 className="rss-folders-feeditem-title"
-                onClick={this._handleClickTitle}
+                onClick={this._handleClickFeed}
             >
                 {feed.title}
             </div>
@@ -115,7 +115,10 @@ class FeedItem extends React.Component<IFeedItemProps> {
             unreadEntriesCount = " [" + unreadMapFeeds.get(feed._id) + "]";
         }
         let unread = (
-            <div className="rss-folders-feeditem-unread">
+            <div
+                className="rss-folders-feeditem-unread"
+                onClick={this._handleClickFeed}
+            >
                 {unreadEntriesCount}
             </div>
         );
