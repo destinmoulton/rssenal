@@ -3,8 +3,9 @@ import jwt from "jsonwebtoken";
 const router = express.Router();
 
 import CONFIG from "../../config/config";
+import requireJWT from "../../lib/requireJWT";
 
-router.post("/", (req, res) => {
+router.post("/login", (req, res) => {
     const { username, password } = req.body;
 
     if (
@@ -26,6 +27,12 @@ router.post("/", (req, res) => {
     res.json({
         status: "error",
         message: "Username or password invalid."
+    });
+});
+
+router.get("/validatetoken", requireJWT, (req, res) => {
+    res.json({
+        status: "valid"
     });
 });
 
