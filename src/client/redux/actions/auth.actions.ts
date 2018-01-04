@@ -24,6 +24,7 @@ export function authenticateUser(username: string, password: string) {
             })
             .then(auth => {
                 if (auth.status === "success") {
+                    localStorage.setItem("jwt_token", auth.token);
                     dispatch(userAuthenticated(username, password));
                 } else {
                     dispatch(
