@@ -126,6 +126,7 @@ export interface IMessageAction {
 export interface IReducerStateAuth {
     authenticationError: string;
     isAuthorized: boolean;
+    isValidatingToken: boolean;
 }
 
 export interface IReducerStateEntries {
