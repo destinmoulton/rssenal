@@ -3,7 +3,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { Icon } from "semantic-ui-react";
-
+import { getEntriesForFeed } from "../../redux/actions/entries.actions";
 import { beginDeleteFeed } from "../../redux/actions/feeds.actions";
 import { changeFilter } from "../../redux/actions/filter.actions";
 
@@ -16,13 +16,20 @@ import {
     IRootStoreState
 } from "../../interfaces";
 
-interface IFeedItemProps {
-    editFeed: (feed: IFeed) => void;
-    feed: IFeed;
-    beginDeleteFeed: (feedId: TFeedID) => void;
-    changeFilter: (newFilter: object) => void;
+interface IMapStateToProps {
     filter: IFilter;
     unreadMapFeeds: Map<TFeedID, number>;
+}
+
+interface IMapDispatchToProps {
+    beginDeleteFeed: (feedId: TFeedID) => void;
+    changeFilter: (newFilter: object) => void;
+    getEntriesForFeed: (feedId: TFeedID) => void;
+}
+
+interface IFeedItemProps extends IMapStateToProps, IMapDispatchToProps {
+    editFeed: (feed: IFeed) => void;
+    feed: IFeed;
 }
 
 class FeedItem extends React.Component<IFeedItemProps> {
@@ -38,6 +45,12 @@ class FeedItem extends React.Component<IFeedItemProps> {
         this._handleClickFeed = this._handleClickFeed.bind(this);
         this._handleHideOptions = this._handleHideOptions.bind(this);
         this._handleShowOptions = this._handleShowOptions.bind(this);
+    }
+
+    componentDidMount() {
+        const { feed, getEntriesForFeed } = this.props;
+
+        getEntriesForFeed(feed._id);
     }
 
     _handleShowOptions() {
@@ -149,10 +162,12 @@ const mapStateToProps = (state: IRootStoreState) => {
     };
 };
 
-const mapDispatchToProps = (dispatch: IDispatch) => {
+const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
     return {
         beginDeleteFeed: (feedId: TFeedID) => dispatch(beginDeleteFeed(feedId)),
-        changeFilter: (newFilter: IFilter) => dispatch(changeFilter(newFilter))
+        changeFilter: (newFilter: IFilter) => dispatch(changeFilter(newFilter)),
+        getEntriesForFeed: (feedId: TFeedID) =>
+            dispatch(getEntriesForFeed(feedId))
     };
 };
 
