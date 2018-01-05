@@ -39,6 +39,7 @@ export interface IEntry {
 
 export interface IEntriesAction {
     type: string;
+    feedId?: TFeedID;
     entries?: IEntry[];
     newEntry?: IEntry;
     showUnread?: boolean;
@@ -131,7 +132,6 @@ export interface IReducerStateAuth {
 
 export interface IReducerStateEntries {
     entries: TEntries;
-    isGettingEntries: boolean;
 }
 
 export interface IReducerStateFeeds {
