@@ -9,10 +9,7 @@ import LogoutButton from "./LogoutButton";
 import SettingsModal from "../Modals/SettingsModal";
 import SortMenu from "./SortMenu";
 
-import {
-    beginGetEntries,
-    updateReadState
-} from "../../redux/actions/entries.actions";
+import { updateReadState } from "../../redux/actions/entries.actions";
 
 import {
     IDispatch,
@@ -30,12 +27,10 @@ interface IMapStateProps {
     folders: TFolders;
     feeds: TFeeds;
     filter: IFilter;
-    isGettingEntries: boolean;
 }
 
 interface IMapDispatchProps {
     markEntryRead: (entry: IEntry) => void;
-    getEntries: () => void;
 }
 
 interface IEntriesListProps extends IMapStateProps, IMapDispatchProps {}
@@ -158,9 +153,7 @@ class EntriesList extends React.Component<IEntriesListProps> {
         this._filterAndSortEntries(this.props, e.currentTarget.value);
     }
 
-    _handleClickRefresh() {
-        this.props.getEntries();
-    }
+    _handleClickRefresh() {}
 
     _handleKeyDown(e: any) {
         switch (e.key) {
@@ -259,7 +252,6 @@ class EntriesList extends React.Component<IEntriesListProps> {
     }
 
     render() {
-        const { isGettingEntries } = this.props;
         const {
             activeEntryId,
             currentTitle,
@@ -267,23 +259,17 @@ class EntriesList extends React.Component<IEntriesListProps> {
             sortBy
         } = this.state;
 
-        let entryList = null;
-
-        if (isGettingEntries) {
-            entryList = <Loader active />;
-        } else {
-            entryList = processedEntries.toArray().map(entry => {
-                const isActive = entry._id === activeEntryId;
-                return (
-                    <EntryItem
-                        key={entry._id}
-                        entry={entry}
-                        toggleEntry={this._toggleEntry}
-                        isActive={isActive}
-                    />
-                );
-            });
-        }
+        let entryList = processedEntries.toArray().map(entry => {
+            const isActive = entry._id === activeEntryId;
+            return (
+                <EntryItem
+                    key={entry._id}
+                    entry={entry}
+                    toggleEntry={this._toggleEntry}
+                    isActive={isActive}
+                />
+            );
+        });
 
         return (
             <div>
@@ -318,15 +304,13 @@ const mapStateToProps = (state: IRootStoreState): IMapStateProps => {
         entries: entries.entries,
         folders: folders.folders,
         feeds: feeds.feeds,
-        filter: filter.filter,
-        isGettingEntries: entries.isGettingEntries
+        filter: filter.filter
     };
 };
 
 const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchProps => {
     return {
-        markEntryRead: entry => dispatch(updateReadState(entry, true)),
-        getEntries: () => dispatch(beginGetEntries())
+        markEntryRead: entry => dispatch(updateReadState(entry, true))
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EntriesList);
