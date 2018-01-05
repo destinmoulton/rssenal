@@ -1,11 +1,19 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { Button, Form, Icon, Header, Message, Modal, Segment } from "semantic-ui-react";
+import {
+    Button,
+    Form,
+    Icon,
+    Header,
+    Message,
+    Modal,
+    Segment
+} from "semantic-ui-react";
 import SelectFolder from "./SelectFolder";
 
 import { API_FEEDVALIDATION_BASE } from "../../redux/apiendpoints";
-import { JSON_HEADERS } from "../../lib/headers";
+import { generateJWTJSONHeaders } from "../../lib/headers";
 
 import { beginAddFeed } from "../../redux/actions/feeds.actions";
 
@@ -20,15 +28,15 @@ interface IAddFeedModalState {
     formError: string;
 }
 
-interface IMapStateToProps { }
+interface IMapStateToProps {}
 
-interface IMapDispatchToProps{
-    beginAddFeed: (feedInfo: any)=>void
+interface IMapDispatchToProps {
+    beginAddFeed: (feedInfo: any) => void;
 }
 
 interface IAddFeedModalProps extends IMapStateToProps, IMapDispatchToProps {
     isModalOpen: boolean;
-    onCloseModal: ()=>void;
+    onCloseModal: () => void;
 }
 
 const DISPLAY_FORM = "FORM";
@@ -43,10 +51,9 @@ const INITIAL_STATE: IAddFeedModalState = {
 };
 
 class AddFeedModal extends React.Component<IAddFeedModalProps> {
-
     state = INITIAL_STATE;
 
-    constructor(props: IAddFeedModalProps){
+    constructor(props: IAddFeedModalProps) {
         super(props);
 
         this._handleClickAddFeed = this._handleClickAddFeed.bind(this);
@@ -54,20 +61,24 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
         this._handleChangeURLInput = this._handleChangeURLInput.bind(this);
         this._handleClose = this._handleClose.bind(this);
         this._handleSelectFolder = this._handleSelectFolder.bind(this);
-        this._transitionToDisplayFeed = this._transitionToDisplayFeed.bind(this);
-        this._transitionToDisplayForm = this._transitionToDisplayForm.bind(this);
+        this._transitionToDisplayFeed = this._transitionToDisplayFeed.bind(
+            this
+        );
+        this._transitionToDisplayForm = this._transitionToDisplayForm.bind(
+            this
+        );
     }
 
-    _handleChangeURLInput(e: React.FormEvent<HTMLInputElement>){
+    _handleChangeURLInput(e: React.FormEvent<HTMLInputElement>) {
         this.setState({
             feedURL: e.currentTarget.value
         });
     }
 
-    _handleClickContinue(){
+    _handleClickContinue() {
         const { feedURL } = this.state;
 
-        if(feedURL !== ""){
+        if (feedURL !== "") {
             this.setState({
                 isValidatingURL: true
             });
@@ -76,13 +87,13 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
         }
     }
 
-    _handleClose(){
+    _handleClose() {
         this.setState(INITIAL_STATE);
 
         this.props.onCloseModal();
     }
 
-    _handleClickAddFeed(){
+    _handleClickAddFeed() {
         const { feedInfo, folderId, feedURL } = this.state;
 
         const dataToAdd = {
@@ -96,22 +107,22 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
         this._handleClose();
     }
 
-    _handleSelectFolder(folderId: TFolderID){
+    _handleSelectFolder(folderId: TFolderID) {
         this.setState({
             folderId
-        })
+        });
     }
 
-    _transitionToDisplayForm(){
+    _transitionToDisplayForm() {
         this.setState({
             display: DISPLAY_FORM,
             feedInfo: {},
             folderId: "0",
             isValidatingURL: false
-        })
+        });
     }
 
-    _transitionToDisplayFeed(feedObj: IFeed){
+    _transitionToDisplayFeed(feedObj: IFeed) {
         this.setState({
             display: DISPLAY_FEED,
             feedInfo: feedObj,
@@ -119,93 +130,102 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
         });
     }
 
-    _serverValidateURL(){
+    _serverValidateURL() {
         const { feedURL } = this.state;
 
         const url = API_FEEDVALIDATION_BASE;
         const init = {
-            headers: JSON_HEADERS,
+            headers: generateJWTJSONHeaders(),
             method: "POST",
-            body: JSON.stringify({feedURL})
+            body: JSON.stringify({ feedURL })
         };
-        
+
         fetch(url, init)
-            .then((res)=>{
+            .then(res => {
                 return res.json();
             })
-            .then((resObj)=>{
-                if(resObj.status === "error"){
-                    throw new Error("The feed address does not seem to be valid. Try again.");
-                } else if(resObj.status === "success"){
+            .then(resObj => {
+                if (resObj.status === "error") {
+                    throw new Error(
+                        "The feed address does not seem to be valid. Try again."
+                    );
+                } else if (resObj.status === "success") {
                     return resObj;
                 }
             })
-            .then((resObj)=>{
+            .then(resObj => {
                 this._transitionToDisplayFeed(resObj.feedInfo.feed);
             })
-            .catch((err)=>{
+            .catch(err => {
                 this.setState({
                     formError: err.message,
                     feedInfo: {},
                     folderId: "0",
                     isValidatingURL: false
                 });
-            })
+            });
     }
 
-    _buildURLForm(){
+    _buildURLForm() {
         const { formError } = this.state;
         let message = null;
-        if(formError !== ""){
-            message = <Message negative>
-                        <Message.Header>{formError}</Message.Header>
-                      </Message>
+        if (formError !== "") {
+            message = (
+                <Message negative>
+                    <Message.Header>{formError}</Message.Header>
+                </Message>
+            );
         }
         return (
             <Form>
                 <Form.Field>
                     <label>Feed Address</label>
-                    <input 
+                    <input
                         autoFocus
-                        placeholder='http://feed.url.here'
-                        onChange={this._handleChangeURLInput} />
+                        placeholder="http://feed.url.here"
+                        onChange={this._handleChangeURLInput}
+                    />
                 </Form.Field>
                 {message}
             </Form>
         );
     }
 
-    _buildURLDisplayButtons(){
+    _buildURLDisplayButtons() {
         const { isValidatingURL } = this.state;
         return (
             <span>
-                <Button color="green"
+                <Button
+                    color="green"
                     onClick={this._handleClickContinue}
                     inverted
-                    loading={isValidatingURL}>
+                    loading={isValidatingURL}
+                >
                     <Icon name="chevron right" />&nbsp;&nbsp;&nbsp;Continue
                 </Button>
             </span>
         );
     }
 
-    _buildFeedInfo(){
+    _buildFeedInfo() {
         const { feedInfo, feedURL } = this.state;
 
-        const description = (feedInfo.description !== feedInfo.title && feedInfo.description !== "")
-                                ? feedInfo.description 
-                                : "No description provided.";
+        const description =
+            feedInfo.description !== feedInfo.title &&
+            feedInfo.description !== ""
+                ? feedInfo.description
+                : "No description provided.";
         return (
             <div>
-                <Header as='h4' attached='top'>
+                <Header as="h4" attached="top">
                     {feedInfo.title}
                 </Header>
-                <Header as='h5' attached>
+                <Header as="h5" attached>
                     {feedURL}
                 </Header>
                 <Segment attached="bottom">{description}</Segment>
 
-                <Header as='h5' attached='top'>
+                <Header as="h5" attached="top">
                     Select Feed Folder
                 </Header>
                 <Segment attached="bottom">
@@ -215,7 +235,7 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
         );
     }
 
-    _buildFeedInfoButtons(){
+    _buildFeedInfoButtons() {
         return (
             <span>
                 <Button
@@ -225,69 +245,65 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
                     inverted
                     onClick={this._transitionToDisplayForm}
                 />
-                <Button 
+                <Button
                     color="green"
                     onClick={this._handleClickAddFeed}
                     inverted
                     icon="checkmark"
-                    content="This is it!" />
+                    content="This is it!"
+                />
             </span>
         );
     }
 
-    render(){
-        const {
-            display
-        } = this.state;
+    render() {
+        const { display } = this.state;
 
-        const {
-            isModalOpen
-        } = this.props;
+        const { isModalOpen } = this.props;
 
         let content = null;
         let buttons = null;
-        if(display === DISPLAY_FORM){
+        if (display === DISPLAY_FORM) {
             content = this._buildURLForm();
             buttons = this._buildURLDisplayButtons();
-        } else if (display === DISPLAY_FEED){
+        } else if (display === DISPLAY_FEED) {
             content = this._buildFeedInfo();
             buttons = this._buildFeedInfoButtons();
         }
 
         return (
             <div>
-            <Modal
-                open={isModalOpen}
-                onClose={this._handleClose}
-                size="small"
-            >
-                <Header icon="plus" content="Add Feed" />
-                <Modal.Content>
-                    {content}
-                </Modal.Content>
-                <Modal.Actions>
-                    <Button 
-                        color="orange"
-                        onClick={this._handleClose}
-                        inverted
-                        floated="left"
-                        icon="close"
-                        content="Cancel"/>
-                    {buttons}
-                </Modal.Actions>
-            </Modal>
+                <Modal
+                    open={isModalOpen}
+                    onClose={this._handleClose}
+                    size="small"
+                >
+                    <Header icon="plus" content="Add Feed" />
+                    <Modal.Content>{content}</Modal.Content>
+                    <Modal.Actions>
+                        <Button
+                            color="orange"
+                            onClick={this._handleClose}
+                            inverted
+                            floated="left"
+                            icon="close"
+                            content="Cancel"
+                        />
+                        {buttons}
+                    </Modal.Actions>
+                </Modal>
             </div>
         );
     }
 }
 
-const mapStateToProps = (state: IRootStoreState): IMapStateToProps=>{
-    return {}
-}
+const mapStateToProps = (state: IRootStoreState): IMapStateToProps => {
+    return {};
+};
 
-const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps=>{
+const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
     return {
-        beginAddFeed: (feedInfo)=>dispatch(beginAddFeed(feedInfo))
-    }
-}
+        beginAddFeed: feedInfo => dispatch(beginAddFeed(feedInfo))
+    };
+};
 export default connect(mapStateToProps, mapDispatchToProps)(AddFeedModal);
