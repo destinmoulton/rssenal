@@ -14,7 +14,7 @@ import { API_FEEDS_BASE } from "../apiendpoints";
 
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 
-import { beginGetEntries } from "./entries.actions";
+import { getEntriesForFeed, entriesRemoveFeed } from "./entries.actions";
 import { message } from "./messages.actions";
 
 import {
@@ -58,7 +58,7 @@ function addFeed(feedInfo: IFeed) {
                 } else if (feedObj.status === "success") {
                     dispatch(message("Feed added.", "success"));
                     dispatch(addFeedComplete(feedObj.feedInfo));
-                    dispatch(beginGetEntries());
+                    dispatch(getEntriesForFeed(feedObj._id));
                 }
             })
             .catch(err => {
@@ -132,7 +132,7 @@ function deleteFeed(feedId: TFeedID) {
             .then(resObj => {
                 dispatch(message("Feed removed.", "success"));
                 dispatch(deleteFeedComplete(feedId));
-                dispatch(beginGetEntries());
+                dispatch(entriesRemoveFeed(feedId));
             })
             .catch(err => {
                 console.error(err);

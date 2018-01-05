@@ -1,21 +1,16 @@
+import { FILTER_CHANGE } from "../actiontypes";
 
-import {
-    FILTER_CHANGE
-} from "../actiontypes";
-
-import { beginGetEntries } from "./entries.actions";
 import { IDispatch, IFilter } from "../../interfaces";
 
-export function changeFilter(newFilter: IFilter){
-    return (dispatch: IDispatch)=>{
-        dispatch(beginGetEntries());
+export function changeFilter(newFilter: IFilter) {
+    return (dispatch: IDispatch) => {
         dispatch(setNewFilter(newFilter));
-    }
+    };
 }
 
-function setNewFilter(newFilter: IFilter){
+function setNewFilter(newFilter: IFilter) {
     return {
         type: FILTER_CHANGE,
         newFilter
-    }
+    };
 }
