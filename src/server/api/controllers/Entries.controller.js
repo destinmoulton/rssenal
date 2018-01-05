@@ -6,7 +6,7 @@ import Feeds from "../models/Feeds.model";
 class EntriesController {
     get(req, res) {
         try {
-            this._updateAllFeeds();
+            this._updateFeed(req.query.feedId);
         } catch (e) {
             return res.json({
                 status: "error",
@@ -14,7 +14,9 @@ class EntriesController {
             });
         }
 
-        let query = {};
+        let query = {
+            feed_id: req.query.feedId
+        };
         if (req.query.hasOwnProperty("hasRead")) {
             query["has_read"] = req.query.hasRead;
         }
@@ -64,35 +66,33 @@ class EntriesController {
         });
     }
 
-    _updateAllFeeds() {
-        Feeds.find({}, (err, feeds) => {
+    _updateFeed(feedId) {
+        Feeds.findOne({ _id: feedId }, (err, feed) => {
             if (err) {
                 throw new Error(err);
             }
 
-            feeds.forEach(feed => {
-                parser.parseURL(feed.url, (err, parsedFeed) => {
-                    // TODO: Add err handler?
+            parser.parseURL(feed.url, (err, parsedFeed) => {
+                // TODO: Add err handler?
 
-                    parsedFeed.feed.entries.forEach(entry => {
-                        const query = {
-                            feed_id: feed._id,
-                            guid: entry.guid
-                        };
-                        Entries.find(query, (err, possibleEntry) => {
-                            if (possibleEntry.length === 0) {
-                                const data = {
-                                    ...entry,
-                                    feed_id: feed._id,
-                                    publish_date: entry.isoDate
-                                };
-                                const newEntry = new Entries(data);
-                                newEntry.save((err, entry) => {
-                                    // TODO: Add err handler?
-                                });
-                            }
-                        }).limit(1);
-                    });
+                parsedFeed.feed.entries.forEach(entry => {
+                    const query = {
+                        feed_id: feed._id,
+                        guid: entry.guid
+                    };
+                    Entries.find(query, (err, possibleEntry) => {
+                        if (possibleEntry.length === 0) {
+                            const data = {
+                                ...entry,
+                                feed_id: feed._id,
+                                publish_date: entry.isoDate
+                            };
+                            const newEntry = new Entries(data);
+                            newEntry.save((err, entry) => {
+                                // TODO: Add err handler?
+                            });
+                        }
+                    }).limit(1);
                 });
             });
         });
