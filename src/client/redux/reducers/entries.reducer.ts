@@ -24,9 +24,9 @@ function entriesReducer(state = INITIAL_STATE, action: IEntriesAction) {
         case ENTRIES_GET_COMPLETE: {
             const { entries } = state;
 
-            let newEntries = OrderedMap<TEntryID, IEntry>();
+            let newEntries = entries.toOrderedMap();
             action.entries.forEach(entry => {
-                newEntries = entries.set(entry._id, entry);
+                newEntries = newEntries.set(entry._id, entry);
             });
 
             return {
