@@ -86,7 +86,9 @@ class FolderItem extends React.Component<IFolderItemProps> {
     _handleClickDelete() {
         const { beginDeleteFolder, folder } = this.props;
         const conf = confirm(
-            `Are you sure you want to delete the '${folder.name}' folder?`
+            `Are you sure you want to delete the '${
+                folder.name
+            }' folder?\nThe feeds will be moved to 'Uncategorized'.`
         );
         if (conf) {
             beginDeleteFolder(folder._id);
