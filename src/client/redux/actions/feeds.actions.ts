@@ -90,6 +90,7 @@ export function getAllFeeds() {
                     console.error(resObj.error);
                 } else if (resObj.status === "success") {
                     dispatch(getAllFeedsComplete(resObj.feeds));
+                    dispatch(getAllEntriesForFeeds(resObj.feeds));
                 }
             })
             .catch(err => {
@@ -102,6 +103,14 @@ function getAllFeedsComplete(feeds: IFeed[]) {
     return {
         type: FEEDS_GETALL_COMPLETE,
         feeds
+    };
+}
+
+function getAllEntriesForFeeds(feeds: IFeed[]) {
+    return (dispatch: IDispatch) => {
+        feeds.forEach(feed => {
+            dispatch(getEntriesForFeed(feed._id));
+        });
     };
 }
 
