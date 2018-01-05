@@ -1,3 +1,4 @@
+import Feeds from "../models/Feeds.model";
 import Folders from "../models/Folders.model";
 
 class FoldersController {
@@ -56,19 +57,49 @@ class FoldersController {
     }
 
     delete_single(req, res) {
-        Folders.remove({ _id: req.params.folderId }, err => {
+        const folderId = req.params.folderId;
+        let json = { status: "" };
+        // Move all the feeds to 'Uncategorized' folder
+        Feeds.find({ folder_id: folderId }, (err, feeds) => {
             if (err) {
-                res.json({
+                json = {
                     status: "error",
-                    message: "There was a problem deleting the folder."
-                });
+                    message: "Unable to get the feeds for the folder."
+                };
             } else {
-                res.json({
-                    status: "success",
-                    _id: req.params.folderId
-                });
+                if (feeds.length > 0) {
+                    feeds.forEach(feed => {
+                        feed.folder_id = 0;
+                        feed.save((err, newFeed) => {
+                            if (err) {
+                                json = {
+                                    status: "error",
+                                    message: "Unable to change feed folder."
+                                };
+                            }
+                        });
+                    });
+                }
             }
         });
+
+        if (json.status === "error") {
+            res.json(json);
+        } else {
+            Folders.remove({ _id: folderId }, err => {
+                if (err) {
+                    res.json({
+                        status: "error",
+                        message: "There was a problem deleting the folder."
+                    });
+                } else {
+                    res.json({
+                        status: "success",
+                        _id: folderId
+                    });
+                }
+            });
+        }
     }
 
     update_single(req, res) {
