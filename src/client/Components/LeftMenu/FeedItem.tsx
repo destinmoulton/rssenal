@@ -24,7 +24,6 @@ interface IMapStateToProps {
 interface IMapDispatchToProps {
     beginDeleteFeed: (feedId: TFeedID) => void;
     changeFilter: (newFilter: object) => void;
-    getEntriesForFeed: (feedId: TFeedID) => void;
 }
 
 interface IFeedItemProps extends IMapStateToProps, IMapDispatchToProps {
@@ -45,12 +44,6 @@ class FeedItem extends React.Component<IFeedItemProps> {
         this._handleClickFeed = this._handleClickFeed.bind(this);
         this._handleHideOptions = this._handleHideOptions.bind(this);
         this._handleShowOptions = this._handleShowOptions.bind(this);
-    }
-
-    componentDidMount() {
-        const { feed, getEntriesForFeed } = this.props;
-
-        getEntriesForFeed(feed._id);
     }
 
     _handleShowOptions() {
@@ -165,9 +158,7 @@ const mapStateToProps = (state: IRootStoreState) => {
 const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
     return {
         beginDeleteFeed: (feedId: TFeedID) => dispatch(beginDeleteFeed(feedId)),
-        changeFilter: (newFilter: IFilter) => dispatch(changeFilter(newFilter)),
-        getEntriesForFeed: (feedId: TFeedID) =>
-            dispatch(getEntriesForFeed(feedId))
+        changeFilter: (newFilter: IFilter) => dispatch(changeFilter(newFilter))
     };
 };
 
