@@ -1,9 +1,9 @@
 import {
-    ENTRIES_GET_BEGIN,
     ENTRIES_GET_COMPLETE,
     ENTRIES_MARKREAD_COMPLETE,
     ENTRIES_UPDATE_BEGIN,
-    ENTRIES_UPDATE_COMPLETE
+    ENTRIES_UPDATE_COMPLETE,
+    ENTRIES_REMOVE_FEED
 } from "../actiontypes";
 
 import { API_ENTRIES_BASE } from "../apiendpoints";
@@ -12,22 +12,15 @@ import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 
 import { feedsDecrementUnread, feedsSetAllUnreadCount } from "./feeds.actions";
 
-import { IDispatch, IEntry, IGetState, TEntries } from "../../interfaces";
+import {
+    IDispatch,
+    IEntry,
+    IGetState,
+    TEntries,
+    TFeedID
+} from "../../interfaces";
 
-export function beginGetEntries() {
-    return (dispatch: IDispatch) => {
-        dispatch(beginGetProcess());
-        dispatch(getEntries());
-    };
-}
-
-function beginGetProcess() {
-    return {
-        type: ENTRIES_GET_BEGIN
-    };
-}
-
-function getEntries() {
+export function getEntriesForFeed(feedId: TFeedID) {
     return (dispatch: IDispatch, getState: IGetState) => {
         const { settings } = getState();
         let showUnread = true;
@@ -36,7 +29,8 @@ function getEntries() {
                 showUnread = setting.value;
             }
         });
-        const queryString = "?hasRead=" + !showUnread;
+
+        const queryString = "?hasRead=" + !showUnread + "&feedId=" + feedId;
         const url = API_ENTRIES_BASE + queryString;
         const init = {
             method: "GET",
@@ -101,5 +95,12 @@ function entryMarkReadComplete(newEntry: IEntry) {
     return {
         type: ENTRIES_MARKREAD_COMPLETE,
         newEntry
+    };
+}
+
+export function entriesRemoveFeed(feedId: TFeedID) {
+    return {
+        type: ENTRIES_REMOVE_FEED,
+        feedId
     };
 }
