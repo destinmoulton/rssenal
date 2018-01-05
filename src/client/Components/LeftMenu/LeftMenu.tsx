@@ -2,7 +2,6 @@ import { OrderedMap } from "immutable";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { beginGetEntries } from "../../redux/actions/entries.actions";
 import { getAllFolders } from "../../redux/actions/folders.actions";
 import { getAllFeeds } from "../../redux/actions/feeds.actions";
 
@@ -31,7 +30,6 @@ interface IMapStateProps {
 }
 
 interface IMapDispatchProps {
-    beginGetEntries: () => void;
     getAllFolders: () => void;
     getAllFeeds: () => void;
 }
@@ -76,17 +74,11 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
     }
 
     componentWillMount() {
-        const {
-            beginGetEntries,
-            getAllFolders,
-            getAllFeeds,
-            hasFolders
-        } = this.props;
+        const { getAllFolders, getAllFeeds, hasFolders } = this.props;
 
         if (!hasFolders) {
             getAllFolders();
             getAllFeeds();
-            beginGetEntries();
         }
     }
 
@@ -198,7 +190,6 @@ const mapStateToProps = (state: IRootStoreState): IMapStateProps => {
 
 const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchProps => {
     return {
-        beginGetEntries: () => dispatch(beginGetEntries()),
         getAllFolders: () => dispatch(getAllFolders()),
         getAllFeeds: () => dispatch(getAllFeeds())
     };
