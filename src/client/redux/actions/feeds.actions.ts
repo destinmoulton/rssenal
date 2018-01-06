@@ -5,7 +5,8 @@ import {
     FEEDS_DELETE_BEGIN,
     FEEDS_DELETE_COMPLETE,
     FEEDS_GETALL_COMPLETE,
-    FEEDS_SET_UNREAD_COUNT,
+    FEEDS_CALC_UNREAD_COUNT,
+    FEEDS_CLEAR_UNREAD,
     FEEDS_UPDATE_BEGIN,
     FEEDS_UPDATE_COMPLETE
 } from "../actiontypes";
@@ -108,9 +109,16 @@ function getAllFeedsComplete(feeds: IFeed[]) {
 
 function getAllEntriesForFeeds(feeds: IFeed[]) {
     return (dispatch: IDispatch) => {
+        dispatch(clearUnread());
         feeds.forEach(feed => {
             dispatch(getEntriesForFeed(feed._id));
         });
+    };
+}
+
+function clearUnread() {
+    return {
+        type: FEEDS_CLEAR_UNREAD
     };
 }
 
@@ -215,7 +223,7 @@ function updateFeedComplete(feed: IFeed) {
 
 export function feedsSetAllUnreadCount(entries: TEntries) {
     return {
-        type: FEEDS_SET_UNREAD_COUNT,
+        type: FEEDS_CALC_UNREAD_COUNT,
         entries
     };
 }
