@@ -5,7 +5,7 @@ import {
     FEEDS_DELETE_BEGIN,
     FEEDS_DELETE_COMPLETE,
     FEEDS_GETALL_COMPLETE,
-    FEEDS_SETALL_UNREAD_COUNT,
+    FEEDS_SET_UNREAD_COUNT,
     FEEDS_UPDATE_BEGIN,
     FEEDS_UPDATE_COMPLETE
 } from "../actiontypes";
@@ -114,6 +114,13 @@ function getAllEntriesForFeeds(feeds: IFeed[]) {
     };
 }
 
+export function refreshAllFeeds() {
+    return (dispatch: IDispatch, getState: () => IRootStoreState) => {
+        const { feeds } = getState().feeds;
+        dispatch(getAllEntriesForFeeds(feeds.toArray()));
+    };
+}
+
 export function beginDeleteFeed(feedId: TFeedID) {
     return (dispatch: IDispatch) => {
         dispatch(beginDeleteProcess());
@@ -191,9 +198,6 @@ function updateFeed(feedInfo: IFeed) {
                 } else if (feedObj.status === "success") {
                     dispatch(message("Feed saved.", "success"));
                     dispatch(updateFeedComplete(feedObj.feedInfo));
-                    dispatch(
-                        feedsSetAllUnreadCount(getState().entries.entries)
-                    );
                 }
             })
             .catch(err => {
@@ -211,7 +215,7 @@ function updateFeedComplete(feed: IFeed) {
 
 export function feedsSetAllUnreadCount(entries: TEntries) {
     return {
-        type: FEEDS_SETALL_UNREAD_COUNT,
+        type: FEEDS_SET_UNREAD_COUNT,
         entries
     };
 }
