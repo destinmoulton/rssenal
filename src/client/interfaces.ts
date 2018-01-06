@@ -1,4 +1,4 @@
-import { List, Map, OrderedMap } from "immutable";
+import { List, Map, OrderedMap, Set } from "immutable";
 
 /** Redux Interfaces */
 export interface IDispatch {
@@ -72,6 +72,7 @@ export interface IFeedsAction {
 }
 
 export interface IFeedsUnreadMap {
+    entriesCounted: Set<TFeedID>;
     feeds: Map<TFeedID, number>;
     folders: Map<TFolderID, number>;
 }
