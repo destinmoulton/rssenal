@@ -1,11 +1,12 @@
-import { Map, OrderedMap } from "immutable";
+import { Map, OrderedMap, Set } from "immutable";
 
 import {
     FEEDS_ADD_BEGIN,
     FEEDS_ADD_COMPLETE,
     FEEDS_DECREMENT_UNREAD,
     FEEDS_GETALL_COMPLETE,
-    FEEDS_SET_UNREAD_COUNT,
+    FEEDS_CALC_UNREAD_COUNT,
+    FEEDS_CLEAR_UNREAD,
     FEEDS_UPDATE_BEGIN,
     FEEDS_UPDATE_COMPLETE
 } from "../actiontypes";
@@ -15,17 +16,21 @@ import {
     TFeedID,
     IFeed,
     IFeedsAction,
+    IFeedsUnreadMap,
     IReducerStateFeeds
 } from "../../interfaces";
 
 import { compareAscByProp } from "../../lib/sort";
 
+const INITIAL_UNREAD_MAP: IFeedsUnreadMap = {
+    entriesCounted: Set<TFeedID>(),
+    feeds: Map<TFeedID, number>(),
+    folders: Map<string, number>()
+};
+
 const INITIAL_STATE: IReducerStateFeeds = {
     feeds: OrderedMap<TFeedID, IFeed>(),
-    unreadMap: {
-        feeds: Map<TFeedID, number>(),
-        folders: Map<string, number>()
-    },
+    unreadMap: INITIAL_UNREAD_MAP,
     isAddingFeed: false,
     isUpdatingFeed: false
 };
@@ -84,13 +89,16 @@ function feedsReducer(state = INITIAL_STATE, action: IFeedsAction) {
                 feeds: mappedFeeds
             };
         }
-        case FEEDS_SET_UNREAD_COUNT: {
+        case FEEDS_CALC_UNREAD_COUNT: {
             const { feeds, unreadMap } = state;
-            let unreadFeeds = unreadMap.feeds.toMap();
-            let unreadFolders = unreadMap.folders.toMap();
+            let entriesCounted = unreadMap.entriesCounted;
+            let unreadFeeds = unreadMap.feeds;
+            let unreadFolders = unreadMap.folders;
 
             action.entries.map((entry: IEntry) => {
-                if (!entry.has_read) {
+                if (!entriesCounted.has(entry._id) || !entry.has_read) {
+                    entriesCounted = entriesCounted.add(entry._id);
+
                     const feed = feeds.get(entry.feed_id);
 
                     if (!unreadFeeds.has(feed._id)) {
@@ -117,10 +125,20 @@ function feedsReducer(state = INITIAL_STATE, action: IFeedsAction) {
                 }
             });
 
-            const newUnreadMap = { feeds: unreadFeeds, folders: unreadFolders };
+            const newUnreadMap = {
+                entriesCounted,
+                feeds: unreadFeeds,
+                folders: unreadFolders
+            };
             return {
                 ...state,
                 unreadMap: newUnreadMap
+            };
+        }
+        case FEEDS_CLEAR_UNREAD: {
+            return {
+                ...state,
+                unreadMap: INITIAL_UNREAD_MAP
             };
         }
         case FEEDS_UPDATE_BEGIN:
