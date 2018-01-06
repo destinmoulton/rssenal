@@ -10,6 +10,7 @@ import SettingsModal from "../Modals/SettingsModal";
 import SortMenu from "./SortMenu";
 
 import { updateReadState } from "../../redux/actions/entries.actions";
+import { refreshAllFeeds } from "../../redux/actions/feeds.actions";
 
 import {
     IDispatch,
@@ -31,6 +32,7 @@ interface IMapStateProps {
 
 interface IMapDispatchProps {
     markEntryRead: (entry: IEntry) => void;
+    refreshAllFeeds: () => void;
 }
 
 interface IEntriesListProps extends IMapStateProps, IMapDispatchProps {}
@@ -153,7 +155,9 @@ class EntriesList extends React.Component<IEntriesListProps> {
         this._filterAndSortEntries(this.props, e.currentTarget.value);
     }
 
-    _handleClickRefresh() {}
+    _handleClickRefresh() {
+        this.props.refreshAllFeeds();
+    }
 
     _handleKeyDown(e: any) {
         switch (e.key) {
@@ -310,7 +314,8 @@ const mapStateToProps = (state: IRootStoreState): IMapStateProps => {
 
 const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchProps => {
     return {
-        markEntryRead: entry => dispatch(updateReadState(entry, true))
+        markEntryRead: entry => dispatch(updateReadState(entry, true)),
+        refreshAllFeeds: () => dispatch(refreshAllFeeds())
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EntriesList);
