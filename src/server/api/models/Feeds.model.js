@@ -8,7 +8,9 @@ const FeedSchema = mongoose.Schema({
     folder_id: {
         type: String
     },
-    url: {},
+    url: {
+        type: String
+    },
     description: {
         type: String
     },
