@@ -10,12 +10,11 @@ import {
 } from "../actiontypes";
 
 import { API_FOLDERS_BASE, API_FOLDERS_GET_ALL } from "../apiendpoints";
-
+import { getAllFeeds } from "./feeds.actions";
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
-
-import { IDispatch, IFolder, TFolderID } from "../../interfaces";
 import { message } from "./messages.actions";
 
+import { IDispatch, IFolder, TFolderID } from "../../interfaces";
 export function getAllFolders() {
     return (dispatch: IDispatch) => {
         dispatch(fetchingInProgress());
@@ -174,7 +173,8 @@ function deleteFolder(folderId: TFolderID) {
             .then(resObj => {
                 if (resObj.status === "success") {
                     dispatch(message("Folder removed.", "success"));
-                    return dispatch(deleteComplete(folderId));
+                    dispatch(deleteComplete(folderId));
+                    dispatch(getAllFeeds());
                 } else {
                     console.error(resObj);
                 }
