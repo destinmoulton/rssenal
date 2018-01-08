@@ -150,11 +150,11 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
                         "The feed address does not seem to be valid. Try again."
                     );
                 } else if (resObj.status === "success") {
-                    return resObj;
+                    return resObj.feedInfo;
                 }
             })
-            .then(resObj => {
-                this._transitionToDisplayFeed(resObj.feedInfo.feed);
+            .then(feed => {
+                this._transitionToDisplayFeed(feed);
             })
             .catch(err => {
                 this.setState({
