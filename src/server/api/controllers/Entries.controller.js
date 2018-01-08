@@ -76,10 +76,6 @@ class EntriesController {
     }
 
     _addNewEntry(feedId, newEntry) {
-        console.log(
-            "Entries.controller :: _addNewEntry :: pubDate = " +
-                newEntry.pubDate
-        );
         const query = {
             feed_id: feedId,
             guid: newEntry.guid
