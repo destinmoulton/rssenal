@@ -59,7 +59,7 @@ function addFeed(feedInfo: IFeed) {
                 } else if (feedObj.status === "success") {
                     dispatch(message("Feed added.", "success"));
                     dispatch(addFeedComplete(feedObj.feedInfo));
-                    dispatch(getEntriesForFeed(feedObj._id));
+                    dispatch(getEntriesForFeed(feedObj.feedInfo._id));
                 }
             })
             .catch(err => {
