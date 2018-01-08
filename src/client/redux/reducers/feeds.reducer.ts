@@ -80,13 +80,13 @@ function feedsReducer(state = INITIAL_STATE, action: IFeedsAction) {
             };
         }
         case FEEDS_GETALL_COMPLETE: {
+            let newFeeds = OrderedMap();
             const arrayMap = action.feeds.map((feed: IFeed) => {
-                return [feed._id, feed];
+                newFeeds = newFeeds.set(feed._id, feed);
             });
-            const mappedFeeds = OrderedMap(arrayMap);
             return {
                 ...state,
-                feeds: mappedFeeds
+                feeds: newFeeds
             };
         }
         case FEEDS_CALC_UNREAD_COUNT: {
