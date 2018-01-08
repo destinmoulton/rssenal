@@ -1,38 +1,32 @@
-import parser from "rss-parser";
+import feedparser from "feedparser-promised";
 
 import Entries from "../models/Entries.model";
 import Feeds from "../models/Feeds.model";
 
 class EntriesController {
     get(req, res) {
-        try {
-            this._updateFeed(req.query.feedId);
-        } catch (e) {
-            return res.json({
-                status: "error",
-                error: "Unable to update all feeds." + e.message
-            });
-        }
-
-        let query = {
-            feed_id: req.query.feedId
-        };
-        if (req.query.hasOwnProperty("hasRead")) {
-            query["has_read"] = req.query.hasRead;
-        }
-        Entries.find(query, (err, entries) => {
-            if (err) {
-                res.json({
-                    status: "error",
-                    error: "Unable to get all entries."
-                });
-            } else {
-                res.json({
+        return this._updateFeed(req.query.feedId)
+            .then(() => {
+                let query = {
+                    feed_id: req.query.feedId
+                };
+                if (req.query.hasOwnProperty("hasRead")) {
+                    query["has_read"] = req.query.hasRead;
+                }
+                return Entries.find(query).sort({ publish_date: "desc" });
+            })
+            .then(entries => {
+                return res.json({
                     status: "success",
                     entries
                 });
-            }
-        }).sort({ publish_date: "desc" });
+            })
+            .catch(err => {
+                return res.json({
+                    status: "error",
+                    error: "Unable to update all feeds." + err.message
+                });
+            });
     }
 
     updateSingle(req, res) {
@@ -67,34 +61,45 @@ class EntriesController {
     }
 
     _updateFeed(feedId) {
-        Feeds.findOne({ _id: feedId }, (err, feed) => {
-            if (err) {
-                throw new Error(err);
-            }
-
-            parser.parseURL(feed.url, (err, parsedFeed) => {
-                // TODO: Add err handler?
-
-                parsedFeed.feed.entries.forEach(entry => {
-                    const query = {
-                        feed_id: feed._id,
-                        guid: entry.guid
-                    };
-                    Entries.find(query, (err, possibleEntry) => {
-                        if (possibleEntry.length === 0) {
-                            const data = {
-                                ...entry,
-                                feed_id: feed._id,
-                                publish_date: entry.isoDate
-                            };
-                            const newEntry = new Entries(data);
-                            newEntry.save((err, entry) => {
-                                // TODO: Add err handler?
-                            });
-                        }
-                    }).limit(1);
+        return Feeds.findOne({ _id: feedId })
+            .then(feed => {
+                return feedparser.parse(feed.url);
+            })
+            .then(entries => {
+                let entryPromises = [];
+                entries.forEach(entry => {
+                    entryPromises.push(this._addNewEntry(feedId, entry));
                 });
+                // Add all the entries
+                return Promise.all(entryPromises);
             });
+    }
+
+    _addNewEntry(feedId, newEntry) {
+        console.log(
+            "Entries.controller :: _addNewEntry :: pubDate = " +
+                newEntry.pubDate
+        );
+        const query = {
+            feed_id: feedId,
+            guid: newEntry.guid
+        };
+        return Entries.findOne(query).then(foundEntry => {
+            if (!foundEntry || !foundEntry._id) {
+                const data = {
+                    feed_id: feedId,
+                    guid: newEntry.guid,
+                    title: newEntry.title,
+                    link: newEntry.link,
+                    creator: newEntry.author,
+                    content: newEntry.description,
+                    content_snippet: newEntry.summary,
+                    publish_date: newEntry.pubDate
+                };
+                const insert = new Entries(data);
+                return insert.save();
+            }
+            return true;
         });
     }
 }
