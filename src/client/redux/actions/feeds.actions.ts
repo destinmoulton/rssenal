@@ -157,6 +157,7 @@ function deleteFeed(feedId: TFeedID) {
                 dispatch(message("Feed removed.", "success"));
                 dispatch(deleteFeedComplete(feedId));
                 dispatch(entriesRemoveFeed(feedId));
+                dispatch(getAllFeeds());
             })
             .catch(err => {
                 console.error(err);
@@ -206,6 +207,7 @@ function updateFeed(feedInfo: IFeed) {
                 } else if (feedObj.status === "success") {
                     dispatch(message("Feed saved.", "success"));
                     dispatch(updateFeedComplete(feedObj.feedInfo));
+                    dispatch(getAllFeeds());
                 }
             })
             .catch(err => {
