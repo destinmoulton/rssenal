@@ -1,9 +1,13 @@
-import { AllHtmlEntities } from "html-entities";
 import * as moment from "moment";
 import * as React from "react";
 import { connect } from "react-redux";
 
 import { Icon } from "semantic-ui-react";
+
+interface ISanitizeHTML {
+    (html: string, options: any): string;
+}
+const sanitizeHTML: ISanitizeHTML = require("sanitize-html-react");
 
 import {
     TEntryID,
@@ -12,14 +16,6 @@ import {
     IRootStoreState,
     ISetting
 } from "../../interfaces";
-
-// Define a typescript interface for the striptags module (@types/striptags did not work)
-interface IStriptags {
-    (html: string, allowedTags?: string | string[]): string;
-}
-const striptags: IStriptags = require("striptags");
-
-const htmlEntities = new AllHtmlEntities();
 
 interface IEntryItemProps {
     entry: IEntry;
@@ -57,14 +53,72 @@ class EntryItem extends React.Component<IEntryItemProps> {
         const { entry } = this.props;
         const { shouldShowImages } = this.state;
 
-        let body = htmlEntities.decode(entry.content);
-
-        let tagsToAllow = ["a", "img"];
-        if (!shouldShowImages) {
-            tagsToAllow = ["a"];
+        let allowedTags = [
+            "a",
+            "b",
+            "br",
+            "em",
+            "figure",
+            "figcaption",
+            "p",
+            "span",
+            "strong"
+        ];
+        if (shouldShowImages) {
+            allowedTags.push("img");
         }
-        body = striptags(body, tagsToAllow);
-        return { __html: body };
+
+        let allowedAttributes: {
+            a: ["href", "target"];
+            img: ["src", "class"];
+            span: [""];
+            p: [""];
+        };
+
+        let transformTags = {
+            div: (tagName: string, attribs: any) => {
+                return {
+                    tagName: "p",
+                    attribs: {}
+                };
+            },
+            a: (tagName: string, attribs: any) => {
+                return {
+                    tagName,
+                    attribs: {
+                        href: attribs.href,
+                        target: "_blank"
+                    }
+                };
+            },
+            img: (tagName: string, attribs: any) => {
+                return {
+                    tagName,
+                    attribs: {
+                        src: attribs.src,
+                        //width: "100%",
+                        class: "rss-entry-content-body-img"
+                    }
+                };
+            }
+        };
+
+        return {
+            __html: sanitizeHTML(entry.content, {
+                allowedTags,
+                allowedAttributes,
+                transformTags
+            })
+        };
+    }
+
+    _getTitle() {
+        let allowedTags: string[] = [];
+        let allowedAttributes: string[] = [];
+        return sanitizeHTML(this.props.entry.title, {
+            allowedTags,
+            allowedAttributes
+        });
     }
 
     _getActiveEntryContent() {
@@ -113,10 +167,11 @@ class EntryItem extends React.Component<IEntryItemProps> {
 
         let content = null;
         if (isActive) {
+            console.log(entry.content);
             content = this._getActiveEntryContent();
         }
 
-        const title = htmlEntities.decode(entry.title);
+        const title = this._getTitle();
 
         const entryClass = entry.has_read
             ? "rss-entry-title-hasread"
