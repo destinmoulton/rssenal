@@ -120,6 +120,13 @@ div.rss-entry-content-container {
 }
 
 
+/* Paragraphs inside an rss feed */
+
+div.rss-entry-content-container>p {
+    font-size: 1.1em;
+}
+
+
 /* The img tag inside the body of an rss feed */
 
 img.rss-entry-content-body-img {
