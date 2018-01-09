@@ -62,7 +62,14 @@ class EntryItem extends React.Component<IEntryItemProps> {
             "figcaption",
             "p",
             "span",
-            "strong"
+            "strong",
+            "ul",
+            "ol",
+            "li",
+            "table",
+            "tbody",
+            "tr",
+            "td"
         ];
         if (shouldShowImages) {
             allowedTags.push("img");
@@ -76,12 +83,12 @@ class EntryItem extends React.Component<IEntryItemProps> {
         };
 
         let transformTags = {
-            div: (tagName: string, attribs: any) => {
-                return {
-                    tagName: "p",
-                    attribs: {}
-                };
-            },
+            // div: (tagName: string, attribs: any) => {
+            //     return {
+            //         tagName: "p",
+            //         attribs: {}
+            //     };
+            // },
             a: (tagName: string, attribs: any) => {
                 if (attribs.href) {
                     return {
