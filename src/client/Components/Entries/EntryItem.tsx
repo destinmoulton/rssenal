@@ -98,23 +98,38 @@ class EntryItem extends React.Component<IEntryItemProps> {
                 }
             },
             img: (tagName: string, attribs: any) => {
-                return {
-                    tagName,
-                    attribs: {
-                        src: attribs.src,
-                        //width: "100%",
-                        class: "rss-entry-content-body-img"
-                    }
-                };
+                if (attribs.src[0] === "/") {
+                    // Don't display relative images
+                    return {
+                        tagName: "span"
+                    };
+                } else {
+                    return {
+                        tagName,
+                        attribs: {
+                            src: attribs.src,
+                            //width: "100%",
+                            class: "rss-entry-content-body-img"
+                        }
+                    };
+                }
             }
         };
 
+        const tagsFilterIfEmpty = ["span", "p", "a"];
+        let exclusiveFilter = (frame: any) => {
+            return tagsFilterIfEmpty.includes(frame.tag) && !frame.text.trim();
+        };
+
+        const sanitizedContent = sanitizeHTML(entry.content, {
+            allowedTags,
+            allowedAttributes,
+            exclusiveFilter,
+            transformTags
+        });
+
         return {
-            __html: sanitizeHTML(entry.content, {
-                allowedTags,
-                allowedAttributes,
-                transformTags
-            })
+            __html: sanitizedContent
         };
     }
 
@@ -173,7 +188,6 @@ class EntryItem extends React.Component<IEntryItemProps> {
 
         let content = null;
         if (isActive) {
-            console.log(entry.content);
             content = this._getActiveEntryContent();
         }
 
