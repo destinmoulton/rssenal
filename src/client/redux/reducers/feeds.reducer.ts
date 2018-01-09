@@ -96,7 +96,7 @@ function feedsReducer(state = INITIAL_STATE, action: IFeedsAction) {
             let unreadFolders = unreadMap.folders;
 
             action.entries.map((entry: IEntry) => {
-                if (!entriesCounted.has(entry._id) || !entry.has_read) {
+                if (!entriesCounted.has(entry._id) && !entry.has_read) {
                     entriesCounted = entriesCounted.add(entry._id);
 
                     const feed = feeds.get(entry.feed_id);
