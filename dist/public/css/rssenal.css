@@ -3,10 +3,9 @@
  * @author Destin Moulton
  **/
 
- .clear{
-     clear: both;
- }
-
+.clear {
+    clear: both;
+}
 
 div.rss-body-left-container {
     position: absolute;
@@ -16,14 +15,14 @@ div.rss-body-left-container {
     border-right: 2px solid gray;
 }
 
- div.rss-body-right-container {
+div.rss-body-right-container {
     position: absolute;
     left: 260px;
     right: 0px;
     height: 100%;
 }
 
-input.rss-foldermodal-name{
+input.rss-foldermodal-name {
     width: 100%;
 }
 
@@ -31,12 +30,12 @@ div.rss-folders-feeditem {
     padding-left: 15px;
     cursor: pointer;
     width: 100%;
-    float:left;
+    float: left;
 }
 
 div.rss-folders-feeditem-active {
     font-weight: bold;
-    background-color: #EBEBEB;
+    background-color: #ebebeb;
 }
 
 div.rss-folders-feeditem-title {
@@ -59,34 +58,38 @@ div.rss-folders-folderitem {
     cursor: pointer;
     height: 20px;
     width: 100%;
-    float:left;
+    float: left;
 }
 
 div.rss-folders-folderitem-active {
     font-weight: bold;
-    background-color: #EBEBEB;
+    background-color: #ebebeb;
 }
+
 div.rss-folders-folderitem-icon {
-    float:left;
+    float: left;
 }
+
 div.rss-folders-folderitem-title {
     float: left;
     width: 62%;
 }
 
 div.rss-folders-folderitem-unread {
-    float:left;
+    float: left;
     margin-left: 3px;
 }
 
 div.rss-folders-folderitem-options {
     float: right;
 }
-input.rss-editfeed-input{
+
+input.rss-editfeed-input {
     width: 100%;
 }
+
 div.rss-entry-container {
-    border-top: 1px solid #B3B3B3;
+    border-top: 1px solid #b3b3b3;
     padding: 3px;
 }
 
@@ -104,7 +107,7 @@ div.rss-entry-title-hasread {
 
 div.rss-entry-info-container {
     font-style: italic;
-    font-size: .9em;
+    font-size: 0.9em;
     margin-left: 10px;
     margin-top: 4px;
 }
@@ -116,13 +119,22 @@ div.rss-entry-content-container {
     margin-top: 4px;
 }
 
+/* The img tag inside the body of an rss feed */
+
+img.rss-entry-content-body-img {
+    max-width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 div.rss-entry-link-container {
     margin-left: auto;
     margin-right: auto;
     padding: 5px;
-    border: 1px solid #5A5A5A;
+    border: 1px solid #5a5a5a;
     border-radius: 4px;
-    background-color: #E5E5E5;
+    background-color: #e5e5e5;
     text-align: center;
     margin-top: 4px;
     width: 200px;
@@ -159,15 +171,15 @@ div.rss-entrylist-menu-sortselect-container {
     padding-top: 4px;
 }
 
-div.rss-leftmenu-buttonbar-container{
+div.rss-leftmenu-buttonbar-container {
     padding: 5px;
 }
 
 div.rss-settings-toggle-box {
-    margin-top:6px;
+    margin-top: 6px;
 }
 
-div.rss-sortfolder-list-container{
+div.rss-sortfolder-list-container {
     position: relative;
     z-index: 0;
     background-color: #f3f3f3;
@@ -175,7 +187,8 @@ div.rss-sortfolder-list-container{
     border-radius: 3px;
     outline: none;
 }
-div.rss-sortfolder-list-item{
+
+div.rss-sortfolder-list-item {
     position: relative;
     display: flex;
     width: 100%;
