@@ -83,13 +83,19 @@ class EntryItem extends React.Component<IEntryItemProps> {
                 };
             },
             a: (tagName: string, attribs: any) => {
-                return {
-                    tagName,
-                    attribs: {
-                        href: attribs.href,
-                        target: "_blank"
-                    }
-                };
+                if (attribs.href) {
+                    return {
+                        tagName,
+                        attribs: {
+                            href: attribs.href,
+                            target: "_blank"
+                        }
+                    };
+                } else {
+                    return {
+                        tagName: "span"
+                    };
+                }
             },
             img: (tagName: string, attribs: any) => {
                 return {
