@@ -1,9 +1,9 @@
-import * as moment from "moment";
 import * as React from "react";
 import { connect } from "react-redux";
 
 import { Icon } from "semantic-ui-react";
 
+import Content from "./Content";
 import {
     sanitizeEntryContent,
     sanitizeEntryTitle
@@ -49,57 +49,20 @@ class Entry extends React.Component<IEntryProps> {
         toggleEntry(entryId);
     }
 
-    _getActiveEntryContent() {
-        const { entry, feeds } = this.props;
-        const { shouldShowImages } = this.state;
-
-        const activeFeed = feeds.get(entry.feed_id);
-        const creator =
-            entry.creator !== undefined || entry.creator !== ""
-                ? " by " + entry.creator
-                : "";
-        const timeAgo = moment(entry.publish_date).fromNow();
-
-        const info = (
-            <div className="rss-entry-info-container">
-                {activeFeed.title}
-                {creator} -- {timeAgo}
-            </div>
-        );
-
-        const sanitizedHTML = {
-            __html: sanitizeEntryContent(entry.content, shouldShowImages)
-        };
-        const body = (
-            <div
-                dangerouslySetInnerHTML={sanitizedHTML}
-                className="rss-entry-content-container"
-            />
-        );
-
-        const link = (
-            <div className="rss-entry-link-container">
-                <a target="_blank" href={entry.link}>
-                    <Icon name="external square" /> Visit Website
-                </a>
-            </div>
-        );
-
-        return (
-            <div>
-                {info}
-                {body}
-                {link}
-            </div>
-        );
-    }
-
     render() {
-        const { entry, isActive } = this.props;
+        const { entry, feeds, isActive } = this.props;
+        const { shouldShowImages } = this.state;
 
         let content = null;
         if (isActive) {
-            content = this._getActiveEntryContent();
+            const activeFeedTitle = feeds.get(entry.feed_id).title;
+            content = (
+                <Content
+                    entry={entry}
+                    activeFeedTitle={activeFeedTitle}
+                    shouldShowImages={shouldShowImages}
+                />
+            );
         }
 
         const title = sanitizeEntryTitle(entry.title);
