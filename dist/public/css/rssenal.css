@@ -89,7 +89,7 @@ input.rss-editfeed-input {
 }
 
 div.rss-entry-container {
-    border-top: 1px solid #b3b3b3;
+    border-bottom: 1px solid #b3b3b3;
     padding: 3px;
 }
 
@@ -119,7 +119,6 @@ div.rss-entry-content-container {
     margin-top: 4px;
     font-size: 1.1em;
 }
-
 
 /* The img tag inside the body of an rss feed */
 
