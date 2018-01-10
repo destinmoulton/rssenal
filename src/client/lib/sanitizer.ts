@@ -10,6 +10,7 @@ export const sanitizeEntryContent = (
     let allowedTags = [
         "a",
         "b",
+        "blockquote",
         "br",
         "code",
         "em",
@@ -34,6 +35,7 @@ export const sanitizeEntryContent = (
 
     let allowedAttributes = {
         a: ["href", "target"],
+        blockquote: <any>[],
         code: <any>[],
         figure: <any>[],
         figcaption: <any>[],

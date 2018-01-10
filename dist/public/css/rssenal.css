@@ -132,6 +132,43 @@ div.rss-entry-content-container > pre {
     overflow-x: scroll;
 }
 
+div.rss-entry-content-container > blockquote {
+    font-family: Georgia, serif;
+    font-size: 18px;
+    font-style: italic;
+    width: 80%;
+    margin: 0.25em 0;
+    margin-left: 25px;
+    padding: 0.25em 30px;
+    line-height: 1.45;
+    position: relative;
+    color: #383838;
+}
+
+div.rss-entry-content-container > blockquote:before {
+    display: block;
+    content: "\201C";
+    font-size: 50px;
+    position: absolute;
+    left: -20px;
+    top: -20px;
+    color: #7a7a7a;
+}
+
+div.rss-entry-content-container > blockquote cite {
+    color: #7a7a7a;
+    font-size: 14px;
+    display: block;
+    margin-top: 5px;
+}
+
+div.rss-entry-content-container > blockquote p {
+    color: #7a7a7a;
+    font-size: 14px;
+    display: block;
+    margin-top: 5px;
+}
+
 /* The img tag inside the body of an rss feed */
 
 img.rss-entry-content-body-img {
