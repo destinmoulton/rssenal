@@ -106,7 +106,7 @@ export const sanitizeEntryContent = (
         exclusiveFilter,
         transformTags
     });
-    console.log(sanitized);
+
     // Finally, replace any stray <br>'s at the beginning
     return sanitized.replace(/^(<br \/>)*/, "");
 };
