@@ -11,31 +11,47 @@ export const sanitizeEntryContent = (
         "a",
         "b",
         "br",
+        "code",
         "em",
         "figure",
         "figcaption",
+        "li",
+        "ol",
         "p",
+        "pre",
         "span",
         "strong",
-        "ul",
-        "ol",
-        "li",
         "table",
         "tbody",
+        "td",
         "tr",
-        "td"
+        "ul"
     ];
 
     if (shouldShowImages) {
         allowedTags.push("img");
     }
 
-    let allowedAttributes: {
-        a: ["href", "target"];
-        div: [""];
-        img: ["src", "class"];
-        span: [""];
-        p: [""];
+    let allowedAttributes = {
+        a: ["href", "target"],
+        code: <any>[],
+        figure: <any>[],
+        figcaption: <any>[],
+        h1: <any>[],
+        h2: <any>[],
+        h3: <any>[],
+        h4: <any>[],
+        h5: <any>[],
+        img: ["src", "class"],
+        li: <any>[],
+        ol: <any>[],
+        p: <any>[],
+        pre: <any>[],
+        span: <any>[],
+        strong: <any>[],
+        td: <any>[],
+        tr: <any>[],
+        ul: <any>[]
     };
 
     let transformTags = {
@@ -82,12 +98,15 @@ export const sanitizeEntryContent = (
         return tagsFilterIfEmpty.includes(frame.tag) && !frame.text.trim();
     };
 
-    return sanitizeHTML(dirtyContent, {
+    let sanitized = sanitizeHTML(dirtyContent, {
         allowedTags,
         allowedAttributes,
         exclusiveFilter,
         transformTags
     });
+    console.log(sanitized);
+    // Finally, replace any stray <br>'s at the beginning
+    return sanitized.replace(/^(<br \/>)*/, "");
 };
 
 export const sanitizeEntryTitle = (dirtyTitle: string) => {
