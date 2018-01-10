@@ -54,6 +54,11 @@ export const sanitizeEntryContent = (
                 };
             }
         },
+        h1: "strong",
+        h2: "strong",
+        h3: "strong",
+        h4: "strong",
+        h5: "strong",
         img: (tagName: string, attribs: any) => {
             if (attribs.src[0] === "/") {
                 // Don't display images with a relative path (as they don't exist on this server)
