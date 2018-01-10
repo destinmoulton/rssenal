@@ -120,6 +120,18 @@ div.rss-entry-content-container {
     font-size: 1.1em;
 }
 
+div.rss-entry-content-container > figure > figcaption {
+    text-align: center;
+}
+
+div.rss-entry-content-container > pre {
+    border: 1px solid darkgray;
+    background-color: lightgoldenrodyellow;
+    font-size: 12px;
+    padding: 5px;
+    overflow-x: scroll;
+}
+
 /* The img tag inside the body of an rss feed */
 
 img.rss-entry-content-body-img {
