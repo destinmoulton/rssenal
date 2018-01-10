@@ -101,30 +101,30 @@ div.rss-entry-title-unread {
 
 div.rss-entry-title-hasread {
     cursor: pointer;
-    font-size: 1.1.em;
+    font-size: 1.1em;
     font-weight: normal;
 }
 
 div.rss-entry-info-container {
     font-style: italic;
     font-size: 0.9em;
-    margin-left: 10px;
+    margin-left: 6px;
     margin-top: 4px;
 }
 
 div.rss-entry-content-container {
     border: 1px solid gray;
     padding: 10px;
-    margin-left: 10px;
+    margin-left: 6px;
     margin-top: 4px;
     font-size: 1.1em;
 }
 
-div.rss-entry-content-container > figure > figcaption {
+div.rss-entry-content-container>figure>figcaption {
     text-align: center;
 }
 
-div.rss-entry-content-container > pre {
+div.rss-entry-content-container>pre {
     border: 1px solid darkgray;
     background-color: lightgoldenrodyellow;
     font-size: 12px;
@@ -132,7 +132,7 @@ div.rss-entry-content-container > pre {
     overflow-x: scroll;
 }
 
-div.rss-entry-content-container > blockquote {
+div.rss-entry-content-container>blockquote {
     font-family: Georgia, serif;
     font-size: 18px;
     font-style: italic;
@@ -145,7 +145,7 @@ div.rss-entry-content-container > blockquote {
     color: #383838;
 }
 
-div.rss-entry-content-container > blockquote:before {
+div.rss-entry-content-container>blockquote:before {
     display: block;
     content: "\201C";
     font-size: 50px;
@@ -155,19 +155,20 @@ div.rss-entry-content-container > blockquote:before {
     color: #7a7a7a;
 }
 
-div.rss-entry-content-container > blockquote cite {
+div.rss-entry-content-container>blockquote cite {
     color: #7a7a7a;
     font-size: 14px;
     display: block;
     margin-top: 5px;
 }
 
-div.rss-entry-content-container > blockquote p {
+div.rss-entry-content-container>blockquote p {
     color: #7a7a7a;
     font-size: 14px;
     display: block;
     margin-top: 5px;
 }
+
 
 /* The img tag inside the body of an rss feed */
 
