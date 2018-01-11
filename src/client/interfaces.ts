@@ -35,6 +35,8 @@ export interface IEntry {
     content_snippet: string;
     publish_date: string;
     has_read: boolean;
+    feedTitle?: string;
+    timeAgo?: string;
 }
 
 export interface IEntriesAction {
