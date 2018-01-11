@@ -20,6 +20,7 @@ import { message } from "./messages.actions";
 
 import {
     IDispatch,
+    IEntry,
     IFeed,
     TFeedID,
     TEntries,
@@ -223,7 +224,7 @@ function updateFeedComplete(feed: IFeed) {
     };
 }
 
-export function feedsSetAllUnreadCount(entries: TEntries) {
+export function feedsSetAllUnreadCount(entries: IEntry[]) {
     return {
         type: FEEDS_CALC_UNREAD_COUNT,
         entries
