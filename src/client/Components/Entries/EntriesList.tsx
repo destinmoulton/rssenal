@@ -56,6 +56,10 @@ class EntriesList extends React.Component<IEntriesListProps> {
         this._toggleEntry = this._toggleEntry.bind(this);
     }
 
+    componentWillMount() {
+        this._filterAndSortEntries(this.props, this.state.sortBy);
+    }
+
     componentWillReceiveProps(nextProps: IEntriesListProps) {
         this._filterAndSortEntries(nextProps, this.state.sortBy);
 
@@ -72,7 +76,7 @@ class EntriesList extends React.Component<IEntriesListProps> {
     _filterAndSortEntries(props: IEntriesListProps, sortBy: string) {
         const { entries, folders, feeds, filter } = props;
 
-        let filteredEntries = entries;
+        let filteredEntries = entries.toOrderedMap();
 
         let title = "All";
 
