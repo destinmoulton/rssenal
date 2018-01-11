@@ -1,3 +1,5 @@
+import * as moment from "moment";
+
 import {
     ENTRIES_GET_COMPLETE,
     ENTRIES_MARKREAD_COMPLETE,
@@ -17,7 +19,8 @@ import {
     IEntry,
     IGetState,
     TEntries,
-    TFeedID
+    TFeedID,
+    TEntryID
 } from "../../interfaces";
 
 export function getEntriesForFeed(feedId: TFeedID) {
@@ -46,8 +49,7 @@ export function getEntriesForFeed(feedId: TFeedID) {
                     console.error(resObj.error);
                 } else {
                     let entries = resObj.entries;
-                    dispatch(getEntriesComplete(entries, showUnread));
-                    dispatch(feedsSetAllUnreadCount(entries));
+                    dispatch(ammendEntries(entries));
                 }
             })
             .catch(err => {
@@ -56,11 +58,27 @@ export function getEntriesForFeed(feedId: TFeedID) {
     };
 }
 
-function getEntriesComplete(entries: TEntries, showUnread: boolean) {
+function ammendEntries(entries: IEntry[]) {
+    return (dispatch: IDispatch, getState: IGetState) => {
+        const { feeds } = getState().feeds;
+        const ammendedEntries = entries.map((entry: IEntry) => {
+            const feedTitle = feeds.get(entry.feed_id).title;
+            const timeAgo = moment(entry.publish_date).fromNow();
+            return {
+                ...entry,
+                feedTitle,
+                timeAgo
+            };
+        });
+        dispatch(getEntriesComplete(ammendedEntries));
+        dispatch(feedsSetAllUnreadCount(ammendedEntries));
+    };
+}
+
+function getEntriesComplete(entries: IEntry[]) {
     return {
         type: ENTRIES_GET_COMPLETE,
-        entries,
-        showUnread
+        entries
     };
 }
 
@@ -81,13 +99,24 @@ export function updateReadState(entry: IEntry, hasRead: boolean) {
                 if (resObj.status === "error") {
                     console.error(resObj.error);
                 } else {
-                    dispatch(feedsDecrementUnread(entry.feed_id));
-                    dispatch(entryMarkReadComplete(resObj.entry));
+                    dispatch(entryAmmendMarkRead(entry._id));
                 }
             })
             .catch(err => {
                 console.error(err);
             });
+    };
+}
+
+function entryAmmendMarkRead(entryId: TEntryID) {
+    return (dispatch: IDispatch, getState: IGetState) => {
+        const { entries } = getState().entries;
+
+        const entry = entries.get(entryId);
+
+        const newEntry = { ...entry, has_read: true };
+        dispatch(feedsDecrementUnread(entry.feed_id));
+        dispatch(entryMarkReadComplete(newEntry));
     };
 }
 
