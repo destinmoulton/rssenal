@@ -19,7 +19,6 @@ import {
 
 interface IEntryProps {
     entry: IEntry;
-    feeds: TFeeds;
     toggleEntry: (entryId: TEntryID) => void;
     isActive: boolean;
     settings: ISetting[];
@@ -50,18 +49,13 @@ class Entry extends React.Component<IEntryProps> {
     }
 
     render() {
-        const { entry, feeds, isActive } = this.props;
+        const { entry, isActive } = this.props;
         const { shouldShowImages } = this.state;
 
         let content = null;
         if (isActive) {
-            const activeFeedTitle = feeds.get(entry.feed_id).title;
             content = (
-                <Content
-                    entry={entry}
-                    activeFeedTitle={activeFeedTitle}
-                    shouldShowImages={shouldShowImages}
-                />
+                <Content entry={entry} shouldShowImages={shouldShowImages} />
             );
         }
 
@@ -88,9 +82,8 @@ class Entry extends React.Component<IEntryProps> {
 }
 
 const mapStateToProps = (state: IRootStoreState) => {
-    const { feeds, settings } = state;
+    const { settings } = state;
     return {
-        feeds: feeds.feeds,
         settings: settings.settings
     };
 };
