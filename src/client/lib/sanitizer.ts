@@ -58,7 +58,7 @@ export const sanitizeEntryContent = (
 
     let transformTags = {
         a: (tagName: string, attribs: any) => {
-            if (attribs.href) {
+            if (attribs.href && attribs.href[0] !== "/") {
                 return {
                     tagName,
                     attribs: {
