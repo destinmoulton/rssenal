@@ -4,17 +4,13 @@ RSSenal is a simple personal RSS feed reader. The server is a node/express api u
 
 You can organize your subscriptions into groups (categories). Navigate your feeds using up/down arrows or j/k for the vim oriented. Disable HTML tags if you want a pure text experience.
 
-### Motivation
-
-I wanted a simple hosted RSS feed reader. I used to LOVE Google Reader. I like feedly, but I don't like all the unnecessary features that interfere with my reading experience.
-
 ### What RSSenal is **Not**
 
 RSSenal was **not** built with multiple users in mind. There is a login, but the login information is statically configured via a configuration file.
 
 There are **no** options to share a post on Facebook, Twitter, or any other social platforms. Copying a link is easy enough.
 
-### Instructions
+### Build Instructions
 
 Copy the contents of src/config/config.template.js into its own file src/config/config.js. Change the configured values to match your own setup.
 
