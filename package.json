@@ -20,7 +20,6 @@
   "license": "MIT",
   "dependencies": {
     "@types/html-entities": "^1.2.16",
-    "@types/react": "^16.0.40",
     "@types/react-dom": "^16.0.4",
     "@types/react-notification-system": "^0.2.36",
     "@types/react-redux": "^5.0.15",
