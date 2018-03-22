@@ -28,6 +28,7 @@ module.exports = {
     externals: {
         react: "React",
         "react-dom": "ReactDOM",
-        moment: "moment"
+        moment: "moment",
+        "semantic-ui-react": "semanticUIReact"
     }
 };
