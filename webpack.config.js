@@ -1,14 +1,13 @@
-var path = require('path');
-var webpack = require('webpack');
+var path = require("path");
+var webpack = require("webpack");
 
 module.exports = {
-    
-    entry: './src/client/App.tsx',
-    output: { 
-        path: path.join(__dirname, 'dist/public/js'), 
-        filename: 'rssenal.js'
+    entry: "./src/client/App.tsx",
+    output: {
+        path: path.join(__dirname, "dist/public/js"),
+        filename: "rssenal.js"
     },
-    devtool: 'source-map',
+    devtool: "source-map",
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
         extensions: [".ts", ".tsx", ".js", ".json"]
@@ -16,7 +15,7 @@ module.exports = {
     module: {
         rules: [
             // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
-            { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+            { test: /\.tsx?$/, loader: "ts-loader" },
 
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
@@ -27,7 +26,7 @@ module.exports = {
     // This is important because it allows us to avoid bundling all of our
     // dependencies, which allows browsers to cache those libraries between builds.
     externals: {
-        "react": "React",
+        react: "React",
         "react-dom": "ReactDOM"
     }
 };
