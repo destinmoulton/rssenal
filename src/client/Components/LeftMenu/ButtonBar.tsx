@@ -23,18 +23,20 @@ class ButtonBar extends React.Component<IButtonBarProps> {
             <div className="rss-leftmenu-buttonbar-container">
                 <Button
                     color="grey"
-                    content="Feed"
-                    icon="plus"
                     onClick={this._handleAddFeed.bind(this)}
                     size="tiny"
-                />
+                >
+                    <Icon name="plus" />
+                    <Icon name="rss" />Feed
+                </Button>
                 <Button
                     color="olive"
-                    content="Folder"
-                    icon="plus"
                     onClick={this._handleAddFolder.bind(this)}
                     size="tiny"
-                />
+                >
+                    <Icon name="plus" />
+                    <Icon name="folder" />Folder
+                </Button>
                 <ReorderFoldersModal />
             </div>
         );
