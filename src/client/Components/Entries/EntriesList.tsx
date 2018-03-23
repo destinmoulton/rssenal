@@ -10,7 +10,6 @@ import SettingsModal from "../Modals/SettingsModal";
 import SortMenu from "./SortMenu";
 
 import { updateReadState } from "../../redux/actions/entries.actions";
-import { refreshAllFeeds } from "../../redux/actions/feeds.actions";
 
 import {
     IDispatch,
@@ -32,7 +31,6 @@ interface IMapStateProps {
 
 interface IMapDispatchProps {
     markEntryRead: (entry: IEntry) => void;
-    refreshAllFeeds: () => void;
 }
 
 interface IEntriesListProps extends IMapStateProps, IMapDispatchProps {}
@@ -52,7 +50,6 @@ class EntriesList extends React.Component<IEntriesListProps> {
         document.onkeydown = this._handleKeyDown.bind(this);
 
         this._handleChangeSort = this._handleChangeSort.bind(this);
-        this._handleClickRefresh = this._handleClickRefresh.bind(this);
         this._toggleEntry = this._toggleEntry.bind(this);
     }
 
@@ -157,10 +154,6 @@ class EntriesList extends React.Component<IEntriesListProps> {
         });
 
         this._filterAndSortEntries(this.props, e.currentTarget.value);
-    }
-
-    _handleClickRefresh() {
-        this.props.refreshAllFeeds();
     }
 
     _handleKeyDown(e: any) {
@@ -287,11 +280,6 @@ class EntriesList extends React.Component<IEntriesListProps> {
                         {currentTitle}
                     </div>
                     <div className="rss-entrylist-menu-sortselect-container">
-                        <Button
-                            icon="refresh"
-                            onClick={this._handleClickRefresh}
-                            size="tiny"
-                        />
                         <SortMenu
                             onChange={this._handleChangeSort}
                             currentSortBy={sortBy}
@@ -319,8 +307,7 @@ const mapStateToProps = (state: IRootStoreState): IMapStateProps => {
 
 const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchProps => {
     return {
-        markEntryRead: entry => dispatch(updateReadState(entry, true)),
-        refreshAllFeeds: () => dispatch(refreshAllFeeds())
+        markEntryRead: entry => dispatch(updateReadState(entry, true))
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EntriesList);
