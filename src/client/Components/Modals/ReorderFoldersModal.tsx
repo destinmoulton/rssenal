@@ -8,17 +8,24 @@ import { SortableFolderItem, SortableFolderList } from "./SortableComponents";
 import { beginReorderFolders } from "../../redux/actions/folders.actions";
 import { compareAscByProp } from "../../lib/sort";
 
-import { IDispatch, IFolder, IRootStoreState, TFolders } from "../../interfaces";
+import {
+    IDispatch,
+    IFolder,
+    IRootStoreState,
+    TFolders
+} from "../../interfaces";
 
 interface IMapStateToProps {
-    folders: TFolders
+    folders: TFolders;
 }
 
 interface IMapDispatchToProps {
-    beginReorderFolders: (foldersArr: IFolder[])=>void
+    beginReorderFolders: (foldersArr: IFolder[]) => void;
 }
 
-interface IReorderFoldersModalProps extends IMapStateToProps, IMapDispatchToProps {}
+interface IReorderFoldersModalProps
+    extends IMapStateToProps,
+        IMapDispatchToProps {}
 
 interface IReorderFoldersModalState {
     foldersAsArray: IFolder[];
@@ -26,13 +33,12 @@ interface IReorderFoldersModalState {
 }
 
 class ReorderFoldersModal extends React.Component<IReorderFoldersModalProps> {
-
     state: IReorderFoldersModalState = {
         foldersAsArray: [],
         isModalOpen: false
-    }
+    };
 
-    constructor(props: IReorderFoldersModalProps){
+    constructor(props: IReorderFoldersModalProps) {
         super(props);
 
         this._handleCloseModal = this._handleCloseModal.bind(this);
@@ -41,8 +47,10 @@ class ReorderFoldersModal extends React.Component<IReorderFoldersModalProps> {
         this._onSortEnd = this._onSortEnd.bind(this);
     }
 
-    componentWillReceiveProps(nextProps: IReorderFoldersModalProps){
-        let tmpArray = nextProps.folders.toArray().sort((a, b)=>compareAscByProp(a,b,"order"));
+    componentWillReceiveProps(nextProps: IReorderFoldersModalProps) {
+        let tmpArray = nextProps.folders
+            .toArray()
+            .sort((a, b) => compareAscByProp(a, b, "order"));
         //Remove the "Uncategorized" folder
         tmpArray.pop();
 
@@ -51,21 +59,21 @@ class ReorderFoldersModal extends React.Component<IReorderFoldersModalProps> {
         });
     }
 
-    _handleCloseModal(){
+    _handleCloseModal() {
         this.setState({
             isModalOpen: false
         });
     }
 
-    _handleOpenModal(){
+    _handleOpenModal() {
         this.setState({
             isModalOpen: true
         });
     }
 
-    _handlePressOK(){
+    _handlePressOK() {
         const { foldersAsArray } = this.state;
-        const orderedFolders = foldersAsArray.map((folder, index)=>{
+        const orderedFolders = foldersAsArray.map((folder, index) => {
             folder.order = index + 1;
             return folder;
         });
@@ -73,14 +81,17 @@ class ReorderFoldersModal extends React.Component<IReorderFoldersModalProps> {
         this._handleCloseModal();
     }
 
-    _onSortEnd(reorderedObj: any){
-        const newFoldersArray = this._reorderFoldersArray(reorderedObj.oldIndex, reorderedObj.newIndex);
+    _onSortEnd(reorderedObj: any) {
+        const newFoldersArray = this._reorderFoldersArray(
+            reorderedObj.oldIndex,
+            reorderedObj.newIndex
+        );
         this.setState({
             foldersAsArray: newFoldersArray
         });
     }
-    
-    _reorderFoldersArray(previousIndex: number, newIndex: number):IFolder[] {
+
+    _reorderFoldersArray(previousIndex: number, newIndex: number): IFolder[] {
         const array = this.state.foldersAsArray.slice(0);
         if (newIndex >= array.length) {
             let k = newIndex - array.length;
@@ -108,25 +119,28 @@ class ReorderFoldersModal extends React.Component<IReorderFoldersModalProps> {
                 >
                     <Header icon="numbered list" content="Reorder Folders" />
                     <Modal.Content>
-                        <SortableFolderList items={foldersAsArray} onSortEnd={this._onSortEnd}/>
+                        <SortableFolderList
+                            items={foldersAsArray}
+                            onSortEnd={this._onSortEnd}
+                        />
                     </Modal.Content>
                     <Modal.Actions>
                         <div>
-                        <Button
-                            icon="cancel"
-                            color="orange"
-                            floated="left"
-                            inverted
-                            content="cancel"
-                            onClick={this._handleCloseModal}
-                        />
-                        <Button
-                            icon="checkmark"
-                            inverted
-                            color="green"
-                            content="Reorder"
-                            onClick={this._handlePressOK}
-                        />
+                            <Button
+                                icon="cancel"
+                                color="orange"
+                                floated="left"
+                                inverted
+                                content="cancel"
+                                onClick={this._handleCloseModal}
+                            />
+                            <Button
+                                icon="checkmark"
+                                inverted
+                                color="green"
+                                content="Reorder"
+                                onClick={this._handlePressOK}
+                            />
                         </div>
                     </Modal.Actions>
                 </Modal>
@@ -135,17 +149,20 @@ class ReorderFoldersModal extends React.Component<IReorderFoldersModalProps> {
     }
 }
 
-const mapStateToProps = (state: IRootStoreState): IMapStateToProps =>{
+const mapStateToProps = (state: IRootStoreState): IMapStateToProps => {
     const { folders } = state;
     return {
         folders: folders.folders
-    }
+    };
 };
 
-const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps =>{
+const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
     return {
-        beginReorderFolders: (foldersArr)=>dispatch(beginReorderFolders(foldersArr))
-    }
-}
+        beginReorderFolders: foldersArr =>
+            dispatch(beginReorderFolders(foldersArr))
+    };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReorderFoldersModal);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    ReorderFoldersModal
+);
