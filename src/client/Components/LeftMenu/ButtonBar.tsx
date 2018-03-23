@@ -27,7 +27,7 @@ class ButtonBar extends React.Component<IButtonBarProps> {
                     size="tiny"
                 >
                     <Icon name="plus" />
-                    <Icon name="rss" />Feed
+                    <Icon name="rss" />
                 </Button>
                 <Button
                     color="olive"
@@ -35,7 +35,7 @@ class ButtonBar extends React.Component<IButtonBarProps> {
                     size="tiny"
                 >
                     <Icon name="plus" />
-                    <Icon name="folder" />Folder
+                    <Icon name="folder" />
                 </Button>
                 <ReorderFoldersModal />
             </div>
