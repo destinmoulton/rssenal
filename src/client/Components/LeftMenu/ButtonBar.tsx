@@ -66,11 +66,16 @@ class ButtonBar extends React.Component<IButtonBarProps> {
                     />
                 </Button.Group>&nbsp;
                 <ReorderFoldersModal />
-                <Button
-                    className="rss-leftmenu-button-reload"
-                    icon="refresh"
-                    onClick={this._handleClickRefresh}
-                    size="mini"
+                <Popup
+                    trigger={
+                        <Button
+                            className="rss-leftmenu-button-reload"
+                            icon="refresh"
+                            onClick={this._handleClickRefresh}
+                            size="mini"
+                        />
+                    }
+                    content="Reload All Feeds"
                 />
                 <LogoutButton />
             </div>
