@@ -148,12 +148,12 @@ class EntriesList extends React.Component<IEntriesListProps> {
         }
     }
 
-    _handleChangeSort(e: any) {
+    _handleChangeSort(e: any, data: any) {
         this.setState({
-            sortBy: e.currentTarget.value
+            sortBy: data.value
         });
 
-        this._filterAndSortEntries(this.props, e.currentTarget.value);
+        this._filterAndSortEntries(this.props, data.value);
     }
 
     _handleKeyDown(e: any) {
