@@ -8,57 +8,62 @@ import { changeSetting } from "../../redux/actions/settings.actions";
 import { IDispatch, IRootStoreState, ISetting } from "../../interfaces";
 
 interface ISettingsModalProps {
-    changeSetting: (setting_key: string, setting_value: any)=>void;
+    changeSetting: (setting_key: string, setting_value: any) => void;
     settings: ISetting[];
 }
 
 class SettingsModal extends React.Component<ISettingsModalProps> {
     state = {
         isModalOpen: false
-    }
+    };
 
-    constructor(props: ISettingsModalProps){
+    constructor(props: ISettingsModalProps) {
         super(props);
 
         this._handleClickOpenModal = this._handleClickOpenModal.bind(this);
         this._handleClickCloseModal = this._handleClickCloseModal.bind(this);
     }
 
-    _handleClickOpenModal(){
+    _handleClickOpenModal() {
         this.setState({
             isModalOpen: true
-        })
+        });
     }
 
-    _handleClickCloseModal(){
+    _handleClickCloseModal() {
         this.setState({
             isModalOpen: false
-        })
+        });
     }
 
-    _buildSettings(){
+    _buildSettings() {
         const { settings } = this.props;
 
-        return settings.map((setting)=>{
-            if(setting.type==="toggle"){
+        return settings.map(setting => {
+            if (setting.type === "toggle") {
                 return this._buildRadioToggle(setting);
             }
         });
     }
 
-    _buildRadioToggle(setting: ISetting){
+    _buildRadioToggle(setting: ISetting) {
         return (
             <div className="rss-settings-toggle-box" key={setting.key}>
-                <Radio 
+                <Radio
                     checked={setting.value}
                     toggle
                     label={setting.name}
-                    onChange={this._handleChangeSetting.bind(this, setting.key, !setting.value)}/>
+                    onChange={this._handleChangeSetting.bind(
+                        this,
+                        setting.key,
+                        !setting.value
+                    )}
+                />
             </div>
         );
     }
 
-    _handleChangeSetting(setting_key: string, setting_value: any){
+    _handleChangeSetting(setting_key: string, setting_value: any) {
         this.props.changeSetting(setting_key, setting_value);
     }
 
@@ -67,23 +72,26 @@ class SettingsModal extends React.Component<ISettingsModalProps> {
         const content = this._buildSettings();
         return (
             <span>
-                <Icon 
+                <Icon
                     name="setting"
                     link={true}
                     size="large"
                     color="blue"
-                    onClick={this._handleClickOpenModal}/>
+                    onClick={this._handleClickOpenModal}
+                />
                 <Modal
                     open={isModalOpen}
                     onClose={this._handleClickCloseModal}
                     size="small"
                 >
                     <Header icon="setting" content="Settings" />
-                    <Modal.Content>
-                        {content}
-                    </Modal.Content>
+                    <Modal.Content>{content}</Modal.Content>
                     <Modal.Actions>
-                        <Button color="green" onClick={this._handleClickCloseModal} inverted>
+                        <Button
+                            color="green"
+                            onClick={this._handleClickCloseModal}
+                            inverted
+                        >
                             <Icon name="checkmark" /> Done
                         </Button>
                     </Modal.Actions>
@@ -93,16 +101,17 @@ class SettingsModal extends React.Component<ISettingsModalProps> {
     }
 }
 
-const mapStateToProps = (state: IRootStoreState)=>{
+const mapStateToProps = (state: IRootStoreState) => {
     const { settings } = state;
     return {
         settings: settings.settings
-    }
-}
+    };
+};
 
-const mapDispatchToProps = (dispatch: IDispatch)=>{
+const mapDispatchToProps = (dispatch: IDispatch) => {
     return {
-        changeSetting: (setting_key: string, setting_value: any)=>dispatch(changeSetting(setting_key, setting_value))
-    }
-}
+        changeSetting: (setting_key: string, setting_value: any) =>
+            dispatch(changeSetting(setting_key, setting_value))
+    };
+};
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsModal);
