@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { Dropdown } from "semantic-ui-react";
+
 const MENU_OPTIONS = [
     { value: "publish_date:asc", text: "Date - Oldest First" },
     { value: "publish_date:desc", text: "Date - Newest First" },
@@ -8,24 +10,22 @@ const MENU_OPTIONS = [
 
 interface ISortMenuProps {
     currentSortBy: string;
-    onChange: (e: any) => void;
+    onChange: (e: any, data: any) => void;
 }
 
 const SortMenu = (props: ISortMenuProps) => {
     const { currentSortBy, onChange } = props;
-
-    const optionList = MENU_OPTIONS.map(option => {
-        return (
-            <option
-                key={option.value}
-                value={option.value}
-                selected={option.value === currentSortBy}
-            >
-                {option.text}
-            </option>
-        );
-    });
-    return <select onChange={onChange}>{optionList}</select>;
+    return (
+        <span>
+            Sorting by&nbsp;
+            <Dropdown
+                inline
+                defaultValue={currentSortBy}
+                onChange={onChange}
+                options={MENU_OPTIONS}
+            />
+        </span>
+    );
 };
 
 export default SortMenu;
