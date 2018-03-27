@@ -2,8 +2,8 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Button } from "semantic-ui-react";
 
-import { logoutUser } from "../../redux/actions/auth.actions";
-import { IRootStoreState, IDispatch } from "../../interfaces";
+import { logoutUser } from "../redux/actions/auth.actions";
+import { IRootStoreState, IDispatch } from "../interfaces";
 interface IMapStateToProps {}
 interface IMapDispatchToProps {
     logoutUser: () => void;
