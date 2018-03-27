@@ -283,7 +283,7 @@ class EntriesList extends React.Component<IEntriesListProps> {
                         <SortMenu
                             onChange={this._handleChangeSort}
                             currentSortBy={sortBy}
-                        />
+                        />&nbsp;&nbsp;
                         <SettingsModal />
                     </div>
                 </div>
