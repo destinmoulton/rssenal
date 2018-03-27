@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { Button, Header, Icon, Modal, Radio } from "semantic-ui-react";
+import { Button, Header, Icon, Modal, Popup, Radio } from "semantic-ui-react";
 
 import { changeSetting } from "../../redux/actions/settings.actions";
 
@@ -72,12 +72,17 @@ class SettingsModal extends React.Component<ISettingsModalProps> {
         const content = this._buildSettings();
         return (
             <span>
-                <Icon
-                    name="setting"
-                    link={true}
-                    size="large"
-                    color="blue"
-                    onClick={this._handleClickOpenModal}
+                <Popup
+                    trigger={
+                        <Icon
+                            name="setting"
+                            link={true}
+                            size="large"
+                            color="blue"
+                            onClick={this._handleClickOpenModal}
+                        />
+                    }
+                    content="Settings"
                 />
                 <Modal
                     open={isModalOpen}
