@@ -10,14 +10,14 @@
 div.rss-body-left-container {
     position: absolute;
     left: 0px;
-    width: 265px;
+    width: 260px;
     height: 100%;
     border-right: 2px solid gray;
 }
 
 div.rss-body-right-container {
     position: absolute;
-    left: 265px;
+    left: 260px;
     right: 0px;
     height: 100%;
 }
