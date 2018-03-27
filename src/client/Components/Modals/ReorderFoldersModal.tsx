@@ -110,7 +110,7 @@ class ReorderFoldersModal extends React.Component<IReorderFoldersModalProps> {
                 <Button
                     icon="numbered list"
                     onClick={this._handleOpenModal}
-                    size="tiny"
+                    size="mini"
                 />
                 <Modal
                     open={isModalOpen}

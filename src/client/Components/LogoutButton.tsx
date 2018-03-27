@@ -25,7 +25,7 @@ class LogoutButton extends React.Component<ILogoutProps> {
             <Button
                 icon="sign out"
                 onClick={this._handleClickLogout}
-                size="tiny"
+                size="mini"
             />
         );
     }

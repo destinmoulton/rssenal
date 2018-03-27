@@ -39,7 +39,7 @@ class ButtonBar extends React.Component<IButtonBarProps> {
     render() {
         return (
             <div className="rss-leftmenu-buttonbar-container">
-                <Button.Group size="tiny">
+                <Button.Group size="mini">
                     <Button
                         color="grey"
                         onClick={this._handleAddFeed.bind(this)}
@@ -59,7 +59,7 @@ class ButtonBar extends React.Component<IButtonBarProps> {
                 <Button
                     icon="refresh"
                     onClick={this._handleClickRefresh}
-                    size="tiny"
+                    size="mini"
                 />
                 <LogoutButton />
             </div>
