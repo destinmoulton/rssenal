@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import { Button, Icon } from "semantic-ui-react";
 
+import LogoutButton from "../LogoutButton";
 import ReorderFoldersModal from "../Modals/ReorderFoldersModal";
 import { refreshAllFeeds } from "../../redux/actions/feeds.actions";
 import * as Types from "../../interfaces";
@@ -60,6 +61,7 @@ class ButtonBar extends React.Component<IButtonBarProps> {
                     onClick={this._handleClickRefresh}
                     size="tiny"
                 />
+                <LogoutButton />
             </div>
         );
     }

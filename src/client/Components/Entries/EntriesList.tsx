@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Button, Loader, Menu } from "semantic-ui-react";
 
 import Entry from "./Entry/Entry";
-import LogoutButton from "./LogoutButton";
+
 import SettingsModal from "../Modals/SettingsModal";
 import SortMenu from "./SortMenu";
 
@@ -285,7 +285,6 @@ class EntriesList extends React.Component<IEntriesListProps> {
                             currentSortBy={sortBy}
                         />
                         <SettingsModal />
-                        <LogoutButton />
                     </div>
                 </div>
                 <div className="rss-entrylist-container">{entryList}</div>
