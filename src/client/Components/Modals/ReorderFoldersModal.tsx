@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { arrayMove } from "react-sortable-hoc";
-import { Button, Header, Icon, Modal } from "semantic-ui-react";
+import { Button, Header, Icon, Modal, Popup } from "semantic-ui-react";
 
 import { SortableFolderItem, SortableFolderList } from "./SortableComponents";
 
@@ -107,11 +107,16 @@ class ReorderFoldersModal extends React.Component<IReorderFoldersModalProps> {
         const { foldersAsArray, isModalOpen } = this.state;
         return (
             <span>
-                <Button
-                    className="rss-leftmenu-button-reorder"
-                    icon="numbered list"
-                    onClick={this._handleOpenModal}
-                    size="mini"
+                <Popup
+                    trigger={
+                        <Button
+                            className="rss-leftmenu-button-reorder"
+                            icon="numbered list"
+                            onClick={this._handleOpenModal}
+                            size="mini"
+                        />
+                    }
+                    content="Reorder Folders"
                 />
                 <Modal
                     open={isModalOpen}
