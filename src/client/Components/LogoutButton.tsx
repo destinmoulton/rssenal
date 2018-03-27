@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Button } from "semantic-ui-react";
+import { Button, Popup } from "semantic-ui-react";
 
 import { logoutUser } from "../redux/actions/auth.actions";
 import { IRootStoreState, IDispatch } from "../interfaces";
@@ -22,12 +22,17 @@ class LogoutButton extends React.Component<ILogoutProps> {
 
     render() {
         return (
-            <Button
-                className="rss-leftmenu-button-logout"
-                icon="sign out"
-                onClick={this._handleClickLogout}
-                size="mini"
-                floated="right"
+            <Popup
+                trigger={
+                    <Button
+                        className="rss-leftmenu-button-logout"
+                        icon="sign out"
+                        onClick={this._handleClickLogout}
+                        size="mini"
+                        floated="right"
+                    />
+                }
+                content="Logout"
             />
         );
     }
