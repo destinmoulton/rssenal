@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { Button, Icon } from "semantic-ui-react";
+import { Button, Icon, Popup } from "semantic-ui-react";
 
 import LogoutButton from "../LogoutButton";
 import ReorderFoldersModal from "../Modals/ReorderFoldersModal";
@@ -40,20 +40,30 @@ class ButtonBar extends React.Component<IButtonBarProps> {
         return (
             <div className="rss-leftmenu-buttonbar-container">
                 <Button.Group size="mini">
-                    <Button
-                        className="rss-leftmenu-button-addrss"
-                        onClick={this._handleAddFeed.bind(this)}
-                    >
-                        <Icon name="plus" />
-                        <Icon name="rss" />
-                    </Button>
-                    <Button
-                        className="rss-leftmenu-button-addfolder"
-                        onClick={this._handleAddFolder.bind(this)}
-                    >
-                        <Icon name="plus" />
-                        <Icon name="folder" />
-                    </Button>
+                    <Popup
+                        trigger={
+                            <Button
+                                className="rss-leftmenu-button-addrss"
+                                onClick={this._handleAddFeed.bind(this)}
+                            >
+                                <Icon name="plus" />
+                                <Icon name="rss" />
+                            </Button>
+                        }
+                        content="Add RSS Feed"
+                    />
+                    <Popup
+                        trigger={
+                            <Button
+                                className="rss-leftmenu-button-addfolder"
+                                onClick={this._handleAddFolder.bind(this)}
+                            >
+                                <Icon name="plus" />
+                                <Icon name="folder" />
+                            </Button>
+                        }
+                        content="Add Folder"
+                    />
                 </Button.Group>&nbsp;
                 <ReorderFoldersModal />
                 <Button
