@@ -41,14 +41,14 @@ class ButtonBar extends React.Component<IButtonBarProps> {
             <div className="rss-leftmenu-buttonbar-container">
                 <Button.Group size="mini">
                     <Button
-                        color="grey"
+                        className="rss-leftmenu-button-addrss"
                         onClick={this._handleAddFeed.bind(this)}
                     >
                         <Icon name="plus" />
                         <Icon name="rss" />
                     </Button>
                     <Button
-                        color="olive"
+                        className="rss-leftmenu-button-addfolder"
                         onClick={this._handleAddFolder.bind(this)}
                     >
                         <Icon name="plus" />
@@ -57,6 +57,7 @@ class ButtonBar extends React.Component<IButtonBarProps> {
                 </Button.Group>&nbsp;
                 <ReorderFoldersModal />
                 <Button
+                    className="rss-leftmenu-button-reload"
                     icon="refresh"
                     onClick={this._handleClickRefresh}
                     size="mini"

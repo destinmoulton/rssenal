@@ -108,6 +108,7 @@ class ReorderFoldersModal extends React.Component<IReorderFoldersModalProps> {
         return (
             <span>
                 <Button
+                    className="rss-leftmenu-button-reorder"
                     icon="numbered list"
                     onClick={this._handleOpenModal}
                     size="mini"

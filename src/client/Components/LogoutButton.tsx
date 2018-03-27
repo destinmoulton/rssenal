@@ -23,6 +23,7 @@ class LogoutButton extends React.Component<ILogoutProps> {
     render() {
         return (
             <Button
+                className="rss-leftmenu-button-logout"
                 icon="sign out"
                 onClick={this._handleClickLogout}
                 size="mini"

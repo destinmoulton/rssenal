@@ -227,6 +227,26 @@ div.rss-leftmenu-buttonbar-container {
     padding: 5px;
 }
 
+button.rss-leftmenu-button-addrss {
+    background-color: #ff8500 !important;
+}
+
+button.rss-leftmenu-button-addfolder {
+    background-color: #f1d592 !important;
+}
+
+button.rss-leftmenu-button-reorder {
+    background-color: #d1ea87 !important;
+}
+
+button.rss-leftmenu-button-reload {
+    background-color: #a0c9ff !important;
+}
+
+button.rss-leftmenu-button-logout {
+    background-color: #b3b3b3 !important;
+}
+
 div.rss-settings-toggle-box {
     margin-top: 6px;
 }
