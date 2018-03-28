@@ -122,6 +122,7 @@ class ReorderFoldersModal extends React.Component<IReorderFoldersModalProps> {
                     open={isModalOpen}
                     onClose={this._handleCloseModal}
                     size="tiny"
+                    className="rss-modal"
                 >
                     <Header icon="numbered list" content="Reorder Folders" />
                     <Modal.Content>
@@ -137,7 +138,7 @@ class ReorderFoldersModal extends React.Component<IReorderFoldersModalProps> {
                                 color="orange"
                                 floated="left"
                                 inverted
-                                content="cancel"
+                                content="Cancel"
                                 onClick={this._handleCloseModal}
                             />
                             <Button
