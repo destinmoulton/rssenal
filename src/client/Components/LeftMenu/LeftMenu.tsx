@@ -1,6 +1,7 @@
 import { OrderedMap } from "immutable";
 import * as React from "react";
 import { connect } from "react-redux";
+import { Icon } from "semantic-ui-react";
 
 import { getAllFolders } from "../../redux/actions/folders.actions";
 import { getAllFeeds } from "../../redux/actions/feeds.actions";
@@ -173,6 +174,9 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
                     />
                 </div>
                 <div>{listFolders}</div>
+                <div className="rss-leftmenu-logo">
+                    <Icon name="rss" />&nbsp;RSSenal
+                </div>
             </div>
         );
     }
