@@ -73,7 +73,7 @@ class Login extends React.Component<ILoginProps> {
                     verticalAlign="middle"
                 >
                     <Grid.Column style={{ maxWidth: 450 }}>
-                        <Header as="h2" color="teal" textAlign="center">
+                        <Header as="h2" className="rss-login-header">
                             RSSenal Sign In
                         </Header>
                         <Form size="large">
