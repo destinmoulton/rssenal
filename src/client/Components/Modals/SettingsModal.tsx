@@ -87,7 +87,8 @@ class SettingsModal extends React.Component<ISettingsModalProps> {
                 <Modal
                     open={isModalOpen}
                     onClose={this._handleClickCloseModal}
-                    size="small"
+                    size="tiny"
+                    className="rss-modal"
                 >
                     <Header icon="setting" content="Settings" />
                     <Modal.Content>{content}</Modal.Content>

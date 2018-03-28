@@ -6,18 +6,17 @@ import SelectFolder from "./SelectFolder";
 
 import { beginUpdateFeed } from "../../redux/actions/feeds.actions";
 
-import {IDispatch, IFeed, IRootStoreState, TFolderID} from "../../interfaces";
+import { IDispatch, IFeed, IRootStoreState, TFolderID } from "../../interfaces";
 
 interface IMapDispatchToProps {
-    beginUpdateFeed: (feedInfo: any)=>void;
+    beginUpdateFeed: (feedInfo: any) => void;
 }
 
-interface IMapStateToProps {
-}
+interface IMapStateToProps {}
 
-interface IEditFeedModalProps extends IMapDispatchToProps, IMapStateToProps{
+interface IEditFeedModalProps extends IMapDispatchToProps, IMapStateToProps {
     isModalOpen: boolean;
-    onCloseModal: ()=>void;
+    onCloseModal: () => void;
     feed: any;
 }
 
@@ -26,28 +25,29 @@ interface IEditFeedModalState {
 }
 
 class EditFeedModal extends React.Component<IEditFeedModalProps> {
-
     state: IEditFeedModalState = {
-        newFeed: {title:""}
-    }
+        newFeed: { title: "" }
+    };
 
-    constructor(props: IEditFeedModalProps){
+    constructor(props: IEditFeedModalProps) {
         super(props);
-        
+
         this._handleClose = this._handleClose.bind(this);
         this._handleSave = this._handleSave.bind(this);
         this._handleInputKeyPress = this._handleInputKeyPress.bind(this);
         this._handleInputOnChange = this._handleInputOnChange.bind(this);
-        this._handleSelectFolderChange = this._handleSelectFolderChange.bind(this);
+        this._handleSelectFolderChange = this._handleSelectFolderChange.bind(
+            this
+        );
     }
 
-    componentWillReceiveProps(nextProps: IEditFeedModalProps){
+    componentWillReceiveProps(nextProps: IEditFeedModalProps) {
         this.setState({
             newFeed: nextProps.feed
         });
     }
-    
-    _handleClose(){
+
+    _handleClose() {
         this.setState({
             newFeed: {}
         });
@@ -55,22 +55,22 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
         this.props.onCloseModal();
     }
 
-    _handleSave(){
+    _handleSave() {
         const { newFeed } = this.state;
 
-        if(newFeed.name !== ""){
+        if (newFeed.name !== "") {
             this.props.beginUpdateFeed(newFeed);
             this._handleClose();
         }
     }
 
-    _handleInputKeyPress(e: any){
-        if(e.key === "Enter"){
+    _handleInputKeyPress(e: any) {
+        if (e.key === "Enter") {
             this._handleSave();
         }
     }
 
-    _handleInputOnChange(e: React.FormEvent<HTMLInputElement>){
+    _handleInputOnChange(e: React.FormEvent<HTMLInputElement>) {
         const { newFeed } = this.state;
         newFeed.title = e.currentTarget.value;
         this.setState({
@@ -78,18 +78,18 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
         });
     }
 
-    _handleSelectFolderChange(folderId: TFolderID){
+    _handleSelectFolderChange(folderId: TFolderID) {
         const { newFeed } = this.state;
         newFeed.folder_id = folderId;
-        
+
         this.setState({
             newFeed
         });
     }
 
-    _buildEditInput(){
+    _buildEditInput() {
         const { newFeed } = this.state;
-        
+
         return (
             <div>
                 <label>Feed Name</label>
@@ -101,16 +101,19 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
                     onChange={this._handleInputOnChange}
                     className="rss-editfeed-input"
                 />
-                <br/><br/>
-                <label>Folder</label><br/>
+                <br />
+                <br />
+                <label>Folder</label>
+                <br />
                 <SelectFolder
-                    selectedValue={newFeed.folder_id} 
-                    onChange={this._handleSelectFolderChange}/>
+                    selectedValue={newFeed.folder_id}
+                    onChange={this._handleSelectFolderChange}
+                />
             </div>
-        )
+        );
     }
 
-    _buildButtons(){
+    _buildButtons() {
         return (
             <div>
                 <Button
@@ -143,27 +146,24 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
                     open={isModalOpen}
                     onClose={this._handleClose}
                     size="tiny"
+                    className="rss-modal"
                 >
                     <Header icon="pencil" content="Edit Feed" />
-                    <Modal.Content>
-                        {form}
-                    </Modal.Content>
-                    <Modal.Actions>
-                        {buttons}
-                    </Modal.Actions>
+                    <Modal.Content>{form}</Modal.Content>
+                    <Modal.Actions>{buttons}</Modal.Actions>
                 </Modal>
             </span>
         );
     }
 }
-const mapStateToProps = (state: IRootStoreState): IMapStateToProps=>{
+const mapStateToProps = (state: IRootStoreState): IMapStateToProps => {
     return {};
-}
+};
 
-const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps=>{
+const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
     return {
-        beginUpdateFeed: (feedInfo)=> dispatch(beginUpdateFeed(feedInfo))
-    }
-}
+        beginUpdateFeed: feedInfo => dispatch(beginUpdateFeed(feedInfo))
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditFeedModal);

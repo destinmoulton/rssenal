@@ -272,27 +272,26 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
         }
 
         return (
-            <div>
-                <Modal
-                    open={isModalOpen}
-                    onClose={this._handleClose}
-                    size="small"
-                >
-                    <Header icon="plus" content="Add Feed" />
-                    <Modal.Content>{content}</Modal.Content>
-                    <Modal.Actions>
-                        <Button
-                            color="orange"
-                            onClick={this._handleClose}
-                            inverted
-                            floated="left"
-                            icon="close"
-                            content="Cancel"
-                        />
-                        {buttons}
-                    </Modal.Actions>
-                </Modal>
-            </div>
+            <Modal
+                open={isModalOpen}
+                onClose={this._handleClose}
+                size="small"
+                className="rss-modal"
+            >
+                <Header icon="plus" content="Add Feed" />
+                <Modal.Content>{content}</Modal.Content>
+                <Modal.Actions>
+                    <Button
+                        color="orange"
+                        onClick={this._handleClose}
+                        inverted
+                        floated="left"
+                        icon="close"
+                        content="Cancel"
+                    />
+                    {buttons}
+                </Modal.Actions>
+            </Modal>
         );
     }
 }
