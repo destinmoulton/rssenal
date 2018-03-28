@@ -5,7 +5,7 @@ import {
     Form,
     Grid,
     Header,
-    Image,
+    Icon,
     Message,
     Segment
 } from "semantic-ui-react";
@@ -74,10 +74,10 @@ class Login extends React.Component<ILoginProps> {
                 >
                     <Grid.Column style={{ maxWidth: 450 }}>
                         <Header as="h2" className="rss-login-header">
-                            RSSenal Sign In
+                            <Icon name="rss" />&nbsp;&nbsp;RSSenal
                         </Header>
                         <Form size="large">
-                            <Segment stacked>
+                            <Segment>
                                 <Form.Input
                                     fluid
                                     icon="user"
@@ -97,7 +97,7 @@ class Login extends React.Component<ILoginProps> {
                                 />
                                 {message}
                                 <Button
-                                    color="teal"
+                                    className="rss-login-button"
                                     fluid
                                     size="large"
                                     onClick={this._authenticateUser}
