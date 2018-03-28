@@ -64,7 +64,7 @@ class ButtonBar extends React.Component<IButtonBarProps> {
                         }
                         content="Add Folder"
                     />
-                </Button.Group>&nbsp;
+                </Button.Group>
                 <ReorderFoldersModal />
                 <Popup
                     trigger={
