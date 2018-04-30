@@ -10,9 +10,15 @@ class EntriesController {
                 let query = {
                     feed_id: req.query.feedId
                 };
-                // if (req.query.hasOwnProperty("hasRead")) {
-                //     query["has_read"] = req.query.hasRead;
-                // }
+
+                if (req.query.hasOwnProperty("showEntriesHasRead")) {
+                    if (req.query["showEntriesHasRead"] === "false") {
+                        // This logic might seem odd,
+                        // but we only want to add this query parameter
+                        // when we do NOT want to view the has_read entries
+                        query["has_read"] = false;
+                    }
+                }
                 return Entries.find(query).sort({ publish_date: "desc" });
             })
             .then(entries => {
