@@ -10,9 +10,9 @@ class EntriesController {
                 let query = {
                     feed_id: req.query.feedId
                 };
-                if (req.query.hasOwnProperty("hasRead")) {
-                    query["has_read"] = req.query.hasRead;
-                }
+                // if (req.query.hasOwnProperty("hasRead")) {
+                //     query["has_read"] = req.query.hasRead;
+                // }
                 return Entries.find(query).sort({ publish_date: "desc" });
             })
             .then(entries => {
