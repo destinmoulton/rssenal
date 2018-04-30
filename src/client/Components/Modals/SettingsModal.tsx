@@ -4,11 +4,13 @@ import { connect } from "react-redux";
 import { Button, Header, Icon, Modal, Popup, Radio } from "semantic-ui-react";
 
 import { changeSetting } from "../../redux/actions/settings.actions";
+import { refreshAllFeeds } from "../../redux/actions/feeds.actions";
 
 import { IDispatch, IRootStoreState, ISetting } from "../../interfaces";
 
 interface ISettingsModalProps {
     changeSetting: (setting_key: string, setting_value: any) => void;
+    refreshAllFeeds: () => void;
     settings: ISetting[];
 }
 
@@ -56,15 +58,24 @@ class SettingsModal extends React.Component<ISettingsModalProps> {
                     onChange={this._handleChangeSetting.bind(
                         this,
                         setting.key,
-                        !setting.value
+                        !setting.value,
+                        setting
                     )}
                 />
             </div>
         );
     }
 
-    _handleChangeSetting(setting_key: string, setting_value: any) {
+    _handleChangeSetting(
+        setting_key: string,
+        setting_value: any,
+        setting: ISetting
+    ) {
         this.props.changeSetting(setting_key, setting_value);
+
+        if (setting.refresh_entries_on_change) {
+            this.props.refreshAllFeeds();
+        }
     }
 
     render() {
@@ -117,7 +128,8 @@ const mapStateToProps = (state: IRootStoreState) => {
 const mapDispatchToProps = (dispatch: IDispatch) => {
     return {
         changeSetting: (setting_key: string, setting_value: any) =>
-            dispatch(changeSetting(setting_key, setting_value))
+            dispatch(changeSetting(setting_key, setting_value)),
+        refreshAllFeeds: () => dispatch(refreshAllFeeds())
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsModal);
