@@ -1,9 +1,6 @@
+import { SETTINGS_CHANGE } from "../actiontypes";
 
-import {
-    SETTINGS_CHANGE
-} from "../actiontypes";
-
-import { ISettingsAction, IReducerStateSettings} from "../../interfaces";
+import { ISettingsAction, IReducerStateSettings } from "../../interfaces";
 
 const INITIAL_STATE: IReducerStateSettings = {
     settings: [
@@ -14,22 +11,22 @@ const INITIAL_STATE: IReducerStateSettings = {
             value: true
         },
         {
-            key: "show_unread",
-            name: "Show Unread",
+            key: "show_entries_has_read",
+            name: "Show Entries Already Read",
             type: "toggle",
-            value: true
-        }          
+            value: false
+        }
     ]
 };
 
-function settingsReducer(state = INITIAL_STATE, action: ISettingsAction){
-    switch(action.type){
+function settingsReducer(state = INITIAL_STATE, action: ISettingsAction) {
+    switch (action.type) {
         case SETTINGS_CHANGE:
             const { settings } = state;
 
-            const newSettings = settings.map((setting)=>{
-                if(setting.key === action.setting_key){
-                    const newSetting = {...setting};
+            const newSettings = settings.map(setting => {
+                if (setting.key === action.setting_key) {
+                    const newSetting = { ...setting };
                     newSetting.value = action.setting_value;
                     return newSetting;
                 } else {
@@ -39,9 +36,9 @@ function settingsReducer(state = INITIAL_STATE, action: ISettingsAction){
             return {
                 ...state,
                 settings: newSettings
-            }
+            };
         default:
-            return {...state};
+            return { ...state };
     }
 }
 
