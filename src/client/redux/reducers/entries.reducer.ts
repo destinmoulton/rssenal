@@ -1,6 +1,7 @@
 import { OrderedMap } from "immutable";
 
 import {
+    ENTRIES_CLEAR_ALL,
     ENTRIES_GET_COMPLETE,
     ENTRIES_MARKREAD_COMPLETE,
     ENTRIES_REMOVE_FEED
@@ -21,6 +22,12 @@ type IEntryTuple = [TEntryID, IEntry];
 
 function entriesReducer(state = INITIAL_STATE, action: IEntriesAction) {
     switch (action.type) {
+        case ENTRIES_CLEAR_ALL: {
+            return {
+                ...state,
+                entries: OrderedMap<TEntryID, IEntry>()
+            };
+        }
         case ENTRIES_GET_COMPLETE: {
             const { entries } = state;
 
