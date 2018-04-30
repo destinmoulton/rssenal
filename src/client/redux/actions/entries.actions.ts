@@ -26,14 +26,15 @@ import {
 export function getEntriesForFeed(feedId: TFeedID) {
     return (dispatch: IDispatch, getState: IGetState) => {
         const { settings } = getState();
-        let showUnread = true;
+        let showRead = false;
         settings.settings.forEach(setting => {
-            if (setting.key === "show_unread") {
-                showUnread = setting.value;
+            if (setting.key === "show_entries_has_read") {
+                showRead = setting.value;
             }
         });
 
-        const queryString = "?hasRead=" + !showUnread + "&feedId=" + feedId;
+        const queryString =
+            "?showEntriesHasRead=" + showRead + "&feedId=" + feedId;
         const url = API_ENTRIES_BASE + queryString;
         const init = {
             method: "GET",
