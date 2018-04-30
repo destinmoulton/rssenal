@@ -15,7 +15,11 @@ import { API_FEEDS_BASE } from "../apiendpoints";
 
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 
-import { getEntriesForFeed, entriesRemoveFeed } from "./entries.actions";
+import {
+    entriesClearAll,
+    getEntriesForFeed,
+    entriesRemoveFeed
+} from "./entries.actions";
 import { message } from "./messages.actions";
 
 import {
@@ -126,6 +130,7 @@ function clearUnread() {
 export function refreshAllFeeds() {
     return (dispatch: IDispatch, getState: () => IRootStoreState) => {
         const { feeds } = getState().feeds;
+        dispatch(entriesClearAll());
         dispatch(getAllEntriesForFeeds(feeds.toArray()));
     };
 }
