@@ -181,6 +181,7 @@ export interface ISetting {
     key: string;
     name: string;
     type: string;
+    refresh_entries_on_change: boolean;
     value: any;
 }
 
