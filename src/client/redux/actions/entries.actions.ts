@@ -1,6 +1,7 @@
 import * as moment from "moment";
 
 import {
+    ENTRIES_CLEAR_ALL,
     ENTRIES_GET_COMPLETE,
     ENTRIES_MARKREAD_COMPLETE,
     ENTRIES_UPDATE_BEGIN,
@@ -132,5 +133,11 @@ export function entriesRemoveFeed(feedId: TFeedID) {
     return {
         type: ENTRIES_REMOVE_FEED,
         feedId
+    };
+}
+
+export function entriesClearAll() {
+    return {
+        type: ENTRIES_CLEAR_ALL
     };
 }
