@@ -8,12 +8,14 @@ const INITIAL_STATE: IReducerStateSettings = {
             key: "show_images",
             name: "Show Images",
             type: "toggle",
+            refresh_entries_on_change: false,
             value: true
         },
         {
             key: "show_entries_has_read",
             name: "Show Entries Already Read",
             type: "toggle",
+            refresh_entries_on_change: true,
             value: false
         }
     ]
