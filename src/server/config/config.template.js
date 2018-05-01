@@ -1,14 +1,17 @@
 const auth = {
-    username: "usernamehere",
-    password: "supersecret"
+    username: "<RSSENAL_USERNAME>",
+    password: "<RSSENAL_PASSWORD>"
 };
 
-export default (config = {
+const config = {
     port: 3000,
     mongo: {
         uri: "mongodb://localhost/rssenal"
     },
+    auth,
     jwt: {
         secret: "SOMETHINGSUPERSECRET!"
     }
-});
+};
+
+export default config;
