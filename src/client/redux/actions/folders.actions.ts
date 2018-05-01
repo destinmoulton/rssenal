@@ -13,6 +13,7 @@ import { API_FOLDERS_BASE, API_FOLDERS_GET_ALL } from "../apiendpoints";
 import { getAllFeeds } from "./feeds.actions";
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { message } from "./messages.actions";
+import { resetFilter } from "./filter.actions";
 
 import { IDispatch, IFolder, TFolderID } from "../../interfaces";
 export function getAllFolders() {
@@ -173,6 +174,7 @@ function deleteFolder(folderId: TFolderID) {
             .then(resObj => {
                 if (resObj.status === "success") {
                     dispatch(message("Folder removed.", "success"));
+                    dispatch(resetFilter());
                     dispatch(deleteComplete(folderId));
                     dispatch(getAllFeeds());
                 } else {
