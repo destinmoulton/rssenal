@@ -10,12 +10,33 @@ RSSenal was **not** built with multiple users in mind. There is a login, but the
 
 There are **no** options to share a post on Facebook, Twitter, or any other social platforms. Copying a link is easy enough.
 
-### Build Instructions
+### Installation Instructions
 
-Copy the contents of src/config/config.template.js into its own file src/config/config.js. Change the configured values to match your own setup.
+`$ git clone https://github.com/destinmoulton/rssenal`
 
-Compile the server code:
+Install node_modules:
+`$ npm install` or `$ yarn install`
+
+### Configuration and Compilation
+
+Copy the contents of `src/config/config.template.js` into its own file `src/config/config.js`. Change the configured values to match your own setup.
+
+Compile the server:
 `$ npm run compile:server`
+
+You can leave the server compilation running or kill it with `Ctrl+c` when you have it configured.
+
+Create a db in mongo.
+
+Without authentication:
+`$ mongo`
+`> use rssenal` This will create the database.
+
+With authentication:
+`$ mongo -u <ROOT_USER> -p --authenticationDatabase <AUTHDB>`
+`db.createUser({ user:"rssenal", pwd:"<SUPERSECRETPASSWORD>", roles: [ { role:"dbOwner", db:"rssenal" } ] })`
+
+Alter the configuration values in `src/config/config.js`
 
 ### License
 
