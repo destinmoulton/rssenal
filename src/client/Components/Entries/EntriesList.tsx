@@ -160,12 +160,12 @@ class EntriesList extends React.Component<IEntriesListProps> {
         switch (e.key) {
             case "ArrowDown":
             case "j":
-                e.preventDefault();
+                //e.preventDefault();
                 this._activateSiblingEntry("next");
                 break;
             case "ArrowUp":
             case "k":
-                e.preventDefault();
+                //e.preventDefault();
                 this._activateSiblingEntry("previous");
                 break;
         }
