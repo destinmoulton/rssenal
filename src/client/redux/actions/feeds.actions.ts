@@ -20,6 +20,8 @@ import {
     getEntriesForFeed,
     entriesRemoveFeed
 } from "./entries.actions";
+
+import { resetFilter } from "./filter.actions";
 import { message } from "./messages.actions";
 
 import {
@@ -161,6 +163,7 @@ function deleteFeed(feedId: TFeedID) {
             })
             .then(resObj => {
                 dispatch(message("Feed removed.", "success"));
+                dispatch(resetFilter());
                 dispatch(deleteFeedComplete(feedId));
                 dispatch(entriesRemoveFeed(feedId));
                 dispatch(getAllFeeds());
