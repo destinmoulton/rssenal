@@ -1,4 +1,4 @@
-import { FILTER_CHANGE } from "../actiontypes";
+import { FILTER_CHANGE, FILTER_RESET } from "../actiontypes";
 
 import { IDispatch, IFilter } from "../../interfaces";
 
@@ -12,5 +12,11 @@ function setNewFilter(newFilter: IFilter) {
     return {
         type: FILTER_CHANGE,
         newFilter
+    };
+}
+
+export function resetFilter() {
+    return {
+        type: FILTER_RESET
     };
 }
