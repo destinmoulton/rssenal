@@ -10,6 +10,11 @@ RSSenal was **not** built with multiple users in mind. There is a login, but the
 
 There are **no** options to share a post on Facebook, Twitter, or any other social platforms. Copying a link is easy enough.
 
+### Requirements
+
+*   pm2
+*   mongodb
+
 ### Installation Instructions
 
 `$ git clone https://github.com/destinmoulton/rssenal`
@@ -31,10 +36,6 @@ Create a db in mongo.
 Without authentication:
 `$ mongo`
 `> use rssenal` This will create the database.
-
-With authentication:
-`$ mongo -u <ROOT_USER> -p --authenticationDatabase <AUTHDB>`
-`db.createUser({ user:"rssenal", pwd:"<SUPERSECRETPASSWORD>", roles: [ { role:"dbOwner", db:"rssenal" } ] })`
 
 Alter the configuration values in `src/config/config.js`
 
