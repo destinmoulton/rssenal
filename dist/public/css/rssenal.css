@@ -121,11 +121,11 @@ div.rss-entry-content-container {
     font-size: 1.1em;
 }
 
-div.rss-entry-content-container>figure>figcaption {
+div.rss-entry-content-container > figure > figcaption {
     text-align: center;
 }
 
-div.rss-entry-content-container>pre {
+div.rss-entry-content-container > pre {
     border: 1px solid darkgray;
     background-color: lightgoldenrodyellow;
     font-size: 12px;
@@ -133,7 +133,7 @@ div.rss-entry-content-container>pre {
     overflow-x: scroll;
 }
 
-div.rss-entry-content-container>blockquote {
+div.rss-entry-content-container > blockquote {
     font-family: Georgia, serif;
     font-size: 18px;
     font-style: italic;
@@ -146,7 +146,7 @@ div.rss-entry-content-container>blockquote {
     color: #383838;
 }
 
-div.rss-entry-content-container>blockquote:before {
+div.rss-entry-content-container > blockquote:before {
     display: block;
     content: "\201C";
     font-size: 50px;
@@ -156,20 +156,19 @@ div.rss-entry-content-container>blockquote:before {
     color: #7a7a7a;
 }
 
-div.rss-entry-content-container>blockquote cite {
+div.rss-entry-content-container > blockquote cite {
     color: #7a7a7a;
     font-size: 14px;
     display: block;
     margin-top: 5px;
 }
 
-div.rss-entry-content-container>blockquote p {
+div.rss-entry-content-container > blockquote p {
     color: #7a7a7a;
     font-size: 14px;
     display: block;
     margin-top: 5px;
 }
-
 
 /* The img tag inside the body of an rss feed */
 
@@ -254,12 +253,22 @@ button.rss-leftmenu-button-logout {
     background-color: #b3b3b3 !important;
 }
 
+div.rss-leftmenu-folders-box {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 div.rss-leftmenu-logo {
     position: absolute;
     left: 0px;
     bottom: 0px;
     font-size: 1.3em;
     padding: 4px;
+    background-color: white;
+    width: 100%;
 }
 
 .rss-login-header {
@@ -271,7 +280,6 @@ button.rss-login-button {
     background-color: #fff !important;
     border: 3px solid #ff8500 !important;
 }
-
 
 /** Modal style to fix the issue of it popping off top of screen **/
 
