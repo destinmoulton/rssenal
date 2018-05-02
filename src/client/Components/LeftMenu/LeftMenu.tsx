@@ -173,7 +173,7 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
                         feed={editFeed}
                     />
                 </div>
-                <div>{listFolders}</div>
+                <div className="rss-leftmenu-folders-box">{listFolders}</div>
                 <div className="rss-leftmenu-logo">
                     <Icon name="rss" />&nbsp;RSSenal
                 </div>
