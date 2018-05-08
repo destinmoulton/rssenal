@@ -298,9 +298,9 @@ const mapStateToProps = (state: IRootStoreState): IMapStateProps => {
 
     return {
         entries: entries.entries,
-        folders: folders.folders,
         feeds: feeds.feeds,
-        filter: filter.filter
+        filter: filter.filter,
+        folders: folders.folders
     };
 };
 
