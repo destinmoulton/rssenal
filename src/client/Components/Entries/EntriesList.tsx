@@ -19,7 +19,8 @@ import {
     TEntries,
     TEntryID,
     TFolders,
-    TFeeds
+    TFeeds,
+    ISetting
 } from "../../interfaces";
 
 interface IMapStateProps {
@@ -27,6 +28,7 @@ interface IMapStateProps {
     folders: TFolders;
     feeds: TFeeds;
     filter: IFilter;
+    settings: ISetting[];
 }
 
 interface IMapDispatchProps {
@@ -54,23 +56,29 @@ class EntriesList extends React.Component<IEntriesListProps> {
     }
 
     componentWillMount() {
-        this._filterAndSortEntries(this.props, this.state.sortBy);
+        this._filterAndSortEntries(this.props, this.state.sortBy, false);
     }
 
     componentWillReceiveProps(nextProps: IEntriesListProps) {
-        this._filterAndSortEntries(nextProps, this.state.sortBy);
-
         if (nextProps.filter.id !== this.props.filter.id) {
+            this._filterAndSortEntries(nextProps, this.state.sortBy, true);
+
             // Reset scroll to top
             document.querySelector(".rss-entrylist-container").scrollTo(0, 0);
 
             this.setState({
                 activeEntryId: ""
             });
+        } else {
+            this._filterAndSortEntries(nextProps, this.state.sortBy, false);
         }
     }
 
-    _filterAndSortEntries(props: IEntriesListProps, sortBy: string) {
+    _filterAndSortEntries(
+        props: IEntriesListProps,
+        sortBy: string,
+        hasFilterChanged: boolean
+    ) {
         const { entries, folders, feeds, filter } = props;
 
         let filteredEntries = entries.toOrderedMap();
@@ -112,7 +120,14 @@ class EntriesList extends React.Component<IEntriesListProps> {
                 break;
         }
 
-        const processedEntries = this._sortEntries(filteredEntries, sortBy);
+        let processedEntries = this._sortEntries(filteredEntries, sortBy);
+
+        if (hasFilterChanged) {
+            processedEntries = this._filterHiddenEntries(
+                props,
+                processedEntries
+            );
+        }
 
         this.setState({
             currentTitle: title,
@@ -148,12 +163,25 @@ class EntriesList extends React.Component<IEntriesListProps> {
         }
     }
 
+    _filterHiddenEntries(props: IEntriesListProps, processedEntries: any) {
+        const { settings } = props;
+
+        let filteredEntries;
+
+        if (false === settings[1].value) {
+            return processedEntries.filter((entry: IEntry) => {
+                return false === entry.has_read;
+            });
+        }
+        return processedEntries;
+    }
+
     _handleChangeSort(e: any, data: any) {
         this.setState({
             sortBy: data.value
         });
 
-        this._filterAndSortEntries(this.props, data.value);
+        this._filterAndSortEntries(this.props, data.value, true);
     }
 
     _handleKeyDown(e: any) {
@@ -294,13 +322,14 @@ class EntriesList extends React.Component<IEntriesListProps> {
 }
 
 const mapStateToProps = (state: IRootStoreState): IMapStateProps => {
-    const { entries, folders, feeds, filter, settings } = state;
+    const { entries, feeds, filter, folders, settings } = state;
 
     return {
         entries: entries.entries,
         feeds: feeds.feeds,
         filter: filter.filter,
-        folders: folders.folders
+        folders: folders.folders,
+        settings: settings.settings
     };
 };
 
