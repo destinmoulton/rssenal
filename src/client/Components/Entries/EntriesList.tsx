@@ -5,10 +5,10 @@ import { connect } from "react-redux";
 import { Button, Loader, Menu } from "semantic-ui-react";
 
 import Entry from "./Entry/Entry";
-
 import SettingsModal from "../Modals/SettingsModal";
 import SortMenu from "./SortMenu";
 
+import { propertyComparator } from "../../lib/sort";
 import { updateReadState } from "../../redux/actions/entries.actions";
 
 import {
@@ -138,29 +138,8 @@ class EntriesList extends React.Component<IEntriesListProps> {
     _sortEntries(entries: TEntries, sortBy: string) {
         const sortParams = sortBy.split(":");
         return entries.sort((a, b) =>
-            this._compareEntries(a, b, sortParams[0], sortParams[1])
+            propertyComparator(a, b, sortParams[1], sortParams[0])
         );
-    }
-
-    _compareEntries(a: any, b: any, field: string, order: string) {
-        if (order === "asc") {
-            if (a[field] < b[field]) {
-                return -1;
-            }
-            if (a[field] > b[field]) {
-                return 1;
-            }
-        } else if (order === "desc") {
-            if (a[field] > b[field]) {
-                return -1;
-            }
-            if (a[field] < b[field]) {
-                return 1;
-            }
-        }
-        if (a[field] === b[field]) {
-            return 0;
-        }
     }
 
     _filterHiddenEntries(props: IEntriesListProps, processedEntries: any) {
