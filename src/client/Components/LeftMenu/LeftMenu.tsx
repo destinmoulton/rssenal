@@ -12,7 +12,7 @@ import EditFeedModal from "../Modals/EditFeedModal";
 import EditFolderModal from "../Modals/EditFolderModal";
 import FolderItem from "./FolderItem";
 
-import { compareAscByProp } from "../../lib/sort";
+import { propertyComparator } from "../../lib/sort";
 
 import {
     TFeeds,
@@ -135,7 +135,9 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
 
         const { folders } = this.props;
         const sortedFolders = folders
-            .sort((a: IFolder, b: IFolder) => compareAscByProp(a, b, "order"))
+            .sort((a: IFolder, b: IFolder) =>
+                propertyComparator(a, b, "asc", "order")
+            )
             .toArray();
         sortedFolders.unshift({ name: "All", _id: "all", order: -1 });
 

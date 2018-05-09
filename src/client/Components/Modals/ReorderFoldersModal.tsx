@@ -6,7 +6,7 @@ import { Button, Header, Icon, Modal, Popup } from "semantic-ui-react";
 import { SortableFolderItem, SortableFolderList } from "./SortableComponents";
 
 import { beginReorderFolders } from "../../redux/actions/folders.actions";
-import { compareAscByProp } from "../../lib/sort";
+import { propertyComparator } from "../../lib/sort";
 
 import {
     IDispatch,
@@ -50,7 +50,7 @@ class ReorderFoldersModal extends React.Component<IReorderFoldersModalProps> {
     componentWillReceiveProps(nextProps: IReorderFoldersModalProps) {
         let tmpArray = nextProps.folders
             .toArray()
-            .sort((a, b) => compareAscByProp(a, b, "order"));
+            .sort((a, b) => propertyComparator(a, b, "asc", "order"));
         //Remove the "Uncategorized" folder
         tmpArray.pop();
 

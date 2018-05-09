@@ -20,7 +20,7 @@ import {
     IReducerStateFeeds
 } from "../../interfaces";
 
-import { compareAscByProp } from "../../lib/sort";
+import { propertyComparator } from "../../lib/sort";
 
 const INITIAL_UNREAD_MAP: IFeedsUnreadMap = {
     entriesCounted: Set<TFeedID>(),
@@ -45,7 +45,9 @@ function feedsReducer(state = INITIAL_STATE, action: IFeedsAction) {
         case FEEDS_ADD_COMPLETE: {
             const newFeeds = state.feeds
                 .set(action.feed._id, action.feed)
-                .sort((a: IFeed, b: IFeed) => compareAscByProp(a, b, "title"));
+                .sort((a: IFeed, b: IFeed) =>
+                    propertyComparator(a, b, "asc", "title")
+                );
             return {
                 ...state,
                 feeds: newFeeds,
@@ -151,7 +153,9 @@ function feedsReducer(state = INITIAL_STATE, action: IFeedsAction) {
 
             const newFeeds = feeds
                 .set(action.feed._id, action.feed)
-                .sort((a: IFeed, b: IFeed) => compareAscByProp(a, b, "title"));
+                .sort((a: IFeed, b: IFeed) =>
+                    propertyComparator(a, b, "asc", "title")
+                );
 
             return {
                 ...state,
