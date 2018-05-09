@@ -1,18 +1,34 @@
-/**
- * Comparison method used in .sort() functions
- *
- * @param a object The first element to compare
- * @param b object the second element to compare
- * @param property string The object property to compare
- */
-export function compareAscByProp<T>(a: T, b: T, property: any): number {
-    if ((<any>a)[property] < (<any>b)[property]) {
+interface GenericObject<P> {
+    [index: string]: P;
+}
+
+export function propertyComparator<T, P>(
+    aObj: any,
+    bObj: any,
+    order: string,
+    propertyName: string
+): number {
+    return "asc" === order
+        ? comparatorAsc<P>(aObj[propertyName], bObj[propertyName])
+        : comparatorDesc<P>(aObj[propertyName], bObj[propertyName]);
+}
+
+export function comparatorAsc<P>(a: P, b: P): number {
+    if (a < b) {
         return -1;
     }
-    if ((<any>a)[property] > (<any>b)[property]) {
+    if (a > b) {
         return 1;
     }
-    if ((<any>a)[property] === (<any>b)[property]) {
-        return 0;
+    return 0;
+}
+
+export function comparatorDesc<P>(a: P, b: P): number {
+    if (a > b) {
+        return -1;
     }
+    if (a < b) {
+        return 1;
+    }
+    return 0;
 }

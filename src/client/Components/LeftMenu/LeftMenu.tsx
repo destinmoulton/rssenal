@@ -136,7 +136,7 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
         const { folders } = this.props;
         const sortedFolders = folders
             .sort((a: IFolder, b: IFolder) =>
-                propertyComparator(a, b, "asc", "order")
+                propertyComparator<IFolder, number>(a, b, "asc", "order")
             )
             .toArray();
         sortedFolders.unshift({ name: "All", _id: "all", order: -1 });
