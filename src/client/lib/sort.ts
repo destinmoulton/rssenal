@@ -1,7 +1,3 @@
-interface GenericObject<P> {
-    [index: string]: P;
-}
-
 export function propertyComparator<T, P>(
     aObj: any,
     bObj: any,
