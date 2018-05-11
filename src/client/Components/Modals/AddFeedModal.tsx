@@ -305,4 +305,5 @@ const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
         beginAddFeed: feedInfo => dispatch(beginAddFeed(feedInfo))
     };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(AddFeedModal);

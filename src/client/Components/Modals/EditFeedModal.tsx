@@ -156,6 +156,7 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
         );
     }
 }
+
 const mapStateToProps = (state: IRootStoreState): IMapStateToProps => {
     return {};
 };
