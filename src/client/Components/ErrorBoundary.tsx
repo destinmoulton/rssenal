@@ -1,11 +1,11 @@
 import * as React from "react";
-import { connect } from "react-redux";
 
-import { message } from "../redux/actions/messages.actions";
 import * as Types from "../interfaces";
 
 interface IErrorBoundaryState {
     hasError: boolean;
+    error: Error;
+    errorInfo: React.ErrorInfo;
 }
 
 interface IErrorBoundaryProps {
@@ -20,14 +20,18 @@ class ErrorBoundary extends React.Component<
         super(props);
 
         this.state = {
-            hasError: false
+            hasError: false,
+            error: Error(),
+            errorInfo: { componentStack: "" }
         };
     }
 
     componentDidCatch(error: Error, info: React.ErrorInfo) {
-        this.setState({ hasError: true });
-
-        this.props.dispatch(message(error.message, "error"));
+        this.setState({
+            hasError: true,
+            error,
+            errorInfo: info
+        });
     }
 
     render() {
@@ -38,4 +42,4 @@ class ErrorBoundary extends React.Component<
     }
 }
 
-export default connect()(ErrorBoundary);
+export default ErrorBoundary;
