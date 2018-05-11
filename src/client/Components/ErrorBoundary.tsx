@@ -1,9 +1,17 @@
 import * as React from "react";
+import { connect } from "react-redux";
+
+import { message } from "../redux/actions/messages.actions";
+import * as Types from "../interfaces";
 
 interface IErrorBoundaryState {
     hasError: boolean;
 }
-interface IErrorBoundaryProps {}
+
+interface IErrorBoundaryProps {
+    dispatch: Types.IDispatch;
+}
+
 class ErrorBoundary extends React.Component<
     IErrorBoundaryProps,
     IErrorBoundaryState
@@ -18,6 +26,8 @@ class ErrorBoundary extends React.Component<
 
     componentDidCatch(error: Error, info: React.ErrorInfo) {
         this.setState({ hasError: true });
+
+        this.props.dispatch(message(error.message, "error"));
     }
 
     render() {
@@ -28,4 +38,4 @@ class ErrorBoundary extends React.Component<
     }
 }
 
-export default ErrorBoundary;
+export default connect()(ErrorBoundary);
