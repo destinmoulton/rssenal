@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Loader } from "semantic-ui-react";
 
 import Browser from "./Browser";
+import ErrorBoundary from "./ErrorBoundary";
 import Login from "./Login";
 
 import { IDispatch, IRootStoreState } from "../interfaces";
@@ -43,7 +44,7 @@ class Window extends React.Component<IWindow> {
             display = <Login />;
         }
 
-        return display;
+        return <ErrorBoundary>{display}</ErrorBoundary>;
     }
 }
 
