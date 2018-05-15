@@ -12,8 +12,8 @@ import {
 import { API_ENTRIES_BASE } from "../apiendpoints";
 
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
-
 import { feedsDecrementUnread, feedsSetAllUnreadCount } from "./feeds.actions";
+import { message } from "./messages.actions";
 
 import {
     IDispatch,
@@ -48,6 +48,7 @@ export function getEntriesForFeed(feedId: TFeedID) {
             })
             .then(resObj => {
                 if (resObj.status === "error") {
+                    dispatch(message(resObj.error, "error"));
                     console.error(resObj.error);
                 } else {
                     let entries = resObj.entries;

@@ -95,6 +95,7 @@ export function getAllFeeds() {
             })
             .then(resObj => {
                 if (resObj.status === "error") {
+                    dispatch(message(resObj.error, "error"));
                     console.error(resObj.error);
                 } else if (resObj.status === "success") {
                     dispatch(getAllFeedsComplete(resObj.feeds));
