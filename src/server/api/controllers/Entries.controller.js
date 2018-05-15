@@ -19,7 +19,9 @@ class EntriesController {
                         query["has_read"] = false;
                     }
                 }
-                return Entries.find(query).sort({ publish_date: "desc" });
+                return Entries.find(query).sort({
+                    publish_date: "desc"
+                });
             })
             .then(entries => {
                 return res.json({
@@ -30,7 +32,7 @@ class EntriesController {
             .catch(err => {
                 return res.json({
                     status: "error",
-                    error: "Unable to update all feeds." + err.message
+                    error: "Unable to get entries for feed. " + err.message + ". Feed ID " + req.query.feedId
                 });
             });
     }
@@ -40,8 +42,7 @@ class EntriesController {
             if (err) {
                 res.json({
                     status: "error",
-                    error:
-                        "Unable to find the entry with id: " +
+                    error: "Unable to find the entry with id: " +
                         req.params.entryId
                 });
             } else {
@@ -67,7 +68,9 @@ class EntriesController {
     }
 
     _updateFeed(feedId) {
-        return Feeds.findOne({ _id: feedId })
+        return Feeds.findOne({
+                _id: feedId
+            })
             .then(feed => {
                 return feedparser.parse(feed.url);
             })
