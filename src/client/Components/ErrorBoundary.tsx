@@ -8,9 +8,7 @@ interface IErrorBoundaryState {
     errorInfo: React.ErrorInfo;
 }
 
-interface IErrorBoundaryProps {
-    dispatch: Types.IDispatch;
-}
+interface IErrorBoundaryProps {}
 
 class ErrorBoundary extends React.Component<
     IErrorBoundaryProps,
