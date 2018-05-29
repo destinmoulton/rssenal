@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import store from "./redux/store";
 
-import Window from "./Components/Window";
+import WindowContainer from "./containers/WindowContainer";
 
 class App {
     run() {
@@ -14,7 +14,7 @@ class App {
         const routing = (
             <Provider store={store}>
                 <BrowserRouter>
-                    <Window />
+                    <WindowContainer />
                 </BrowserRouter>
             </Provider>
         );
