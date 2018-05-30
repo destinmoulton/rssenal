@@ -1,9 +1,6 @@
 import { is } from "immutable";
 import * as React from "react";
 import * as NotificationSystem from "react-notification-system";
-import { connect } from "react-redux";
-
-import { removeMessage } from "../redux/actions/messages.actions";
 
 import {
     IDispatch,
