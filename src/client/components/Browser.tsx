@@ -5,8 +5,6 @@ import EntriesList from "./Entries/EntriesList";
 import LeftMenu from "./LeftMenu/LeftMenu";
 import MessagesContainer from "../containers/MessagesContainer";
 
-import { IFilter } from "../interfaces";
-
 const Browser: React.SFC = () => {
     return (
         <div>

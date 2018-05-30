@@ -4,7 +4,7 @@ import { Loader } from "semantic-ui-react";
 
 import Browser from "./Browser";
 import ErrorBoundary from "./ErrorBoundary";
-import Login from "./Login";
+import LoginContainer from "../containers/LoginContainer";
 
 import { IDispatch, IRootStoreState } from "../interfaces";
 
@@ -34,7 +34,7 @@ class WindowComponent extends React.Component<IWindowComponentProps> {
         } else if (isValidatingToken) {
             display = <Loader />;
         } else {
-            display = <Login />;
+            display = <LoginContainer />;
         }
 
         return <ErrorBoundary>{display}</ErrorBoundary>;

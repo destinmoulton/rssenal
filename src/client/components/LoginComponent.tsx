@@ -1,5 +1,5 @@
 import * as React from "react";
-import { connect } from "react-redux";
+
 import {
     Button,
     Form,
@@ -10,26 +10,18 @@ import {
     Segment
 } from "semantic-ui-react";
 
-import { loginUser } from "../redux/actions/auth.actions";
-
-import { IDispatch, IRootStoreState } from "../interfaces";
-
-interface IMapStateToProps {
-    authenticationError: string;
-}
-interface IMapDispatchToProps {
-    loginUser: (username: string, password: string) => void;
+export interface ILoginComponentProps {
+    authenticationError?: string;
+    loginUser?: (username: string, password: string) => void;
 }
 
-interface ILoginProps extends IMapStateToProps, IMapDispatchToProps {}
-
-class Login extends React.Component<ILoginProps> {
+class LoginComponent extends React.Component<ILoginComponentProps> {
     state = {
         username: "",
         password: ""
     };
 
-    constructor(props: ILoginProps) {
+    constructor(props: ILoginComponentProps) {
         super(props);
 
         this._authenticateUser = this._authenticateUser.bind(this);
@@ -112,17 +104,5 @@ class Login extends React.Component<ILoginProps> {
         );
     }
 }
-const mapStateToProps = (state: IRootStoreState): IMapStateToProps => {
-    return {
-        authenticationError: state.auth.authenticationError
-    };
-};
 
-const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
-    return {
-        loginUser: (username: string, password: string) => {
-            return dispatch(loginUser(username, password));
-        }
-    };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default LoginComponent;
