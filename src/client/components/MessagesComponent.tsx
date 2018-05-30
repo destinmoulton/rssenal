@@ -2,13 +2,7 @@ import { is } from "immutable";
 import * as React from "react";
 import * as NotificationSystem from "react-notification-system";
 
-import {
-    IDispatch,
-    IMessage,
-    IReducerStateMessages,
-    IRootStoreState,
-    TMessages
-} from "../interfaces";
+import { IMessage, IReducerStateMessages, TMessages } from "../interfaces";
 
 export interface IMessagesComponentProps {
     messages?: TMessages;

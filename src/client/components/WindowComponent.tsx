@@ -6,8 +6,6 @@ import Browser from "./Browser";
 import ErrorBoundary from "./ErrorBoundary";
 import LoginContainer from "../containers/LoginContainer";
 
-import { IDispatch, IRootStoreState } from "../interfaces";
-
 export interface IWindowComponentProps {
     isAuthorized?: boolean;
     isValidatingToken?: boolean;
