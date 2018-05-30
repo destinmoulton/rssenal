@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { Button, Icon, Popup } from "semantic-ui-react";
 
-import LogoutButtonComponent from "./LogoutButtonComponent";
+import LogoutButtonContainer from "../../containers/LeftMenu/LogoutButtonContainer";
 import ReorderFoldersModal from "../Modals/ReorderFoldersModal";
 import { refreshAllFeeds } from "../../redux/actions/feeds.actions";
 import * as Types from "../../interfaces";
@@ -77,7 +77,7 @@ class ButtonBar extends React.Component<IButtonBarProps> {
                     }
                     content="Reload All Feeds"
                 />
-                <LogoutButtonComponent />
+                <LogoutButtonContainer />
             </div>
         );
     }

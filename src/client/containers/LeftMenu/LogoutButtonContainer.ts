@@ -1,12 +1,12 @@
 import { connect } from "react-redux";
 
-import { logoutUser } from "../redux/actions/auth.actions";
+import { logoutUser } from "../../redux/actions/auth.actions";
 
 import LogoutButtonComponent, {
     ILogoutButtonComponentProps
-} from "../components/LeftMenu/LogoutButtonComponent";
+} from "../../components/LeftMenu/LogoutButtonComponent";
 
-import * as Types from "../interfaces";
+import * as Types from "../../interfaces";
 
 const mapStateToProps = (
     state: Types.IRootStoreState
