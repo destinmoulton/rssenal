@@ -3,7 +3,7 @@ import { Grid, Menu, Segment } from "semantic-ui-react";
 
 import EntriesList from "./Entries/EntriesList";
 import LeftMenu from "./LeftMenu/LeftMenu";
-import Messages from "./Messages";
+import MessagesContainer from "../containers/MessagesContainer";
 
 import { IFilter } from "../interfaces";
 
@@ -16,18 +16,11 @@ class Browser extends React.Component {
         entriesFilter: { limit: "" }
     };
 
-    constructor(props: IBrowserProps) {
-        super(props);
-        this._handleChangeEntriesFilter = this._handleChangeEntriesFilter.bind(
-            this
-        );
-    }
-
-    _handleChangeEntriesFilter(newFilter: IFilter) {
+    _handleChangeEntriesFilter = (newFilter: IFilter) => {
         this.setState({
             entriesFilter: newFilter
         });
-    }
+    };
 
     render() {
         const { entriesFilter } = this.state;
@@ -40,7 +33,7 @@ class Browser extends React.Component {
                 <div className="rss-body-right-container">
                     <EntriesList />
                 </div>
-                <Messages />
+                <MessagesContainer />
             </div>
         );
     }

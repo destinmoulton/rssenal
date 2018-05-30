@@ -13,32 +13,27 @@ import {
     TMessages
 } from "../interfaces";
 
-interface IMapStateToProps {
-    messages: TMessages;
+export interface IMessagesComponentProps {
+    messages?: TMessages;
+    removeMessage?: (message: IMessage) => void;
 }
-
-interface IMapDispatchToProps {
-    removeMessage: (message: IMessage) => IReducerStateMessages;
-}
-
-interface IMessagesProps extends IMapStateToProps, IMapDispatchToProps {}
 
 interface IRefs {
     notificationSystem: NotificationSystem.System;
 }
 
-class Messages extends React.Component<IMessagesProps> {
+class MessagesComponent extends React.Component<IMessagesComponentProps> {
     private _refs: IRefs = {
         notificationSystem: null
     };
 
-    constructor(props: IMessagesProps) {
+    constructor(props: IMessagesComponentProps) {
         super(props);
 
         this._onCloseMessage = this._onCloseMessage.bind(this);
     }
 
-    componentWillReceiveProps(nextProps: IMessagesProps) {
+    componentWillReceiveProps(nextProps: IMessagesComponentProps) {
         const newMessages = nextProps.messages;
         const oldMessages = this.props.messages;
 
@@ -66,15 +61,4 @@ class Messages extends React.Component<IMessagesProps> {
     }
 }
 
-const mapStateToProps = (state: IRootStoreState): IMapStateToProps => {
-    return {
-        messages: state.messages.messages
-    };
-};
-
-const mapDispatchToProps = (dispatch: IDispatch) => {
-    return {
-        removeMessage: (message: IMessage) => dispatch(removeMessage(message))
-    };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Messages);
+export default MessagesComponent;
