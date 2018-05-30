@@ -7,36 +7,18 @@ import MessagesContainer from "../containers/MessagesContainer";
 
 import { IFilter } from "../interfaces";
 
-interface IBrowserProps {}
-interface IBrowserState {
-    entriesFilter: IFilter;
-}
-class Browser extends React.Component {
-    state: IBrowserState = {
-        entriesFilter: { limit: "" }
-    };
-
-    _handleChangeEntriesFilter = (newFilter: IFilter) => {
-        this.setState({
-            entriesFilter: newFilter
-        });
-    };
-
-    render() {
-        const { entriesFilter } = this.state;
-
-        return (
-            <div>
-                <div className="rss-body-left-container">
-                    <LeftMenu />
-                </div>
-                <div className="rss-body-right-container">
-                    <EntriesList />
-                </div>
-                <MessagesContainer />
+const Browser: React.SFC = () => {
+    return (
+        <div>
+            <div className="rss-body-left-container">
+                <LeftMenu />
             </div>
-        );
-    }
-}
+            <div className="rss-body-right-container">
+                <EntriesList />
+            </div>
+            <MessagesContainer />
+        </div>
+    );
+};
 
 export default Browser;
