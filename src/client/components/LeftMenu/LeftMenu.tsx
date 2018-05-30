@@ -7,7 +7,7 @@ import { getAllFolders } from "../../redux/actions/folders.actions";
 import { getAllFeeds } from "../../redux/actions/feeds.actions";
 
 import AddFeedModal from "../Modals/AddFeedModal";
-import ButtonBar from "./ButtonBar";
+import ButtonBarComponent from "./ButtonBarComponent";
 import EditFeedModal from "../Modals/EditFeedModal";
 import EditFolderModal from "../Modals/EditFolderModal";
 import FolderItem from "./FolderItem";
@@ -156,7 +156,7 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
         return (
             <div>
                 <div>
-                    <ButtonBar
+                    <ButtonBarComponent
                         openEditFolderModal={this._handleOpenEditFolderModal}
                         openAddFeedModal={this._handleOpenAddFeedModal}
                     />
