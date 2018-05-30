@@ -4,7 +4,7 @@ import { logoutUser } from "../redux/actions/auth.actions";
 
 import LogoutButtonComponent, {
     ILogoutButtonComponentProps
-} from "../components/LogoutButtonComponent";
+} from "../components/LeftMenu/LogoutButtonComponent";
 
 import * as Types from "../interfaces";
 
