@@ -7,10 +7,10 @@ import { getAllFolders } from "../../redux/actions/folders.actions";
 import { getAllFeeds } from "../../redux/actions/feeds.actions";
 
 import AddFeedModal from "../Modals/AddFeedModal";
-import ButtonBarComponent from "./ButtonBarComponent";
+import ButtonBarContainer from "../../containers/LeftMenu/ButtonBarContainer";
 import EditFeedModal from "../Modals/EditFeedModal";
 import EditFolderModal from "../Modals/EditFolderModal";
-import FolderItem from "./FolderItem";
+import FolderItemContainer from "../../containers/LeftMenu/FolderItemContainer";
 
 import { propertyComparator } from "../../lib/sort";
 
@@ -144,7 +144,7 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
         let listFolders = sortedFolders.map(folder => {
             return (
                 <div key={folder._id}>
-                    <FolderItem
+                    <FolderItemContainer
                         folder={folder}
                         editFolder={this._handleOpenEditFolderModal}
                         editFeed={this._handleOpenEditFeedModal}
@@ -156,7 +156,7 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
         return (
             <div>
                 <div>
-                    <ButtonBarComponent
+                    <ButtonBarContainer
                         openEditFolderModal={this._handleOpenEditFolderModal}
                         openAddFeedModal={this._handleOpenAddFeedModal}
                     />
