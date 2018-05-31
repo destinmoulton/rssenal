@@ -5,14 +5,20 @@ import { Button, Icon, Popup } from "semantic-ui-react";
 import LogoutButtonContainer from "../../containers/LeftMenu/LogoutButtonContainer";
 import ReorderFoldersModal from "../Modals/ReorderFoldersModal";
 
-export interface IButtonBarComponentProps {
-    openAddFeedModal?: (newFeed: object) => void;
-    openEditFolderModal?: (folderDefault: object) => void;
-    refreshAllFeeds?: () => void;
+export interface IButtonBarMapState {}
+export interface IButtonBarMapDispatch {
+    refreshAllFeeds: () => void;
 }
 
-class ButtonBarComponent extends React.Component<IButtonBarComponentProps> {
-    constructor(props: IButtonBarComponentProps) {
+interface IButtonBarProps {
+    openAddFeedModal: (newFeed: object) => void;
+    openEditFolderModal: (folderDefault: object) => void;
+}
+
+type TAll = IButtonBarProps & IButtonBarMapState & IButtonBarMapDispatch;
+
+class ButtonBarComponent extends React.Component<TAll> {
+    constructor(props: TAll) {
         super(props);
 
         this._handleClickRefresh = this._handleClickRefresh.bind(this);
