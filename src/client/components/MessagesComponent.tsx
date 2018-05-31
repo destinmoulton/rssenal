@@ -4,27 +4,32 @@ import * as NotificationSystem from "react-notification-system";
 
 import { IMessage, IReducerStateMessages, TMessages } from "../interfaces";
 
-export interface IMessagesComponentProps {
-    messages?: TMessages;
+export interface IMessagesMapDispatch {
     removeMessage?: (message: IMessage) => void;
 }
+
+export interface IMessagesMapState {
+    messages?: TMessages;
+}
+
+type TAllProps = IMessagesMapDispatch & IMessagesMapState;
 
 interface IRefs {
     notificationSystem: NotificationSystem.System;
 }
 
-class MessagesComponent extends React.Component<IMessagesComponentProps> {
+class MessagesComponent extends React.Component<TAllProps> {
     private _refs: IRefs = {
         notificationSystem: null
     };
 
-    constructor(props: IMessagesComponentProps) {
+    constructor(props: TAllProps) {
         super(props);
 
         this._onCloseMessage = this._onCloseMessage.bind(this);
     }
 
-    componentWillReceiveProps(nextProps: IMessagesComponentProps) {
+    componentWillReceiveProps(nextProps: TAllProps) {
         const newMessages = nextProps.messages;
         const oldMessages = this.props.messages;
 

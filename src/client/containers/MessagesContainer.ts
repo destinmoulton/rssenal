@@ -3,14 +3,13 @@ import { connect } from "react-redux";
 import { removeMessage } from "../redux/actions/messages.actions";
 
 import MessagesComponent, {
-    IMessagesComponentProps
+    IMessagesMapDispatch,
+    IMessagesMapState
 } from "../components/MessagesComponent";
 
 import * as Types from "../interfaces";
 
-const mapStateToProps = (
-    state: Types.IRootStoreState
-): IMessagesComponentProps => {
+const mapStateToProps = (state: Types.IRootStoreState): IMessagesMapState => {
     return {
         messages: state.messages.messages
     };
@@ -18,7 +17,7 @@ const mapStateToProps = (
 
 const mapDispatchToProps = (
     dispatch: Types.IDispatch
-): IMessagesComponentProps => {
+): IMessagesMapDispatch => {
     return {
         removeMessage: (message: Types.IMessage) =>
             dispatch(removeMessage(message))
