@@ -6,13 +6,13 @@ import { Icon } from "semantic-ui-react";
 import { TFeedID, IFeed, IFeedsUnreadMap, IFilter } from "../../interfaces";
 
 export interface IFeedItemMapState {
-    filter?: IFilter;
-    unreadMapFeeds?: Map<TFeedID, number>;
+    filter: IFilter;
+    unreadMapFeeds: Map<TFeedID, number>;
 }
 
 export interface IFeedItemMapDispatch {
-    beginDeleteFeed?: (feedId: TFeedID) => void;
-    changeFilter?: (newFilter: object) => void;
+    beginDeleteFeed: (feedId: TFeedID) => void;
+    changeFilter: (newFilter: object) => void;
 }
 
 interface IFeedItemProps {
