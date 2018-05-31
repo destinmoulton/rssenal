@@ -1,56 +1,52 @@
 import { Map, OrderedMap } from "immutable";
 import * as React from "react";
-import { connect } from "react-redux";
+
 import { Button, Confirm, Icon, SemanticICONS } from "semantic-ui-react";
 
 import ListFeeds from "./ListFeeds";
 
 import {
-    beginDeleteFolder,
-    beginSaveFolder
-} from "../../redux/actions/folders.actions";
-import { changeFilter } from "../../redux/actions/filter.actions";
-
-import {
-    IDispatch,
     IFeed,
     IFolder,
     IFilter,
-    IRootStoreState,
     TFolderID,
     TFeedID,
     TFeeds
 } from "../../interfaces";
 
-interface IMapStateProps {
+export interface IFolderItemMapState {
     filter: IFilter;
     unreadMapGroups: Map<TFolderID, number>;
     feeds: TFeeds;
 }
 
-interface IMapDispatchProps {
+export interface IFolderItemMapDispatch {
     beginDeleteFolder: (folderId: TFolderID) => void;
     changeFilter: (filter: IFilter) => void;
 }
 
-interface IFolderItemProps extends IMapStateProps, IMapDispatchProps {
+interface IFolderItemProps {
     editFeed: (feed: IFeed) => void;
     editFolder: (currentFolder: IFolder) => void;
     folder: IFolder;
 }
+
+type TAllProps = IFolderItemProps &
+    IFolderItemMapDispatch &
+    IFolderItemMapState;
 
 interface IFolderItemState {
     feedsAreVisible: boolean;
     optionsAreVisible: boolean;
 }
 
-class FolderItem extends React.Component<IFolderItemProps> {
+class FolderItemComponent extends React.Component<TAllProps, IFolderItemState> {
     state: IFolderItemState = {
         feedsAreVisible: false,
         optionsAreVisible: false
     };
 
-    constructor(props: IFolderItemProps) {
+    constructor(props: TAllProps) {
         super(props);
 
         this._showOptions = this._showOptions.bind(this);
@@ -232,22 +228,4 @@ class FolderItem extends React.Component<IFolderItemProps> {
     }
 }
 
-const mapStateToProps = (state: IRootStoreState): IMapStateProps => {
-    const { feeds, filter } = state;
-
-    return {
-        filter: filter.filter,
-        unreadMapGroups: feeds.unreadMap.folders,
-        feeds: feeds.feeds
-    };
-};
-
-const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchProps => {
-    return {
-        beginDeleteFolder: (folderId: TFolderID) =>
-            dispatch(beginDeleteFolder(folderId)),
-        changeFilter: (newFilter: IFilter) => dispatch(changeFilter(newFilter))
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(FolderItem);
+export default FolderItemComponent;
