@@ -1,10 +1,7 @@
 import { OrderedMap } from "immutable";
 import * as React from "react";
-import { connect } from "react-redux";
-import { Icon } from "semantic-ui-react";
 
-import { getAllFolders } from "../../redux/actions/folders.actions";
-import { getAllFeeds } from "../../redux/actions/feeds.actions";
+import { Icon } from "semantic-ui-react";
 
 import AddFeedModal from "../Modals/AddFeedModal";
 import ButtonBarContainer from "../../containers/LeftMenu/ButtonBarContainer";
@@ -14,28 +11,20 @@ import FolderItemContainer from "../../containers/LeftMenu/FolderItemContainer";
 
 import { propertyComparator } from "../../lib/sort";
 
-import {
-    TFeeds,
-    IFeed,
-    IFolder,
-    IDispatch,
-    IRootStoreState,
-    TFeedID,
-    TFolderID
-} from "../../interfaces";
+import { TFeeds, IFeed, IFolder, TFeedID, TFolderID } from "../../interfaces";
 
-interface IMapStateProps {
+export interface ILeftMenuMapState {
     feeds: TFeeds;
     hasFolders: boolean;
     folders: OrderedMap<TFolderID, IFolder>;
 }
 
-interface IMapDispatchProps {
+export interface ILeftMenuMapDispatch {
     getAllFolders: () => void;
     getAllFeeds: () => void;
 }
 
-interface ILeftMenuProps extends IMapStateProps, IMapDispatchProps {}
+type IAllProps = ILeftMenuMapDispatch & ILeftMenuMapState;
 
 interface ILeftMenuState {
     addFeedModalOpen: boolean;
@@ -44,7 +33,7 @@ interface ILeftMenuState {
     editFolder: IFolder;
     editFolderModalOpen: boolean;
 }
-class LeftMenu extends React.Component<ILeftMenuProps> {
+class LeftMenuComponent extends React.Component<IAllProps, ILeftMenuState> {
     state: ILeftMenuState = {
         addFeedModalOpen: false,
         editFeed: null,
@@ -53,7 +42,7 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
         editFolderModalOpen: false
     };
 
-    constructor(props: ILeftMenuProps) {
+    constructor(props: IAllProps) {
         super(props);
 
         this._handleCloseAddFeedModal = this._handleCloseAddFeedModal.bind(
@@ -105,7 +94,7 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
 
     _handleCloseEditFolderModal() {
         this.setState({
-            editFolder: {},
+            editFolder: null,
             editFolderModalOpen: false
         });
     }
@@ -119,7 +108,7 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
 
     _handleCloseEditFeedModal() {
         this.setState({
-            editFeed: {},
+            editFeed: null,
             editFeedModalOpen: false
         });
     }
@@ -184,21 +173,4 @@ class LeftMenu extends React.Component<ILeftMenuProps> {
     }
 }
 
-const mapStateToProps = (state: IRootStoreState): IMapStateProps => {
-    const { folders, feeds } = state;
-
-    return {
-        feeds: feeds.feeds,
-        hasFolders: folders.hasFolders,
-        folders: folders.folders
-    };
-};
-
-const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchProps => {
-    return {
-        getAllFolders: () => dispatch(getAllFolders()),
-        getAllFeeds: () => dispatch(getAllFeeds())
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LeftMenu);
+export default LeftMenuComponent;
