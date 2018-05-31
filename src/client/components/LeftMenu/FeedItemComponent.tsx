@@ -5,21 +5,33 @@ import { Icon } from "semantic-ui-react";
 
 import { TFeedID, IFeed, IFeedsUnreadMap, IFilter } from "../../interfaces";
 
-export interface IFeedItemComponentProps {
+export interface IFeedItemMapState {
     filter?: IFilter;
     unreadMapFeeds?: Map<TFeedID, number>;
-    beginDeleteFeed?: (feedId: TFeedID) => void;
-    changeFilter?: (newFilter: object) => void;
-    editFeed?: (feed: IFeed) => void;
-    feed?: IFeed;
 }
 
-class FeedItemComponent extends React.Component<IFeedItemComponentProps> {
+export interface IFeedItemMapDispatch {
+    beginDeleteFeed?: (feedId: TFeedID) => void;
+    changeFilter?: (newFilter: object) => void;
+}
+
+interface IFeedItemProps {
+    editFeed: (feed: IFeed) => void;
+    feed: IFeed;
+}
+
+type TAllProps = IFeedItemProps & IFeedItemMapState & IFeedItemMapDispatch;
+
+interface IFeedItemState {
+    isOptionsVisible: boolean;
+}
+
+class FeedItemComponent extends React.Component<TAllProps, IFeedItemState> {
     state = {
         isOptionsVisible: false
     };
 
-    constructor(props: IFeedItemComponentProps) {
+    constructor(props: TAllProps) {
         super(props);
 
         this._handleClickDelete = this._handleClickDelete.bind(this);
