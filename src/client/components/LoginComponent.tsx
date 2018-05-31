@@ -10,18 +10,23 @@ import {
     Segment
 } from "semantic-ui-react";
 
-export interface ILoginComponentProps {
-    authenticationError?: string;
-    loginUser?: (username: string, password: string) => void;
+export interface ILoginMapState {
+    authenticationError: string;
 }
 
-class LoginComponent extends React.Component<ILoginComponentProps> {
+export interface ILoginMapDispatch {
+    loginUser: (username: string, password: string) => void;
+}
+
+type TAllProps = ILoginMapDispatch & ILoginMapState;
+
+class LoginComponent extends React.Component<TAllProps> {
     state = {
         username: "",
         password: ""
     };
 
-    constructor(props: ILoginComponentProps) {
+    constructor(props: TAllProps) {
         super(props);
 
         this._authenticateUser = this._authenticateUser.bind(this);

@@ -1,24 +1,21 @@
 import { connect } from "react-redux";
 
 import LoginComponent, {
-    ILoginComponentProps
+    ILoginMapDispatch,
+    ILoginMapState
 } from "../components/LoginComponent";
 
 import { loginUser } from "../redux/actions/auth.actions";
 
 import * as Types from "../interfaces";
 
-const mapStateToProps = (
-    state: Types.IRootStoreState
-): ILoginComponentProps => {
+const mapStateToProps = (state: Types.IRootStoreState): ILoginMapState => {
     return {
         authenticationError: state.auth.authenticationError
     };
 };
 
-const mapDispatchToProps = (
-    dispatch: Types.IDispatch
-): ILoginComponentProps => {
+const mapDispatchToProps = (dispatch: Types.IDispatch): ILoginMapDispatch => {
     return {
         loginUser: (username: string, password: string) => {
             return dispatch(loginUser(username, password));
