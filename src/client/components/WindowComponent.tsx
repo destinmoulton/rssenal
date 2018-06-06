@@ -13,10 +13,6 @@ export interface IWindowComponentProps {
 }
 
 class WindowComponent extends React.Component<IWindowComponentProps> {
-    constructor(props: IWindowComponentProps) {
-        super(props);
-    }
-
     componentDidMount() {
         if (localStorage.getItem("jwt_token")) {
             this.props.validateToken();
