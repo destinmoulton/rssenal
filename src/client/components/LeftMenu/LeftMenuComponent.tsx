@@ -42,28 +42,7 @@ class LeftMenuComponent extends React.Component<IAllProps, ILeftMenuState> {
         editFolderModalOpen: false
     };
 
-    constructor(props: IAllProps) {
-        super(props);
-
-        this._handleCloseAddFeedModal = this._handleCloseAddFeedModal.bind(
-            this
-        );
-        this._handleCloseEditFeedModal = this._handleCloseEditFeedModal.bind(
-            this
-        );
-        this._handleCloseEditFolderModal = this._handleCloseEditFolderModal.bind(
-            this
-        );
-        this._handleOpenAddFeedModal = this._handleOpenAddFeedModal.bind(this);
-        this._handleOpenEditFeedModal = this._handleOpenEditFeedModal.bind(
-            this
-        );
-        this._handleOpenEditFolderModal = this._handleOpenEditFolderModal.bind(
-            this
-        );
-    }
-
-    componentWillMount() {
+    componentDidMount() {
         const { getAllFolders, getAllFeeds, hasFolders } = this.props;
 
         if (!hasFolders) {
@@ -72,46 +51,46 @@ class LeftMenuComponent extends React.Component<IAllProps, ILeftMenuState> {
         }
     }
 
-    _handleOpenAddFeedModal(feed: IFeed) {
+    _handleOpenAddFeedModal = (feed: IFeed) => {
         this.setState({
             editFeed: feed,
             addFeedModalOpen: true
         });
-    }
+    };
 
-    _handleCloseAddFeedModal() {
+    _handleCloseAddFeedModal = () => {
         this.setState({
             addFeedModalOpen: false
         });
-    }
+    };
 
-    _handleOpenEditFolderModal(folder: IFolder) {
+    _handleOpenEditFolderModal = (folder: IFolder) => {
         this.setState({
             editFolder: folder,
             editFolderModalOpen: true
         });
-    }
+    };
 
-    _handleCloseEditFolderModal() {
+    _handleCloseEditFolderModal = () => {
         this.setState({
             editFolder: null,
             editFolderModalOpen: false
         });
-    }
+    };
 
-    _handleOpenEditFeedModal(feed: IFeed) {
+    _handleOpenEditFeedModal = (feed: IFeed) => {
         this.setState({
             editFeed: feed,
             editFeedModalOpen: true
         });
-    }
+    };
 
-    _handleCloseEditFeedModal() {
+    _handleCloseEditFeedModal = () => {
         this.setState({
             editFeed: null,
             editFeedModalOpen: false
         });
-    }
+    };
 
     render() {
         const {
