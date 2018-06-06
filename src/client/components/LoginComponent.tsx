@@ -42,6 +42,7 @@ class LoginComponent extends React.Component<TAllProps, ILoginState> {
             this.props.loginUser(username, password);
         }
     };
+
     render() {
         const { authenticationError } = this.props;
 
