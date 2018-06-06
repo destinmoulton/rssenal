@@ -14,29 +14,29 @@ interface ISettingsModalProps {
     settings: ISetting[];
 }
 
-class SettingsModal extends React.Component<ISettingsModalProps> {
+interface ISettingsModalState {
+    isModalOpen: boolean;
+}
+
+class SettingsModal extends React.Component<
+    ISettingsModalProps,
+    ISettingsModalState
+> {
     state = {
         isModalOpen: false
     };
 
-    constructor(props: ISettingsModalProps) {
-        super(props);
-
-        this._handleClickOpenModal = this._handleClickOpenModal.bind(this);
-        this._handleClickCloseModal = this._handleClickCloseModal.bind(this);
-    }
-
-    _handleClickOpenModal() {
+    _handleClickOpenModal = () => {
         this.setState({
             isModalOpen: true
         });
-    }
+    };
 
-    _handleClickCloseModal() {
+    _handleClickCloseModal = () => {
         this.setState({
             isModalOpen: false
         });
-    }
+    };
 
     _buildSettings() {
         const { settings } = this.props;
