@@ -32,22 +32,25 @@ interface IReorderFoldersModalState {
     isModalOpen: boolean;
 }
 
-class ReorderFoldersModal extends React.Component<IReorderFoldersModalProps> {
+class ReorderFoldersModal extends React.Component<
+    IReorderFoldersModalProps,
+    IReorderFoldersModalState
+> {
     state: IReorderFoldersModalState = {
         foldersAsArray: [],
         isModalOpen: false
     };
 
-    componentWillReceiveProps(nextProps: IReorderFoldersModalProps) {
-        let tmpArray = nextProps.folders
+    static getDerivedStateFromProps(props: IReorderFoldersModalProps) {
+        let tmpArray = props.folders
             .toArray()
             .sort((a, b) => propertyComparator(a, b, "asc", "order"));
         //Remove the "Uncategorized" folder
         tmpArray.pop();
 
-        this.setState({
+        return {
             foldersAsArray: tmpArray
-        });
+        };
     }
 
     _handleCloseModal = () => {
