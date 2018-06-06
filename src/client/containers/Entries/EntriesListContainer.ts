@@ -29,6 +29,7 @@ const mapDispatchToProps = (
         markEntryRead: entry => dispatch(updateReadState(entry, true))
     };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(
     EntriesListComponent
 );

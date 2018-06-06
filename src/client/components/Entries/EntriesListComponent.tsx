@@ -266,7 +266,7 @@ class EntriesListComponent extends React.Component<
         }
     }
 
-    render() {
+    _generateEntries() {
         const {
             activeEntryId,
             currentTitle,
@@ -274,7 +274,16 @@ class EntriesListComponent extends React.Component<
             sortBy
         } = this.state;
 
-        let entryList = processedEntries.toArray().map(entry => {
+        const { settings } = this.props;
+
+        let shouldShowImages = false;
+        settings.forEach(setting => {
+            if (setting.key === "show_images") {
+                shouldShowImages = setting.value;
+            }
+        });
+
+        return processedEntries.toArray().map(entry => {
             const isActive = entry._id === activeEntryId;
             return (
                 <Entry
@@ -282,9 +291,16 @@ class EntriesListComponent extends React.Component<
                     entry={entry}
                     toggleEntry={this._toggleEntry}
                     isActive={isActive}
+                    shouldShowImages={shouldShowImages}
                 />
             );
         });
+    }
+
+    render() {
+        const { currentTitle, sortBy } = this.state;
+
+        const entryList = this._generateEntries();
 
         return (
             <div>
