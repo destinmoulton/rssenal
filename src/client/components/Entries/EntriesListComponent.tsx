@@ -1,8 +1,6 @@
 import { OrderedMap } from "immutable";
 import * as React from "react";
 
-import { Button, Loader, Menu } from "semantic-ui-react";
-
 import Entry from "./Entry/Entry";
 import SettingsModal from "../Modals/SettingsModal";
 import SortMenu from "./SortMenu";
@@ -56,9 +54,6 @@ class EntriesListComponent extends React.Component<
 
         // Setup the global/document level keypress events
         document.onkeydown = this._handleKeyDown.bind(this);
-
-        this._handleChangeSort = this._handleChangeSort.bind(this);
-        this._toggleEntry = this._toggleEntry.bind(this);
     }
 
     componentWillMount() {
@@ -161,15 +156,15 @@ class EntriesListComponent extends React.Component<
         return processedEntries;
     }
 
-    _handleChangeSort(e: any, data: any) {
+    _handleChangeSort = (e: any, data: any) => {
         this.setState({
             sortBy: data.value
         });
 
         this._filterAndSortEntries(this.props, data.value, true);
-    }
+    };
 
-    _handleKeyDown(e: any) {
+    _handleKeyDown = (e: any) => {
         switch (e.key) {
             case "ArrowDown":
             case "j":
@@ -182,7 +177,22 @@ class EntriesListComponent extends React.Component<
                 this._activateSiblingEntry("previous");
                 break;
         }
-    }
+    };
+
+    _handleToggleEntry = (entryId: TEntryID) => {
+        let nextActiveEntryId = entryId;
+        if (this.state.activeEntryId === entryId) {
+            nextActiveEntryId = "";
+        }
+
+        if (nextActiveEntryId !== "") {
+            this._markRead(nextActiveEntryId);
+        }
+
+        this.setState({
+            activeEntryId: nextActiveEntryId
+        });
+    };
 
     _activateSiblingEntry(direction: string) {
         const { activeEntryId, processedEntries } = this.state;
@@ -233,21 +243,6 @@ class EntriesListComponent extends React.Component<
         });
     }
 
-    _toggleEntry(entryId: TEntryID) {
-        let nextActiveEntryId = entryId;
-        if (this.state.activeEntryId === entryId) {
-            nextActiveEntryId = "";
-        }
-
-        if (nextActiveEntryId !== "") {
-            this._markRead(nextActiveEntryId);
-        }
-
-        this.setState({
-            activeEntryId: nextActiveEntryId
-        });
-    }
-
     _scrollToEntry(entryId: TEntryID) {
         const entryEl = document.getElementById("rss-entry-item-" + entryId);
         setTimeout(() => {
@@ -289,7 +284,7 @@ class EntriesListComponent extends React.Component<
                 <Entry
                     key={entry._id}
                     entry={entry}
-                    toggleEntry={this._toggleEntry}
+                    toggleEntry={this._handleToggleEntry}
                     isActive={isActive}
                     shouldShowImages={shouldShowImages}
                 />
