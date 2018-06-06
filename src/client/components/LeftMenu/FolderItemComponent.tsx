@@ -1,7 +1,7 @@
 import { Map, OrderedMap } from "immutable";
 import * as React from "react";
 
-import { Button, Confirm, Icon, SemanticICONS } from "semantic-ui-react";
+import { Icon, SemanticICONS } from "semantic-ui-react";
 
 import ListFeeds from "./ListFeeds";
 
