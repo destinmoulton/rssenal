@@ -20,30 +20,28 @@ export interface ILoginMapDispatch {
 
 type TAllProps = ILoginMapDispatch & ILoginMapState;
 
-class LoginComponent extends React.Component<TAllProps> {
+interface ILoginState {
+    username?: string;
+    password?: string;
+}
+
+class LoginComponent extends React.Component<TAllProps, ILoginState> {
     state = {
         username: "",
         password: ""
     };
 
-    constructor(props: TAllProps) {
-        super(props);
+    _changeInput = (e: React.FormEvent<HTMLInputElement>) => {
+        this.setState({ [e.currentTarget.name]: e.currentTarget.value.trim() });
+    };
 
-        this._authenticateUser = this._authenticateUser.bind(this);
-        this._changeInput = this._changeInput.bind(this);
-    }
-
-    _changeInput(e: any) {
-        this.setState({ [e.target.name]: e.target.value.trim() });
-    }
-
-    _authenticateUser() {
+    _authenticateUser = () => {
         const { username, password } = this.state;
 
         if (username && password) {
             this.props.loginUser(username, password);
         }
-    }
+    };
     render() {
         const { authenticationError } = this.props;
 
