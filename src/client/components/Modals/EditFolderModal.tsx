@@ -28,50 +28,41 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
         folderInfo: INITIAL_FOLDER
     };
 
-    constructor(props: IFolderEditorModalProps) {
-        super(props);
-
-        this._handleClose = this._handleClose.bind(this);
-        this._handleSave = this._handleSave.bind(this);
-        this._handleInputKeyPress = this._handleInputKeyPress.bind(this);
-        this._handleInputOnChange = this._handleInputOnChange.bind(this);
-    }
-
     static getDerivedStateFromProps(props: IFolderEditorModalProps) {
         return {
             folderInfo: props.folder
         };
     }
 
-    _handleClose() {
+    _handleClose = () => {
         this.setState({
             folderInfo: INITIAL_FOLDER
         });
         this.props.onCloseModal();
-    }
+    };
 
-    _handleSave() {
+    _handleSave = () => {
         const { folderInfo } = this.state;
 
         if (folderInfo.name.trim() !== "") {
             this.props.beginSaveFolder(folderInfo);
             this._handleClose();
         }
-    }
+    };
 
-    _handleInputKeyPress(e: any) {
+    _handleInputKeyPress = (e: any) => {
         if (e.key === "Enter") {
             this._handleSave();
         }
-    }
+    };
 
-    _handleInputOnChange(e: any) {
+    _handleInputOnChange = (e: any) => {
         const { folderInfo } = this.state;
         folderInfo.name = e.target.value;
         this.setState({
             folderInfo
         });
-    }
+    };
 
     _buildEditInput() {
         const { folderInfo } = this.state;
