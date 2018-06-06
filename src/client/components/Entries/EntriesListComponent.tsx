@@ -1,6 +1,5 @@
 import { OrderedMap } from "immutable";
 import * as React from "react";
-import { connect } from "react-redux";
 
 import { Button, Loader, Menu } from "semantic-ui-react";
 
@@ -9,13 +8,10 @@ import SettingsModal from "../Modals/SettingsModal";
 import SortMenu from "./SortMenu";
 
 import { propertyComparator } from "../../lib/sort";
-import { updateReadState } from "../../redux/actions/entries.actions";
 
 import {
-    IDispatch,
     IEntry,
     IFilter,
-    IRootStoreState,
     TEntries,
     TEntryID,
     TFolders,
@@ -23,7 +19,7 @@ import {
     ISetting
 } from "../../interfaces";
 
-interface IMapStateProps {
+export interface IEntriesListMapState {
     entries: TEntries;
     folders: TFolders;
     feeds: TFeeds;
@@ -31,13 +27,23 @@ interface IMapStateProps {
     settings: ISetting[];
 }
 
-interface IMapDispatchProps {
+export interface IEntriesListMapDispatch {
     markEntryRead: (entry: IEntry) => void;
 }
 
-interface IEntriesListProps extends IMapStateProps, IMapDispatchProps {}
+type TAllProps = IEntriesListMapState & IEntriesListMapDispatch;
 
-class EntriesList extends React.Component<IEntriesListProps> {
+interface IEntriesListState {
+    sortBy: string;
+    activeEntryId: string;
+    currentTitle: string;
+    processedEntries: OrderedMap<TEntryID, IEntry> | Iterable<IEntry>;
+}
+
+class EntriesListComponent extends React.Component<
+    TAllProps,
+    IEntriesListState
+> {
     state = {
         sortBy: "publish_date:asc",
         activeEntryId: "",
@@ -45,7 +51,7 @@ class EntriesList extends React.Component<IEntriesListProps> {
         processedEntries: OrderedMap<TEntryID, IEntry>()
     };
 
-    constructor(props: IEntriesListProps) {
+    constructor(props: TAllProps) {
         super(props);
 
         // Setup the global/document level keypress events
@@ -59,7 +65,7 @@ class EntriesList extends React.Component<IEntriesListProps> {
         this._filterAndSortEntries(this.props, this.state.sortBy, false);
     }
 
-    componentWillReceiveProps(nextProps: IEntriesListProps) {
+    componentWillReceiveProps(nextProps: TAllProps) {
         if (nextProps.filter.id !== this.props.filter.id) {
             this._filterAndSortEntries(nextProps, this.state.sortBy, true);
 
@@ -75,7 +81,7 @@ class EntriesList extends React.Component<IEntriesListProps> {
     }
 
     _filterAndSortEntries(
-        props: IEntriesListProps,
+        props: TAllProps,
         sortBy: string,
         hasFilterChanged: boolean
     ) {
@@ -131,7 +137,7 @@ class EntriesList extends React.Component<IEntriesListProps> {
 
         this.setState({
             currentTitle: title,
-            processedEntries
+            processedEntries: OrderedMap(processedEntries)
         });
     }
 
@@ -142,7 +148,7 @@ class EntriesList extends React.Component<IEntriesListProps> {
         );
     }
 
-    _filterHiddenEntries(props: IEntriesListProps, processedEntries: any) {
+    _filterHiddenEntries(props: TAllProps, processedEntries: any) {
         const { settings } = props;
 
         let filteredEntries;
@@ -300,21 +306,4 @@ class EntriesList extends React.Component<IEntriesListProps> {
     }
 }
 
-const mapStateToProps = (state: IRootStoreState): IMapStateProps => {
-    const { entries, feeds, filter, folders, settings } = state;
-
-    return {
-        entries: entries.entries,
-        feeds: feeds.feeds,
-        filter: filter.filter,
-        folders: folders.folders,
-        settings: settings.settings
-    };
-};
-
-const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchProps => {
-    return {
-        markEntryRead: entry => dispatch(updateReadState(entry, true))
-    };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(EntriesList);
+export default EntriesListComponent;

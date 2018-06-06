@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Grid, Menu, Segment } from "semantic-ui-react";
 
-import EntriesList from "./Entries/EntriesList";
+import EntriesListContainer from "../containers/Entries/EntriesListContainer";
 import LeftMenuContainer from "../containers/LeftMenu/LeftMenuContainer";
 import MessagesContainer from "../containers/MessagesContainer";
 
@@ -12,7 +12,7 @@ const Browser: React.SFC = () => {
                 <LeftMenuContainer />
             </div>
             <div className="rss-body-right-container">
-                <EntriesList />
+                <EntriesListContainer />
             </div>
             <MessagesContainer />
         </div>
