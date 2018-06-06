@@ -38,9 +38,11 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
     };
 
     static getDerivedStateFromProps(props: IEditFeedModalProps) {
-        return {
-            newFeed: props.feed
-        };
+        if (props.feed) {
+            return {
+                newFeed: props.feed
+            };
+        }
     }
 
     _handleClose = () => {

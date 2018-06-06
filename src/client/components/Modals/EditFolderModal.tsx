@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { Button, Header, Icon, Modal } from "semantic-ui-react";
+import { Button, Header, Modal } from "semantic-ui-react";
 
 import { beginSaveFolder } from "../../redux/actions/folders.actions";
 
@@ -23,15 +23,20 @@ interface IFolderEditorModalState {
 
 const INITIAL_FOLDER = { name: "", _id: "" };
 
-class EditFolderModal extends React.Component<IFolderEditorModalProps> {
+class EditFolderModal extends React.Component<
+    IFolderEditorModalProps,
+    IFolderEditorModalState
+> {
     state: IFolderEditorModalState = {
         folderInfo: INITIAL_FOLDER
     };
 
     static getDerivedStateFromProps(props: IFolderEditorModalProps) {
-        return {
-            folderInfo: props.folder
-        };
+        if (props.folder) {
+            return {
+                folderInfo: props.folder
+            };
+        }
     }
 
     _handleClose = () => {
