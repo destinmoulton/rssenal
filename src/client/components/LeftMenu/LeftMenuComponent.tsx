@@ -5,7 +5,7 @@ import { Icon } from "semantic-ui-react";
 
 import AddFeedModalContainer from "../../containers/Modals/AddFeedModalContainer";
 import ButtonBarContainer from "../../containers/LeftMenu/ButtonBarContainer";
-import EditFeedModal from "../Modals/EditFeedModal";
+import EditFeedModalContainer from "../../containers/Modals/EditFeedModalContainer";
 import EditFolderModal from "../Modals/EditFolderModal";
 import FolderItemContainer from "../../containers/LeftMenu/FolderItemContainer";
 
@@ -137,7 +137,7 @@ class LeftMenuComponent extends React.Component<IAllProps, ILeftMenuState> {
                         onCloseModal={this._handleCloseEditFolderModal}
                         folder={editFolder}
                     />
-                    <EditFeedModal
+                    <EditFeedModalContainer
                         isModalOpen={editFeedModalOpen}
                         onCloseModal={this._handleCloseEditFeedModal}
                         feed={editFeed}

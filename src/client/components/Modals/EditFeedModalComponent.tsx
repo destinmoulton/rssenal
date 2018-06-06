@@ -1,43 +1,41 @@
 import * as React from "react";
-import { connect } from "react-redux";
 
 import { Button, Header, Icon, Modal } from "semantic-ui-react";
 import SelectFolder from "./SelectFolder";
 
-import { beginUpdateFeed } from "../../redux/actions/feeds.actions";
+import { TFolderID, TFolders } from "../../interfaces";
 
-import {
-    IDispatch,
-    IFeed,
-    IRootStoreState,
-    TFolderID,
-    TFolders
-} from "../../interfaces";
-
-interface IMapDispatchToProps {
+export interface IEditFeedModalMapDispatch {
     beginUpdateFeed: (feedInfo: any) => void;
 }
 
-interface IMapStateToProps {
+export interface IEditFeedModalMapState {
     folders: TFolders;
 }
 
-interface IEditFeedModalProps extends IMapDispatchToProps, IMapStateToProps {
+interface IEditFeedModalProps {
     isModalOpen: boolean;
     onCloseModal: () => void;
     feed: any;
 }
 
+type TAllProps = IEditFeedModalMapDispatch &
+    IEditFeedModalMapState &
+    IEditFeedModalProps;
+
 interface IEditFeedModalState {
     newFeed: any;
 }
 
-class EditFeedModal extends React.Component<IEditFeedModalProps> {
+class EditFeedModalComponent extends React.Component<
+    TAllProps,
+    IEditFeedModalState
+> {
     state: IEditFeedModalState = {
         newFeed: { title: "" }
     };
 
-    static getDerivedStateFromProps(props: IEditFeedModalProps) {
+    static getDerivedStateFromProps(props: TAllProps) {
         if (props.feed) {
             return {
                 newFeed: props.feed
@@ -157,17 +155,4 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
     }
 }
 
-const mapStateToProps = (state: IRootStoreState): IMapStateToProps => {
-    const { folders } = state;
-    return {
-        folders: folders.folders
-    };
-};
-
-const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
-    return {
-        beginUpdateFeed: feedInfo => dispatch(beginUpdateFeed(feedInfo))
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditFeedModal);
+export default EditFeedModalComponent;
