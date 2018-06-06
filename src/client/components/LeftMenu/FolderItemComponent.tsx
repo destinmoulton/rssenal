@@ -46,40 +46,7 @@ class FolderItemComponent extends React.Component<TAllProps, IFolderItemState> {
         optionsAreVisible: false
     };
 
-    constructor(props: TAllProps) {
-        super(props);
-
-        this._showOptions = this._showOptions.bind(this);
-        this._hideOptions = this._hideOptions.bind(this);
-        this._handleClickDelete = this._handleClickDelete.bind(this);
-        this._handleClickEdit = this._handleClickEdit.bind(this);
-        this._handleClickFolder = this._handleClickFolder.bind(this);
-        this._handleToggleFeedsVisible = this._handleToggleFeedsVisible.bind(
-            this
-        );
-    }
-
-    _showOptions() {
-        const { folder } = this.props;
-
-        if (folder._id != "0") {
-            this.setState({
-                optionsAreVisible: true
-            });
-        }
-    }
-
-    _hideOptions() {
-        this.setState({
-            optionsAreVisible: false
-        });
-    }
-
-    _handleClickEdit() {
-        this.props.editFolder(this.props.folder);
-    }
-
-    _handleClickDelete() {
+    _handleClickDelete = () => {
         const { beginDeleteFolder, folder } = this.props;
         const conf = confirm(
             `Are you sure you want to delete the '${
@@ -89,22 +56,42 @@ class FolderItemComponent extends React.Component<TAllProps, IFolderItemState> {
         if (conf) {
             beginDeleteFolder(folder._id);
         }
-    }
+    };
 
-    _handleClickFolder() {
+    _handleClickEdit = () => {
+        this.props.editFolder(this.props.folder);
+    };
+
+    _handleClickFolder = () => {
         const { changeFilter, folder } = this.props;
 
         changeFilter({
             limit: "folder",
             id: folder._id
         });
-    }
+    };
 
-    _handleToggleFeedsVisible() {
+    _handleHideOptions = () => {
+        this.setState({
+            optionsAreVisible: false
+        });
+    };
+
+    _handleShowOptions = () => {
+        const { folder } = this.props;
+
+        if (folder._id != "0") {
+            this.setState({
+                optionsAreVisible: true
+            });
+        }
+    };
+
+    _handleToggleFeedsVisible = () => {
         this.setState({
             feedsAreVisible: !this.state.feedsAreVisible
         });
-    }
+    };
 
     _domOptionButtons() {
         return (
@@ -213,8 +200,8 @@ class FolderItemComponent extends React.Component<TAllProps, IFolderItemState> {
             <div>
                 <div
                     className={className}
-                    onMouseEnter={this._showOptions}
-                    onMouseLeave={this._hideOptions}
+                    onMouseEnter={this._handleShowOptions}
+                    onMouseLeave={this._handleHideOptions}
                 >
                     {toggleFeedsIcon}
                     {title}
