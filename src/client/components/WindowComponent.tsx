@@ -17,7 +17,7 @@ class WindowComponent extends React.Component<IWindowComponentProps> {
         super(props);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         if (localStorage.getItem("jwt_token")) {
             this.props.validateToken();
         }
