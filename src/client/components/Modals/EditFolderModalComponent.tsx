@@ -1,21 +1,21 @@
 import * as React from "react";
-import { connect } from "react-redux";
 
 import { Button, Header, Modal } from "semantic-ui-react";
 
-import { beginSaveFolder } from "../../redux/actions/folders.actions";
+import { IFolder } from "../../interfaces";
+import EditFeedModalComponent from "./EditFeedModalComponent";
 
-import { IDispatch, IFolder, IRootStoreState } from "../../interfaces";
-
-interface IMapDispatchToProps {
+export interface IEditFolderModalMapDispatch {
     beginSaveFolder: (folder: any) => void;
 }
 
-interface IFolderEditorModalProps extends IMapDispatchToProps {
+interface IEditFolderModalProps {
     isModalOpen: boolean;
     onCloseModal: () => void;
     folder: IFolder;
 }
+
+type TAllProps = IEditFolderModalMapDispatch & IEditFolderModalProps;
 
 interface IFolderEditorModalState {
     folderInfo: any;
@@ -23,15 +23,15 @@ interface IFolderEditorModalState {
 
 const INITIAL_FOLDER = { name: "", _id: "" };
 
-class EditFolderModal extends React.Component<
-    IFolderEditorModalProps,
+class EditFolderModalComponent extends React.Component<
+    TAllProps,
     IFolderEditorModalState
 > {
     state: IFolderEditorModalState = {
         folderInfo: INITIAL_FOLDER
     };
 
-    static getDerivedStateFromProps(props: IFolderEditorModalProps) {
+    static getDerivedStateFromProps(props: TAllProps) {
         if (props.folder) {
             return {
                 folderInfo: props.folder
@@ -134,14 +134,4 @@ class EditFolderModal extends React.Component<
     }
 }
 
-const mapStateToProps = (state: IRootStoreState) => {
-    return {};
-};
-
-const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
-    return {
-        beginSaveFolder: folderInfo => dispatch(beginSaveFolder(folderInfo))
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditFolderModal);
+export default EditFolderModalComponent;
