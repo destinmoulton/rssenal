@@ -2,7 +2,7 @@ import { OrderedMap } from "immutable";
 import * as React from "react";
 
 import Entry from "./Entry/Entry";
-import SettingsModal from "../Modals/SettingsModal";
+import SettingsModalContainer from "../../containers/Modals/SettingsModalContainer";
 import SortMenu from "./SortMenu";
 
 import { propertyComparator } from "../../lib/sort";
@@ -308,7 +308,7 @@ class EntriesListComponent extends React.Component<
                             onChange={this._handleChangeSort}
                             currentSortBy={sortBy}
                         />&nbsp;&nbsp;
-                        <SettingsModal />
+                        <SettingsModalContainer />
                     </div>
                 </div>
                 <div className="rss-entrylist-container">{entryList}</div>
