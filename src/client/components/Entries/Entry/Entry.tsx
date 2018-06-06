@@ -4,18 +4,9 @@ import { connect } from "react-redux";
 import { Icon } from "semantic-ui-react";
 
 import Content from "./Content";
-import {
-    sanitizeEntryContent,
-    sanitizeEntryTitle
-} from "../../../lib/sanitizer";
+import { sanitizeEntryTitle } from "../../../lib/sanitizer";
 
-import {
-    TEntryID,
-    IEntry,
-    TFeeds,
-    IRootStoreState,
-    ISetting
-} from "../../../interfaces";
+import { TEntryID, IEntry } from "../../../interfaces";
 
 interface IEntryProps {
     entry: IEntry;
