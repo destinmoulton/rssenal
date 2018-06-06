@@ -37,14 +37,10 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
         this._handleInputOnChange = this._handleInputOnChange.bind(this);
     }
 
-    componentDidCatch(error: Error, info: any) {
-        console.error(error, info);
-    }
-
-    componentWillReceiveProps(nextProps: IFolderEditorModalProps) {
-        this.setState({
-            folderInfo: nextProps.folder
-        });
+    static getDerivedStateFromProps(props: IFolderEditorModalProps) {
+        return {
+            folderInfo: props.folder
+        };
     }
 
     _handleClose() {
