@@ -37,10 +37,10 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
         newFeed: { title: "" }
     };
 
-    componentWillReceiveProps(nextProps: IEditFeedModalProps) {
-        this.setState({
-            newFeed: nextProps.feed
-        });
+    static getDerivedStateFromProps(props: IEditFeedModalProps) {
+        return {
+            newFeed: props.feed
+        };
     }
 
     _handleClose = () => {
