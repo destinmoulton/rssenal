@@ -23,12 +23,6 @@ class MessagesComponent extends React.Component<TAllProps> {
         notificationSystem: null
     };
 
-    constructor(props: TAllProps) {
-        super(props);
-
-        this._onCloseMessage = this._onCloseMessage.bind(this);
-    }
-
     componentWillReceiveProps(nextProps: TAllProps) {
         const newMessages = nextProps.messages;
         const oldMessages = this.props.messages;
@@ -42,9 +36,9 @@ class MessagesComponent extends React.Component<TAllProps> {
         });
     }
 
-    _onCloseMessage(message: IMessage) {
+    _onCloseMessage = (message: IMessage) => {
         this.props.removeMessage(message);
-    }
+    };
 
     render() {
         return (
