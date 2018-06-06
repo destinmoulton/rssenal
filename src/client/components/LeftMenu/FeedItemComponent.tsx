@@ -31,29 +31,7 @@ class FeedItemComponent extends React.Component<TAllProps, IFeedItemState> {
         isOptionsVisible: false
     };
 
-    constructor(props: TAllProps) {
-        super(props);
-
-        this._handleClickDelete = this._handleClickDelete.bind(this);
-        this._handleClickEdit = this._handleClickEdit.bind(this);
-        this._handleClickFeed = this._handleClickFeed.bind(this);
-        this._handleHideOptions = this._handleHideOptions.bind(this);
-        this._handleShowOptions = this._handleShowOptions.bind(this);
-    }
-
-    _handleShowOptions() {
-        this.setState({
-            isOptionsVisible: true
-        });
-    }
-
-    _handleHideOptions() {
-        this.setState({
-            isOptionsVisible: false
-        });
-    }
-
-    _handleClickDelete() {
+    _handleClickDelete = () => {
         const { beginDeleteFeed, feed } = this.props;
         const conf = confirm(
             `Are you sure you want to delete "${feed.title}"?`
@@ -61,20 +39,32 @@ class FeedItemComponent extends React.Component<TAllProps, IFeedItemState> {
         if (conf) {
             beginDeleteFeed(feed._id);
         }
-    }
+    };
 
-    _handleClickEdit() {
+    _handleClickEdit = () => {
         this.props.editFeed(this.props.feed);
-    }
+    };
 
-    _handleClickFeed() {
+    _handleClickFeed = () => {
         const { changeFilter, feed } = this.props;
 
         changeFilter({
             limit: "feed",
             id: feed._id
         });
-    }
+    };
+
+    _handleHideOptions = () => {
+        this.setState({
+            isOptionsVisible: false
+        });
+    };
+
+    _handleShowOptions = () => {
+        this.setState({
+            isOptionsVisible: true
+        });
+    };
 
     _buildOptions() {
         return (
