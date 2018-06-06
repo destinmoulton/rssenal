@@ -9,15 +9,9 @@ export interface ILogoutButtonComponentProps {
 class LogoutButtonComponent extends React.Component<
     ILogoutButtonComponentProps
 > {
-    constructor(props: ILogoutButtonComponentProps) {
-        super(props);
-
-        this._handleClickLogout = this._handleClickLogout.bind(this);
-    }
-
-    _handleClickLogout() {
+    _handleClickLogout = () => {
         this.props.logoutUser();
-    }
+    };
 
     render() {
         return (
