@@ -17,7 +17,13 @@ import { generateJWTJSONHeaders } from "../../lib/headers";
 
 import { beginAddFeed } from "../../redux/actions/feeds.actions";
 
-import { IDispatch, IFeed, IRootStoreState, TFolderID } from "../../interfaces";
+import {
+    IDispatch,
+    IFeed,
+    IRootStoreState,
+    TFolderID,
+    TFolders
+} from "../../interfaces";
 
 interface IAddFeedModalState {
     display: string;
@@ -28,7 +34,9 @@ interface IAddFeedModalState {
     formError: string;
 }
 
-interface IMapStateToProps {}
+interface IMapStateToProps {
+    folders: TFolders;
+}
 
 interface IMapDispatchToProps {
     beginAddFeed: (feedInfo: any) => void;
@@ -50,7 +58,10 @@ const INITIAL_STATE: IAddFeedModalState = {
     formError: ""
 };
 
-class AddFeedModal extends React.Component<IAddFeedModalProps> {
+class AddFeedModal extends React.Component<
+    IAddFeedModalProps,
+    IAddFeedModalState
+> {
     state = INITIAL_STATE;
 
     constructor(props: IAddFeedModalProps) {
@@ -209,6 +220,7 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
 
     _buildFeedInfo() {
         const { feedInfo, feedURL } = this.state;
+        const { folders } = this.props;
 
         const description =
             feedInfo.description !== feedInfo.title &&
@@ -229,7 +241,11 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
                     Select Feed Folder
                 </Header>
                 <Segment attached="bottom">
-                    <SelectFolder onChange={this._handleSelectFolder} />
+                    <SelectFolder
+                        onChange={this._handleSelectFolder}
+                        selectedValue={"0"}
+                        folders={folders}
+                    />
                 </Segment>
             </div>
         );
@@ -297,7 +313,10 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
 }
 
 const mapStateToProps = (state: IRootStoreState): IMapStateToProps => {
-    return {};
+    const { folders } = state;
+    return {
+        folders: folders.folders
+    };
 };
 
 const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
