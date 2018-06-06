@@ -1,8 +1,7 @@
-import { is } from "immutable";
 import * as React from "react";
 import * as NotificationSystem from "react-notification-system";
 
-import { IMessage, IReducerStateMessages, TMessages } from "../interfaces";
+import { IMessage, TMessages } from "../interfaces";
 
 export interface IMessagesMapDispatch {
     removeMessage?: (message: IMessage) => void;
@@ -23,9 +22,9 @@ class MessagesComponent extends React.Component<TAllProps> {
         notificationSystem: null
     };
 
-    componentWillReceiveProps(nextProps: TAllProps) {
-        const newMessages = nextProps.messages;
-        const oldMessages = this.props.messages;
+    componentDidUpdate(prevProps: TAllProps) {
+        const newMessages = this.props.messages;
+        const oldMessages = prevProps.messages;
 
         newMessages.map((newMessage: IMessage) => {
             if (!oldMessages.includes(newMessage)) {
