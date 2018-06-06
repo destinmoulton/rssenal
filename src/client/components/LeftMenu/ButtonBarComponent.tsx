@@ -18,23 +18,17 @@ interface IButtonBarProps {
 type TAll = IButtonBarProps & IButtonBarMapState & IButtonBarMapDispatch;
 
 class ButtonBarComponent extends React.Component<TAll> {
-    constructor(props: TAll) {
-        super(props);
-
-        this._handleClickRefresh = this._handleClickRefresh.bind(this);
-    }
-
-    _handleAddFolder() {
+    _handleAddFolder = () => {
         this.props.openEditFolderModal({ _id: "", name: "" });
-    }
+    };
 
-    _handleAddFeed() {
+    _handleAddFeed = () => {
         this.props.openAddFeedModal({ _id: "", title: "" });
-    }
+    };
 
-    _handleClickRefresh() {
+    _handleClickRefresh = () => {
         this.props.refreshAllFeeds();
-    }
+    };
 
     render() {
         return (
@@ -44,7 +38,7 @@ class ButtonBarComponent extends React.Component<TAll> {
                         trigger={
                             <Button
                                 className="rss-leftmenu-button-addrss"
-                                onClick={this._handleAddFeed.bind(this)}
+                                onClick={this._handleAddFeed}
                             >
                                 <Icon name="plus" />
                                 <Icon name="rss" />
@@ -56,7 +50,7 @@ class ButtonBarComponent extends React.Component<TAll> {
                         trigger={
                             <Button
                                 className="rss-leftmenu-button-addfolder"
-                                onClick={this._handleAddFolder.bind(this)}
+                                onClick={this._handleAddFolder}
                             >
                                 <Icon name="plus" />
                                 <Icon name="folder" />
