@@ -1,5 +1,4 @@
 import * as React from "react";
-import { connect } from "react-redux";
 
 import {
     Button,
@@ -15,28 +14,24 @@ import SelectFolder from "./SelectFolder";
 import { API_FEEDVALIDATION_BASE } from "../../redux/apiendpoints";
 import { generateJWTJSONHeaders } from "../../lib/headers";
 
-import { beginAddFeed } from "../../redux/actions/feeds.actions";
+import { IFeed, TFolderID, TFolders } from "../../interfaces";
 
-import {
-    IDispatch,
-    IFeed,
-    IRootStoreState,
-    TFolderID,
-    TFolders
-} from "../../interfaces";
-
-interface IMapStateToProps {
+export interface IAddFeedModalMapState {
     folders: TFolders;
 }
 
-interface IMapDispatchToProps {
+export interface IAddFeedModalMapDispatch {
     beginAddFeed: (feedInfo: any) => void;
 }
 
-interface IAddFeedModalProps extends IMapStateToProps, IMapDispatchToProps {
+interface IAddFeedModalProps {
     isModalOpen: boolean;
     onCloseModal: () => void;
 }
+
+type TAllProps = IAddFeedModalMapState &
+    IAddFeedModalMapDispatch &
+    IAddFeedModalProps;
 
 const DISPLAY_FORM = "FORM";
 const DISPLAY_FEED = "FEED";
@@ -58,8 +53,8 @@ const INITIAL_STATE: IAddFeedModalState = {
     isValidatingURL: false
 };
 
-class AddFeedModal extends React.Component<
-    IAddFeedModalProps,
+class AddFeedModalComponent extends React.Component<
+    TAllProps,
     IAddFeedModalState
 > {
     state = INITIAL_STATE;
@@ -296,17 +291,4 @@ class AddFeedModal extends React.Component<
     }
 }
 
-const mapStateToProps = (state: IRootStoreState): IMapStateToProps => {
-    const { folders } = state;
-    return {
-        folders: folders.folders
-    };
-};
-
-const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
-    return {
-        beginAddFeed: feedInfo => dispatch(beginAddFeed(feedInfo))
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddFeedModal);
+export default AddFeedModalComponent;

@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { Icon } from "semantic-ui-react";
 
-import AddFeedModal from "../Modals/AddFeedModal";
+import AddFeedModalContainer from "../../containers/Modals/AddFeedModalContainer";
 import ButtonBarContainer from "../../containers/LeftMenu/ButtonBarContainer";
 import EditFeedModal from "../Modals/EditFeedModal";
 import EditFolderModal from "../Modals/EditFolderModal";
@@ -128,7 +128,7 @@ class LeftMenuComponent extends React.Component<IAllProps, ILeftMenuState> {
                         openEditFolderModal={this._handleOpenEditFolderModal}
                         openAddFeedModal={this._handleOpenAddFeedModal}
                     />
-                    <AddFeedModal
+                    <AddFeedModalContainer
                         isModalOpen={addFeedModalOpen}
                         onCloseModal={this._handleCloseAddFeedModal}
                     />
