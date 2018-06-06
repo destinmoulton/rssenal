@@ -56,7 +56,7 @@ class EntriesListComponent extends React.Component<
         document.onkeydown = this._handleKeyDown.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this._filterAndSortEntries(this.props, this.state.sortBy, false);
     }
 
