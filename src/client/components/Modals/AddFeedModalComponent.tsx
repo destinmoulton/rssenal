@@ -1,5 +1,4 @@
 import * as React from "react";
-import { connect } from "react-redux";
 
 import {
     Button,
@@ -15,67 +14,58 @@ import SelectFolder from "./SelectFolder";
 import { API_FEEDVALIDATION_BASE } from "../../redux/apiendpoints";
 import { generateJWTJSONHeaders } from "../../lib/headers";
 
-import { beginAddFeed } from "../../redux/actions/feeds.actions";
+import { IFeed, TFolderID, TFolders } from "../../interfaces";
 
-import { IDispatch, IFeed, IRootStoreState, TFolderID } from "../../interfaces";
-
-interface IAddFeedModalState {
-    display: string;
-    feedInfo: IFeed;
-    isValidatingURL: boolean;
-    feedURL: string;
-    folderId: TFolderID;
-    formError: string;
+export interface IAddFeedModalMapState {
+    folders: TFolders;
 }
 
-interface IMapStateToProps {}
-
-interface IMapDispatchToProps {
+export interface IAddFeedModalMapDispatch {
     beginAddFeed: (feedInfo: any) => void;
 }
 
-interface IAddFeedModalProps extends IMapStateToProps, IMapDispatchToProps {
+interface IAddFeedModalProps {
     isModalOpen: boolean;
     onCloseModal: () => void;
 }
 
+type TAllProps = IAddFeedModalMapState &
+    IAddFeedModalMapDispatch &
+    IAddFeedModalProps;
+
 const DISPLAY_FORM = "FORM";
 const DISPLAY_FEED = "FEED";
+
+interface IAddFeedModalState {
+    display: string;
+    feedInfo: any;
+    feedURL: string;
+    folderId: TFolderID;
+    formError: string;
+    isValidatingURL: boolean;
+}
 const INITIAL_STATE: IAddFeedModalState = {
     display: DISPLAY_FORM,
     feedInfo: null,
-    isValidatingURL: false,
     feedURL: "",
     folderId: "0",
-    formError: ""
+    formError: "",
+    isValidatingURL: false
 };
 
-class AddFeedModal extends React.Component<IAddFeedModalProps> {
+class AddFeedModalComponent extends React.Component<
+    TAllProps,
+    IAddFeedModalState
+> {
     state = INITIAL_STATE;
 
-    constructor(props: IAddFeedModalProps) {
-        super(props);
-
-        this._handleClickAddFeed = this._handleClickAddFeed.bind(this);
-        this._handleClickContinue = this._handleClickContinue.bind(this);
-        this._handleChangeURLInput = this._handleChangeURLInput.bind(this);
-        this._handleClose = this._handleClose.bind(this);
-        this._handleSelectFolder = this._handleSelectFolder.bind(this);
-        this._transitionToDisplayFeed = this._transitionToDisplayFeed.bind(
-            this
-        );
-        this._transitionToDisplayForm = this._transitionToDisplayForm.bind(
-            this
-        );
-    }
-
-    _handleChangeURLInput(e: React.FormEvent<HTMLInputElement>) {
+    _handleChangeURLInput = (e: React.FormEvent<HTMLInputElement>) => {
         this.setState({
             feedURL: e.currentTarget.value
         });
-    }
+    };
 
-    _handleClickContinue() {
+    _handleClickContinue = () => {
         const { feedURL } = this.state;
 
         if (feedURL !== "") {
@@ -85,15 +75,15 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
 
             this._serverValidateURL();
         }
-    }
+    };
 
-    _handleClose() {
+    _handleClose = () => {
         this.setState(INITIAL_STATE);
 
         this.props.onCloseModal();
-    }
+    };
 
-    _handleClickAddFeed() {
+    _handleClickAddFeed = () => {
         const { feedInfo, folderId, feedURL } = this.state;
 
         const dataToAdd = {
@@ -105,30 +95,30 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
         };
         this.props.beginAddFeed(dataToAdd);
         this._handleClose();
-    }
+    };
 
-    _handleSelectFolder(folderId: TFolderID) {
+    _handleSelectFolder = (folderId: TFolderID) => {
         this.setState({
             folderId
         });
-    }
+    };
 
-    _transitionToDisplayForm() {
+    _transitionToDisplayForm = () => {
         this.setState({
             display: DISPLAY_FORM,
             feedInfo: {},
             folderId: "0",
             isValidatingURL: false
         });
-    }
+    };
 
-    _transitionToDisplayFeed(feedObj: IFeed) {
+    _transitionToDisplayFeed = (feedObj: IFeed) => {
         this.setState({
             display: DISPLAY_FEED,
             feedInfo: feedObj,
             formError: ""
         });
-    }
+    };
 
     _serverValidateURL() {
         const { feedURL } = this.state;
@@ -209,6 +199,7 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
 
     _buildFeedInfo() {
         const { feedInfo, feedURL } = this.state;
+        const { folders } = this.props;
 
         const description =
             feedInfo.description !== feedInfo.title &&
@@ -229,7 +220,11 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
                     Select Feed Folder
                 </Header>
                 <Segment attached="bottom">
-                    <SelectFolder onChange={this._handleSelectFolder} />
+                    <SelectFolder
+                        onChange={this._handleSelectFolder}
+                        selectedValue={"0"}
+                        folders={folders}
+                    />
                 </Segment>
             </div>
         );
@@ -296,14 +291,4 @@ class AddFeedModal extends React.Component<IAddFeedModalProps> {
     }
 }
 
-const mapStateToProps = (state: IRootStoreState): IMapStateToProps => {
-    return {};
-};
-
-const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
-    return {
-        beginAddFeed: feedInfo => dispatch(beginAddFeed(feedInfo))
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddFeedModal);
+export default AddFeedModalComponent;

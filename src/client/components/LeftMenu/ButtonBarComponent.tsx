@@ -1,40 +1,34 @@
 import * as React from "react";
-import { connect } from "react-redux";
 
 import { Button, Icon, Popup } from "semantic-ui-react";
 
-import LogoutButton from "../LogoutButton";
-import ReorderFoldersModal from "../Modals/ReorderFoldersModal";
-import { refreshAllFeeds } from "../../redux/actions/feeds.actions";
-import * as Types from "../../interfaces";
+import LogoutButtonContainer from "../../containers/LeftMenu/LogoutButtonContainer";
+import ReorderFoldersModalContainer from "../../containers/Modals/ReorderFoldersModalContainer";
 
-interface IMapDispatchProps {
+export interface IButtonBarMapState {}
+export interface IButtonBarMapDispatch {
     refreshAllFeeds: () => void;
 }
 
-interface IButtonBarProps extends IMapDispatchProps {
+interface IButtonBarProps {
     openAddFeedModal: (newFeed: object) => void;
     openEditFolderModal: (folderDefault: object) => void;
 }
 
-class ButtonBar extends React.Component<IButtonBarProps> {
-    constructor(props: IButtonBarProps) {
-        super(props);
+type TAll = IButtonBarProps & IButtonBarMapState & IButtonBarMapDispatch;
 
-        this._handleClickRefresh = this._handleClickRefresh.bind(this);
-    }
-
-    _handleAddFolder() {
+class ButtonBarComponent extends React.Component<TAll> {
+    _handleAddFolder = () => {
         this.props.openEditFolderModal({ _id: "", name: "" });
-    }
+    };
 
-    _handleAddFeed() {
+    _handleAddFeed = () => {
         this.props.openAddFeedModal({ _id: "", title: "" });
-    }
+    };
 
-    _handleClickRefresh() {
+    _handleClickRefresh = () => {
         this.props.refreshAllFeeds();
-    }
+    };
 
     render() {
         return (
@@ -44,7 +38,7 @@ class ButtonBar extends React.Component<IButtonBarProps> {
                         trigger={
                             <Button
                                 className="rss-leftmenu-button-addrss"
-                                onClick={this._handleAddFeed.bind(this)}
+                                onClick={this._handleAddFeed}
                             >
                                 <Icon name="plus" />
                                 <Icon name="rss" />
@@ -56,7 +50,7 @@ class ButtonBar extends React.Component<IButtonBarProps> {
                         trigger={
                             <Button
                                 className="rss-leftmenu-button-addfolder"
-                                onClick={this._handleAddFolder.bind(this)}
+                                onClick={this._handleAddFolder}
                             >
                                 <Icon name="plus" />
                                 <Icon name="folder" />
@@ -65,7 +59,7 @@ class ButtonBar extends React.Component<IButtonBarProps> {
                         content="Add Folder"
                     />
                 </Button.Group>
-                <ReorderFoldersModal />
+                <ReorderFoldersModalContainer />
                 <Popup
                     trigger={
                         <Button
@@ -77,19 +71,10 @@ class ButtonBar extends React.Component<IButtonBarProps> {
                     }
                     content="Reload All Feeds"
                 />
-                <LogoutButton />
+                <LogoutButtonContainer />
             </div>
         );
     }
 }
 
-const mapStateToProps = (state: Types.IRootStoreState) => {
-    return {};
-};
-
-const mapDispatchToProps = (dispatch: Types.IDispatch): IMapDispatchProps => {
-    return {
-        refreshAllFeeds: () => dispatch(refreshAllFeeds())
-    };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(ButtonBar);
+export default ButtonBarComponent;

@@ -1,77 +1,62 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { arrayMove } from "react-sortable-hoc";
-import { Button, Header, Icon, Modal, Popup } from "semantic-ui-react";
 
-import { SortableFolderItem, SortableFolderList } from "./SortableComponents";
+import { Button, Header, Modal, Popup } from "semantic-ui-react";
 
-import { beginReorderFolders } from "../../redux/actions/folders.actions";
+import { SortableFolderList } from "./SortableComponents";
+
 import { propertyComparator } from "../../lib/sort";
 
-import {
-    IDispatch,
-    IFolder,
-    IRootStoreState,
-    TFolders
-} from "../../interfaces";
+import { IFolder, TFolders } from "../../interfaces";
 
-interface IMapStateToProps {
+export interface IReorderFoldersMapState {
     folders: TFolders;
 }
 
-interface IMapDispatchToProps {
+export interface IReorderFolderMapDispatch {
     beginReorderFolders: (foldersArr: IFolder[]) => void;
 }
 
-interface IReorderFoldersModalProps
-    extends IMapStateToProps,
-        IMapDispatchToProps {}
+type TAllProps = IReorderFolderMapDispatch & IReorderFoldersMapState;
 
 interface IReorderFoldersModalState {
     foldersAsArray: IFolder[];
     isModalOpen: boolean;
 }
 
-class ReorderFoldersModal extends React.Component<IReorderFoldersModalProps> {
+class ReorderFoldersModalComponent extends React.Component<
+    TAllProps,
+    IReorderFoldersModalState
+> {
     state: IReorderFoldersModalState = {
         foldersAsArray: [],
         isModalOpen: false
     };
 
-    constructor(props: IReorderFoldersModalProps) {
-        super(props);
-
-        this._handleCloseModal = this._handleCloseModal.bind(this);
-        this._handleOpenModal = this._handleOpenModal.bind(this);
-        this._handlePressOK = this._handlePressOK.bind(this);
-        this._onSortEnd = this._onSortEnd.bind(this);
-    }
-
-    componentWillReceiveProps(nextProps: IReorderFoldersModalProps) {
-        let tmpArray = nextProps.folders
+    static getDerivedStateFromProps(props: TAllProps) {
+        let tmpArray = props.folders
             .toArray()
             .sort((a, b) => propertyComparator(a, b, "asc", "order"));
         //Remove the "Uncategorized" folder
         tmpArray.pop();
 
-        this.setState({
+        return {
             foldersAsArray: tmpArray
-        });
+        };
     }
 
-    _handleCloseModal() {
+    _handleCloseModal = () => {
         this.setState({
             isModalOpen: false
         });
-    }
+    };
 
-    _handleOpenModal() {
+    _handleOpenModal = () => {
         this.setState({
             isModalOpen: true
         });
-    }
+    };
 
-    _handlePressOK() {
+    _handlePressOK = () => {
         const { foldersAsArray } = this.state;
         const orderedFolders = foldersAsArray.map((folder, index) => {
             folder.order = index + 1;
@@ -79,9 +64,9 @@ class ReorderFoldersModal extends React.Component<IReorderFoldersModalProps> {
         });
         this.props.beginReorderFolders(orderedFolders);
         this._handleCloseModal();
-    }
+    };
 
-    _onSortEnd(reorderedObj: any) {
+    _onSortEnd = (reorderedObj: any) => {
         const newFoldersArray = this._reorderFoldersArray(
             reorderedObj.oldIndex,
             reorderedObj.newIndex
@@ -89,7 +74,7 @@ class ReorderFoldersModal extends React.Component<IReorderFoldersModalProps> {
         this.setState({
             foldersAsArray: newFoldersArray
         });
-    }
+    };
 
     _reorderFoldersArray(previousIndex: number, newIndex: number): IFolder[] {
         const array = this.state.foldersAsArray.slice(0);
@@ -156,20 +141,4 @@ class ReorderFoldersModal extends React.Component<IReorderFoldersModalProps> {
     }
 }
 
-const mapStateToProps = (state: IRootStoreState): IMapStateToProps => {
-    const { folders } = state;
-    return {
-        folders: folders.folders
-    };
-};
-
-const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
-    return {
-        beginReorderFolders: foldersArr =>
-            dispatch(beginReorderFolders(foldersArr))
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(
-    ReorderFoldersModal
-);
+export default ReorderFoldersModalComponent;

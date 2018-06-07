@@ -1,89 +1,52 @@
 import { Map, OrderedMap } from "immutable";
 import * as React from "react";
-import { connect } from "react-redux";
-import { Button, Confirm, Icon, SemanticICONS } from "semantic-ui-react";
+
+import { Icon, SemanticICONS } from "semantic-ui-react";
 
 import ListFeeds from "./ListFeeds";
 
 import {
-    beginDeleteFolder,
-    beginSaveFolder
-} from "../../redux/actions/folders.actions";
-import { changeFilter } from "../../redux/actions/filter.actions";
-
-import {
-    IDispatch,
     IFeed,
     IFolder,
     IFilter,
-    IRootStoreState,
     TFolderID,
     TFeedID,
     TFeeds
 } from "../../interfaces";
 
-interface IMapStateProps {
+export interface IFolderItemMapState {
     filter: IFilter;
     unreadMapGroups: Map<TFolderID, number>;
     feeds: TFeeds;
 }
 
-interface IMapDispatchProps {
+export interface IFolderItemMapDispatch {
     beginDeleteFolder: (folderId: TFolderID) => void;
     changeFilter: (filter: IFilter) => void;
 }
 
-interface IFolderItemProps extends IMapStateProps, IMapDispatchProps {
+interface IFolderItemProps {
     editFeed: (feed: IFeed) => void;
     editFolder: (currentFolder: IFolder) => void;
     folder: IFolder;
 }
+
+type TAllProps = IFolderItemProps &
+    IFolderItemMapDispatch &
+    IFolderItemMapState;
 
 interface IFolderItemState {
     feedsAreVisible: boolean;
     optionsAreVisible: boolean;
 }
 
-class FolderItem extends React.Component<IFolderItemProps> {
+class FolderItemComponent extends React.Component<TAllProps, IFolderItemState> {
     state: IFolderItemState = {
         feedsAreVisible: false,
         optionsAreVisible: false
     };
 
-    constructor(props: IFolderItemProps) {
-        super(props);
-
-        this._showOptions = this._showOptions.bind(this);
-        this._hideOptions = this._hideOptions.bind(this);
-        this._handleClickDelete = this._handleClickDelete.bind(this);
-        this._handleClickEdit = this._handleClickEdit.bind(this);
-        this._handleClickFolder = this._handleClickFolder.bind(this);
-        this._handleToggleFeedsVisible = this._handleToggleFeedsVisible.bind(
-            this
-        );
-    }
-
-    _showOptions() {
-        const { folder } = this.props;
-
-        if (folder._id != "0") {
-            this.setState({
-                optionsAreVisible: true
-            });
-        }
-    }
-
-    _hideOptions() {
-        this.setState({
-            optionsAreVisible: false
-        });
-    }
-
-    _handleClickEdit() {
-        this.props.editFolder(this.props.folder);
-    }
-
-    _handleClickDelete() {
+    _handleClickDelete = () => {
         const { beginDeleteFolder, folder } = this.props;
         const conf = confirm(
             `Are you sure you want to delete the '${
@@ -93,22 +56,42 @@ class FolderItem extends React.Component<IFolderItemProps> {
         if (conf) {
             beginDeleteFolder(folder._id);
         }
-    }
+    };
 
-    _handleClickFolder() {
+    _handleClickEdit = () => {
+        this.props.editFolder(this.props.folder);
+    };
+
+    _handleClickFolder = () => {
         const { changeFilter, folder } = this.props;
 
         changeFilter({
             limit: "folder",
             id: folder._id
         });
-    }
+    };
 
-    _handleToggleFeedsVisible() {
+    _handleHideOptions = () => {
+        this.setState({
+            optionsAreVisible: false
+        });
+    };
+
+    _handleShowOptions = () => {
+        const { folder } = this.props;
+
+        if (folder._id != "0") {
+            this.setState({
+                optionsAreVisible: true
+            });
+        }
+    };
+
+    _handleToggleFeedsVisible = () => {
         this.setState({
             feedsAreVisible: !this.state.feedsAreVisible
         });
-    }
+    };
 
     _domOptionButtons() {
         return (
@@ -217,8 +200,8 @@ class FolderItem extends React.Component<IFolderItemProps> {
             <div>
                 <div
                     className={className}
-                    onMouseEnter={this._showOptions}
-                    onMouseLeave={this._hideOptions}
+                    onMouseEnter={this._handleShowOptions}
+                    onMouseLeave={this._handleHideOptions}
                 >
                     {toggleFeedsIcon}
                     {title}
@@ -232,22 +215,4 @@ class FolderItem extends React.Component<IFolderItemProps> {
     }
 }
 
-const mapStateToProps = (state: IRootStoreState): IMapStateProps => {
-    const { feeds, filter } = state;
-
-    return {
-        filter: filter.filter,
-        unreadMapGroups: feeds.unreadMap.folders,
-        feeds: feeds.feeds
-    };
-};
-
-const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchProps => {
-    return {
-        beginDeleteFolder: (folderId: TFolderID) =>
-            dispatch(beginDeleteFolder(folderId)),
-        changeFilter: (newFilter: IFilter) => dispatch(changeFilter(newFilter))
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(FolderItem);
+export default FolderItemComponent;

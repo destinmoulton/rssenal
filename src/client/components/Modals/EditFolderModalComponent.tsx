@@ -1,21 +1,21 @@
 import * as React from "react";
-import { connect } from "react-redux";
 
-import { Button, Header, Icon, Modal } from "semantic-ui-react";
+import { Button, Header, Modal } from "semantic-ui-react";
 
-import { beginSaveFolder } from "../../redux/actions/folders.actions";
+import { IFolder } from "../../interfaces";
+import EditFeedModalComponent from "./EditFeedModalComponent";
 
-import { IDispatch, IFolder, IRootStoreState } from "../../interfaces";
-
-interface IMapDispatchToProps {
+export interface IEditFolderModalMapDispatch {
     beginSaveFolder: (folder: any) => void;
 }
 
-interface IFolderEditorModalProps extends IMapDispatchToProps {
+interface IEditFolderModalProps {
     isModalOpen: boolean;
     onCloseModal: () => void;
     folder: IFolder;
 }
+
+type TAllProps = IEditFolderModalMapDispatch & IEditFolderModalProps;
 
 interface IFolderEditorModalState {
     folderInfo: any;
@@ -23,59 +23,51 @@ interface IFolderEditorModalState {
 
 const INITIAL_FOLDER = { name: "", _id: "" };
 
-class EditFolderModal extends React.Component<IFolderEditorModalProps> {
+class EditFolderModalComponent extends React.Component<
+    TAllProps,
+    IFolderEditorModalState
+> {
     state: IFolderEditorModalState = {
         folderInfo: INITIAL_FOLDER
     };
 
-    constructor(props: IFolderEditorModalProps) {
-        super(props);
-
-        this._handleClose = this._handleClose.bind(this);
-        this._handleSave = this._handleSave.bind(this);
-        this._handleInputKeyPress = this._handleInputKeyPress.bind(this);
-        this._handleInputOnChange = this._handleInputOnChange.bind(this);
+    static getDerivedStateFromProps(props: TAllProps) {
+        if (props.folder) {
+            return {
+                folderInfo: props.folder
+            };
+        }
     }
 
-    componentDidCatch(error: Error, info: any) {
-        console.error(error, info);
-    }
-
-    componentWillReceiveProps(nextProps: IFolderEditorModalProps) {
-        this.setState({
-            folderInfo: nextProps.folder
-        });
-    }
-
-    _handleClose() {
+    _handleClose = () => {
         this.setState({
             folderInfo: INITIAL_FOLDER
         });
         this.props.onCloseModal();
-    }
+    };
 
-    _handleSave() {
+    _handleSave = () => {
         const { folderInfo } = this.state;
 
         if (folderInfo.name.trim() !== "") {
             this.props.beginSaveFolder(folderInfo);
             this._handleClose();
         }
-    }
+    };
 
-    _handleInputKeyPress(e: any) {
+    _handleInputKeyPress = (e: any) => {
         if (e.key === "Enter") {
             this._handleSave();
         }
-    }
+    };
 
-    _handleInputOnChange(e: any) {
+    _handleInputOnChange = (e: any) => {
         const { folderInfo } = this.state;
         folderInfo.name = e.target.value;
         this.setState({
             folderInfo
         });
-    }
+    };
 
     _buildEditInput() {
         const { folderInfo } = this.state;
@@ -142,14 +134,4 @@ class EditFolderModal extends React.Component<IFolderEditorModalProps> {
     }
 }
 
-const mapStateToProps = (state: IRootStoreState) => {
-    return {};
-};
-
-const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
-    return {
-        beginSaveFolder: folderInfo => dispatch(beginSaveFolder(folderInfo))
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditFolderModal);
+export default EditFolderModalComponent;

@@ -1,12 +1,13 @@
 import * as React from "react";
-import { connect } from "react-redux";
 
 import { Button, Header, Icon, Modal, Popup, Radio } from "semantic-ui-react";
 
-import { changeSetting } from "../../redux/actions/settings.actions";
-import { refreshAllFeeds } from "../../redux/actions/feeds.actions";
+import { ISetting } from "../../interfaces";
 
-import { IDispatch, IRootStoreState, ISetting } from "../../interfaces";
+export interface ISettingsModalMapDispatch {
+    changeSetting: (setting_key: string, setting_value: any) => void;
+    refreshAllFeeds: () => void;
+}
 
 interface ISettingsModalProps {
     changeSetting: (setting_key: string, setting_value: any) => void;
@@ -14,29 +15,31 @@ interface ISettingsModalProps {
     settings: ISetting[];
 }
 
-class SettingsModal extends React.Component<ISettingsModalProps> {
+type TAllProps = ISettingsModalProps & ISettingsModalMapDispatch;
+
+interface ISettingsModalState {
+    isModalOpen: boolean;
+}
+
+class SettingsModalComponent extends React.Component<
+    TAllProps,
+    ISettingsModalState
+> {
     state = {
         isModalOpen: false
     };
 
-    constructor(props: ISettingsModalProps) {
-        super(props);
-
-        this._handleClickOpenModal = this._handleClickOpenModal.bind(this);
-        this._handleClickCloseModal = this._handleClickCloseModal.bind(this);
-    }
-
-    _handleClickOpenModal() {
+    _handleClickOpenModal = () => {
         this.setState({
             isModalOpen: true
         });
-    }
+    };
 
-    _handleClickCloseModal() {
+    _handleClickCloseModal = () => {
         this.setState({
             isModalOpen: false
         });
-    }
+    };
 
     _buildSettings() {
         const { settings } = this.props;
@@ -118,18 +121,4 @@ class SettingsModal extends React.Component<ISettingsModalProps> {
     }
 }
 
-const mapStateToProps = (state: IRootStoreState) => {
-    const { settings } = state;
-    return {
-        settings: settings.settings
-    };
-};
-
-const mapDispatchToProps = (dispatch: IDispatch) => {
-    return {
-        changeSetting: (setting_key: string, setting_value: any) =>
-            dispatch(changeSetting(setting_key, setting_value)),
-        refreshAllFeeds: () => dispatch(refreshAllFeeds())
-    };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(SettingsModal);
+export default SettingsModalComponent;

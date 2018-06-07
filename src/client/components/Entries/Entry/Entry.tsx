@@ -4,44 +4,18 @@ import { connect } from "react-redux";
 import { Icon } from "semantic-ui-react";
 
 import Content from "./Content";
-import {
-    sanitizeEntryContent,
-    sanitizeEntryTitle
-} from "../../../lib/sanitizer";
+import { sanitizeEntryTitle } from "../../../lib/sanitizer";
 
-import {
-    TEntryID,
-    IEntry,
-    TFeeds,
-    IRootStoreState,
-    ISetting
-} from "../../../interfaces";
+import { TEntryID, IEntry } from "../../../interfaces";
 
 interface IEntryProps {
     entry: IEntry;
     toggleEntry: (entryId: TEntryID) => void;
     isActive: boolean;
-    settings: ISetting[];
+    shouldShowImages: boolean;
 }
 
 class Entry extends React.Component<IEntryProps> {
-    state = {
-        shouldShowImages: false
-    };
-
-    componentWillReceiveProps({ settings }: IEntryProps) {
-        let shouldShowImages = false;
-        settings.forEach(setting => {
-            if (setting.key === "show_images") {
-                shouldShowImages = setting.value;
-            }
-        });
-
-        this.setState({
-            shouldShowImages
-        });
-    }
-
     _toggleEntry(entryId: TEntryID) {
         const { toggleEntry } = this.props;
 
@@ -49,8 +23,7 @@ class Entry extends React.Component<IEntryProps> {
     }
 
     render() {
-        const { entry, isActive } = this.props;
-        const { shouldShowImages } = this.state;
+        const { entry, isActive, shouldShowImages } = this.props;
 
         let content = null;
         if (isActive) {
@@ -81,11 +54,4 @@ class Entry extends React.Component<IEntryProps> {
     }
 }
 
-const mapStateToProps = (state: IRootStoreState) => {
-    const { settings } = state;
-    return {
-        settings: settings.settings
-    };
-};
-
-export default connect(mapStateToProps)(Entry);
+export default Entry;

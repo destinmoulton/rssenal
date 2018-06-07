@@ -1,5 +1,5 @@
 import * as React from "react";
-import { connect } from "react-redux";
+
 import {
     Button,
     Form,
@@ -10,43 +10,39 @@ import {
     Segment
 } from "semantic-ui-react";
 
-import { loginUser } from "../redux/actions/auth.actions";
-
-import { IDispatch, IRootStoreState } from "../interfaces";
-
-interface IMapStateToProps {
+export interface ILoginMapState {
     authenticationError: string;
 }
-interface IMapDispatchToProps {
+
+export interface ILoginMapDispatch {
     loginUser: (username: string, password: string) => void;
 }
 
-interface ILoginProps extends IMapStateToProps, IMapDispatchToProps {}
+type TAllProps = ILoginMapDispatch & ILoginMapState;
 
-class Login extends React.Component<ILoginProps> {
+interface ILoginState {
+    username?: string;
+    password?: string;
+}
+
+class LoginComponent extends React.Component<TAllProps, ILoginState> {
     state = {
         username: "",
         password: ""
     };
 
-    constructor(props: ILoginProps) {
-        super(props);
+    _changeInput = (e: React.FormEvent<HTMLInputElement>) => {
+        this.setState({ [e.currentTarget.name]: e.currentTarget.value.trim() });
+    };
 
-        this._authenticateUser = this._authenticateUser.bind(this);
-        this._changeInput = this._changeInput.bind(this);
-    }
-
-    _changeInput(e: any) {
-        this.setState({ [e.target.name]: e.target.value.trim() });
-    }
-
-    _authenticateUser() {
+    _authenticateUser = () => {
         const { username, password } = this.state;
 
         if (username && password) {
             this.props.loginUser(username, password);
         }
-    }
+    };
+
     render() {
         const { authenticationError } = this.props;
 
@@ -112,17 +108,5 @@ class Login extends React.Component<ILoginProps> {
         );
     }
 }
-const mapStateToProps = (state: IRootStoreState): IMapStateToProps => {
-    return {
-        authenticationError: state.auth.authenticationError
-    };
-};
 
-const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
-    return {
-        loginUser: (username: string, password: string) => {
-            return dispatch(loginUser(username, password));
-        }
-    };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default LoginComponent;

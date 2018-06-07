@@ -1,94 +1,91 @@
 import * as React from "react";
-import { connect } from "react-redux";
 
 import { Button, Header, Icon, Modal } from "semantic-ui-react";
 import SelectFolder from "./SelectFolder";
 
-import { beginUpdateFeed } from "../../redux/actions/feeds.actions";
+import { TFolderID, TFolders } from "../../interfaces";
 
-import { IDispatch, IFeed, IRootStoreState, TFolderID } from "../../interfaces";
-
-interface IMapDispatchToProps {
+export interface IEditFeedModalMapDispatch {
     beginUpdateFeed: (feedInfo: any) => void;
 }
 
-interface IMapStateToProps {}
+export interface IEditFeedModalMapState {
+    folders: TFolders;
+}
 
-interface IEditFeedModalProps extends IMapDispatchToProps, IMapStateToProps {
+interface IEditFeedModalProps {
     isModalOpen: boolean;
     onCloseModal: () => void;
     feed: any;
 }
 
+type TAllProps = IEditFeedModalMapDispatch &
+    IEditFeedModalMapState &
+    IEditFeedModalProps;
+
 interface IEditFeedModalState {
     newFeed: any;
 }
 
-class EditFeedModal extends React.Component<IEditFeedModalProps> {
+class EditFeedModalComponent extends React.Component<
+    TAllProps,
+    IEditFeedModalState
+> {
     state: IEditFeedModalState = {
         newFeed: { title: "" }
     };
 
-    constructor(props: IEditFeedModalProps) {
-        super(props);
-
-        this._handleClose = this._handleClose.bind(this);
-        this._handleSave = this._handleSave.bind(this);
-        this._handleInputKeyPress = this._handleInputKeyPress.bind(this);
-        this._handleInputOnChange = this._handleInputOnChange.bind(this);
-        this._handleSelectFolderChange = this._handleSelectFolderChange.bind(
-            this
-        );
+    static getDerivedStateFromProps(props: TAllProps) {
+        if (props.feed) {
+            return {
+                newFeed: props.feed
+            };
+        }
     }
 
-    componentWillReceiveProps(nextProps: IEditFeedModalProps) {
-        this.setState({
-            newFeed: nextProps.feed
-        });
-    }
-
-    _handleClose() {
+    _handleClose = () => {
         this.setState({
             newFeed: {}
         });
 
         this.props.onCloseModal();
-    }
+    };
 
-    _handleSave() {
+    _handleSave = () => {
         const { newFeed } = this.state;
 
         if (newFeed.name !== "") {
             this.props.beginUpdateFeed(newFeed);
             this._handleClose();
         }
-    }
+    };
 
-    _handleInputKeyPress(e: any) {
+    _handleInputKeyPress = (e: any) => {
         if (e.key === "Enter") {
             this._handleSave();
         }
-    }
+    };
 
-    _handleInputOnChange(e: React.FormEvent<HTMLInputElement>) {
+    _handleInputOnChange = (e: React.FormEvent<HTMLInputElement>) => {
         const { newFeed } = this.state;
         newFeed.title = e.currentTarget.value;
         this.setState({
             newFeed
         });
-    }
+    };
 
-    _handleSelectFolderChange(folderId: TFolderID) {
+    _handleSelectFolderChange = (folderId: TFolderID) => {
         const { newFeed } = this.state;
         newFeed.folder_id = folderId;
 
         this.setState({
             newFeed
         });
-    }
+    };
 
     _buildEditInput() {
         const { newFeed } = this.state;
+        const { folders } = this.props;
 
         return (
             <div>
@@ -108,6 +105,7 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
                 <SelectFolder
                     selectedValue={newFeed.folder_id}
                     onChange={this._handleSelectFolderChange}
+                    folders={folders}
                 />
             </div>
         );
@@ -157,14 +155,4 @@ class EditFeedModal extends React.Component<IEditFeedModalProps> {
     }
 }
 
-const mapStateToProps = (state: IRootStoreState): IMapStateToProps => {
-    return {};
-};
-
-const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
-    return {
-        beginUpdateFeed: feedInfo => dispatch(beginUpdateFeed(feedInfo))
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditFeedModal);
+export default EditFeedModalComponent;

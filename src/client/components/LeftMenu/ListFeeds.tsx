@@ -2,7 +2,7 @@ import { OrderedMap } from "immutable";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import FeedItem from "./FeedItem";
+import FeedItemContainer from "../../containers/LeftMenu/FeedItemContainer";
 
 import { IFeed, TFeedID, TFolderID, TFeeds } from "../../interfaces";
 
@@ -21,7 +21,13 @@ const ListFeeds = (props: IListFeedsProps) => {
         })
         .toArray()
         .map((feed: IFeed) => {
-            return <FeedItem key={feed._id} feed={feed} editFeed={editFeed} />;
+            return (
+                <FeedItemContainer
+                    key={feed._id}
+                    feed={feed}
+                    editFeed={editFeed}
+                />
+            );
         });
 
     return (
