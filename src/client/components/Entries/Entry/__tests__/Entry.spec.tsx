@@ -36,7 +36,7 @@ describe("<Entry />", () => {
         mockToggleEntry.mockReset();
     });
 
-    it("renders the entry", () => {
+    it("renders the correct class & id", () => {
         const wrapper = shallow(
             <Entry
                 entry={ENTRY_HAS_READ}
@@ -49,6 +49,60 @@ describe("<Entry />", () => {
         expect(wrapper.find("div.rss-entry-container").prop("id")).toBe(
             `rss-entry-item-${ENTRY._id}`
         );
+    });
+
+    it("unread Entry shows unread class", () => {
+        const wrapper = shallow(
+            <Entry
+                entry={ENTRY_NOT_READ}
+                toggleEntry={mockToggleEntry}
+                isActive={true}
+                shouldShowImages={true}
+            />
+        );
+
+        expect(wrapper.find("div.rss-entry-title-unread")).toHaveLength(1);
+    });
+
+    it("has read Entry shows hasread class", () => {
+        const wrapper = shallow(
+            <Entry
+                entry={ENTRY_HAS_READ}
+                toggleEntry={mockToggleEntry}
+                isActive={true}
+                shouldShowImages={true}
+            />
+        );
+
+        expect(wrapper.find("div.rss-entry-title-hasread")).toHaveLength(1);
+    });
+
+    it("displays the entry title", () => {
+        const wrapper = shallow(
+            <Entry
+                entry={ENTRY_HAS_READ}
+                toggleEntry={mockToggleEntry}
+                isActive={true}
+                shouldShowImages={true}
+            />
+        );
+
+        expect(wrapper.find("div.rss-entry-title-hasread").text()).toBe(
+            ENTRY.title
+        );
+    });
+
+    it("fires toggleEntry on title click", () => {
+        const wrapper = shallow(
+            <Entry
+                entry={ENTRY_HAS_READ}
+                toggleEntry={mockToggleEntry}
+                isActive={true}
+                shouldShowImages={true}
+            />
+        );
+        wrapper.find("div.rss-entry-title-hasread").simulate("click");
+        expect(mockToggleEntry.mock.calls).toEqual([[ENTRY._id]]);
     });
 
     it("shows <Content /> when active", () => {
