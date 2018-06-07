@@ -3,7 +3,7 @@ import * as React from "react";
 import { Button, Icon, Popup } from "semantic-ui-react";
 
 import LogoutButtonContainer from "../../containers/LeftMenu/LogoutButtonContainer";
-import ReorderFoldersModal from "../Modals/ReorderFoldersModal";
+import ReorderFoldersModalContainer from "../../containers/Modals/ReorderFoldersModalContainer";
 
 export interface IButtonBarMapState {}
 export interface IButtonBarMapDispatch {
@@ -59,7 +59,7 @@ class ButtonBarComponent extends React.Component<TAll> {
                         content="Add Folder"
                     />
                 </Button.Group>
-                <ReorderFoldersModal />
+                <ReorderFoldersModalContainer />
                 <Popup
                     trigger={
                         <Button

@@ -1,39 +1,30 @@
 import * as React from "react";
-import { connect } from "react-redux";
 
 import { Button, Header, Modal, Popup } from "semantic-ui-react";
 
 import { SortableFolderList } from "./SortableComponents";
 
-import { beginReorderFolders } from "../../redux/actions/folders.actions";
 import { propertyComparator } from "../../lib/sort";
 
-import {
-    IDispatch,
-    IFolder,
-    IRootStoreState,
-    TFolders
-} from "../../interfaces";
+import { IFolder, TFolders } from "../../interfaces";
 
-interface IMapStateToProps {
+export interface IReorderFoldersMapState {
     folders: TFolders;
 }
 
-interface IMapDispatchToProps {
+export interface IReorderFolderMapDispatch {
     beginReorderFolders: (foldersArr: IFolder[]) => void;
 }
 
-interface IReorderFoldersModalProps
-    extends IMapStateToProps,
-        IMapDispatchToProps {}
+type TAllProps = IReorderFolderMapDispatch & IReorderFoldersMapState;
 
 interface IReorderFoldersModalState {
     foldersAsArray: IFolder[];
     isModalOpen: boolean;
 }
 
-class ReorderFoldersModal extends React.Component<
-    IReorderFoldersModalProps,
+class ReorderFoldersModalComponent extends React.Component<
+    TAllProps,
     IReorderFoldersModalState
 > {
     state: IReorderFoldersModalState = {
@@ -41,7 +32,7 @@ class ReorderFoldersModal extends React.Component<
         isModalOpen: false
     };
 
-    static getDerivedStateFromProps(props: IReorderFoldersModalProps) {
+    static getDerivedStateFromProps(props: TAllProps) {
         let tmpArray = props.folders
             .toArray()
             .sort((a, b) => propertyComparator(a, b, "asc", "order"));
@@ -150,20 +141,4 @@ class ReorderFoldersModal extends React.Component<
     }
 }
 
-const mapStateToProps = (state: IRootStoreState): IMapStateToProps => {
-    const { folders } = state;
-    return {
-        folders: folders.folders
-    };
-};
-
-const mapDispatchToProps = (dispatch: IDispatch): IMapDispatchToProps => {
-    return {
-        beginReorderFolders: foldersArr =>
-            dispatch(beginReorderFolders(foldersArr))
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(
-    ReorderFoldersModal
-);
+export default ReorderFoldersModalComponent;
