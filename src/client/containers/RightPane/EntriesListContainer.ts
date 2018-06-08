@@ -6,7 +6,7 @@ import * as Types from "../../interfaces";
 import EntriesListComponent, {
     IEntriesListMapDispatch,
     IEntriesListMapState
-} from "../../components/Entries/EntriesListComponent";
+} from "../../components/RightPane/EntriesListComponent";
 
 const mapStateToProps = (
     state: Types.IRootStoreState
@@ -30,6 +30,7 @@ const mapDispatchToProps = (
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    EntriesListComponent
-);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(EntriesListComponent);
