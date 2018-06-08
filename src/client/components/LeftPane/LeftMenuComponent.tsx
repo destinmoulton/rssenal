@@ -4,10 +4,10 @@ import * as React from "react";
 import { Icon } from "semantic-ui-react";
 
 import AddFeedModalContainer from "../../containers/Modals/AddFeedModalContainer";
-import ButtonBarContainer from "../../containers/LeftMenu/ButtonBarContainer";
+import ButtonBarContainer from "../../containers/LeftPane/ButtonBarContainer";
 import EditFeedModalContainer from "../../containers/Modals/EditFeedModalContainer";
 import EditFolderModalContainer from "../../containers/Modals/EditFolderModalContainer";
-import FolderItemContainer from "../../containers/LeftMenu/FolderItemContainer";
+import FolderItemContainer from "../../containers/LeftPane/FolderItemContainer";
 
 import { propertyComparator } from "../../lib/sort";
 

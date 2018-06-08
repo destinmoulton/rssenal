@@ -5,7 +5,7 @@ import { getAllFeeds } from "../../redux/actions/feeds.actions";
 import LeftMenuComponent, {
     ILeftMenuMapDispatch,
     ILeftMenuMapState
-} from "../../components/LeftMenu/LeftMenuComponent";
+} from "../../components/LeftPane/LeftMenuComponent";
 
 import * as Types from "../../interfaces";
 
@@ -28,4 +28,7 @@ const mapDispatchToProps = (
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LeftMenuComponent);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LeftMenuComponent);

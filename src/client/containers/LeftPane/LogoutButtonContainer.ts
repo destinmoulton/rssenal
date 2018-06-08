@@ -4,7 +4,7 @@ import { logoutUser } from "../../redux/actions/auth.actions";
 
 import LogoutButtonComponent, {
     ILogoutButtonComponentProps
-} from "../../components/LeftMenu/LogoutButtonComponent";
+} from "../../components/LeftPane/LogoutButtonComponent";
 
 import * as Types from "../../interfaces";
 
@@ -21,6 +21,7 @@ const mapDispatchToProps = (
         logoutUser: () => dispatch(logoutUser())
     };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(
-    LogoutButtonComponent
-);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LogoutButtonComponent);

@@ -8,7 +8,7 @@ import { changeFilter } from "../../redux/actions/filter.actions";
 import FolderItemComponent, {
     IFolderItemMapDispatch,
     IFolderItemMapState
-} from "../../components/LeftMenu/FolderItemComponent";
+} from "../../components/LeftPane/FolderItemComponent";
 
 import * as Types from "../../interfaces";
 
@@ -33,6 +33,7 @@ const mapDispatchToProps = (
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    FolderItemComponent
-);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FolderItemComponent);

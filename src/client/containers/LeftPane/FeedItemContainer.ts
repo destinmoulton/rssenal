@@ -5,7 +5,7 @@ import { changeFilter } from "../../redux/actions/filter.actions";
 import FeedItemComponent, {
     IFeedItemMapState,
     IFeedItemMapDispatch
-} from "../../components/LeftMenu/FeedItemComponent";
+} from "../../components/LeftPane/FeedItemComponent";
 import * as Types from "../../interfaces";
 
 const mapStateToProps = (state: Types.IRootStoreState): IFeedItemMapState => {
@@ -27,4 +27,7 @@ const mapDispatchToProps = (
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FeedItemComponent);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FeedItemComponent);
