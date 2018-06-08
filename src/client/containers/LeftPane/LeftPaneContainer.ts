@@ -2,14 +2,14 @@ import { connect } from "react-redux";
 import { getAllFolders } from "../../redux/actions/folders.actions";
 import { getAllFeeds } from "../../redux/actions/feeds.actions";
 
-import LeftMenuComponent, {
-    ILeftMenuMapDispatch,
-    ILeftMenuMapState
-} from "../../components/LeftPane/LeftMenuComponent";
+import LeftPaneComponent, {
+    ILeftPaneMapDispatch,
+    ILeftPaneMapState
+} from "../../components/LeftPane/LeftPaneComponent";
 
 import * as Types from "../../interfaces";
 
-const mapStateToProps = (state: Types.IRootStoreState): ILeftMenuMapState => {
+const mapStateToProps = (state: Types.IRootStoreState): ILeftPaneMapState => {
     const { folders, feeds } = state;
 
     return {
@@ -21,7 +21,7 @@ const mapStateToProps = (state: Types.IRootStoreState): ILeftMenuMapState => {
 
 const mapDispatchToProps = (
     dispatch: Types.IDispatch
-): ILeftMenuMapDispatch => {
+): ILeftPaneMapDispatch => {
     return {
         getAllFolders: () => dispatch(getAllFolders()),
         getAllFeeds: () => dispatch(getAllFeeds())
@@ -31,4 +31,4 @@ const mapDispatchToProps = (
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(LeftMenuComponent);
+)(LeftPaneComponent);

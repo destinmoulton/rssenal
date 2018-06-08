@@ -1,15 +1,14 @@
 import * as React from "react";
-import { Grid, Menu, Segment } from "semantic-ui-react";
 
 import EntriesListContainer from "../containers/Entries/EntriesListContainer";
-import LeftMenuContainer from "../containers/LeftPane/LeftMenuContainer";
+import LeftPaneContainer from "../containers/LeftPane/LeftPaneContainer";
 import MessagesContainer from "../containers/MessagesContainer";
 
 const Browser: React.SFC = () => {
     return (
         <div>
             <div className="rss-body-left-container">
-                <LeftMenuContainer />
+                <LeftPaneContainer />
             </div>
             <div className="rss-body-right-container">
                 <EntriesListContainer />
