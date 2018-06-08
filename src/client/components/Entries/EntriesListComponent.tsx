@@ -57,12 +57,12 @@ class EntriesListComponent extends React.Component<
     }
 
     componentDidMount() {
-        this._filterAndSortEntries(this.props, this.state.sortBy, false);
+        this._filterAndSortEntries(this.state.sortBy, false);
     }
 
-    componentWillReceiveProps(nextProps: TAllProps) {
-        if (nextProps.filter.id !== this.props.filter.id) {
-            this._filterAndSortEntries(nextProps, this.state.sortBy, true);
+    componentDidUpdate(prevProps: TAllProps) {
+        if (this.props.filter.id !== prevProps.filter.id) {
+            this._filterAndSortEntries(this.state.sortBy, true);
 
             // Reset scroll to top
             document.querySelector(".rss-entrylist-container").scrollTo(0, 0);
@@ -71,16 +71,12 @@ class EntriesListComponent extends React.Component<
                 activeEntryId: ""
             });
         } else {
-            this._filterAndSortEntries(nextProps, this.state.sortBy, false);
+            this._filterAndSortEntries(this.state.sortBy, false);
         }
     }
 
-    _filterAndSortEntries(
-        props: TAllProps,
-        sortBy: string,
-        hasFilterChanged: boolean
-    ) {
-        const { entries, folders, feeds, filter } = props;
+    _filterAndSortEntries(sortBy: string, hasFilterChanged: boolean) {
+        const { entries, folders, feeds, filter } = this.props;
 
         let filteredEntries = entries.toOrderedMap();
 
@@ -124,10 +120,7 @@ class EntriesListComponent extends React.Component<
         let processedEntries = this._sortEntries(filteredEntries, sortBy);
 
         if (hasFilterChanged) {
-            processedEntries = this._filterHiddenEntries(
-                props,
-                processedEntries
-            );
+            processedEntries = this._filterHiddenEntries(processedEntries);
         }
 
         this.setState({
@@ -143,10 +136,8 @@ class EntriesListComponent extends React.Component<
         );
     }
 
-    _filterHiddenEntries(props: TAllProps, processedEntries: any) {
-        const { settings } = props;
-
-        let filteredEntries;
+    _filterHiddenEntries(processedEntries: any) {
+        const { settings } = this.props;
 
         if (false === settings[1].value) {
             return processedEntries.filter((entry: IEntry) => {
@@ -161,7 +152,7 @@ class EntriesListComponent extends React.Component<
             sortBy: data.value
         });
 
-        this._filterAndSortEntries(this.props, data.value, true);
+        this._filterAndSortEntries(data.value, true);
     };
 
     _handleKeyDown = (e: any) => {
@@ -262,13 +253,7 @@ class EntriesListComponent extends React.Component<
     }
 
     _generateEntries() {
-        const {
-            activeEntryId,
-            currentTitle,
-            processedEntries,
-            sortBy
-        } = this.state;
-
+        const { activeEntryId, processedEntries } = this.state;
         const { settings } = this.props;
 
         let shouldShowImages = false;
