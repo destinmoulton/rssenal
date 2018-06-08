@@ -284,18 +284,6 @@ class EntriesListComponent extends React.Component<
 
         return (
             <div>
-                <div className="rss-entrylist-menu">
-                    <div className="rss-entrylist-menu-title-container">
-                        {currentTitle}
-                    </div>
-                    <div className="rss-entrylist-menu-sortselect-container">
-                        <SortMenu
-                            onChange={this._handleChangeSort}
-                            currentSortBy={sortBy}
-                        />&nbsp;&nbsp;
-                        <SettingsModalContainer />
-                    </div>
-                </div>
                 <div className="rss-entrylist-container">{entryList}</div>
             </div>
         );
