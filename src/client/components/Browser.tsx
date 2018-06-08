@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import EntriesListContainer from "../containers/Entries/EntriesListContainer";
+import EntriesListContainer from "../containers/RightPane/EntriesListContainer";
 import LeftPaneContainer from "../containers/LeftPane/LeftPaneContainer";
 import MessagesContainer from "../containers/MessagesContainer";
 
