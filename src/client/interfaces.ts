@@ -88,6 +88,7 @@ export interface IFilter {
 export interface IFilterAction {
     type: string;
     newFilter: object;
+    filterTitle: string;
 }
 
 /** Folders Interfaces & Types */
