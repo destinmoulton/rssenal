@@ -18,8 +18,6 @@ const INITIAL_STATE: IReducerStateEntries = {
     entries: OrderedMap<TEntryID, IEntry>()
 };
 
-type IEntryTuple = [TEntryID, IEntry];
-
 function entriesReducer(state = INITIAL_STATE, action: IEntriesAction) {
     switch (action.type) {
         case ENTRIES_CLEAR_ALL: {
