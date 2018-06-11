@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import EntriesListContainer from "../containers/RightPane/EntriesListContainer";
 import LeftPaneContainer from "../containers/LeftPane/LeftPaneContainer";
 import MessagesContainer from "../containers/MessagesContainer";
+import RightPaneContainer from "../containers/RightPane/RightPaneContainer";
 
 const Browser: React.SFC = () => {
     return (
@@ -11,7 +11,7 @@ const Browser: React.SFC = () => {
                 <LeftPaneContainer />
             </div>
             <div className="rss-body-right-container">
-                <EntriesListContainer />
+                <RightPaneContainer />
             </div>
             <MessagesContainer />
         </div>
