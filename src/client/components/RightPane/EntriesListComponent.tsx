@@ -55,12 +55,12 @@ class EntriesListComponent extends React.Component<
     }
 
     componentDidMount() {
-        this._filterAndSortEntries(false);
+        this._prepareVisibleEntries(false);
     }
 
     componentDidUpdate(prevProps: TAllProps) {
         if (this.props.filter.id !== prevProps.filter.id) {
-            this._filterAndSortEntries(true);
+            this._prepareVisibleEntries(true);
 
             // Reset scroll to top
             document.querySelector(".rss-entrylist-container").scrollTo(0, 0);
@@ -69,41 +69,12 @@ class EntriesListComponent extends React.Component<
                 activeEntryId: ""
             });
         } else if (this.props.sortBy !== prevProps.sortBy) {
-            this._filterAndSortEntries(false);
+            this._prepareVisibleEntries(false);
         }
     }
 
-    _filterAndSortEntries(hasFilterChanged: boolean) {
-        const { entries, feeds, filter } = this.props;
-
-        let filteredEntries = entries.toOrderedMap();
-
-        switch (filter.limit) {
-            case "feed":
-                filteredEntries = filteredEntries
-                    .filter(entry => {
-                        return entry.feed_id === filter.id;
-                    })
-                    .toOrderedMap();
-                break;
-            case "folder":
-                if (filter.id !== "all") {
-                    const feedIds = feeds
-                        .filter(feed => {
-                            return feed.folder_id === filter.id;
-                        })
-                        .map(feed => {
-                            return feed._id;
-                        });
-
-                    filteredEntries = entries
-                        .filter(entry => {
-                            return feedIds.includes(entry.feed_id);
-                        })
-                        .toOrderedMap();
-                }
-                break;
-        }
+    _prepareVisibleEntries(hasFilterChanged: boolean) {
+        const filteredEntries = this._filterEntries();
 
         let visibleEntries = this._sortEntries(filteredEntries);
 
@@ -116,7 +87,36 @@ class EntriesListComponent extends React.Component<
         });
     }
 
-    _filterEntries() {}
+    _filterEntries() {
+        const { entries, feeds, filter } = this.props;
+
+        switch (filter.limit) {
+            case "feed":
+                return entries
+                    .filter(entry => {
+                        return entry.feed_id === filter.id;
+                    })
+                    .toOrderedMap();
+            case "folder":
+                if (filter.id !== "all") {
+                    const feedIds = feeds
+                        .filter(feed => {
+                            return feed.folder_id === filter.id;
+                        })
+                        .map(feed => {
+                            return feed._id;
+                        });
+
+                    return entries
+                        .filter(entry => {
+                            return feedIds.includes(entry.feed_id);
+                        })
+                        .toOrderedMap();
+                }
+                break;
+        }
+        return entries.toOrderedMap();
+    }
 
     _sortEntries(entries: TEntries) {
         const sortParams = this.props.sortBy.split(":");
