@@ -3,7 +3,8 @@ import { FILTER_CHANGE, FILTER_RESET } from "../actiontypes";
 import { IFilterAction, IReducerStateFilter } from "../../interfaces";
 
 const INITIAL_STATE: IReducerStateFilter = {
-    filter: { limit: "folder", id: "all" }
+    filter: { limit: "folder", id: "all" },
+    filterTitle: "All"
 };
 
 function filterReducer(state = INITIAL_STATE, action: IFilterAction) {
@@ -11,7 +12,8 @@ function filterReducer(state = INITIAL_STATE, action: IFilterAction) {
         case FILTER_CHANGE: {
             return {
                 ...state,
-                filter: action.newFilter
+                filter: action.newFilter,
+                filterTitle: action.filterTitle
             };
         }
         case FILTER_RESET: {
