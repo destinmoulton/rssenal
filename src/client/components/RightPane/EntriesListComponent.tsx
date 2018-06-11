@@ -34,7 +34,7 @@ type TAllProps = IEntriesListMapState & IEntriesListMapDispatch & IProps;
 interface IEntriesListState {
     activeEntryId: string;
     currentTitle: string;
-    processedEntries: OrderedMap<TEntryID, IEntry> | Iterable<IEntry>;
+    visibleEntries: OrderedMap<TEntryID, IEntry> | Iterable<IEntry>;
 }
 
 class EntriesListComponent extends React.Component<
@@ -44,7 +44,7 @@ class EntriesListComponent extends React.Component<
     state = {
         activeEntryId: "",
         currentTitle: "",
-        processedEntries: OrderedMap<TEntryID, IEntry>()
+        visibleEntries: OrderedMap<TEntryID, IEntry>()
     };
 
     constructor(props: TAllProps) {
@@ -68,7 +68,7 @@ class EntriesListComponent extends React.Component<
             this.setState({
                 activeEntryId: ""
             });
-        } else {
+        } else if (this.props.sortBy !== prevProps.sortBy) {
             this._filterAndSortEntries(false);
         }
     }
@@ -105,16 +105,18 @@ class EntriesListComponent extends React.Component<
                 break;
         }
 
-        let processedEntries = this._sortEntries(filteredEntries);
+        let visibleEntries = this._sortEntries(filteredEntries);
 
         if (hasFilterChanged) {
-            processedEntries = this._filterHiddenEntries(processedEntries);
+            visibleEntries = this._filterHiddenEntries(visibleEntries);
         }
 
         this.setState({
-            processedEntries: OrderedMap(processedEntries)
+            visibleEntries: OrderedMap(visibleEntries)
         });
     }
+
+    _filterEntries() {}
 
     _sortEntries(entries: TEntries) {
         const sortParams = this.props.sortBy.split(":");
@@ -123,15 +125,15 @@ class EntriesListComponent extends React.Component<
         );
     }
 
-    _filterHiddenEntries(processedEntries: any) {
+    _filterHiddenEntries(visibleEntries: any) {
         const { settings } = this.props;
 
         if (false === settings[1].value) {
-            return processedEntries.filter((entry: IEntry) => {
+            return visibleEntries.filter((entry: IEntry) => {
                 return false === entry.has_read;
             });
         }
-        return processedEntries;
+        return visibleEntries;
     }
 
     _handleKeyDown = (e: any) => {
@@ -165,17 +167,17 @@ class EntriesListComponent extends React.Component<
     };
 
     _activateSiblingEntry(direction: string) {
-        const { activeEntryId, processedEntries } = this.state;
+        const { activeEntryId, visibleEntries } = this.state;
 
         let sibling: IEntry = null;
 
         if (activeEntryId === "") {
-            sibling = processedEntries.first();
+            sibling = visibleEntries.first();
         } else {
             let previousEntry: IEntry = null;
             let nextEntry: IEntry = null;
             let found = false;
-            processedEntries.map(entry => {
+            visibleEntries.map(entry => {
                 if (found && !nextEntry) {
                     nextEntry = entry;
                 }
@@ -193,13 +195,13 @@ class EntriesListComponent extends React.Component<
                 if (nextEntry !== null) {
                     sibling = nextEntry;
                 } else {
-                    sibling = processedEntries.last();
+                    sibling = visibleEntries.last();
                 }
             } else if (direction === "previous") {
                 if (previousEntry !== null) {
                     sibling = previousEntry;
                 } else {
-                    sibling = processedEntries.first();
+                    sibling = visibleEntries.first();
                 }
             }
         }
@@ -232,7 +234,7 @@ class EntriesListComponent extends React.Component<
     }
 
     _generateEntries() {
-        const { activeEntryId, processedEntries } = this.state;
+        const { activeEntryId, visibleEntries } = this.state;
         const { settings } = this.props;
 
         let shouldShowImages = false;
@@ -242,7 +244,7 @@ class EntriesListComponent extends React.Component<
             }
         });
 
-        return processedEntries.toArray().map(entry => {
+        return visibleEntries.toArray().map(entry => {
             const isActive = entry._id === activeEntryId;
             return (
                 <Entry
