@@ -150,6 +150,7 @@ export interface IReducerStateSettings {
 
 export interface IReducerStateFilter {
     filter: IFilter;
+    filterTitle: string;
 }
 
 export interface IReducerStateFolders {
