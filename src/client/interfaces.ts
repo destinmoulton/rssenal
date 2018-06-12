@@ -89,6 +89,7 @@ export interface IFilterAction {
     type: string;
     newFilter: object;
     filterTitle: string;
+    filteredEntries: TEntries;
 }
 
 /** Folders Interfaces & Types */
@@ -152,6 +153,7 @@ export interface IReducerStateSettings {
 export interface IReducerStateFilter {
     filter: IFilter;
     filterTitle: string;
+    filteredEntries: TEntries;
 }
 
 export interface IReducerStateFolders {
