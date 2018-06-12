@@ -147,7 +147,7 @@ export interface IReducerStateFeeds {
 }
 
 export interface IReducerStateSettings {
-    settings: ISetting[];
+    settings: TSettings;
 }
 
 export interface IReducerStateFilter {
@@ -182,15 +182,15 @@ export interface IRootStoreState {
 /** Settings Interfaces */
 
 export interface ISetting {
-    key: string;
     name: string;
     type: string;
     refresh_entries_on_change: boolean;
     value: any;
 }
 
+export type TSettings = Map<string, ISetting>;
+
 export interface ISettingsAction {
     type: string;
-    setting_key: string;
-    setting_value: any;
+    settings: TSettings;
 }

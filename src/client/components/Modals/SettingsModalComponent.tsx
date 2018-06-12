@@ -2,20 +2,18 @@ import * as React from "react";
 
 import { Button, Header, Icon, Modal, Popup, Radio } from "semantic-ui-react";
 
-import { ISetting } from "../../interfaces";
+import { ISetting, TSettings } from "../../interfaces";
 
 export interface ISettingsModalMapDispatch {
-    changeSetting: (setting_key: string, setting_value: any) => void;
+    settingChange: (setting_key: string, setting_value: any) => void;
     refreshAllFeeds: () => void;
 }
 
-interface ISettingsModalProps {
-    changeSetting: (setting_key: string, setting_value: any) => void;
-    refreshAllFeeds: () => void;
-    settings: ISetting[];
+export interface ISettingsModalMapState {
+    settings: TSettings;
 }
 
-type TAllProps = ISettingsModalProps & ISettingsModalMapDispatch;
+type TAllProps = ISettingsModalMapState & ISettingsModalMapDispatch;
 
 interface ISettingsModalState {
     isModalOpen: boolean;
@@ -28,6 +26,10 @@ class SettingsModalComponent extends React.Component<
     state = {
         isModalOpen: false
     };
+
+    componentDidUpdate() {
+        console.log(this.props);
+    }
 
     _handleClickOpenModal = () => {
         this.setState({
@@ -44,23 +46,25 @@ class SettingsModalComponent extends React.Component<
     _buildSettings() {
         const { settings } = this.props;
 
-        return settings.map(setting => {
-            if (setting.type === "toggle") {
-                return this._buildRadioToggle(setting);
-            }
-        });
+        return settings
+            .map((setting, key) => {
+                if (setting.type === "toggle") {
+                    return this._buildRadioToggle(key, setting);
+                }
+            })
+            .toArray();
     }
 
-    _buildRadioToggle(setting: ISetting) {
+    _buildRadioToggle(setting_key: string, setting: ISetting) {
         return (
-            <div className="rss-settings-toggle-box" key={setting.key}>
+            <div className="rss-settings-toggle-box" key={setting_key}>
                 <Radio
                     checked={setting.value}
                     toggle
                     label={setting.name}
                     onChange={this._handleChangeSetting.bind(
                         this,
-                        setting.key,
+                        setting_key,
                         !setting.value,
                         setting
                     )}
@@ -74,7 +78,7 @@ class SettingsModalComponent extends React.Component<
         setting_value: any,
         setting: ISetting
     ) {
-        this.props.changeSetting(setting_key, setting_value);
+        this.props.settingChange(setting_key, setting_value);
 
         if (setting.refresh_entries_on_change) {
             this.props.refreshAllFeeds();

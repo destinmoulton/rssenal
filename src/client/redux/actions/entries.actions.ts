@@ -4,6 +4,7 @@ import * as moment from "moment";
 import { ENTRIES_SET_ALL } from "../actiontypes";
 
 import { API_ENTRIES_BASE } from "../apiendpoints";
+import { SETTING_SHOW_ENTRIES_READ } from "../../constants";
 
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { feedsDecrementUnread, feedsSetAllUnreadCount } from "./feeds.actions";
@@ -22,12 +23,9 @@ import {
 export function getEntriesForFeed(feedId: TFeedID) {
     return (dispatch: IDispatch, getState: IGetState) => {
         const { settingsStore } = getState();
-        let showRead = false;
-        settingsStore.settings.forEach(setting => {
-            if (setting.key === "show_entries_has_read") {
-                showRead = setting.value;
-            }
-        });
+
+        const setting = settingsStore.settings.get(SETTING_SHOW_ENTRIES_READ);
+        let showRead = setting.value;
 
         const queryString =
             "?showEntriesHasRead=" + showRead + "&feedId=" + feedId;
@@ -117,7 +115,7 @@ export function updateReadState(entry: IEntry, hasRead: boolean) {
 
 function entryAmmendMarkRead(entryId: TEntryID) {
     return (dispatch: IDispatch, getState: IGetState) => {
-        const { entriesStore, filterStore } = getState();
+        const { entriesStore } = getState();
         const allEntries = entriesStore.entries;
         const entry = allEntries.get(entryId);
 

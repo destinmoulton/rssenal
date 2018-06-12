@@ -1,43 +1,20 @@
+import { Map } from "immutable";
+
 import { SETTINGS_CHANGE } from "../actiontypes";
+import { DEFAULT_SETTINGS } from "../../constants";
 
-import { ISettingsAction, IReducerStateSettings } from "../../interfaces";
+import * as Types from "../../interfaces";
 
-const INITIAL_STATE: IReducerStateSettings = {
-    settings: [
-        {
-            key: "show_images",
-            name: "Show Images",
-            type: "toggle",
-            refresh_entries_on_change: false,
-            value: true
-        },
-        {
-            key: "show_entries_has_read",
-            name: "Show Entries Already Read",
-            type: "toggle",
-            refresh_entries_on_change: true,
-            value: false
-        }
-    ]
+const INITIAL_STATE: Types.IReducerStateSettings = {
+    settings: Map(DEFAULT_SETTINGS)
 };
 
-function settingsReducer(state = INITIAL_STATE, action: ISettingsAction) {
+function settingsReducer(state = INITIAL_STATE, action: Types.ISettingsAction) {
     switch (action.type) {
         case SETTINGS_CHANGE:
-            const { settings } = state;
-
-            const newSettings = settings.map(setting => {
-                if (setting.key === action.setting_key) {
-                    const newSetting = { ...setting };
-                    newSetting.value = action.setting_value;
-                    return newSetting;
-                } else {
-                    return setting;
-                }
-            });
             return {
                 ...state,
-                settings: newSettings
+                settings: action.settings
             };
         default:
             return { ...state };
