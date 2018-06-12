@@ -12,7 +12,7 @@ export function changeFilter(filter: Types.IFilter) {
 
 export function filterVisibleEntries(
     filter: Types.IFilter,
-    allEntries: Types.TEntries
+    currentEntries: Types.TEntries
 ) {
     return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { feedsStore, foldersStore } = getState();
@@ -20,13 +20,13 @@ export function filterVisibleEntries(
 
         let title = "All";
 
-        let filteredEntries = allEntries.toOrderedMap();
+        let filteredEntries = currentEntries.toOrderedMap();
         switch (filter.limit) {
             case "feed":
                 const activeFeed = feedsStore.feeds.get(filter.id);
                 title = activeFeed.title;
 
-                filteredEntries = allEntries
+                filteredEntries = currentEntries
                     .filter(entry => {
                         return entry.feed_id === filter.id;
                     })
@@ -46,7 +46,7 @@ export function filterVisibleEntries(
                             return feed._id;
                         });
 
-                    filteredEntries = allEntries
+                    filteredEntries = currentEntries
                         .filter(entry => {
                             return feedIds.includes(entry.feed_id);
                         })
