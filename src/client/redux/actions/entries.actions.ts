@@ -1,11 +1,10 @@
+import { OrderedMap } from "immutable";
 import * as moment from "moment";
 
 import {
     ENTRIES_CLEAR_ALL,
     ENTRIES_GET_COMPLETE,
     ENTRIES_MARKREAD_COMPLETE,
-    ENTRIES_UPDATE_BEGIN,
-    ENTRIES_UPDATE_COMPLETE,
     ENTRIES_REMOVE_FEED
 } from "../actiontypes";
 
@@ -13,13 +12,13 @@ import { API_ENTRIES_BASE } from "../apiendpoints";
 
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { feedsDecrementUnread, feedsSetAllUnreadCount } from "./feeds.actions";
+import { filterVisibleEntries } from "./filter.actions";
 import { message } from "./messages.actions";
 
 import {
     IDispatch,
     IEntry,
     IGetState,
-    TEntries,
     TFeedID,
     TEntryID
 } from "../../interfaces";
@@ -63,9 +62,10 @@ export function getEntriesForFeed(feedId: TFeedID) {
 
 function ammendEntries(entries: IEntry[]) {
     return (dispatch: IDispatch, getState: IGetState) => {
-        const { feeds } = getState().feeds;
+        const { feeds, filter } = getState();
+
         const ammendedEntries = entries.map((entry: IEntry) => {
-            const feedTitle = feeds.get(entry.feed_id).title;
+            const feedTitle = feeds.feeds.get(entry.feed_id).title;
             const timeAgo = moment(entry.publish_date).fromNow();
             return {
                 ...entry,
@@ -74,6 +74,9 @@ function ammendEntries(entries: IEntry[]) {
             };
         });
         dispatch(getEntriesComplete(ammendedEntries));
+        dispatch(
+            filterVisibleEntries(filter.filter, OrderedMap(ammendedEntries))
+        );
         dispatch(feedsSetAllUnreadCount(ammendedEntries));
     };
 }
@@ -113,13 +116,14 @@ export function updateReadState(entry: IEntry, hasRead: boolean) {
 
 function entryAmmendMarkRead(entryId: TEntryID) {
     return (dispatch: IDispatch, getState: IGetState) => {
-        const { entries } = getState().entries;
-
-        const entry = entries.get(entryId);
+        const { entries, filter } = getState();
+        const allEntries = entries.entries;
+        const entry = entries.entries.get(entryId);
 
         const newEntry = { ...entry, has_read: true };
         dispatch(feedsDecrementUnread(entry.feed_id));
         dispatch(entryMarkReadComplete(newEntry));
+        dispatch(filterVisibleEntries(filter.filter, allEntries));
     };
 }
 
