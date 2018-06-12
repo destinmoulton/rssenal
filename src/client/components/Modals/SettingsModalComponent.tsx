@@ -27,10 +27,6 @@ class SettingsModalComponent extends React.Component<
         isModalOpen: false
     };
 
-    componentDidUpdate() {
-        console.log(this.props);
-    }
-
     _handleClickOpenModal = () => {
         this.setState({
             isModalOpen: true
