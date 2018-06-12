@@ -3,6 +3,7 @@ import * as React from "react";
 
 import Entry from "./Entry/Entry";
 
+import { SETTING_SHOW_IMAGES } from "../../constants";
 import { propertyComparator } from "../../lib/sort";
 
 import {
@@ -11,14 +12,14 @@ import {
     TEntries,
     TEntryID,
     TFeeds,
-    ISetting
+    TSettings
 } from "../../interfaces";
 
 export interface IEntriesListMapState {
     entries: TEntries;
     feeds: TFeeds;
     filter: IFilter;
-    settings: ISetting[];
+    settings: TSettings;
     filteredEntries: TEntries;
 }
 
@@ -105,7 +106,7 @@ class EntriesListComponent extends React.Component<
     _filterHiddenEntries(visibleEntries: TEntries) {
         const { settings } = this.props;
 
-        if (false === settings[1].value) {
+        if (false === settings.get(SETTING_SHOW_IMAGES).value) {
             return visibleEntries
                 .filter((entry: IEntry) => {
                     return false === entry.has_read;
@@ -217,12 +218,7 @@ class EntriesListComponent extends React.Component<
 
         const { settings } = this.props;
 
-        let shouldShowImages = false;
-        settings.forEach(setting => {
-            if (setting.key === "show_images") {
-                shouldShowImages = setting.value;
-            }
-        });
+        const shouldShowImages = settings.get(SETTING_SHOW_IMAGES).value;
 
         return visibleEntries.toArray().map(entry => {
             const isActive = entry._id === activeEntryId;

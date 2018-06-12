@@ -8,10 +8,9 @@ export function settingChange(setting_key: string, setting_value: any) {
 
         const { settings } = settingsStore;
 
-        const setting = settings.get(setting_key);
+        const setting = Object.assign({}, settings.get(setting_key));
 
         setting.value = setting_value;
-
         const newSettings = settings.set(setting_key, setting);
 
         dispatch(settingsChangeAll(newSettings));
