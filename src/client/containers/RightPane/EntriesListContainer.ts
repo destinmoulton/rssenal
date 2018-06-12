@@ -17,6 +17,7 @@ const mapStateToProps = (
         entries: entries.entries,
         feeds: feeds.feeds,
         filter: filter.filter,
+        filteredEntries: filter.filteredEntries,
         settings: settings.settings
     };
 };

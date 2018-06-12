@@ -19,6 +19,7 @@ export interface IEntriesListMapState {
     feeds: TFeeds;
     filter: IFilter;
     settings: ISetting[];
+    filteredEntries: TEntries;
 }
 
 export interface IEntriesListMapDispatch {
@@ -70,11 +71,13 @@ class EntriesListComponent extends React.Component<
             });
         } else if (this.props.sortBy !== prevProps.sortBy) {
             this._prepareVisibleEntries(false);
+        } else if (this.props.filteredEntries !== prevProps.filteredEntries) {
+            this._prepareVisibleEntries(false);
         }
     }
 
     _prepareVisibleEntries(hasFilterChanged: boolean) {
-        const filteredEntries = this._filterEntries();
+        const { filteredEntries } = this.props;
 
         let visibleEntries = this._sortEntries(filteredEntries);
 
@@ -85,37 +88,6 @@ class EntriesListComponent extends React.Component<
         this.setState({
             visibleEntries: OrderedMap(visibleEntries)
         });
-    }
-
-    _filterEntries() {
-        const { entries, feeds, filter } = this.props;
-
-        switch (filter.limit) {
-            case "feed":
-                return entries
-                    .filter(entry => {
-                        return entry.feed_id === filter.id;
-                    })
-                    .toOrderedMap();
-            case "folder":
-                if (filter.id !== "all") {
-                    const feedIds = feeds
-                        .filter(feed => {
-                            return feed.folder_id === filter.id;
-                        })
-                        .map(feed => {
-                            return feed._id;
-                        });
-
-                    return entries
-                        .filter(entry => {
-                            return feedIds.includes(entry.feed_id);
-                        })
-                        .toOrderedMap();
-                }
-                break;
-        }
-        return entries.toOrderedMap();
     }
 
     _sortEntries(entries: TEntries) {
@@ -235,6 +207,7 @@ class EntriesListComponent extends React.Component<
 
     _generateEntries() {
         const { activeEntryId, visibleEntries } = this.state;
+
         const { settings } = this.props;
 
         let shouldShowImages = false;
@@ -246,6 +219,7 @@ class EntriesListComponent extends React.Component<
 
         return visibleEntries.toArray().map(entry => {
             const isActive = entry._id === activeEntryId;
+            console.log(entry);
             return (
                 <Entry
                     key={entry._id}
@@ -261,11 +235,7 @@ class EntriesListComponent extends React.Component<
     render() {
         const entryList = this._generateEntries();
 
-        return (
-            <div>
-                <div className="rss-entrylist-container">{entryList}</div>
-            </div>
-        );
+        return <div className="rss-entrylist-container">{entryList}</div>;
     }
 }
 
