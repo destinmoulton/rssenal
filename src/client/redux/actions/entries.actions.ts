@@ -70,12 +70,7 @@ function ammendEntries(entries: IEntry[]) {
             };
         });
         dispatch(getEntriesComplete(ammendedEntries));
-        dispatch(
-            filterVisibleEntries(
-                filterStore.filter,
-                OrderedMap(ammendedEntries)
-            )
-        );
+
         dispatch(feedsSetAllUnreadCount(ammendedEntries));
     };
 }
@@ -90,8 +85,7 @@ function getEntriesComplete(entries: IEntry[]) {
             newEntries = newEntries.set(entry._id, entry);
         });
 
-        dispatch(entriesSetAll(newEntries));
-        dispatch(filterVisibleEntries(filterStore.filter, newEntries));
+        dispatch(entriesSetAndFilter(newEntries));
     };
 }
 
@@ -131,14 +125,13 @@ function entryAmmendMarkRead(entryId: TEntryID) {
         const newEntries = allEntries.set(entryId, newEntry);
 
         dispatch(feedsDecrementUnread(entry.feed_id));
-        dispatch(entriesSetAll(newEntries));
-        dispatch(filterVisibleEntries(filterStore.filter, newEntries));
+        dispatch(entriesSetAndFilter(newEntries));
     };
 }
 
 export function entriesRemoveFeed(feedId: TFeedID) {
     return (dispatch: IDispatch, getState: IGetState) => {
-        const { filterStore, entriesStore } = getState();
+        const { entriesStore } = getState();
         const { entries } = entriesStore;
 
         const newEntries = entries
@@ -146,9 +139,15 @@ export function entriesRemoveFeed(feedId: TFeedID) {
                 return entry.feed_id !== feedId;
             })
             .toOrderedMap();
+        dispatch(entriesSetAndFilter(newEntries));
+    };
+}
 
-        dispatch(entriesSetAll(newEntries));
-        dispatch(filterVisibleEntries(filterStore.filter, newEntries));
+function entriesSetAndFilter(entries: TEntries) {
+    return (dispatch: IDispatch, getState: IGetState) => {
+        const { filterStore } = getState();
+        dispatch(entriesSetAll(entries));
+        dispatch(filterVisibleEntries(filterStore.filter, entries));
     };
 }
 
