@@ -4,10 +4,13 @@ export const SORT_MENU_OPTIONS = [
     { value: "title:asc", text: "Title" }
 ];
 
+export const SETTING_SHOW_IMAGES = "show_images";
+export const SETTING_SHOW_ENTRIES_READ = "show_entries_has_read";
+
 // Tuples of default settings
 export const DEFAULT_SETTINGS = [
     [
-        "show_images",
+        SETTING_SHOW_IMAGES,
         {
             name: "Show Images",
             type: "toggle",
@@ -16,7 +19,7 @@ export const DEFAULT_SETTINGS = [
         }
     ],
     [
-        "show_entries_has_read",
+        SETTING_SHOW_ENTRIES_READ,
         {
             name: "Show Entries Already Read",
             type: "toggle",
