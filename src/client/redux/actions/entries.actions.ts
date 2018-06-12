@@ -25,9 +25,9 @@ import {
 
 export function getEntriesForFeed(feedId: TFeedID) {
     return (dispatch: IDispatch, getState: IGetState) => {
-        const { settings } = getState();
+        const { settingsStore } = getState();
         let showRead = false;
-        settings.settings.forEach(setting => {
+        settingsStore.settings.forEach(setting => {
             if (setting.key === "show_entries_has_read") {
                 showRead = setting.value;
             }
@@ -62,10 +62,10 @@ export function getEntriesForFeed(feedId: TFeedID) {
 
 function ammendEntries(entries: IEntry[]) {
     return (dispatch: IDispatch, getState: IGetState) => {
-        const { feeds, filter } = getState();
+        const { feedsStore, filterStore } = getState();
 
         const ammendedEntries = entries.map((entry: IEntry) => {
-            const feedTitle = feeds.feeds.get(entry.feed_id).title;
+            const feedTitle = feedsStore.feeds.get(entry.feed_id).title;
             const timeAgo = moment(entry.publish_date).fromNow();
             return {
                 ...entry,
@@ -75,7 +75,10 @@ function ammendEntries(entries: IEntry[]) {
         });
         dispatch(getEntriesComplete(ammendedEntries));
         dispatch(
-            filterVisibleEntries(filter.filter, OrderedMap(ammendedEntries))
+            filterVisibleEntries(
+                filterStore.filter,
+                OrderedMap(ammendedEntries)
+            )
         );
         dispatch(feedsSetAllUnreadCount(ammendedEntries));
     };
@@ -116,14 +119,14 @@ export function updateReadState(entry: IEntry, hasRead: boolean) {
 
 function entryAmmendMarkRead(entryId: TEntryID) {
     return (dispatch: IDispatch, getState: IGetState) => {
-        const { entries, filter } = getState();
-        const allEntries = entries.entries;
-        const entry = entries.entries.get(entryId);
+        const { entriesStore, filterStore } = getState();
+        const allEntries = entriesStore.entries;
+        const entry = entriesStore.entries.get(entryId);
 
         const newEntry = { ...entry, has_read: true };
         dispatch(feedsDecrementUnread(entry.feed_id));
         dispatch(entryMarkReadComplete(newEntry));
-        dispatch(filterVisibleEntries(filter.filter, allEntries));
+        dispatch(filterVisibleEntries(filterStore.filter, allEntries));
     };
 }
 

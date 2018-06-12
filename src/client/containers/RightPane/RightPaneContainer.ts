@@ -14,9 +14,9 @@ const mapDispatchToProps = (
 };
 
 const mapStateToProps = (state: Types.IRootStoreState): IRightPaneMapState => {
-    const { filter } = state;
+    const { filterStore } = state;
     return {
-        filterTitle: filter.filterTitle
+        filterTitle: filterStore.filterTitle
     };
 };
 

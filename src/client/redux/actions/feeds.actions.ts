@@ -132,7 +132,7 @@ function clearUnread() {
 
 export function refreshAllFeeds() {
     return (dispatch: IDispatch, getState: () => IRootStoreState) => {
-        const { feeds } = getState().feeds;
+        const { feeds } = getState().feedsStore;
         dispatch(entriesClearAll());
         dispatch(getAllEntriesForFeeds(feeds.toArray()));
     };
@@ -196,7 +196,7 @@ function beginUpdateFeedProcess() {
 }
 
 function updateFeed(feedInfo: IFeed) {
-    return (dispatch: IDispatch, getState: () => IRootStoreState) => {
+    return (dispatch: IDispatch) => {
         const url = API_FEEDS_BASE + feedInfo._id;
         const init = {
             method: "PUT",

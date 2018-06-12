@@ -10,12 +10,12 @@ import LeftPaneComponent, {
 import * as Types from "../../interfaces";
 
 const mapStateToProps = (state: Types.IRootStoreState): ILeftPaneMapState => {
-    const { folders, feeds } = state;
+    const { foldersStore, feedsStore } = state;
 
     return {
-        feeds: feeds.feeds,
-        hasFolders: folders.hasFolders,
-        folders: folders.folders
+        feeds: feedsStore.feeds,
+        hasFolders: foldersStore.hasFolders,
+        folders: foldersStore.folders
     };
 };
 

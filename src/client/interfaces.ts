@@ -170,13 +170,13 @@ export interface IReducerStateMessages {
 }
 
 export interface IRootStoreState {
-    auth: IReducerStateAuth;
-    entries: IReducerStateEntries;
-    feeds: IReducerStateFeeds;
-    filter: IReducerStateFilter;
-    folders: IReducerStateFolders;
-    messages: IReducerStateMessages;
-    settings: IReducerStateSettings;
+    authStore: IReducerStateAuth;
+    entriesStore: IReducerStateEntries;
+    feedsStore: IReducerStateFeeds;
+    filterStore: IReducerStateFilter;
+    foldersStore: IReducerStateFolders;
+    messagesStore: IReducerStateMessages;
+    settingsStore: IReducerStateSettings;
 }
 
 /** Settings Interfaces */

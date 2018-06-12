@@ -5,8 +5,8 @@ import * as Types from "../../interfaces";
 
 export function changeFilter(filter: Types.IFilter) {
     return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
-        const { entries } = getState();
-        dispatch(filterVisibleEntries(filter, entries.entries));
+        const { entriesStore } = getState();
+        dispatch(filterVisibleEntries(filter, entriesStore.entries));
     };
 }
 
@@ -15,15 +15,15 @@ export function filterVisibleEntries(
     allEntries: Types.TEntries
 ) {
     return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
-        const { feeds, folders } = getState();
-        const allFeeds = feeds.feeds;
+        const { feedsStore, foldersStore } = getState();
+        const allFeeds = feedsStore.feeds;
 
         let title = "All";
 
         let filteredEntries = allEntries.toOrderedMap();
         switch (filter.limit) {
             case "feed":
-                const activeFeed = feeds.feeds.get(filter.id);
+                const activeFeed = feedsStore.feeds.get(filter.id);
                 title = activeFeed.title;
 
                 filteredEntries = allEntries
@@ -34,7 +34,7 @@ export function filterVisibleEntries(
                 break;
             case "folder":
                 if (filter.id !== "all") {
-                    const activeFolder = folders.folders.get(filter.id);
+                    const activeFolder = foldersStore.folders.get(filter.id);
 
                     title = activeFolder.name;
 
@@ -54,6 +54,7 @@ export function filterVisibleEntries(
                 }
                 break;
         }
+        console.log(filteredEntries);
         dispatch(setNewFilter(filter, title, filteredEntries));
     };
 }

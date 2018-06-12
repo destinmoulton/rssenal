@@ -6,9 +6,9 @@ import * as Types from "../../interfaces";
 import SettingsModalComponent from "../../components/Modals/SettingsModalComponent";
 
 const mapStateToProps = (state: Types.IRootStoreState) => {
-    const { settings } = state;
+    const { settingsStore } = state;
     return {
-        settings: settings.settings
+        settings: settingsStore.settings
     };
 };
 

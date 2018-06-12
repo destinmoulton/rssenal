@@ -13,12 +13,12 @@ import FolderItemComponent, {
 import * as Types from "../../interfaces";
 
 const mapStateToProps = (state: Types.IRootStoreState): IFolderItemMapState => {
-    const { feeds, filter } = state;
+    const { feedsStore, filterStore } = state;
 
     return {
-        filter: filter.filter,
-        unreadMapGroups: feeds.unreadMap.folders,
-        feeds: feeds.feeds
+        filter: filterStore.filter,
+        unreadMapGroups: feedsStore.unreadMap.folders,
+        feeds: feedsStore.feeds
     };
 };
 

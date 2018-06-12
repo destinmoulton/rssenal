@@ -221,7 +221,7 @@ class EntriesListComponent extends React.Component<
 
         return visibleEntries.toArray().map(entry => {
             const isActive = entry._id === activeEntryId;
-            console.log(entry);
+
             return (
                 <Entry
                     key={entry._id}

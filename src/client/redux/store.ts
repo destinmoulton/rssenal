@@ -12,13 +12,13 @@ import settingsReducer from "./reducers/settings.reducer";
 
 const store = createStore(
     combineReducers({
-        authState: authReducer,
-        entriesState: entriesReducer,
-        filterState: filterReducer,
-        foldersState: foldersReducer,
-        feedsState: feedsReducer,
-        messagesState: messagesReducer,
-        settingsState: settingsReducer
+        authStore: authReducer,
+        entriesStore: entriesReducer,
+        filterStore: filterReducer,
+        foldersStore: foldersReducer,
+        feedsStore: feedsReducer,
+        messagesStore: messagesReducer,
+        settingsStore: settingsReducer
     }),
     applyMiddleware(thunk)
 );

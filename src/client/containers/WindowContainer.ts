@@ -12,8 +12,8 @@ const mapStateToProps = (
     state: Types.IRootStoreState
 ): IWindowComponentProps => {
     return {
-        isAuthorized: state.auth.isAuthorized,
-        isValidatingToken: state.auth.isValidatingToken
+        isAuthorized: state.authStore.isAuthorized,
+        isValidatingToken: state.authStore.isValidatingToken
     };
 };
 
@@ -25,4 +25,7 @@ const mapDispatchToProps = (
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(WindowComponent);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(WindowComponent);

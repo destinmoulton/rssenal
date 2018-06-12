@@ -11,14 +11,14 @@ import EntriesListComponent, {
 const mapStateToProps = (
     state: Types.IRootStoreState
 ): IEntriesListMapState => {
-    const { entries, feeds, filter, settings } = state;
+    const { entriesStore, feedsStore, filterStore, settingsStore } = state;
 
     return {
-        entries: entries.entries,
-        feeds: feeds.feeds,
-        filter: filter.filter,
-        filteredEntries: filter.filteredEntries,
-        settings: settings.settings
+        entries: entriesStore.entries,
+        feeds: feedsStore.feeds,
+        filter: filterStore.filter,
+        filteredEntries: filterStore.filteredEntries,
+        settings: settingsStore.settings
     };
 };
 
