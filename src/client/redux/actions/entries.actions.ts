@@ -138,7 +138,7 @@ function entryAmmendMarkRead(entryId: TEntryID) {
 
 export function entriesRemoveFeed(feedId: TFeedID) {
     return (dispatch: IDispatch, getState: IGetState) => {
-        const { entriesStore } = getState();
+        const { filterStore, entriesStore } = getState();
         const { entries } = entriesStore;
 
         const newEntries = entries
@@ -148,6 +148,7 @@ export function entriesRemoveFeed(feedId: TFeedID) {
             .toOrderedMap();
 
         dispatch(entriesSetAll(newEntries));
+        dispatch(filterVisibleEntries(filterStore.filter, newEntries));
     };
 }
 
