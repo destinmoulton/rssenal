@@ -64,6 +64,7 @@ class EntriesListComponent extends React.Component<
         const hasSortChanged = this.props.sortBy !== prevProps.sortBy;
         const hasFilteredEntriesChanged =
             this.props.filteredEntries !== prevProps.filteredEntries;
+
         if (hasFilterChanged) {
             this._prepareVisibleEntries(true);
 
@@ -73,7 +74,7 @@ class EntriesListComponent extends React.Component<
             this.setState({
                 activeEntryId: ""
             });
-        } else if (hasSortChanged || hasFilteredEntriesChanged) {
+        } else if (hasFilteredEntriesChanged || hasSortChanged) {
             this._prepareVisibleEntries(false);
         }
     }
@@ -94,18 +95,22 @@ class EntriesListComponent extends React.Component<
 
     _sortEntries(entries: TEntries) {
         const sortParams = this.props.sortBy.split(":");
-        return entries.sort((a, b) =>
-            propertyComparator(a, b, sortParams[1], sortParams[0])
-        );
+        return entries
+            .sort((a, b) =>
+                propertyComparator(a, b, sortParams[1], sortParams[0])
+            )
+            .toOrderedMap();
     }
 
-    _filterHiddenEntries(visibleEntries: any) {
+    _filterHiddenEntries(visibleEntries: TEntries) {
         const { settings } = this.props;
 
         if (false === settings[1].value) {
-            return visibleEntries.filter((entry: IEntry) => {
-                return false === entry.has_read;
-            });
+            return visibleEntries
+                .filter((entry: IEntry) => {
+                    return false === entry.has_read;
+                })
+                .toOrderedMap();
         }
         return visibleEntries;
     }
