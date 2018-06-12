@@ -1,12 +1,7 @@
 import { OrderedMap } from "immutable";
 import * as moment from "moment";
 
-import {
-    ENTRIES_CLEAR_ALL,
-    ENTRIES_GET_COMPLETE,
-    ENTRIES_MARKREAD_COMPLETE,
-    ENTRIES_REMOVE_FEED
-} from "../actiontypes";
+import { ENTRIES_CLEAR_ALL, ENTRIES_SET_ALL } from "../actiontypes";
 
 import { API_ENTRIES_BASE } from "../apiendpoints";
 
@@ -20,7 +15,8 @@ import {
     IEntry,
     IGetState,
     TFeedID,
-    TEntryID
+    TEntryID,
+    TEntries
 } from "../../interfaces";
 
 export function getEntriesForFeed(feedId: TFeedID) {
@@ -85,9 +81,17 @@ function ammendEntries(entries: IEntry[]) {
 }
 
 function getEntriesComplete(entries: IEntry[]) {
-    return {
-        type: ENTRIES_GET_COMPLETE,
-        entries
+    return (dispatch: IDispatch, getState: IGetState) => {
+        const { entriesStore, filterStore } = getState();
+        const currentEntries = entriesStore.entries;
+
+        let newEntries = currentEntries.toOrderedMap();
+        entries.forEach(entry => {
+            newEntries = newEntries.set(entry._id, entry);
+        });
+
+        dispatch(entriesSetAll(newEntries));
+        dispatch(filterVisibleEntries(filterStore.filter, newEntries));
     };
 }
 
@@ -121,26 +125,36 @@ function entryAmmendMarkRead(entryId: TEntryID) {
     return (dispatch: IDispatch, getState: IGetState) => {
         const { entriesStore, filterStore } = getState();
         const allEntries = entriesStore.entries;
-        const entry = entriesStore.entries.get(entryId);
+        const entry = allEntries.get(entryId);
 
         const newEntry = { ...entry, has_read: true };
-        dispatch(feedsDecrementUnread(entry.feed_id));
-        dispatch(entryMarkReadComplete(newEntry));
-        dispatch(filterVisibleEntries(filterStore.filter, allEntries));
-    };
-}
+        const newEntries = allEntries.set(entryId, newEntry);
 
-function entryMarkReadComplete(newEntry: IEntry) {
-    return {
-        type: ENTRIES_MARKREAD_COMPLETE,
-        newEntry
+        dispatch(feedsDecrementUnread(entry.feed_id));
+        dispatch(entriesSetAll(newEntries));
+        dispatch(filterVisibleEntries(filterStore.filter, newEntries));
     };
 }
 
 export function entriesRemoveFeed(feedId: TFeedID) {
+    return (dispatch: IDispatch, getState: IGetState) => {
+        const { entriesStore } = getState();
+        const { entries } = entriesStore;
+
+        const newEntries = entries
+            .filter((entry: IEntry) => {
+                return entry.feed_id !== feedId;
+            })
+            .toOrderedMap();
+
+        dispatch(entriesSetAll(newEntries));
+    };
+}
+
+function entriesSetAll(entries: TEntries) {
     return {
-        type: ENTRIES_REMOVE_FEED,
-        feedId
+        type: ENTRIES_SET_ALL,
+        entries
     };
 }
 

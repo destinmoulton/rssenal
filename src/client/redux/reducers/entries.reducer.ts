@@ -1,11 +1,6 @@
 import { OrderedMap } from "immutable";
 
-import {
-    ENTRIES_CLEAR_ALL,
-    ENTRIES_GET_COMPLETE,
-    ENTRIES_MARKREAD_COMPLETE,
-    ENTRIES_REMOVE_FEED
-} from "../actiontypes";
+import { ENTRIES_CLEAR_ALL, ENTRIES_SET_ALL } from "../actiontypes";
 
 import {
     TEntryID,
@@ -26,42 +21,13 @@ function entriesReducer(state = INITIAL_STATE, action: IEntriesAction) {
                 entries: OrderedMap<TEntryID, IEntry>()
             };
         }
-        case ENTRIES_GET_COMPLETE: {
-            const { entries } = state;
-
-            let newEntries = entries.toOrderedMap();
-            action.entries.forEach(entry => {
-                newEntries = newEntries.set(entry._id, entry);
-            });
-
+        case ENTRIES_SET_ALL: {
             return {
                 ...state,
-                entries: newEntries
+                entries: action.entries
             };
         }
-        case ENTRIES_REMOVE_FEED:
-            const { entries } = state;
 
-            const newEntries = entries.filter((entry: IEntry) => {
-                return entry.feed_id !== action.feedId;
-            });
-
-            return {
-                ...state,
-                entries: newEntries
-            };
-
-        case ENTRIES_MARKREAD_COMPLETE: {
-            const { entries } = state;
-            const newEntries = entries.set(
-                action.newEntry._id,
-                action.newEntry
-            );
-            return {
-                ...state,
-                entries: newEntries
-            };
-        }
         default:
             return { ...state };
     }
