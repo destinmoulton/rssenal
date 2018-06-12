@@ -129,17 +129,9 @@ function entryAmmendMarkRead(entryId: TEntryID) {
     };
 }
 
-export function entriesRemoveFeed(feedId: TFeedID) {
-    return (dispatch: IDispatch, getState: IGetState) => {
-        const { entriesStore } = getState();
-        const { entries } = entriesStore;
-
-        const newEntries = entries
-            .filter((entry: IEntry) => {
-                return entry.feed_id !== feedId;
-            })
-            .toOrderedMap();
-        dispatch(entriesSetAndFilter(newEntries));
+export function entriesClearAll() {
+    return (dispatch: IDispatch) => {
+        dispatch(entriesSetAndFilter(OrderedMap<TEntryID, IEntry>()));
     };
 }
 
@@ -155,11 +147,5 @@ function entriesSetAll(entries: TEntries) {
     return {
         type: ENTRIES_SET_ALL,
         entries
-    };
-}
-
-export function entriesClearAll() {
-    return (dispatch: IDispatch) => {
-        dispatch(entriesSetAndFilter(OrderedMap<TEntryID, IEntry>()));
     };
 }

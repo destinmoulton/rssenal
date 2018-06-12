@@ -15,11 +15,7 @@ import { API_FEEDS_BASE } from "../apiendpoints";
 
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 
-import {
-    entriesClearAll,
-    getEntriesForFeed,
-    entriesRemoveFeed
-} from "./entries.actions";
+import { entriesClearAll, getEntriesForFeed } from "./entries.actions";
 
 import { resetFilter } from "./filter.actions";
 import { message } from "./messages.actions";
@@ -166,8 +162,7 @@ function deleteFeed(feedId: TFeedID) {
                 dispatch(message("Feed removed.", "success"));
                 dispatch(resetFilter());
                 dispatch(deleteFeedComplete(feedId));
-                dispatch(entriesRemoveFeed(feedId));
-                dispatch(getAllFeeds());
+                dispatch(refreshAllFeeds());
             })
             .catch(err => {
                 console.error(err);
