@@ -1,7 +1,7 @@
 import { OrderedMap } from "immutable";
 import * as moment from "moment";
 
-import { ENTRIES_CLEAR_ALL, ENTRIES_SET_ALL } from "../actiontypes";
+import { ENTRIES_SET_ALL } from "../actiontypes";
 
 import { API_ENTRIES_BASE } from "../apiendpoints";
 
@@ -159,7 +159,7 @@ function entriesSetAll(entries: TEntries) {
 }
 
 export function entriesClearAll() {
-    return {
-        type: ENTRIES_CLEAR_ALL
+    return (dispatch: IDispatch) => {
+        dispatch(entriesSetAndFilter(OrderedMap<TEntryID, IEntry>()));
     };
 }

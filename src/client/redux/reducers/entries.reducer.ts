@@ -1,6 +1,6 @@
 import { OrderedMap } from "immutable";
 
-import { ENTRIES_CLEAR_ALL, ENTRIES_SET_ALL } from "../actiontypes";
+import { ENTRIES_SET_ALL } from "../actiontypes";
 
 import {
     TEntryID,
@@ -15,12 +15,6 @@ const INITIAL_STATE: IReducerStateEntries = {
 
 function entriesReducer(state = INITIAL_STATE, action: IEntriesAction) {
     switch (action.type) {
-        case ENTRIES_CLEAR_ALL: {
-            return {
-                ...state,
-                entries: OrderedMap<TEntryID, IEntry>()
-            };
-        }
         case ENTRIES_SET_ALL: {
             return {
                 ...state,

@@ -54,7 +54,6 @@ export function filterVisibleEntries(
                 }
                 break;
         }
-        console.log(filteredEntries);
         dispatch(setNewFilter(filter, title, filteredEntries));
     };
 }
