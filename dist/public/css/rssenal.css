@@ -121,11 +121,11 @@ div.rss-entry-content-container {
     font-size: 1.1em;
 }
 
-div.rss-entry-content-container>figure>figcaption {
+div.rss-entry-content-container > figure > figcaption {
     text-align: center;
 }
 
-div.rss-entry-content-container>pre {
+div.rss-entry-content-container > pre {
     border: 1px solid darkgray;
     background-color: lightgoldenrodyellow;
     font-size: 12px;
@@ -133,7 +133,7 @@ div.rss-entry-content-container>pre {
     overflow-x: scroll;
 }
 
-div.rss-entry-content-container>blockquote {
+div.rss-entry-content-container > blockquote {
     font-family: Georgia, serif;
     font-size: 18px;
     font-style: italic;
@@ -146,7 +146,7 @@ div.rss-entry-content-container>blockquote {
     color: #383838;
 }
 
-div.rss-entry-content-container>blockquote:before {
+div.rss-entry-content-container > blockquote:before {
     display: block;
     content: "\201C";
     font-size: 50px;
@@ -156,14 +156,14 @@ div.rss-entry-content-container>blockquote:before {
     color: #7a7a7a;
 }
 
-div.rss-entry-content-container>blockquote cite {
+div.rss-entry-content-container > blockquote cite {
     color: #7a7a7a;
     font-size: 14px;
     display: block;
     margin-top: 5px;
 }
 
-div.rss-entry-content-container>blockquote p {
+div.rss-entry-content-container > blockquote p {
     color: #7a7a7a;
     font-size: 14px;
     display: block;
@@ -201,7 +201,7 @@ div.rss-entry-link-container {
     overflow-y: scroll;
 }
 
-.rss-entrylist-menu {
+.rss-rightpane-topbar {
     border-bottom: 2px solid gray;
     height: 40px;
     position: absolute;
@@ -212,13 +212,13 @@ div.rss-entry-link-container {
     line-height: 40px;
 }
 
-div.rss-entrylist-menu-title-container {
+div.rss-rightpane-topbar-title-container {
     font-size: 1.3em;
     margin-left: 15px;
     float: left;
 }
 
-div.rss-entrylist-menu-sortselect-container {
+div.rss-rightpane-topbar-sortselect-container {
     float: right;
     margin-right: 15px;
 }

@@ -23,24 +23,22 @@ type TAllProps = IEditFeedModalMapDispatch &
     IEditFeedModalMapState &
     IEditFeedModalProps;
 
-interface IEditFeedModalState {
+interface IState {
     newFeed: any;
 }
 
-class EditFeedModalComponent extends React.Component<
-    TAllProps,
-    IEditFeedModalState
-> {
-    state: IEditFeedModalState = {
+class EditFeedModalComponent extends React.Component<TAllProps, IState> {
+    state: IState = {
         newFeed: { title: "" }
     };
 
-    static getDerivedStateFromProps(props: TAllProps) {
+    static getDerivedStateFromProps(props: TAllProps, state: IState) {
         if (props.feed) {
             return {
                 newFeed: props.feed
             };
         }
+        return null;
     }
 
     _handleClose = () => {

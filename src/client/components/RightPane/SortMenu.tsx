@@ -2,11 +2,7 @@ import * as React from "react";
 
 import { Dropdown } from "semantic-ui-react";
 
-const MENU_OPTIONS = [
-    { value: "publish_date:asc", text: "Date - Oldest First" },
-    { value: "publish_date:desc", text: "Date - Newest First" },
-    { value: "title:asc", text: "Title" }
-];
+import { SORT_MENU_OPTIONS } from "../../constants";
 
 interface ISortMenuProps {
     currentSortBy: string;
@@ -22,7 +18,7 @@ const SortMenu = (props: ISortMenuProps) => {
                 inline
                 defaultValue={currentSortBy}
                 onChange={onChange}
-                options={MENU_OPTIONS}
+                options={SORT_MENU_OPTIONS}
             />
         </span>
     );

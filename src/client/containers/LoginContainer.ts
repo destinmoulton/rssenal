@@ -11,7 +11,7 @@ import * as Types from "../interfaces";
 
 const mapStateToProps = (state: Types.IRootStoreState): ILoginMapState => {
     return {
-        authenticationError: state.auth.authenticationError
+        authenticationError: state.authStore.authenticationError
     };
 };
 
@@ -23,4 +23,7 @@ const mapDispatchToProps = (dispatch: Types.IDispatch): ILoginMapDispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginComponent);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LoginComponent);

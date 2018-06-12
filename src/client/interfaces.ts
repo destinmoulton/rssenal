@@ -88,6 +88,8 @@ export interface IFilter {
 export interface IFilterAction {
     type: string;
     newFilter: object;
+    filterTitle: string;
+    filteredEntries: TEntries;
 }
 
 /** Folders Interfaces & Types */
@@ -150,6 +152,8 @@ export interface IReducerStateSettings {
 
 export interface IReducerStateFilter {
     filter: IFilter;
+    filterTitle: string;
+    filteredEntries: TEntries;
 }
 
 export interface IReducerStateFolders {
@@ -166,13 +170,13 @@ export interface IReducerStateMessages {
 }
 
 export interface IRootStoreState {
-    auth: IReducerStateAuth;
-    entries: IReducerStateEntries;
-    feeds: IReducerStateFeeds;
-    filter: IReducerStateFilter;
-    folders: IReducerStateFolders;
-    messages: IReducerStateMessages;
-    settings: IReducerStateSettings;
+    authStore: IReducerStateAuth;
+    entriesStore: IReducerStateEntries;
+    feedsStore: IReducerStateFeeds;
+    filterStore: IReducerStateFilter;
+    foldersStore: IReducerStateFolders;
+    messagesStore: IReducerStateMessages;
+    settingsStore: IReducerStateSettings;
 }
 
 /** Settings Interfaces */

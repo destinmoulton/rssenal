@@ -4,37 +4,37 @@ import * as React from "react";
 import { Icon } from "semantic-ui-react";
 
 import AddFeedModalContainer from "../../containers/Modals/AddFeedModalContainer";
-import ButtonBarContainer from "../../containers/LeftMenu/ButtonBarContainer";
+import ButtonBarContainer from "../../containers/LeftPane/ButtonBarContainer";
 import EditFeedModalContainer from "../../containers/Modals/EditFeedModalContainer";
 import EditFolderModalContainer from "../../containers/Modals/EditFolderModalContainer";
-import FolderItemContainer from "../../containers/LeftMenu/FolderItemContainer";
+import FolderItemContainer from "../../containers/LeftPane/FolderItemContainer";
 
 import { propertyComparator } from "../../lib/sort";
 
 import { TFeeds, IFeed, IFolder, TFeedID, TFolderID } from "../../interfaces";
 
-export interface ILeftMenuMapState {
+export interface ILeftPaneMapState {
     feeds: TFeeds;
     hasFolders: boolean;
     folders: OrderedMap<TFolderID, IFolder>;
 }
 
-export interface ILeftMenuMapDispatch {
+export interface ILeftPaneMapDispatch {
     getAllFolders: () => void;
     getAllFeeds: () => void;
 }
 
-type IAllProps = ILeftMenuMapDispatch & ILeftMenuMapState;
+type IAllProps = ILeftPaneMapDispatch & ILeftPaneMapState;
 
-interface ILeftMenuState {
+interface ILeftPaneState {
     addFeedModalOpen: boolean;
     editFeed: IFeed;
     editFeedModalOpen: boolean;
     editFolder: IFolder;
     editFolderModalOpen: boolean;
 }
-class LeftMenuComponent extends React.Component<IAllProps, ILeftMenuState> {
-    state: ILeftMenuState = {
+class LeftPaneComponent extends React.Component<IAllProps, ILeftPaneState> {
+    state: ILeftPaneState = {
         addFeedModalOpen: false,
         editFeed: null,
         editFeedModalOpen: false,
@@ -152,4 +152,4 @@ class LeftMenuComponent extends React.Component<IAllProps, ILeftMenuState> {
     }
 }
 
-export default LeftMenuComponent;
+export default LeftPaneComponent;

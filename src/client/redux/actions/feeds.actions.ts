@@ -15,11 +15,7 @@ import { API_FEEDS_BASE } from "../apiendpoints";
 
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 
-import {
-    entriesClearAll,
-    getEntriesForFeed,
-    entriesRemoveFeed
-} from "./entries.actions";
+import { entriesClearAll, getEntriesForFeed } from "./entries.actions";
 
 import { resetFilter } from "./filter.actions";
 import { message } from "./messages.actions";
@@ -132,7 +128,7 @@ function clearUnread() {
 
 export function refreshAllFeeds() {
     return (dispatch: IDispatch, getState: () => IRootStoreState) => {
-        const { feeds } = getState().feeds;
+        const { feeds } = getState().feedsStore;
         dispatch(entriesClearAll());
         dispatch(getAllEntriesForFeeds(feeds.toArray()));
     };
@@ -166,8 +162,7 @@ function deleteFeed(feedId: TFeedID) {
                 dispatch(message("Feed removed.", "success"));
                 dispatch(resetFilter());
                 dispatch(deleteFeedComplete(feedId));
-                dispatch(entriesRemoveFeed(feedId));
-                dispatch(getAllFeeds());
+                dispatch(refreshAllFeeds());
             })
             .catch(err => {
                 console.error(err);
@@ -196,7 +191,7 @@ function beginUpdateFeedProcess() {
 }
 
 function updateFeed(feedInfo: IFeed) {
-    return (dispatch: IDispatch, getState: () => IRootStoreState) => {
+    return (dispatch: IDispatch) => {
         const url = API_FEEDS_BASE + feedInfo._id;
         const init = {
             method: "PUT",

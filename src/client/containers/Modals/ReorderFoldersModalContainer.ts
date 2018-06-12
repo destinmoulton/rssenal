@@ -10,9 +10,9 @@ import ReorderFoldersModalComponent, {
 const mapStateToProps = (
     state: Types.IRootStoreState
 ): IReorderFoldersMapState => {
-    const { folders } = state;
+    const { foldersStore } = state;
     return {
-        folders: folders.folders
+        folders: foldersStore.folders
     };
 };
 

@@ -17,26 +17,25 @@ interface IEditFolderModalProps {
 
 type TAllProps = IEditFolderModalMapDispatch & IEditFolderModalProps;
 
-interface IFolderEditorModalState {
+interface IState {
     folderInfo: any;
 }
 
 const INITIAL_FOLDER = { name: "", _id: "" };
 
-class EditFolderModalComponent extends React.Component<
-    TAllProps,
-    IFolderEditorModalState
-> {
-    state: IFolderEditorModalState = {
+class EditFolderModalComponent extends React.Component<TAllProps, IState> {
+    state: IState = {
         folderInfo: INITIAL_FOLDER
     };
 
-    static getDerivedStateFromProps(props: TAllProps) {
+    static getDerivedStateFromProps(props: TAllProps, state: IState) {
         if (props.folder) {
             return {
                 folderInfo: props.folder
             };
         }
+
+        return null;
     }
 
     _handleClose = () => {

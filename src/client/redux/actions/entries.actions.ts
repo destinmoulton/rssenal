@@ -1,34 +1,29 @@
+import { OrderedMap } from "immutable";
 import * as moment from "moment";
 
-import {
-    ENTRIES_CLEAR_ALL,
-    ENTRIES_GET_COMPLETE,
-    ENTRIES_MARKREAD_COMPLETE,
-    ENTRIES_UPDATE_BEGIN,
-    ENTRIES_UPDATE_COMPLETE,
-    ENTRIES_REMOVE_FEED
-} from "../actiontypes";
+import { ENTRIES_SET_ALL } from "../actiontypes";
 
 import { API_ENTRIES_BASE } from "../apiendpoints";
 
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { feedsDecrementUnread, feedsSetAllUnreadCount } from "./feeds.actions";
+import { filterVisibleEntries } from "./filter.actions";
 import { message } from "./messages.actions";
 
 import {
     IDispatch,
     IEntry,
     IGetState,
-    TEntries,
     TFeedID,
-    TEntryID
+    TEntryID,
+    TEntries
 } from "../../interfaces";
 
 export function getEntriesForFeed(feedId: TFeedID) {
     return (dispatch: IDispatch, getState: IGetState) => {
-        const { settings } = getState();
+        const { settingsStore } = getState();
         let showRead = false;
-        settings.settings.forEach(setting => {
+        settingsStore.settings.forEach(setting => {
             if (setting.key === "show_entries_has_read") {
                 showRead = setting.value;
             }
@@ -63,9 +58,10 @@ export function getEntriesForFeed(feedId: TFeedID) {
 
 function ammendEntries(entries: IEntry[]) {
     return (dispatch: IDispatch, getState: IGetState) => {
-        const { feeds } = getState().feeds;
+        const { feedsStore, filterStore } = getState();
+
         const ammendedEntries = entries.map((entry: IEntry) => {
-            const feedTitle = feeds.get(entry.feed_id).title;
+            const feedTitle = feedsStore.feeds.get(entry.feed_id).title;
             const timeAgo = moment(entry.publish_date).fromNow();
             return {
                 ...entry,
@@ -74,14 +70,22 @@ function ammendEntries(entries: IEntry[]) {
             };
         });
         dispatch(getEntriesComplete(ammendedEntries));
+
         dispatch(feedsSetAllUnreadCount(ammendedEntries));
     };
 }
 
 function getEntriesComplete(entries: IEntry[]) {
-    return {
-        type: ENTRIES_GET_COMPLETE,
-        entries
+    return (dispatch: IDispatch, getState: IGetState) => {
+        const { entriesStore, filterStore } = getState();
+        const currentEntries = entriesStore.entries;
+
+        let newEntries = currentEntries.toOrderedMap();
+        entries.forEach(entry => {
+            newEntries = newEntries.set(entry._id, entry);
+        });
+
+        dispatch(entriesSetAndFilter(newEntries));
     };
 }
 
@@ -113,32 +117,35 @@ export function updateReadState(entry: IEntry, hasRead: boolean) {
 
 function entryAmmendMarkRead(entryId: TEntryID) {
     return (dispatch: IDispatch, getState: IGetState) => {
-        const { entries } = getState().entries;
-
-        const entry = entries.get(entryId);
+        const { entriesStore, filterStore } = getState();
+        const allEntries = entriesStore.entries;
+        const entry = allEntries.get(entryId);
 
         const newEntry = { ...entry, has_read: true };
+        const newEntries = allEntries.set(entryId, newEntry);
+
         dispatch(feedsDecrementUnread(entry.feed_id));
-        dispatch(entryMarkReadComplete(newEntry));
-    };
-}
-
-function entryMarkReadComplete(newEntry: IEntry) {
-    return {
-        type: ENTRIES_MARKREAD_COMPLETE,
-        newEntry
-    };
-}
-
-export function entriesRemoveFeed(feedId: TFeedID) {
-    return {
-        type: ENTRIES_REMOVE_FEED,
-        feedId
+        dispatch(entriesSetAndFilter(newEntries));
     };
 }
 
 export function entriesClearAll() {
+    return (dispatch: IDispatch) => {
+        dispatch(entriesSetAndFilter(OrderedMap<TEntryID, IEntry>()));
+    };
+}
+
+function entriesSetAndFilter(entries: TEntries) {
+    return (dispatch: IDispatch, getState: IGetState) => {
+        const { filterStore } = getState();
+        dispatch(entriesSetAll(entries));
+        dispatch(filterVisibleEntries(filterStore.filter, entries));
+    };
+}
+
+function entriesSetAll(entries: TEntries) {
     return {
-        type: ENTRIES_CLEAR_ALL
+        type: ENTRIES_SET_ALL,
+        entries
     };
 }

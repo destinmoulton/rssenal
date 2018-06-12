@@ -2,8 +2,6 @@ import { OrderedMap } from "immutable";
 import * as React from "react";
 
 import Entry from "./Entry/Entry";
-import SettingsModalContainer from "../../containers/Modals/SettingsModalContainer";
-import SortMenu from "./SortMenu";
 
 import { propertyComparator } from "../../lib/sort";
 
@@ -12,30 +10,32 @@ import {
     IFilter,
     TEntries,
     TEntryID,
-    TFolders,
     TFeeds,
     ISetting
 } from "../../interfaces";
 
 export interface IEntriesListMapState {
     entries: TEntries;
-    folders: TFolders;
     feeds: TFeeds;
     filter: IFilter;
     settings: ISetting[];
+    filteredEntries: TEntries;
 }
 
 export interface IEntriesListMapDispatch {
     markEntryRead: (entry: IEntry) => void;
 }
 
-type TAllProps = IEntriesListMapState & IEntriesListMapDispatch;
+interface IProps {
+    sortBy: string;
+}
+
+type TAllProps = IEntriesListMapState & IEntriesListMapDispatch & IProps;
 
 interface IEntriesListState {
-    sortBy: string;
     activeEntryId: string;
     currentTitle: string;
-    processedEntries: OrderedMap<TEntryID, IEntry> | Iterable<IEntry>;
+    visibleEntries: OrderedMap<TEntryID, IEntry> | Iterable<IEntry>;
 }
 
 class EntriesListComponent extends React.Component<
@@ -43,10 +43,9 @@ class EntriesListComponent extends React.Component<
     IEntriesListState
 > {
     state = {
-        sortBy: "publish_date:asc",
         activeEntryId: "",
         currentTitle: "",
-        processedEntries: OrderedMap<TEntryID, IEntry>()
+        visibleEntries: OrderedMap<TEntryID, IEntry>()
     };
 
     constructor(props: TAllProps) {
@@ -57,12 +56,17 @@ class EntriesListComponent extends React.Component<
     }
 
     componentDidMount() {
-        this._filterAndSortEntries(this.props, this.state.sortBy, false);
+        this._prepareVisibleEntries(false);
     }
 
-    componentWillReceiveProps(nextProps: TAllProps) {
-        if (nextProps.filter.id !== this.props.filter.id) {
-            this._filterAndSortEntries(nextProps, this.state.sortBy, true);
+    componentDidUpdate(prevProps: TAllProps) {
+        const hasFilterChanged = this.props.filter.id !== prevProps.filter.id;
+        const hasSortChanged = this.props.sortBy !== prevProps.sortBy;
+        const hasFilteredEntriesChanged =
+            this.props.filteredEntries !== prevProps.filteredEntries;
+
+        if (hasFilterChanged) {
+            this._prepareVisibleEntries(true);
 
             // Reset scroll to top
             document.querySelector(".rss-entrylist-container").scrollTo(0, 0);
@@ -70,99 +74,46 @@ class EntriesListComponent extends React.Component<
             this.setState({
                 activeEntryId: ""
             });
-        } else {
-            this._filterAndSortEntries(nextProps, this.state.sortBy, false);
+        } else if (hasFilteredEntriesChanged || hasSortChanged) {
+            this._prepareVisibleEntries(false);
         }
     }
 
-    _filterAndSortEntries(
-        props: TAllProps,
-        sortBy: string,
-        hasFilterChanged: boolean
-    ) {
-        const { entries, folders, feeds, filter } = props;
+    _prepareVisibleEntries(hasFilterChanged: boolean) {
+        const { filteredEntries } = this.props;
 
-        let filteredEntries = entries.toOrderedMap();
-
-        let title = "All";
-
-        switch (filter.limit) {
-            case "feed":
-                filteredEntries = filteredEntries
-                    .filter(entry => {
-                        return entry.feed_id === filter.id;
-                    })
-                    .toOrderedMap();
-
-                const activeFeed = feeds.get(filter.id);
-
-                title = activeFeed.title;
-                break;
-            case "folder":
-                if (filter.id !== "all") {
-                    const feedIds = feeds
-                        .filter(feed => {
-                            return feed.folder_id === filter.id;
-                        })
-                        .map(feed => {
-                            return feed._id;
-                        });
-
-                    filteredEntries = entries
-                        .filter(entry => {
-                            return feedIds.includes(entry.feed_id);
-                        })
-                        .toOrderedMap();
-
-                    const activeFolder = folders.get(filter.id);
-
-                    title = activeFolder.name;
-                }
-                break;
-        }
-
-        let processedEntries = this._sortEntries(filteredEntries, sortBy);
+        let visibleEntries = this._sortEntries(filteredEntries);
 
         if (hasFilterChanged) {
-            processedEntries = this._filterHiddenEntries(
-                props,
-                processedEntries
-            );
+            visibleEntries = this._filterHiddenEntries(visibleEntries);
         }
 
         this.setState({
-            currentTitle: title,
-            processedEntries: OrderedMap(processedEntries)
+            visibleEntries: OrderedMap(visibleEntries)
         });
     }
 
-    _sortEntries(entries: TEntries, sortBy: string) {
-        const sortParams = sortBy.split(":");
-        return entries.sort((a, b) =>
-            propertyComparator(a, b, sortParams[1], sortParams[0])
-        );
+    _sortEntries(entries: TEntries) {
+        const sortParams = this.props.sortBy.split(":");
+        return entries
+            .sort((a, b) =>
+                propertyComparator(a, b, sortParams[1], sortParams[0])
+            )
+            .toOrderedMap();
     }
 
-    _filterHiddenEntries(props: TAllProps, processedEntries: any) {
-        const { settings } = props;
-
-        let filteredEntries;
+    _filterHiddenEntries(visibleEntries: TEntries) {
+        const { settings } = this.props;
 
         if (false === settings[1].value) {
-            return processedEntries.filter((entry: IEntry) => {
-                return false === entry.has_read;
-            });
+            return visibleEntries
+                .filter((entry: IEntry) => {
+                    return false === entry.has_read;
+                })
+                .toOrderedMap();
         }
-        return processedEntries;
+        return visibleEntries;
     }
-
-    _handleChangeSort = (e: any, data: any) => {
-        this.setState({
-            sortBy: data.value
-        });
-
-        this._filterAndSortEntries(this.props, data.value, true);
-    };
 
     _handleKeyDown = (e: any) => {
         switch (e.key) {
@@ -195,17 +146,17 @@ class EntriesListComponent extends React.Component<
     };
 
     _activateSiblingEntry(direction: string) {
-        const { activeEntryId, processedEntries } = this.state;
+        const { activeEntryId, visibleEntries } = this.state;
 
         let sibling: IEntry = null;
 
         if (activeEntryId === "") {
-            sibling = processedEntries.first();
+            sibling = visibleEntries.first();
         } else {
             let previousEntry: IEntry = null;
             let nextEntry: IEntry = null;
             let found = false;
-            processedEntries.map(entry => {
+            visibleEntries.map(entry => {
                 if (found && !nextEntry) {
                     nextEntry = entry;
                 }
@@ -223,13 +174,13 @@ class EntriesListComponent extends React.Component<
                 if (nextEntry !== null) {
                     sibling = nextEntry;
                 } else {
-                    sibling = processedEntries.last();
+                    sibling = visibleEntries.last();
                 }
             } else if (direction === "previous") {
                 if (previousEntry !== null) {
                     sibling = previousEntry;
                 } else {
-                    sibling = processedEntries.first();
+                    sibling = visibleEntries.first();
                 }
             }
         }
@@ -262,12 +213,7 @@ class EntriesListComponent extends React.Component<
     }
 
     _generateEntries() {
-        const {
-            activeEntryId,
-            currentTitle,
-            processedEntries,
-            sortBy
-        } = this.state;
+        const { activeEntryId, visibleEntries } = this.state;
 
         const { settings } = this.props;
 
@@ -278,8 +224,9 @@ class EntriesListComponent extends React.Component<
             }
         });
 
-        return processedEntries.toArray().map(entry => {
+        return visibleEntries.toArray().map(entry => {
             const isActive = entry._id === activeEntryId;
+
             return (
                 <Entry
                     key={entry._id}
@@ -293,27 +240,9 @@ class EntriesListComponent extends React.Component<
     }
 
     render() {
-        const { currentTitle, sortBy } = this.state;
-
         const entryList = this._generateEntries();
 
-        return (
-            <div>
-                <div className="rss-entrylist-menu">
-                    <div className="rss-entrylist-menu-title-container">
-                        {currentTitle}
-                    </div>
-                    <div className="rss-entrylist-menu-sortselect-container">
-                        <SortMenu
-                            onChange={this._handleChangeSort}
-                            currentSortBy={sortBy}
-                        />&nbsp;&nbsp;
-                        <SettingsModalContainer />
-                    </div>
-                </div>
-                <div className="rss-entrylist-container">{entryList}</div>
-            </div>
-        );
+        return <div className="rss-entrylist-container">{entryList}</div>;
     }
 }
 

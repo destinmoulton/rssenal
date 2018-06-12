@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Button, Icon, Popup } from "semantic-ui-react";
 
-import LogoutButtonContainer from "../../containers/LeftMenu/LogoutButtonContainer";
+import LogoutButtonContainer from "../../containers/LeftPane/LogoutButtonContainer";
 import ReorderFoldersModalContainer from "../../containers/Modals/ReorderFoldersModalContainer";
 
 export interface IButtonBarMapState {}

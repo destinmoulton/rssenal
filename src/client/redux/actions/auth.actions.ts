@@ -20,6 +20,10 @@ export function validateToken() {
         };
         fetch(url, init)
             .then(res => {
+                if (!res.ok) {
+                    return { status: "invalid" };
+                }
+
                 return res.json();
             })
             .then(auth => {

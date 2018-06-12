@@ -10,9 +10,9 @@ import AddFeedModalComponent, {
 const mapStateToProps = (
     state: Types.IRootStoreState
 ): IAddFeedModalMapState => {
-    const { folders } = state;
+    const { foldersStore } = state;
     return {
-        folders: folders.folders
+        folders: foldersStore.folders
     };
 };
 

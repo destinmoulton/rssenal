@@ -5,7 +5,7 @@ import { refreshAllFeeds } from "../../redux/actions/feeds.actions";
 import ButtonBarComponent, {
     IButtonBarMapDispatch,
     IButtonBarMapState
-} from "../../components/LeftMenu/ButtonBarComponent";
+} from "../../components/LeftPane/ButtonBarComponent";
 
 import * as Types from "../../interfaces";
 
@@ -21,4 +21,7 @@ const mapDispatchToProps = (
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ButtonBarComponent);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ButtonBarComponent);

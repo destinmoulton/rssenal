@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import { routerReducer } from "react-router-redux";
+
 import thunk from "redux-thunk";
 
 import authReducer from "./reducers/auth.reducer";
@@ -12,13 +12,13 @@ import settingsReducer from "./reducers/settings.reducer";
 
 const store = createStore(
     combineReducers({
-        auth: authReducer,
-        entries: entriesReducer,
-        filter: filterReducer,
-        folders: foldersReducer,
-        feeds: feedsReducer,
-        messages: messagesReducer,
-        settings: settingsReducer
+        authStore: authReducer,
+        entriesStore: entriesReducer,
+        filterStore: filterReducer,
+        foldersStore: foldersReducer,
+        feedsStore: feedsReducer,
+        messagesStore: messagesReducer,
+        settingsStore: settingsReducer
     }),
     applyMiddleware(thunk)
 );

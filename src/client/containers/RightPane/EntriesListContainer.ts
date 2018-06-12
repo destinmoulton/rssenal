@@ -6,19 +6,19 @@ import * as Types from "../../interfaces";
 import EntriesListComponent, {
     IEntriesListMapDispatch,
     IEntriesListMapState
-} from "../../components/Entries/EntriesListComponent";
+} from "../../components/RightPane/EntriesListComponent";
 
 const mapStateToProps = (
     state: Types.IRootStoreState
 ): IEntriesListMapState => {
-    const { entries, feeds, filter, folders, settings } = state;
+    const { entriesStore, feedsStore, filterStore, settingsStore } = state;
 
     return {
-        entries: entries.entries,
-        feeds: feeds.feeds,
-        filter: filter.filter,
-        folders: folders.folders,
-        settings: settings.settings
+        entries: entriesStore.entries,
+        feeds: feedsStore.feeds,
+        filter: filterStore.filter,
+        filteredEntries: filterStore.filteredEntries,
+        settings: settingsStore.settings
     };
 };
 
@@ -30,6 +30,7 @@ const mapDispatchToProps = (
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    EntriesListComponent
-);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(EntriesListComponent);

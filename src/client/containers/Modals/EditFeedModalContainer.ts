@@ -11,9 +11,9 @@ import EditFeedModalComponent, {
 const mapStateToProps = (
     state: Types.IRootStoreState
 ): IEditFeedModalMapState => {
-    const { folders } = state;
+    const { foldersStore } = state;
     return {
-        folders: folders.folders
+        folders: foldersStore.folders
     };
 };
 

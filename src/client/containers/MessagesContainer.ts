@@ -11,7 +11,7 @@ import * as Types from "../interfaces";
 
 const mapStateToProps = (state: Types.IRootStoreState): IMessagesMapState => {
     return {
-        messages: state.messages.messages
+        messages: state.messagesStore.messages
     };
 };
 
@@ -23,4 +23,7 @@ const mapDispatchToProps = (
             dispatch(removeMessage(message))
     };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(MessagesComponent);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MessagesComponent);

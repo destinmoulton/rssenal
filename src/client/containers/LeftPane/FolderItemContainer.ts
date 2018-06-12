@@ -8,17 +8,17 @@ import { changeFilter } from "../../redux/actions/filter.actions";
 import FolderItemComponent, {
     IFolderItemMapDispatch,
     IFolderItemMapState
-} from "../../components/LeftMenu/FolderItemComponent";
+} from "../../components/LeftPane/FolderItemComponent";
 
 import * as Types from "../../interfaces";
 
 const mapStateToProps = (state: Types.IRootStoreState): IFolderItemMapState => {
-    const { feeds, filter } = state;
+    const { feedsStore, filterStore } = state;
 
     return {
-        filter: filter.filter,
-        unreadMapGroups: feeds.unreadMap.folders,
-        feeds: feeds.feeds
+        filter: filterStore.filter,
+        unreadMapGroups: feedsStore.unreadMap.folders,
+        feeds: feedsStore.feeds
     };
 };
 
@@ -33,6 +33,7 @@ const mapDispatchToProps = (
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-    FolderItemComponent
-);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FolderItemComponent);

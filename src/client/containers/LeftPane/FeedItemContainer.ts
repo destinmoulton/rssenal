@@ -5,14 +5,14 @@ import { changeFilter } from "../../redux/actions/filter.actions";
 import FeedItemComponent, {
     IFeedItemMapState,
     IFeedItemMapDispatch
-} from "../../components/LeftMenu/FeedItemComponent";
+} from "../../components/LeftPane/FeedItemComponent";
 import * as Types from "../../interfaces";
 
 const mapStateToProps = (state: Types.IRootStoreState): IFeedItemMapState => {
-    const { feeds, filter } = state;
+    const { feedsStore, filterStore } = state;
     return {
-        filter: filter.filter,
-        unreadMapFeeds: feeds.unreadMap.feeds
+        filter: filterStore.filter,
+        unreadMapFeeds: feedsStore.unreadMap.feeds
     };
 };
 
@@ -27,4 +27,7 @@ const mapDispatchToProps = (
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FeedItemComponent);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FeedItemComponent);
