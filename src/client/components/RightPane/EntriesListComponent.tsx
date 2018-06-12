@@ -60,7 +60,11 @@ class EntriesListComponent extends React.Component<
     }
 
     componentDidUpdate(prevProps: TAllProps) {
-        if (this.props.filter.id !== prevProps.filter.id) {
+        const hasFilterChanged = this.props.filter.id !== prevProps.filter.id;
+        const hasSortChanged = this.props.sortBy !== prevProps.sortBy;
+        const hasFilteredEntriesChanged =
+            this.props.filteredEntries !== prevProps.filteredEntries;
+        if (hasFilterChanged) {
             this._prepareVisibleEntries(true);
 
             // Reset scroll to top
@@ -69,9 +73,7 @@ class EntriesListComponent extends React.Component<
             this.setState({
                 activeEntryId: ""
             });
-        } else if (this.props.sortBy !== prevProps.sortBy) {
-            this._prepareVisibleEntries(false);
-        } else if (this.props.filteredEntries !== prevProps.filteredEntries) {
+        } else if (hasSortChanged || hasFilteredEntriesChanged) {
             this._prepareVisibleEntries(false);
         }
     }
