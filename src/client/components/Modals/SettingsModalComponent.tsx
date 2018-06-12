@@ -5,12 +5,12 @@ import { Button, Header, Icon, Modal, Popup, Radio } from "semantic-ui-react";
 import { ISetting } from "../../interfaces";
 
 export interface ISettingsModalMapDispatch {
-    changeSetting: (setting_key: string, setting_value: any) => void;
+    settingChange: (setting_key: string, setting_value: any) => void;
     refreshAllFeeds: () => void;
 }
 
 interface ISettingsModalProps {
-    changeSetting: (setting_key: string, setting_value: any) => void;
+    settingChange: (setting_key: string, setting_value: any) => void;
     refreshAllFeeds: () => void;
     settings: ISetting[];
 }
@@ -74,7 +74,7 @@ class SettingsModalComponent extends React.Component<
         setting_value: any,
         setting: ISetting
     ) {
-        this.props.changeSetting(setting_key, setting_value);
+        this.props.settingChange(setting_key, setting_value);
 
         if (setting.refresh_entries_on_change) {
             this.props.refreshAllFeeds();
