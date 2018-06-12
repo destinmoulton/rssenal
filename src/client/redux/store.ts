@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import { routerReducer } from "react-router-redux";
+
 import thunk from "redux-thunk";
 
 import authReducer from "./reducers/auth.reducer";
