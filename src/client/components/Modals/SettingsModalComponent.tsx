@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Button, Header, Icon, Modal, Popup, Radio } from "semantic-ui-react";
 
-import { ISetting, TSettings } from "../../interfaces";
+import { ISetting, TSettings } from "../../types";
 
 export interface ISettingsModalMapDispatch {
     settingChange: (setting_key: string, setting_value: any) => void;

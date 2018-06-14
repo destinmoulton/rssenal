@@ -27,7 +27,7 @@ import {
     TFeedID,
     TEntries,
     IRootStoreState
-} from "../../interfaces";
+} from "../../types";
 
 export function beginAddFeed(feedInfo: IFeed) {
     return (dispatch: IDispatch) => {

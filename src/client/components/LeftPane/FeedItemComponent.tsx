@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { Icon } from "semantic-ui-react";
 
-import { TFeedID, IFeed, IFeedsUnreadMap, IFilter } from "../../interfaces";
+import { TFeedID, IFeed, IFeedsUnreadMap, IFilter } from "../../types";
 
 export interface IFeedItemMapState {
     filter: IFilter;

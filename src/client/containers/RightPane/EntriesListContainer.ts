@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { updateReadState } from "../../redux/actions/entries.actions";
 
-import * as Types from "../../interfaces";
+import * as Types from "../../types";
 
 import EntriesListComponent, {
     IEntriesListMapDispatch,

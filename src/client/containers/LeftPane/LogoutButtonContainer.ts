@@ -6,7 +6,7 @@ import LogoutButtonComponent, {
     ILogoutButtonComponentProps
 } from "../../components/LeftPane/LogoutButtonComponent";
 
-import * as Types from "../../interfaces";
+import * as Types from "../../types";
 
 const mapStateToProps = (
     state: Types.IRootStoreState

@@ -18,7 +18,7 @@ import {
     TFeedID,
     TEntryID,
     TEntries
-} from "../../interfaces";
+} from "../../types";
 
 export function getEntriesForFeed(feedId: TFeedID) {
     return (dispatch: IDispatch, getState: IGetState) => {

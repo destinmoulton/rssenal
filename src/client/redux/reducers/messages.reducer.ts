@@ -2,7 +2,7 @@ import { List } from "immutable";
 
 import { MESSAGES_ADD, MESSAGES_REMOVE } from "../actiontypes";
 
-import { IMessage, IMessageAction,IReducerStateMessages } from "../../interfaces";
+import { IMessage, IMessageAction,IReducerStateMessages } from "../../types";
 
 const INITIAL_STATE: IReducerStateMessages = {
     messages: List(),

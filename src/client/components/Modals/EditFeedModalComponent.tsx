@@ -3,7 +3,7 @@ import * as React from "react";
 import { Button, Header, Icon, Modal } from "semantic-ui-react";
 import SelectFolder from "./SelectFolder";
 
-import { TFolderID, TFolders } from "../../interfaces";
+import { TFolderID, TFolders } from "../../types";
 
 export interface IEditFeedModalMapDispatch {
     beginUpdateFeed: (feedInfo: any) => void;

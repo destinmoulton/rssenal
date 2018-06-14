@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { settingChange } from "../../redux/actions/settings.actions";
 import { refreshAllFeeds } from "../../redux/actions/feeds.actions";
 
-import * as Types from "../../interfaces";
+import * as Types from "../../types";
 import SettingsModalComponent, {
     ISettingsModalMapDispatch,
     ISettingsModalMapState

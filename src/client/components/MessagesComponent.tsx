@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as NotificationSystem from "react-notification-system";
 
-import { IMessage, TMessages } from "../interfaces";
+import { IMessage, TMessages } from "../types";
 
 export interface IMessagesMapDispatch {
     removeMessage?: (message: IMessage) => void;

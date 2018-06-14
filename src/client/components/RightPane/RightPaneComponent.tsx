@@ -3,7 +3,7 @@ import * as React from "react";
 import TopBarComponent from "../RightPane/TopBarComponent";
 import EntriesListContainer from "../../containers/RightPane/EntriesListContainer";
 
-import * as Types from "../../interfaces";
+import * as Types from "../../types";
 
 export interface IRightPaneMapState {
     filterTitle: string;

@@ -1,7 +1,7 @@
 import { OrderedMap } from "immutable";
 import { FILTER_CHANGE, FILTER_RESET } from "../actiontypes";
 
-import * as Types from "../../interfaces";
+import * as Types from "../../types";
 
 export function changeFilter(filter: Types.IFilter) {
     return (dispatch: Types.IDispatch, getState: Types.IGetState) => {

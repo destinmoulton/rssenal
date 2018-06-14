@@ -13,7 +13,7 @@ import {
     TEntryID,
     TFeeds,
     TSettings
-} from "../../interfaces";
+} from "../../types";
 
 export interface IEntriesListMapState {
     entries: TEntries;

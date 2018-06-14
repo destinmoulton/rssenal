@@ -9,7 +9,7 @@ import {
     AUTH_TOKEN_VALIDATION_COMPLETE
 } from "../actiontypes";
 
-import { IDispatch } from "../../interfaces";
+import { IDispatch } from "../../types";
 
 export function validateToken() {
     return (dispatch: IDispatch) => {

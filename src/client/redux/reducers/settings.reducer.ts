@@ -3,7 +3,7 @@ import { Map } from "immutable";
 import { SETTINGS_CHANGE } from "../actiontypes";
 import { DEFAULT_SETTINGS } from "../../constants";
 
-import * as Types from "../../interfaces";
+import * as Types from "../../types";
 
 const INITIAL_STATE: Types.IReducerStateSettings = {
     settings: Map(DEFAULT_SETTINGS)

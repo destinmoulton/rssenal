@@ -7,7 +7,7 @@ import LeftPaneComponent, {
     ILeftPaneMapState
 } from "../../components/LeftPane/LeftPaneComponent";
 
-import * as Types from "../../interfaces";
+import * as Types from "../../types";
 
 const mapStateToProps = (state: Types.IRootStoreState): ILeftPaneMapState => {
     const { foldersStore, feedsStore } = state;

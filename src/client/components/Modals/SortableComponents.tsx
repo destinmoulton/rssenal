@@ -1,7 +1,7 @@
 import * as React from "react";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 
-import { IFolder } from "../../interfaces";
+import { IFolder } from "../../types";
 
 interface ISortableFolderItemProps {
     value: any;

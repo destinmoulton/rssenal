@@ -6,7 +6,7 @@ import FeedItemComponent, {
     IFeedItemMapState,
     IFeedItemMapDispatch
 } from "../../components/LeftPane/FeedItemComponent";
-import * as Types from "../../interfaces";
+import * as Types from "../../types";
 
 const mapStateToProps = (state: Types.IRootStoreState): IFeedItemMapState => {
     const { feedsStore, filterStore } = state;

@@ -7,7 +7,7 @@ import LoginComponent, {
 
 import { loginUser } from "../redux/actions/auth.actions";
 
-import * as Types from "../interfaces";
+import * as Types from "../types";
 
 const mapStateToProps = (state: Types.IRootStoreState): ILoginMapState => {
     return {

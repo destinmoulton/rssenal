@@ -11,7 +11,7 @@ import FolderItemContainer from "../../containers/LeftPane/FolderItemContainer";
 
 import { propertyComparator } from "../../lib/sort";
 
-import { TFeeds, IFeed, IFolder, TFeedID, TFolderID } from "../../interfaces";
+import { TFeeds, IFeed, IFolder, TFeedID, TFolderID } from "../../types";
 
 export interface ILeftPaneMapState {
     feeds: TFeeds;

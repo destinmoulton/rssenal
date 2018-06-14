@@ -14,7 +14,7 @@ import SelectFolder from "./SelectFolder";
 import { API_FEEDVALIDATION_BASE } from "../../redux/apiendpoints";
 import { generateJWTJSONHeaders } from "../../lib/headers";
 
-import { IFeed, TFolderID, TFolders } from "../../interfaces";
+import { IFeed, TFolderID, TFolders } from "../../types";
 
 export interface IAddFeedModalMapState {
     folders: TFolders;

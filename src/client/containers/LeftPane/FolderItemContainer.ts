@@ -10,7 +10,7 @@ import FolderItemComponent, {
     IFolderItemMapState
 } from "../../components/LeftPane/FolderItemComponent";
 
-import * as Types from "../../interfaces";
+import * as Types from "../../types";
 
 const mapStateToProps = (state: Types.IRootStoreState): IFolderItemMapState => {
     const { feedsStore, filterStore } = state;

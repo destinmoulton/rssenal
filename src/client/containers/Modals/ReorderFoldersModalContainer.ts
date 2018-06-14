@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { beginReorderFolders } from "../../redux/actions/folders.actions";
 
-import * as Types from "../../interfaces";
+import * as Types from "../../types";
 import ReorderFoldersModalComponent, {
     IReorderFolderMapDispatch,
     IReorderFoldersMapState

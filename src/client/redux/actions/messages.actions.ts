@@ -1,5 +1,5 @@
 import { MESSAGES_ADD, MESSAGES_REMOVE } from "../actiontypes";
-import { IMessage } from "../../interfaces";
+import { IMessage } from "../../types";
 
 export function message(messageText: string, level: string){
     return {

@@ -6,7 +6,7 @@ import { SortableFolderList } from "./SortableComponents";
 
 import { propertyComparator } from "../../lib/sort";
 
-import { IFolder, TFolders } from "../../interfaces";
+import { IFolder, TFolders } from "../../types";
 
 export interface IReorderFoldersMapState {
     folders: TFolders;

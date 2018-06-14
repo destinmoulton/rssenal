@@ -5,7 +5,7 @@ import {
     AUTH_TOKEN_IS_VALIDATING,
     AUTH_TOKEN_VALIDATION_COMPLETE
 } from "../actiontypes";
-import { IAuthAction, IReducerStateAuth } from "../../interfaces";
+import { IAuthAction, IReducerStateAuth } from "../../types";
 
 const INITIAL_STATE: IReducerStateAuth = {
     authenticationError: "",

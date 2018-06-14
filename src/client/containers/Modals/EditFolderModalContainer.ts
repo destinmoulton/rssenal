@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { beginSaveFolder } from "../../redux/actions/folders.actions";
 
-import * as Types from "../../interfaces";
+import * as Types from "../../types";
 import EditFolderModalComponent, {
     IEditFolderModalMapDispatch
 } from "../../components/Modals/EditFolderModalComponent";

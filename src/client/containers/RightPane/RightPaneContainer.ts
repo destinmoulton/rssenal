@@ -5,7 +5,7 @@ import RightPaneComponent, {
     IRightPaneMapState
 } from "../../components/RightPane/RightPaneComponent";
 
-import * as Types from "../../interfaces";
+import * as Types from "../../types";
 
 const mapDispatchToProps = (
     dispatch: Types.IDispatch

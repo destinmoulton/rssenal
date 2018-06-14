@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import * as Types from "../interfaces";
+import * as Types from "../types";
 
 interface IErrorBoundaryState {
     hasError: boolean;

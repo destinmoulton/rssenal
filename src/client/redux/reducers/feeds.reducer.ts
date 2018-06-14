@@ -18,7 +18,7 @@ import {
     IFeedsAction,
     IFeedsUnreadMap,
     IReducerStateFeeds
-} from "../../interfaces";
+} from "../../types";
 
 import { propertyComparator } from "../../lib/sort";
 

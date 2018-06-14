@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { Dropdown } from "semantic-ui-react";
 
-import { IRootStoreState, TFolders, TFolderID } from "../../interfaces";
+import { IRootStoreState, TFolders, TFolderID } from "../../types";
 
 interface ISelectFolderProps {
     onChange: (folderId: TFolderID) => void;

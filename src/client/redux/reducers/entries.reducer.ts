@@ -7,7 +7,7 @@ import {
     IEntry,
     IEntriesAction,
     IReducerStateEntries
-} from "../../interfaces";
+} from "../../types";
 
 const INITIAL_STATE: IReducerStateEntries = {
     entries: OrderedMap<TEntryID, IEntry>()

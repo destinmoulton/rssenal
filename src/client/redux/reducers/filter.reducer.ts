@@ -1,7 +1,7 @@
 import { OrderedMap } from "immutable";
 import { FILTER_CHANGE, FILTER_RESET } from "../actiontypes";
 
-import * as Types from "../../interfaces";
+import * as Types from "../../types";
 
 const INITIAL_STATE: Types.IReducerStateFilter = {
     filter: { limit: "folder", id: "all" },

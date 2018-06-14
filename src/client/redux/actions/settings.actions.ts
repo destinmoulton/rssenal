@@ -1,6 +1,6 @@
 import { SETTINGS_CHANGE } from "../actiontypes";
 
-import * as Types from "../../interfaces";
+import * as Types from "../../types";
 
 export function settingChange(setting_key: string, setting_value: any) {
     return (dispatch: Types.IDispatch, getState: Types.IGetState) => {

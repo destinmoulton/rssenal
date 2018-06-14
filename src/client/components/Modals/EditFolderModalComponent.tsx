@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Button, Header, Modal } from "semantic-ui-react";
 
-import { IFolder } from "../../interfaces";
+import { IFolder } from "../../types";
 import EditFeedModalComponent from "./EditFeedModalComponent";
 
 export interface IEditFolderModalMapDispatch {

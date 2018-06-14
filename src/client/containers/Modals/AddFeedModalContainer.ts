@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import * as Types from "../../interfaces";
+import * as Types from "../../types";
 import { beginAddFeed } from "../../redux/actions/feeds.actions";
 import AddFeedModalComponent, {
     IAddFeedModalMapDispatch,

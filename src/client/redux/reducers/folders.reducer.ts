@@ -11,7 +11,7 @@ import {
    FOLDERS_UPDATE_COMPLETE
 } from "../actiontypes";
 
-import { TFolderID, IFolder, IFolderAction, IReducerStateFolders } from "../../interfaces";
+import { TFolderID, IFolder, IFolderAction, IReducerStateFolders } from "../../types";
 
 const INITIAL_STATE: IReducerStateFolders = {
     folders: OrderedMap<TFolderID, IFolder>(),

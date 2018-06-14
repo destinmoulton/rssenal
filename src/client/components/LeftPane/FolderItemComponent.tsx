@@ -12,7 +12,7 @@ import {
     TFolderID,
     TFeedID,
     TFeeds
-} from "../../interfaces";
+} from "../../types";
 
 export interface IFolderItemMapState {
     filter: IFilter;

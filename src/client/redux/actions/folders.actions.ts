@@ -15,7 +15,7 @@ import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { message } from "./messages.actions";
 import { resetFilter } from "./filter.actions";
 
-import { IDispatch, IFolder, TFolderID } from "../../interfaces";
+import { IDispatch, IFolder, TFolderID } from "../../types";
 export function getAllFolders() {
     return (dispatch: IDispatch) => {
         dispatch(fetchingInProgress());

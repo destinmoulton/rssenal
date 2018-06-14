@@ -7,7 +7,7 @@ import ButtonBarComponent, {
     IButtonBarMapState
 } from "../../components/LeftPane/ButtonBarComponent";
 
-import * as Types from "../../interfaces";
+import * as Types from "../../types";
 
 const mapStateToProps = (state: Types.IRootStoreState): IButtonBarMapState => {
     return {};

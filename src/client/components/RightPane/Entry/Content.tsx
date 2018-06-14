@@ -4,7 +4,7 @@ import { Icon } from "semantic-ui-react";
 
 import { sanitizeEntryContent } from "../../../lib/sanitizer";
 
-import { IEntry } from "../../../interfaces";
+import { IEntry } from "../../../types";
 
 interface IContentProps {
     entry: IEntry;

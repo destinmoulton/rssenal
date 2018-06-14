@@ -2,7 +2,7 @@ import * as React from "react";
 
 import FeedItemContainer from "../../containers/LeftPane/FeedItemContainer";
 
-import { IFeed, TFolderID, TFeeds } from "../../interfaces";
+import { IFeed, TFolderID, TFeeds } from "../../types";
 
 interface IListFeedsProps {
     feeds: TFeeds;
