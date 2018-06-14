@@ -1,10 +1,8 @@
-import { OrderedMap } from "immutable";
 import * as React from "react";
-import { connect } from "react-redux";
 
 import FeedItemContainer from "../../containers/LeftPane/FeedItemContainer";
 
-import { IFeed, TFeedID, TFolderID, TFeeds } from "../../interfaces";
+import { IFeed, TFolderID, TFeeds } from "../../interfaces";
 
 interface IListFeedsProps {
     feeds: TFeeds;
