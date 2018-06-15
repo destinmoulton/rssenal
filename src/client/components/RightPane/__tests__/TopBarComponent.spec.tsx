@@ -1,8 +1,5 @@
 import * as React from "react";
 import { shallow } from "enzyme";
-
-import TopBarComponent from "../TopBarComponent";
-
 declare global {
     namespace NodeJS {
         interface Global {
@@ -14,6 +11,7 @@ declare global {
 global.Headers = jest.fn().mockImplementation(() => {
     return { append: () => {} };
 });
+import TopBarComponent from "../TopBarComponent";
 
 describe("<TopBarComponent />", () => {
     it("matches the snapshot", () => {
