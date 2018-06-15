@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TopBarComponent /> matches the snapshot 1`] = `
+<div
+  className="rss-rightpane-topbar"
+>
+  <div
+    className="rss-rightpane-topbar-title-container"
+  >
+    Test Title
+  </div>
+  <div
+    className="rss-rightpane-topbar-sortselect-container"
+  >
+    <SortMenu
+      currentSortBy="sort:byTest"
+      onChange={[MockFunction]}
+    />
+      
+    <Connect(SettingsModalComponent) />
+  </div>
+</div>
+`;
