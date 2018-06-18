@@ -1,5 +1,5 @@
 import { API_AUTH_LOGIN, API_AUTH_VALIDATE_TOKEN } from "../apiendpoints";
-import { JSON_HEADERS, generateJWTHeaders } from "../../lib/headers";
+import { generateJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 
 import {
     AUTH_ERROR,
@@ -57,7 +57,7 @@ export function loginUser(username: string, password: string) {
         const init = {
             method: "POST",
             body: JSON.stringify({ username, password }),
-            headers: JSON_HEADERS
+            headers: generateJSONHeaders()
         };
 
         fetch(url, init)

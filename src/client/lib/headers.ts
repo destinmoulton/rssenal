@@ -1,8 +1,9 @@
-let jsonHeaders = new Headers();
-jsonHeaders.append("Accept", "application/json");
-jsonHeaders.append("Content-Type", "application/json");
-
-export const JSON_HEADERS = jsonHeaders;
+export function generateJSONHeaders() {
+    let jsonHeaders = new Headers();
+    jsonHeaders.append("Accept", "application/json");
+    jsonHeaders.append("Content-Type", "application/json");
+    return jsonHeaders;
+}
 
 // Build the jwt header for json access
 export function generateJWTJSONHeaders() {
