@@ -104,7 +104,7 @@ class LeftPaneComponent extends React.Component<IAllProps, ILeftPaneState> {
         const { folders } = this.props;
         const sortedFolders = folders
             .sort((a: IFolder, b: IFolder) =>
-                propertyComparator<IFolder, number>(a, b, "asc", "order")
+                propertyComparator<IFolder, number>(a, b, "asc", "order", false)
             )
             .toArray();
         sortedFolders.unshift({ name: "All", _id: "all", order: -1 });

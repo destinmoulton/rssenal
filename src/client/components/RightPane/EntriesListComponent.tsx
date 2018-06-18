@@ -98,7 +98,7 @@ class EntriesListComponent extends React.Component<
         const sortParams = this.props.sortBy.split(":");
         return entries
             .sort((a, b) =>
-                propertyComparator(a, b, sortParams[1], sortParams[0])
+                propertyComparator(a, b, sortParams[1], sortParams[0], false)
             )
             .toOrderedMap();
     }

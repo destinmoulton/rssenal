@@ -122,7 +122,7 @@ function convertAllFeedsToOrderedMap(feedsArr: Types.IFeed[]) {
 function sortFeeds(feeds: Types.TFeeds): Types.TFeeds {
     return feeds
         .sort((a: Types.IFeed, b: Types.IFeed) =>
-            propertyComparator(a, b, "asc", "title")
+            propertyComparator(a, b, "asc", "title", true)
         )
         .toOrderedMap();
 }

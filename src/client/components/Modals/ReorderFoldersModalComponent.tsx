@@ -35,7 +35,7 @@ class ReorderFoldersModalComponent extends React.Component<
     static getDerivedStateFromProps(props: TAllProps) {
         let tmpArray = props.folders
             .toArray()
-            .sort((a, b) => propertyComparator(a, b, "asc", "order"));
+            .sort((a, b) => propertyComparator(a, b, "asc", "order", false));
         //Remove the "Uncategorized" folder
         tmpArray.pop();
 
