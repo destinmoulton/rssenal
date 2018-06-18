@@ -5,7 +5,7 @@ import {
     FEEDS_DELETE_BEGIN,
     FEEDS_DELETE_COMPLETE,
     FEEDS_GETALL_COMPLETE,
-    FEEDS_CALC_UNREAD_COUNT,
+    FEEDS_SET_UNREAD,
     FEEDS_CLEAR_UNREAD,
     FEEDS_UPDATE_BEGIN,
     FEEDS_UPDATE_COMPLETE
@@ -265,10 +265,54 @@ function updateFeedComplete(feeds: Types.TFeeds) {
     };
 }
 
-export function feedsSetAllUnreadCount(entries: Types.IEntry[]) {
+export function feedsUpdateUnreadCount(entries: Types.IEntry[]) {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+        const { feeds, unreadMap } = getState().feedsStore;
+        let entriesCounted = unreadMap.entriesCounted;
+        let unreadFeeds = unreadMap.feeds;
+        let unreadFolders = unreadMap.folders;
+
+        entries.map((entry: Types.IEntry) => {
+            if (!entriesCounted.has(entry._id) && !entry.has_read) {
+                entriesCounted = entriesCounted.add(entry._id);
+
+                const feed = feeds.get(entry.feed_id);
+
+                if (!unreadFeeds.has(feed._id)) {
+                    unreadFeeds = unreadFeeds.set(feed._id, 1);
+                } else {
+                    const countUnread: number = unreadFeeds.get(feed._id);
+                    unreadFeeds = unreadFeeds.set(feed._id, countUnread + 1);
+                }
+
+                if (!unreadFolders.has(feed.folder_id)) {
+                    unreadFolders = unreadFolders.set(feed.folder_id, 1);
+                } else {
+                    const countUnread: number = unreadFolders.get(
+                        feed.folder_id
+                    );
+                    unreadFolders = unreadFolders.set(
+                        feed.folder_id,
+                        countUnread + 1
+                    );
+                }
+            }
+        });
+
+        const newUnreadMap = {
+            entriesCounted,
+            feeds: unreadFeeds,
+            folders: unreadFolders
+        };
+
+        dispatch(feedsSetUnread(newUnreadMap));
+    };
+}
+
+function feedsSetUnread(unreadMap: Types.IFeedsUnreadMap) {
     return {
-        type: FEEDS_CALC_UNREAD_COUNT,
-        entries
+        type: FEEDS_SET_UNREAD,
+        unreadMap
     };
 }
 

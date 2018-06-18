@@ -5,22 +5,19 @@ import {
     FEEDS_ADD_COMPLETE,
     FEEDS_DECREMENT_UNREAD,
     FEEDS_GETALL_COMPLETE,
-    FEEDS_CALC_UNREAD_COUNT,
+    FEEDS_SET_UNREAD,
     FEEDS_CLEAR_UNREAD,
     FEEDS_UPDATE_BEGIN,
     FEEDS_UPDATE_COMPLETE
 } from "../actiontypes";
 
 import {
-    IEntry,
     TFeedID,
     IFeed,
     IFeedsAction,
     IFeedsUnreadMap,
     IReducerStateFeeds
 } from "../../types";
-
-import { propertyComparator } from "../../lib/sort";
 
 const INITIAL_UNREAD_MAP: IFeedsUnreadMap = {
     entriesCounted: Set<TFeedID>(),
@@ -82,50 +79,10 @@ function feedsReducer(state = INITIAL_STATE, action: IFeedsAction) {
                 feeds: action.feeds
             };
         }
-        case FEEDS_CALC_UNREAD_COUNT: {
-            const { feeds, unreadMap } = state;
-            let entriesCounted = unreadMap.entriesCounted;
-            let unreadFeeds = unreadMap.feeds;
-            let unreadFolders = unreadMap.folders;
-
-            action.entries.map((entry: IEntry) => {
-                if (!entriesCounted.has(entry._id) && !entry.has_read) {
-                    entriesCounted = entriesCounted.add(entry._id);
-
-                    const feed = feeds.get(entry.feed_id);
-
-                    if (!unreadFeeds.has(feed._id)) {
-                        unreadFeeds = unreadFeeds.set(feed._id, 1);
-                    } else {
-                        const countUnread: number = unreadFeeds.get(feed._id);
-                        unreadFeeds = unreadFeeds.set(
-                            feed._id,
-                            countUnread + 1
-                        );
-                    }
-
-                    if (!unreadFolders.has(feed.folder_id)) {
-                        unreadFolders = unreadFolders.set(feed.folder_id, 1);
-                    } else {
-                        const countUnread: number = unreadFolders.get(
-                            feed.folder_id
-                        );
-                        unreadFolders = unreadFolders.set(
-                            feed.folder_id,
-                            countUnread + 1
-                        );
-                    }
-                }
-            });
-
-            const newUnreadMap = {
-                entriesCounted,
-                feeds: unreadFeeds,
-                folders: unreadFolders
-            };
+        case FEEDS_SET_UNREAD: {
             return {
                 ...state,
-                unreadMap: newUnreadMap
+                unreadMap: action.unreadMap
             };
         }
         case FEEDS_CLEAR_UNREAD: {
