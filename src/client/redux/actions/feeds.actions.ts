@@ -228,7 +228,7 @@ function updateFeed(feedInfo: Types.IFeed) {
                     console.error(feedObj.error);
                 } else if (feedObj.status === "success") {
                     dispatch(message("Feed saved.", "success"));
-                    dispatch(updateFeedComplete(feedObj.feedInfo));
+                    dispatch(applyUpdateFeed(feedObj.feedInfo));
                     dispatch(getAllFeeds());
                 }
             })
@@ -238,10 +238,20 @@ function updateFeed(feedInfo: Types.IFeed) {
     };
 }
 
-function updateFeedComplete(feed: Types.IFeed) {
+function applyUpdateFeed(feed: Types.IFeed) {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+        const { feeds } = getState().feedsStore;
+
+        let newFeeds = feeds.set(feed._id, feed);
+        newFeeds = sortFeeds(newFeeds);
+        dispatch(updateFeedComplete(newFeeds));
+    };
+}
+
+function updateFeedComplete(feeds: Types.TFeeds) {
     return {
         type: FEEDS_UPDATE_COMPLETE,
-        feed
+        feeds
     };
 }
 
