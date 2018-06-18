@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { Loader } from "semantic-ui-react";
 
+import storage from "../lib/storage";
 import Browser from "./Browser";
 import ErrorBoundary from "./ErrorBoundary";
 import LoginContainer from "../containers/LoginContainer";
@@ -14,7 +15,7 @@ export interface IWindowComponentProps {
 
 class WindowComponent extends React.Component<IWindowComponentProps> {
     componentDidMount() {
-        if (localStorage.getItem("jwt_token")) {
+        if (storage.get("jwt_token")) {
             this.props.validateToken();
         }
     }
