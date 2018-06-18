@@ -19,6 +19,7 @@ import { entriesClearAll, getEntriesForFeed } from "./entries.actions";
 
 import { resetFilter } from "./filter.actions";
 import { message } from "./messages.actions";
+import { propertyComparator } from "../../lib/sort";
 
 import * as Types from "../../types";
 import { OrderedMap } from "immutable";
@@ -103,9 +104,18 @@ function convertAllFeedsToOrderedMap(feedsArr: Types.IFeed[]) {
         const feedsTuples = feedsArr.map(feed => {
             return [feed._id, feed];
         });
-        const feedsOrderedMap: Types.TFeeds = OrderedMap(feedsTuples);
+        let feedsOrderedMap: Types.TFeeds = OrderedMap(feedsTuples);
+        feedsOrderedMap = sortFeeds(feedsOrderedMap);
         dispatch(getAllFeedsComplete(feedsOrderedMap));
     };
+}
+
+function sortFeeds(feeds: Types.TFeeds): Types.TFeeds {
+    return feeds
+        .sort((a: Types.IFeed, b: Types.IFeed) =>
+            propertyComparator(a, b, "asc", "title")
+        )
+        .toOrderedMap();
 }
 
 function getAllFeedsComplete(feeds: Types.TFeeds) {
