@@ -1,11 +1,10 @@
 import {
     FEEDS_ADD_BEGIN,
     FEEDS_ADD_COMPLETE,
-    FEEDS_DECREMENT_UNREAD,
     FEEDS_DELETE_BEGIN,
     FEEDS_DELETE_COMPLETE,
     FEEDS_GETALL_COMPLETE,
-    FEEDS_CALC_UNREAD_COUNT,
+    FEEDS_SET_UNREAD,
     FEEDS_CLEAR_UNREAD,
     FEEDS_UPDATE_BEGIN,
     FEEDS_UPDATE_COMPLETE
@@ -19,18 +18,13 @@ import { entriesClearAll, getEntriesForFeed } from "./entries.actions";
 
 import { resetFilter } from "./filter.actions";
 import { message } from "./messages.actions";
+import { propertyComparator } from "../../lib/sort";
 
-import {
-    IDispatch,
-    IEntry,
-    IFeed,
-    TFeedID,
-    TEntries,
-    IRootStoreState
-} from "../../types";
+import * as Types from "../../types";
+import { OrderedMap } from "immutable";
 
-export function beginAddFeed(feedInfo: IFeed) {
-    return (dispatch: IDispatch) => {
+export function beginAddFeed(feedInfo: Types.IFeed) {
+    return (dispatch: Types.IDispatch) => {
         dispatch(beginAddFeedProcess());
         dispatch(addFeed(feedInfo));
     };
@@ -42,8 +36,8 @@ function beginAddFeedProcess() {
     };
 }
 
-function addFeed(feedInfo: IFeed) {
-    return (dispatch: IDispatch) => {
+function addFeed(feedInfo: Types.IFeed) {
+    return (dispatch: Types.IDispatch) => {
         const url = API_FEEDS_BASE;
         const headers = generateJWTJSONHeaders();
         const init = {
@@ -71,15 +65,25 @@ function addFeed(feedInfo: IFeed) {
     };
 }
 
-function addFeedComplete(feed: IFeed) {
+function addFeedToOrderedMap(feed: Types.IFeed) {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+        const { feeds } = getState().feedsStore;
+
+        let newFeeds = feeds.set(feed._id, feed);
+        newFeeds = sortFeeds(newFeeds);
+        dispatch(addFeedComplete(newFeeds));
+    };
+}
+
+function addFeedComplete(feeds: Types.TFeeds) {
     return {
         type: FEEDS_ADD_COMPLETE,
-        feed
+        feeds
     };
 }
 
 export function getAllFeeds() {
-    return (dispatch: IDispatch) => {
+    return (dispatch: Types.IDispatch) => {
         const url = API_FEEDS_BASE;
         const init = {
             method: "GET",
@@ -94,7 +98,7 @@ export function getAllFeeds() {
                     dispatch(message(resObj.error, "error"));
                     console.error(resObj.error);
                 } else if (resObj.status === "success") {
-                    dispatch(getAllFeedsComplete(resObj.feeds));
+                    dispatch(convertAllFeedsToOrderedMap(resObj.feeds));
                     dispatch(getAllEntriesForFeeds(resObj.feeds));
                 }
             })
@@ -104,15 +108,34 @@ export function getAllFeeds() {
     };
 }
 
-function getAllFeedsComplete(feeds: IFeed[]) {
+function convertAllFeedsToOrderedMap(feedsArr: Types.IFeed[]) {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+        const feedsTuples = feedsArr.map(feed => {
+            return [feed._id, feed];
+        });
+        let feedsOrderedMap: Types.TFeeds = OrderedMap(feedsTuples);
+        feedsOrderedMap = sortFeeds(feedsOrderedMap);
+        dispatch(getAllFeedsComplete(feedsOrderedMap));
+    };
+}
+
+function sortFeeds(feeds: Types.TFeeds): Types.TFeeds {
+    return feeds
+        .sort((a: Types.IFeed, b: Types.IFeed) =>
+            propertyComparator(a, b, "asc", "title")
+        )
+        .toOrderedMap();
+}
+
+function getAllFeedsComplete(feeds: Types.TFeeds) {
     return {
         type: FEEDS_GETALL_COMPLETE,
         feeds
     };
 }
 
-function getAllEntriesForFeeds(feeds: IFeed[]) {
-    return (dispatch: IDispatch) => {
+function getAllEntriesForFeeds(feeds: Types.IFeed[]) {
+    return (dispatch: Types.IDispatch) => {
         dispatch(clearUnread());
         feeds.forEach(feed => {
             dispatch(getEntriesForFeed(feed._id));
@@ -127,15 +150,18 @@ function clearUnread() {
 }
 
 export function refreshAllFeeds() {
-    return (dispatch: IDispatch, getState: () => IRootStoreState) => {
+    return (
+        dispatch: Types.IDispatch,
+        getState: () => Types.IRootStoreState
+    ) => {
         const { feeds } = getState().feedsStore;
         dispatch(entriesClearAll());
         dispatch(getAllEntriesForFeeds(feeds.toArray()));
     };
 }
 
-export function beginDeleteFeed(feedId: TFeedID) {
-    return (dispatch: IDispatch) => {
+export function beginDeleteFeed(feedId: Types.TFeedID) {
+    return (dispatch: Types.IDispatch) => {
         dispatch(beginDeleteProcess());
         dispatch(deleteFeed(feedId));
     };
@@ -147,8 +173,8 @@ function beginDeleteProcess() {
     };
 }
 
-function deleteFeed(feedId: TFeedID) {
-    return (dispatch: IDispatch) => {
+function deleteFeed(feedId: Types.TFeedID) {
+    return (dispatch: Types.IDispatch) => {
         const url = API_FEEDS_BASE + feedId;
         const init = {
             method: "DELETE",
@@ -170,15 +196,15 @@ function deleteFeed(feedId: TFeedID) {
     };
 }
 
-function deleteFeedComplete(feedId: TFeedID) {
+function deleteFeedComplete(feedId: Types.TFeedID) {
     return {
         type: FEEDS_DELETE_COMPLETE,
         feedId
     };
 }
 
-export function beginUpdateFeed(feedInfo: IFeed) {
-    return (dispatch: IDispatch) => {
+export function beginUpdateFeed(feedInfo: Types.IFeed) {
+    return (dispatch: Types.IDispatch) => {
         dispatch(beginUpdateFeedProcess());
         dispatch(updateFeed(feedInfo));
     };
@@ -190,8 +216,8 @@ function beginUpdateFeedProcess() {
     };
 }
 
-function updateFeed(feedInfo: IFeed) {
-    return (dispatch: IDispatch) => {
+function updateFeed(feedInfo: Types.IFeed) {
+    return (dispatch: Types.IDispatch) => {
         const url = API_FEEDS_BASE + feedInfo._id;
         const init = {
             method: "PUT",
@@ -211,7 +237,7 @@ function updateFeed(feedInfo: IFeed) {
                     console.error(feedObj.error);
                 } else if (feedObj.status === "success") {
                     dispatch(message("Feed saved.", "success"));
-                    dispatch(updateFeedComplete(feedObj.feedInfo));
+                    dispatch(applyUpdateFeed(feedObj.feedInfo));
                     dispatch(getAllFeeds());
                 }
             })
@@ -221,23 +247,99 @@ function updateFeed(feedInfo: IFeed) {
     };
 }
 
-function updateFeedComplete(feed: IFeed) {
+function applyUpdateFeed(feed: Types.IFeed) {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+        const { feeds } = getState().feedsStore;
+
+        let newFeeds = feeds.set(feed._id, feed);
+        newFeeds = sortFeeds(newFeeds);
+        dispatch(updateFeedComplete(newFeeds));
+    };
+}
+
+function updateFeedComplete(feeds: Types.TFeeds) {
     return {
         type: FEEDS_UPDATE_COMPLETE,
-        feed
+        feeds
     };
 }
 
-export function feedsSetAllUnreadCount(entries: IEntry[]) {
-    return {
-        type: FEEDS_CALC_UNREAD_COUNT,
-        entries
+export function feedsUpdateUnreadCount(entries: Types.IEntry[]) {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+        const { feeds, unreadMap } = getState().feedsStore;
+        let entriesCounted = unreadMap.entriesCounted;
+        let unreadFeeds = unreadMap.feeds;
+        let unreadFolders = unreadMap.folders;
+
+        entries.map((entry: Types.IEntry) => {
+            if (!entriesCounted.has(entry._id) && !entry.has_read) {
+                entriesCounted = entriesCounted.add(entry._id);
+
+                const feed = feeds.get(entry.feed_id);
+
+                if (!unreadFeeds.has(feed._id)) {
+                    unreadFeeds = unreadFeeds.set(feed._id, 1);
+                } else {
+                    const countUnread: number = unreadFeeds.get(feed._id);
+                    unreadFeeds = unreadFeeds.set(feed._id, countUnread + 1);
+                }
+
+                if (!unreadFolders.has(feed.folder_id)) {
+                    unreadFolders = unreadFolders.set(feed.folder_id, 1);
+                } else {
+                    const countUnread: number = unreadFolders.get(
+                        feed.folder_id
+                    );
+                    unreadFolders = unreadFolders.set(
+                        feed.folder_id,
+                        countUnread + 1
+                    );
+                }
+            }
+        });
+
+        const newUnreadMap = {
+            entriesCounted,
+            feeds: unreadFeeds,
+            folders: unreadFolders
+        };
+
+        dispatch(feedsSetUnread(newUnreadMap));
     };
 }
 
-export function feedsDecrementUnread(feedId: TFeedID) {
+export function feedsDecrementUnread(feedId: Types.TFeedID) {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+        const { feeds, unreadMap } = getState().feedsStore;
+        const feed = feeds.get(feedId);
+
+        let unreadFeeds = unreadMap.feeds;
+        let unreadFolders = unreadMap.folders;
+
+        if (unreadFeeds.has(feedId)) {
+            const unreadFeedCount = unreadFeeds.get(feedId);
+            const newCount = unreadFeedCount > 1 ? unreadFeedCount - 1 : 0;
+            unreadFeeds = unreadFeeds.set(feedId, newCount);
+        }
+
+        if (unreadFolders.has(feed.folder_id)) {
+            const unreadFolderCount = unreadFolders.get(feed.folder_id);
+            const newCount = unreadFolderCount > 1 ? unreadFolderCount - 1 : 0;
+            unreadFolders = unreadFolders.set(feed.folder_id, newCount);
+        }
+
+        const newUnreadMap = {
+            ...unreadMap,
+            feeds: unreadFeeds,
+            folders: unreadFolders
+        };
+        dispatch(feedsSetUnread(newUnreadMap));
+    };
+}
+
+function feedsSetUnread(unreadMap: Types.IFeedsUnreadMap) {
     return {
-        type: FEEDS_DECREMENT_UNREAD,
-        feedId
+        type: FEEDS_SET_UNREAD,
+        unreadMap
     };
 }

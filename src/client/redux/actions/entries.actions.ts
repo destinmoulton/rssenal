@@ -7,7 +7,7 @@ import { API_ENTRIES_BASE } from "../apiendpoints";
 import { SETTING_SHOW_ENTRIES_READ } from "../../constants";
 
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
-import { feedsDecrementUnread, feedsSetAllUnreadCount } from "./feeds.actions";
+import { feedsDecrementUnread, feedsUpdateUnreadCount } from "./feeds.actions";
 import { filterVisibleEntries } from "./filter.actions";
 import { message } from "./messages.actions";
 
@@ -69,7 +69,7 @@ function ammendEntries(entries: IEntry[]) {
         });
         dispatch(getEntriesComplete(ammendedEntries));
 
-        dispatch(feedsSetAllUnreadCount(ammendedEntries));
+        dispatch(feedsUpdateUnreadCount(ammendedEntries));
     };
 }
 
