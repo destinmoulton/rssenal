@@ -66,10 +66,20 @@ function addFeed(feedInfo: Types.IFeed) {
     };
 }
 
-function addFeedComplete(feed: Types.IFeed) {
+function addFeedToOrderedMap(feed: Types.IFeed) {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+        const { feeds } = getState().feedsStore;
+
+        let newFeeds = feeds.set(feed._id, feed);
+        newFeeds = sortFeeds(newFeeds);
+        dispatch(addFeedComplete(newFeeds));
+    };
+}
+
+function addFeedComplete(feeds: Types.TFeeds) {
     return {
         type: FEEDS_ADD_COMPLETE,
-        feed
+        feeds
     };
 }
 

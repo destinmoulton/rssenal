@@ -43,14 +43,9 @@ function feedsReducer(state = INITIAL_STATE, action: IFeedsAction) {
                 isAddingFeed: true
             };
         case FEEDS_ADD_COMPLETE: {
-            const newFeeds = state.feeds
-                .set(action.feed._id, action.feed)
-                .sort((a: IFeed, b: IFeed) =>
-                    propertyComparator(a, b, "asc", "title")
-                );
             return {
                 ...state,
-                feeds: newFeeds,
+                feeds: action.feeds,
                 isAddingFeed: false
             };
         }
