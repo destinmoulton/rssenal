@@ -1,7 +1,6 @@
 import {
     FEEDS_ADD_BEGIN,
     FEEDS_ADD_COMPLETE,
-    FEEDS_DECREMENT_UNREAD,
     FEEDS_DELETE_BEGIN,
     FEEDS_DELETE_COMPLETE,
     FEEDS_GETALL_COMPLETE,
@@ -309,16 +308,38 @@ export function feedsUpdateUnreadCount(entries: Types.IEntry[]) {
     };
 }
 
+export function feedsDecrementUnread(feedId: Types.TFeedID) {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+        const { feeds, unreadMap } = getState().feedsStore;
+        const feed = feeds.get(feedId);
+
+        let unreadFeeds = unreadMap.feeds;
+        let unreadFolders = unreadMap.folders;
+
+        if (unreadFeeds.has(feedId)) {
+            const unreadFeedCount = unreadFeeds.get(feedId);
+            const newCount = unreadFeedCount > 1 ? unreadFeedCount - 1 : 0;
+            unreadFeeds = unreadFeeds.set(feedId, newCount);
+        }
+
+        if (unreadFolders.has(feed.folder_id)) {
+            const unreadFolderCount = unreadFolders.get(feed.folder_id);
+            const newCount = unreadFolderCount > 1 ? unreadFolderCount - 1 : 0;
+            unreadFolders = unreadFolders.set(feed.folder_id, newCount);
+        }
+
+        const newUnreadMap = {
+            ...unreadMap,
+            feeds: unreadFeeds,
+            folders: unreadFolders
+        };
+        dispatch(feedsSetUnread(newUnreadMap));
+    };
+}
+
 function feedsSetUnread(unreadMap: Types.IFeedsUnreadMap) {
     return {
         type: FEEDS_SET_UNREAD,
         unreadMap
-    };
-}
-
-export function feedsDecrementUnread(feedId: Types.TFeedID) {
-    return {
-        type: FEEDS_DECREMENT_UNREAD,
-        feedId
     };
 }

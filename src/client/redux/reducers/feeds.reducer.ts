@@ -3,7 +3,6 @@ import { Map, OrderedMap, Set } from "immutable";
 import {
     FEEDS_ADD_BEGIN,
     FEEDS_ADD_COMPLETE,
-    FEEDS_DECREMENT_UNREAD,
     FEEDS_GETALL_COMPLETE,
     FEEDS_SET_UNREAD,
     FEEDS_CLEAR_UNREAD,
@@ -44,33 +43,6 @@ function feedsReducer(state = INITIAL_STATE, action: IFeedsAction) {
                 ...state,
                 feeds: action.feeds,
                 isAddingFeed: false
-            };
-        }
-        case FEEDS_DECREMENT_UNREAD: {
-            const { unreadMap, feeds } = state;
-            const { feedId } = action;
-            const feed = feeds.get(feedId);
-
-            let unreadFeeds = unreadMap.feeds;
-            let unreadFolders = unreadMap.folders;
-
-            if (unreadFeeds.has(feedId)) {
-                const unreadFeedCount = unreadFeeds.get(feedId);
-                const newCount = unreadFeedCount > 1 ? unreadFeedCount - 1 : 0;
-                unreadFeeds = unreadFeeds.set(feedId, newCount);
-            }
-
-            if (unreadFolders.has(feed.folder_id)) {
-                const unreadFolderCount = unreadFolders.get(feed.folder_id);
-                const newCount =
-                    unreadFolderCount > 1 ? unreadFolderCount - 1 : 0;
-                unreadFolders = unreadFolders.set(feed.folder_id, newCount);
-            }
-
-            const newUnreadMap = { feeds: unreadFeeds, folders: unreadFolders };
-            return {
-                ...state,
-                unreadMap: newUnreadMap
             };
         }
         case FEEDS_GETALL_COMPLETE: {
