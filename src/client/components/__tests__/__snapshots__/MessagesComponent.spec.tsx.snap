@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MessagesComponent /> renders and matches snapshot 1`] = `
+<Component
+  allowHTML={false}
+  noAnimation={false}
+  style={Object {}}
+/>
+`;
