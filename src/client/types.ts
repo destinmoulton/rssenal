@@ -41,10 +41,7 @@ export interface IEntry {
 
 export interface IEntriesAction {
     type: string;
-    feedId?: TFeedID;
     entries?: IEntry[];
-    newEntry?: IEntry;
-    showUnread?: boolean;
 }
 
 export type TEntries = OrderedMap<TEntryID, IEntry>;
