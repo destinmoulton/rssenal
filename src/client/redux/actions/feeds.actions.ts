@@ -55,7 +55,7 @@ function addFeed(feedInfo: Types.IFeed) {
                     console.error(feedObj.error);
                 } else if (feedObj.status === "success") {
                     dispatch(message("Feed added.", "success"));
-                    dispatch(addFeedComplete(feedObj.feedInfo));
+                    dispatch(addFeedToOrderedMap(feedObj.feedInfo));
                     dispatch(getEntriesForFeed(feedObj.feedInfo._id));
                 }
             })
