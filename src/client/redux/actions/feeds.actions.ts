@@ -20,17 +20,10 @@ import { entriesClearAll, getEntriesForFeed } from "./entries.actions";
 import { resetFilter } from "./filter.actions";
 import { message } from "./messages.actions";
 
-import {
-    IDispatch,
-    IEntry,
-    IFeed,
-    TFeedID,
-    TEntries,
-    IRootStoreState
-} from "../../types";
+import * as Types from "../../types";
 
-export function beginAddFeed(feedInfo: IFeed) {
-    return (dispatch: IDispatch) => {
+export function beginAddFeed(feedInfo: Types.IFeed) {
+    return (dispatch: Types.IDispatch) => {
         dispatch(beginAddFeedProcess());
         dispatch(addFeed(feedInfo));
     };
@@ -42,8 +35,8 @@ function beginAddFeedProcess() {
     };
 }
 
-function addFeed(feedInfo: IFeed) {
-    return (dispatch: IDispatch) => {
+function addFeed(feedInfo: Types.IFeed) {
+    return (dispatch: Types.IDispatch) => {
         const url = API_FEEDS_BASE;
         const headers = generateJWTJSONHeaders();
         const init = {
@@ -71,7 +64,7 @@ function addFeed(feedInfo: IFeed) {
     };
 }
 
-function addFeedComplete(feed: IFeed) {
+function addFeedComplete(feed: Types.IFeed) {
     return {
         type: FEEDS_ADD_COMPLETE,
         feed
@@ -79,7 +72,7 @@ function addFeedComplete(feed: IFeed) {
 }
 
 export function getAllFeeds() {
-    return (dispatch: IDispatch) => {
+    return (dispatch: Types.IDispatch) => {
         const url = API_FEEDS_BASE;
         const init = {
             method: "GET",
@@ -104,15 +97,15 @@ export function getAllFeeds() {
     };
 }
 
-function getAllFeedsComplete(feeds: IFeed[]) {
+function getAllFeedsComplete(feeds: Types.IFeed[]) {
     return {
         type: FEEDS_GETALL_COMPLETE,
         feeds
     };
 }
 
-function getAllEntriesForFeeds(feeds: IFeed[]) {
-    return (dispatch: IDispatch) => {
+function getAllEntriesForFeeds(feeds: Types.IFeed[]) {
+    return (dispatch: Types.IDispatch) => {
         dispatch(clearUnread());
         feeds.forEach(feed => {
             dispatch(getEntriesForFeed(feed._id));
@@ -127,15 +120,15 @@ function clearUnread() {
 }
 
 export function refreshAllFeeds() {
-    return (dispatch: IDispatch, getState: () => IRootStoreState) => {
+    return (dispatch: Types.IDispatch, getState: () => Types.IRootStoreState) => {
         const { feeds } = getState().feedsStore;
         dispatch(entriesClearAll());
         dispatch(getAllEntriesForFeeds(feeds.toArray()));
     };
 }
 
-export function beginDeleteFeed(feedId: TFeedID) {
-    return (dispatch: IDispatch) => {
+export function beginDeleteFeed(feedId: Types.TFeedID) {
+    return (dispatch: Types.IDispatch) => {
         dispatch(beginDeleteProcess());
         dispatch(deleteFeed(feedId));
     };
@@ -147,8 +140,8 @@ function beginDeleteProcess() {
     };
 }
 
-function deleteFeed(feedId: TFeedID) {
-    return (dispatch: IDispatch) => {
+function deleteFeed(feedId: Types.TFeedID) {
+    return (dispatch: Types.IDispatch) => {
         const url = API_FEEDS_BASE + feedId;
         const init = {
             method: "DELETE",
@@ -170,15 +163,15 @@ function deleteFeed(feedId: TFeedID) {
     };
 }
 
-function deleteFeedComplete(feedId: TFeedID) {
+function deleteFeedComplete(feedId: Types.TFeedID) {
     return {
         type: FEEDS_DELETE_COMPLETE,
         feedId
     };
 }
 
-export function beginUpdateFeed(feedInfo: IFeed) {
-    return (dispatch: IDispatch) => {
+export function beginUpdateFeed(feedInfo: Types.IFeed) {
+    return (dispatch: Types.IDispatch) => {
         dispatch(beginUpdateFeedProcess());
         dispatch(updateFeed(feedInfo));
     };
@@ -190,8 +183,8 @@ function beginUpdateFeedProcess() {
     };
 }
 
-function updateFeed(feedInfo: IFeed) {
-    return (dispatch: IDispatch) => {
+function updateFeed(feedInfo: Types.IFeed) {
+    return (dispatch: Types.IDispatch) => {
         const url = API_FEEDS_BASE + feedInfo._id;
         const init = {
             method: "PUT",
@@ -221,21 +214,21 @@ function updateFeed(feedInfo: IFeed) {
     };
 }
 
-function updateFeedComplete(feed: IFeed) {
+function updateFeedComplete(feed: Types.IFeed) {
     return {
         type: FEEDS_UPDATE_COMPLETE,
         feed
     };
 }
 
-export function feedsSetAllUnreadCount(entries: IEntry[]) {
+export function feedsSetAllUnreadCount(entries: Types.IEntry[]) {
     return {
         type: FEEDS_CALC_UNREAD_COUNT,
         entries
     };
 }
 
-export function feedsDecrementUnread(feedId: TFeedID) {
+export function feedsDecrementUnread(feedId: Types.TFeedID) {
     return {
         type: FEEDS_DECREMENT_UNREAD,
         feedId
