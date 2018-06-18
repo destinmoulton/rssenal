@@ -21,6 +21,7 @@ import { resetFilter } from "./filter.actions";
 import { message } from "./messages.actions";
 
 import * as Types from "../../types";
+import { OrderedMap } from "immutable";
 
 export function beginAddFeed(feedInfo: Types.IFeed) {
     return (dispatch: Types.IDispatch) => {
@@ -87,7 +88,7 @@ export function getAllFeeds() {
                     dispatch(message(resObj.error, "error"));
                     console.error(resObj.error);
                 } else if (resObj.status === "success") {
-                    dispatch(getAllFeedsComplete(resObj.feeds));
+                    dispatch(convertAllFeedsToOrderedMap(resObj.feeds));
                     dispatch(getAllEntriesForFeeds(resObj.feeds));
                 }
             })
@@ -97,7 +98,17 @@ export function getAllFeeds() {
     };
 }
 
-function getAllFeedsComplete(feeds: Types.IFeed[]) {
+function convertAllFeedsToOrderedMap(feedsArr: Types.IFeed[]) {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+        const feedsTuples = feedsArr.map(feed => {
+            return [feed._id, feed];
+        });
+        const feedsOrderedMap: Types.TFeeds = OrderedMap(feedsTuples);
+        dispatch(getAllFeedsComplete(feedsOrderedMap));
+    };
+}
+
+function getAllFeedsComplete(feeds: Types.TFeeds) {
     return {
         type: FEEDS_GETALL_COMPLETE,
         feeds
@@ -120,7 +131,10 @@ function clearUnread() {
 }
 
 export function refreshAllFeeds() {
-    return (dispatch: Types.IDispatch, getState: () => Types.IRootStoreState) => {
+    return (
+        dispatch: Types.IDispatch,
+        getState: () => Types.IRootStoreState
+    ) => {
         const { feeds } = getState().feedsStore;
         dispatch(entriesClearAll());
         dispatch(getAllEntriesForFeeds(feeds.toArray()));
