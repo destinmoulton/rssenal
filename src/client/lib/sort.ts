@@ -15,7 +15,7 @@ export function propertyComparator<T, P>(
         : comparatorDesc<P>(aObj[propertyName], bObj[propertyName]);
 }
 
-export function comparatorAsc<P>(a: P, b: P): number {
+function comparatorAsc<P>(a: P, b: P): number {
     if (a < b) {
         return -1;
     }
@@ -25,7 +25,7 @@ export function comparatorAsc<P>(a: P, b: P): number {
     return 0;
 }
 
-export function comparatorDesc<P>(a: P, b: P): number {
+function comparatorDesc<P>(a: P, b: P): number {
     if (a > b) {
         return -1;
     }
@@ -35,7 +35,7 @@ export function comparatorDesc<P>(a: P, b: P): number {
     return 0;
 }
 
-export function stringComparatorAsc(a: string, b: string): number {
+function stringComparatorAsc(a: string, b: string): number {
     if (a.toLowerCase() < b.toLowerCase()) {
         return -1;
     }
@@ -45,7 +45,7 @@ export function stringComparatorAsc(a: string, b: string): number {
     return 0;
 }
 
-export function stringComparatorDesc(a: string, b: string): number {
+function stringComparatorDesc(a: string, b: string): number {
     if (a.toLowerCase() > b.toLowerCase()) {
         return -1;
     }
