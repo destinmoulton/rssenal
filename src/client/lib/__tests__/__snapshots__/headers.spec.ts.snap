@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`lib/headers.ts generateJSONHeaders() 1`] = `
+Headers {
+  Symbol(map): Object {
+    "Accept": Array [
+      "application/json",
+    ],
+    "Content-Type": Array [
+      "application/json",
+    ],
+  },
+}
+`;
