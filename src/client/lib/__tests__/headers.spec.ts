@@ -9,4 +9,17 @@ describe("lib/headers.ts", () => {
         const headers = generateJSONHeaders();
         expect(headers).toMatchSnapshot();
     });
+
+    it("generateJWTHeaders()", () => {
+        localStorage.setItem("jwt_token", "TEST_JWT_TOKEN");
+        const headers = generateJWTHeaders();
+
+        expect(headers).toMatchSnapshot();
+    });
+
+    it("generateJWTJSONHeaders()", () => {
+        localStorage.setItem("jwt_token", "TEST_JWT_TOKEN");
+        const headers = generateJWTJSONHeaders();
+        expect(headers).toMatchSnapshot();
+    });
 });
