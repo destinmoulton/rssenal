@@ -1,3 +1,5 @@
+import storage from "./storage";
+
 export function generateJSONHeaders() {
     let jsonHeaders = new Headers();
     jsonHeaders.append("Accept", "application/json");
@@ -11,8 +13,8 @@ export function generateJWTJSONHeaders() {
     headers.append("Accept", "application/json");
     headers.append("Content-Type", "application/json");
 
-    const jwt_token = localStorage.getItem("jwt_token");
-    if (jwt_token) {
+    if (storage.has("jwt_token")) {
+        const jwt_token = storage.get("jwt_token");
         headers.append("Authorization", `Bearer ${jwt_token}`);
     }
     return headers;
@@ -21,8 +23,9 @@ export function generateJWTJSONHeaders() {
 //Build the jwt header for general access
 export function generateJWTHeaders() {
     let headers = new Headers();
-    const jwt_token = localStorage.getItem("jwt_token");
-    if (jwt_token) {
+
+    if (storage.has("jwt_token")) {
+        const jwt_token = storage.get("jwt_token");
         headers.append("Authorization", `Bearer ${jwt_token}`);
     }
     return headers;
