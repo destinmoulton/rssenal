@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LogoutButtonComponent /> renders and matches the snapshot 1`] = `
+<Popup
+  content="Logout"
+  keepInViewPort={true}
+  on="hover"
+  position="top left"
+  trigger={
+    <Button
+      as="button"
+      className="rss-leftmenu-button-logout"
+      floated="right"
+      icon="sign out"
+      onClick={[Function]}
+      role="button"
+      size="mini"
+    />
+  }
+/>
+`;
