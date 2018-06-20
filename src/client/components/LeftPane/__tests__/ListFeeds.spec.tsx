@@ -1,8 +1,6 @@
-import { Map } from "immutable";
 import * as React from "react";
 
 import { shallow } from "enzyme";
-import * as Types from "../../../types";
 import ListFeeds from "../ListFeeds";
 
 import feeds from "../../../../../test/data/feeds";
