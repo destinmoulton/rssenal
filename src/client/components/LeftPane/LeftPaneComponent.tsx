@@ -11,12 +11,12 @@ import FolderItemContainer from "../../containers/LeftPane/FolderItemContainer";
 
 import { propertyComparator } from "../../lib/sort";
 
-import { TFeeds, IFeed, IFolder, TFeedID, TFolderID } from "../../types";
+import { TFeeds, IFeed, IFolder, TFolders } from "../../types";
 
 export interface ILeftPaneMapState {
     feeds: TFeeds;
     hasFolders: boolean;
-    folders: OrderedMap<TFolderID, IFolder>;
+    folders: TFolders;
 }
 
 export interface ILeftPaneMapDispatch {
