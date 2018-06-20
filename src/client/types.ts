@@ -68,10 +68,12 @@ export interface IFeedsAction {
     unreadMap?: IFeedsUnreadMap;
 }
 
+export type TUnreadMapFeeds = Map<TFeedID, number>;
+export type TUnreadMapFolders = Map<TFolderID, number>;
 export interface IFeedsUnreadMap {
     entriesCounted: Set<TFeedID>;
-    feeds: Map<TFeedID, number>;
-    folders: Map<TFolderID, number>;
+    feeds: TUnreadMapFeeds;
+    folders: TUnreadMapFolders;
 }
 
 /** Filter Interfaces */
