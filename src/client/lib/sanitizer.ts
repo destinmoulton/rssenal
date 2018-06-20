@@ -12,7 +12,7 @@ export const sanitizeEntryContent = (
     dirtyContent: string,
     shouldShowImages: boolean
 ): string => {
-    let allowedTags = SANITIZER_ALLOWED_CONTENT_TAGS;
+    let allowedTags = SANITIZER_ALLOWED_CONTENT_TAGS.slice();
     if (shouldShowImages) {
         allowedTags.push("img");
     }
@@ -44,7 +44,8 @@ export const sanitizeEntryContent = (
             if (attribs.src[0] === "/") {
                 // Don't display images with a relative path (as they don't exist on this server)
                 return {
-                    tagName: "span"
+                    tagName: "span",
+                    attribs: {}
                 };
             } else {
                 return {
