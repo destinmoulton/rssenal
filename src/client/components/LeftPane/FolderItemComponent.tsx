@@ -10,13 +10,13 @@ import {
     IFolder,
     IFilter,
     TFolderID,
-    TFeedID,
-    TFeeds
+    TFeeds,
+    TUnreadMapFolders
 } from "../../types";
 
 export interface IFolderItemMapState {
     filter: IFilter;
-    unreadMapGroups: Map<TFolderID, number>;
+    unreadMapGroups: TUnreadMapFolders;
     feeds: TFeeds;
 }
 

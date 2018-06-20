@@ -3,11 +3,11 @@ import * as React from "react";
 
 import { Icon } from "semantic-ui-react";
 
-import { TFeedID, IFeed, IFeedsUnreadMap, IFilter } from "../../types";
+import { TFeedID, IFeed, IFilter, TUnreadMapFeeds } from "../../types";
 
 export interface IFeedItemMapState {
     filter: IFilter;
-    unreadMapFeeds: Map<TFeedID, number>;
+    unreadMapFeeds: TUnreadMapFeeds;
 }
 
 export interface IFeedItemMapDispatch {
