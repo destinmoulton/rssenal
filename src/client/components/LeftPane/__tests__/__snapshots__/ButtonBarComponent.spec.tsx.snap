@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ButtonBarComponent /> renders and matches the snapshot 1`] = `
+<div
+  className="rss-leftmenu-buttonbar-container"
+>
+  <ButtonGroup
+    size="mini"
+  >
+    <Popup
+      content="Add RSS Feed"
+      keepInViewPort={true}
+      on="hover"
+      position="top left"
+      trigger={
+        <Button
+          as="button"
+          className="rss-leftmenu-button-addrss"
+          onClick={[Function]}
+          role="button"
+        >
+          <Icon
+            as="i"
+            name="plus"
+          />
+          <Icon
+            as="i"
+            name="rss"
+          />
+        </Button>
+      }
+    />
+    <Popup
+      content="Add Folder"
+      keepInViewPort={true}
+      on="hover"
+      position="top left"
+      trigger={
+        <Button
+          as="button"
+          className="rss-leftmenu-button-addfolder"
+          onClick={[Function]}
+          role="button"
+        >
+          <Icon
+            as="i"
+            name="plus"
+          />
+          <Icon
+            as="i"
+            name="folder"
+          />
+        </Button>
+      }
+    />
+  </ButtonGroup>
+  <Connect(ReorderFoldersModalComponent) />
+  <Popup
+    content="Reload All Feeds"
+    keepInViewPort={true}
+    on="hover"
+    position="top left"
+    trigger={
+      <Button
+        as="button"
+        className="rss-leftmenu-button-reload"
+        icon="refresh"
+        onClick={[Function]}
+        role="button"
+        size="mini"
+      />
+    }
+  />
+  <Connect(LogoutButtonComponent) />
+</div>
+`;

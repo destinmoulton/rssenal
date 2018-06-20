@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FolderItemComponent /> renders and matches the snapshot 1`] = `
+<div>
+  <div
+    className="rss-folders-folderitem rss-folders-folderitem-active"
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <div
+      className="rss-folders-folderitem-icon"
+    >
+      <Icon
+        as="i"
+        name="caret right"
+        onClick={[Function]}
+      />
+    </div>
+    <div
+      className="rss-folders-folderitem-title"
+      onClick={[Function]}
+    >
+      Lifestyle
+    </div>
+    <div
+      className="rss-folders-folderitem-unread"
+      onClick={[Function]}
+    >
+       [20]
+    </div>
+  </div>
+  <div
+    className="clear"
+  />
+</div>
+`;
