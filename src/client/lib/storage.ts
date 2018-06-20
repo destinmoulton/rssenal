@@ -4,7 +4,7 @@ class Storage {
     }
 
     set(key: string, value: string): void {
-        return localStorage.setItem(key, value);
+        localStorage.setItem(key, value);
     }
 
     has(key: string): boolean {
