@@ -1,27 +1,11 @@
 import * as React from "react";
-import { shallow, render, mount } from "enzyme";
+import { mount } from "enzyme";
 
 import Content from "../Content";
+import ENTRY from "../../../../../../test/data/entry";
 
-const CONTENT_WITHOUT_IMAGE = "Test Content";
-const CONTENT_WITH_IMAGE =
-    CONTENT_WITHOUT_IMAGE + `<img src="http://test.image.com/image.jpeg"/>`;
-
-const ENTRY = {
-    _id: "0test1",
-    content: CONTENT_WITH_IMAGE,
-    creator: "McJesty",
-    feed_id: "ABC123_test_feed_id",
-    feedTitle: "Test Feed Title",
-    guid: "guidtest",
-    timeAgo: "5 days ago",
-    title: "Test Title",
-    link: "https://test.link.com/blog-post.html",
-    content_snippet: "Content snippet",
-    publish_date: "2016-05-18T16:00:00Z",
-    has_read: false
-};
-
+const IMG = `<img src="http://test.image.com/image.jpeg"/>`;
+const ENTRY_WITH_IMAGE = { ...ENTRY, content: ENTRY.content + IMG };
 describe("<Content />", () => {
     describe("renders the info container", () => {
         let wrapper: any = null;
@@ -52,7 +36,7 @@ describe("<Content />", () => {
 
     it("renders content with images enabled", () => {
         const wrapper = mount(
-            <Content entry={ENTRY} shouldShowImages={true} />
+            <Content entry={ENTRY_WITH_IMAGE} shouldShowImages={true} />
         );
         const dangerousHTML = wrapper
             .find("div.rss-entry-content-container")
@@ -62,7 +46,7 @@ describe("<Content />", () => {
 
     it("renders content with images disabled", () => {
         const wrapper = mount(
-            <Content entry={ENTRY} shouldShowImages={false} />
+            <Content entry={ENTRY_WITH_IMAGE} shouldShowImages={false} />
         );
         const dangerousHTML = wrapper
             .find("div.rss-entry-content-container")
