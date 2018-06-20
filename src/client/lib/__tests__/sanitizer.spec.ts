@@ -19,4 +19,15 @@ describe("lib/sanitizer.ts", () => {
             expect(transformed).toMatchSnapshot();
         });
     });
+
+    describe("sanitizeEntryTitle()", () => {
+        it("removes all tags", () => {
+            const ORIG =
+                "<span>Test</span><h1>one</h1><h2>two</h2><h3>three</h3><h4>four</h4><h5>five</h5><img src='bling'/><a href='test.com'>link</a>";
+            const EXPECTED = "Testonetwothreefourfivelink";
+
+            const transformed = sanitizeEntryTitle(ORIG);
+            expect(transformed).toBe(EXPECTED);
+        });
+    });
 });
