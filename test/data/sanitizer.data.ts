@@ -1,5 +1,6 @@
 let INITIAL = {};
 let EXPECTED = {};
+let WITHOUT = {};
 
 INITIAL["a"] = `
 <a href="/local_address.html">Gizoogle</a>
@@ -74,13 +75,18 @@ EXPECTED["i"] = `
 `;
 
 INITIAL["img"] = `
-<img src="/local_image.png"/>
-<img src="http://test.com/test_image.png" class="test-image-class" id="image-id"/>
+<img src="/local_image.png" />
+<img src="http://test.com/test_image.png" class="test-image-class" id="image-id" />
 `;
 
 EXPECTED["img"] = `
 <span></span>
 <img src="http://test.com/test_image.png" />
+`;
+
+WITHOUT["img"] = `
+<span></span>
+
 `;
 
 INITIAL["l"] = `
@@ -156,7 +162,9 @@ for (let tag of tags) {
     INITIAL_HTML += INITIAL[tag];
     EXPECTED_HTML_WITH_IMG += EXPECTED[tag];
 
-    if (tag !== "img") {
+    if (tag === "img") {
+        EXPECTED_HTML_WITHOUT_IMG += WITHOUT[tag];
+    } else {
         EXPECTED_HTML_WITHOUT_IMG += EXPECTED[tag];
     }
 }

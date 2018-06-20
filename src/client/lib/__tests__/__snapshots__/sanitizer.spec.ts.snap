@@ -1,6 +1,57 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`lib/sanitizer.ts sanitizeEntryContent() cleans up HTML tags transforms tags, stripping images 1`] = `"undefinedundefinedundefinedundefinedundefinedundefinedundefinedundefinedundefinedundefinedundefinedundefined"`;
+exports[`lib/sanitizer.ts sanitizeEntryContent() cleans up HTML tags transforms tags, stripping images 1`] = `
+"
+<span>Gizoogle</span>
+<a href=\\"http://www.gizoogle.com\\" target=\\"_blank\\">Gizoogle</a>
+
+
+<strong>Test Bold</strong>
+<strong>Test Bold</strong>
+
+<br />
+
+<blockquote>Test quotation</blockquote>
+
+<pre><code>$(\\"test\\").html();</code></pre>
+
+<strong>Test h1</strong>
+<strong>Test h2</strong>
+<strong>Test h3</strong>
+<strong>Test h4</strong>
+<strong>Test h5</strong>
+
+<em>Test i</em>
+<em>Test em</em>
+
+<span></span>
+
+
+<ol>
+    <li>List Item</li>
+</ol>
+<ul>
+    <li>List Item</li>
+</ul>
+
+<p>Test content</p>
+
+<span>Test span</span>
+
+<table>
+    <thead>
+        <tr>
+            <th>Header Col 1</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Body Col 1</td>
+        </tr>
+    </tbody>
+</table>
+"
+`;
 
 exports[`lib/sanitizer.ts sanitizeEntryContent() cleans up HTML tags transforms tags, with images 1`] = `
 "
