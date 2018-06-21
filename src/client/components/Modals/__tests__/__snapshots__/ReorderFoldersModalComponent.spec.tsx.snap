@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ReorderFoldersModalComponent /> renders and matches the snapshot 1`] = `
+<span>
+  <Popup
+    content="Reorder Folders"
+    keepInViewPort={true}
+    on="hover"
+    position="top left"
+    trigger={
+      <Button
+        as="button"
+        className="rss-leftmenu-button-reorder"
+        icon="numbered list"
+        onClick={[Function]}
+        role="button"
+        size="mini"
+      />
+    }
+  />
+  <Modal
+    centered={true}
+    className="rss-modal"
+    closeOnDimmerClick={true}
+    closeOnDocumentClick={false}
+    dimmer={true}
+    eventPool="Modal"
+    onClose={[Function]}
+    open={false}
+    size="tiny"
+  >
+    <Header
+      content="Reorder Folders"
+      icon="numbered list"
+    />
+    <ModalContent>
+      <sortableList
+        axis="y"
+        distance={0}
+        getHelperDimensions={[Function]}
+        hideSortableGhost={true}
+        items={
+          Array [
+            Object {
+              "__v": 0,
+              "_id": "5a54f74838e78863ac6a8961",
+              "name": "Lifestyle",
+              "order": 1,
+            },
+            Object {
+              "__v": 0,
+              "_id": "5a53ec3a94c3905e4a8328d4",
+              "name": "Programming",
+              "order": 2,
+            },
+            Object {
+              "__v": 0,
+              "_id": "5a54fcf538e78863ac6a89f7",
+              "name": "Writing",
+              "order": 3,
+            },
+          ]
+        }
+        lockOffset="50%"
+        lockToContainerEdges={false}
+        onSortEnd={[Function]}
+        pressDelay={0}
+        pressThreshold={5}
+        shouldCancelStart={[Function]}
+        transitionDuration={300}
+        useWindowAsScrollContainer={false}
+      />
+    </ModalContent>
+    <ModalActions>
+      <div>
+        <Button
+          as="button"
+          color="orange"
+          content="Cancel"
+          floated="left"
+          icon="cancel"
+          inverted={true}
+          onClick={[Function]}
+          role="button"
+        />
+        <Button
+          as="button"
+          color="green"
+          content="Reorder"
+          icon="checkmark"
+          inverted={true}
+          onClick={[Function]}
+          role="button"
+        />
+      </div>
+    </ModalActions>
+  </Modal>
+</span>
+`;
