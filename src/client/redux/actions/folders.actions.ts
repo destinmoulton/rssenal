@@ -1,20 +1,12 @@
 import { OrderedMap } from "immutable";
-import {
-    FOLDERS_FETCHING,
-    FOLDERS_RECEIVED,
-    FOLDERS_ADD_BEGIN,
-    FOLDERS_ADD_COMPLETE,
-    FOLDERS_DELETE_BEGIN,
-    FOLDERS_DELETE_COMPLETE,
-    FOLDERS_UPDATE_BEGIN,
-    FOLDERS_UPDATE_COMPLETE
-} from "../actiontypes";
-import { UNCATEGORIZED_FOLDER } from "../../constants";
+
+import * as ACT_TYPES from "../actiontypes";
 import { API_FOLDERS_BASE, API_FOLDERS_GET_ALL } from "../apiendpoints";
+import { UNCATEGORIZED_FOLDER } from "../../constants";
 import { getAllFeeds } from "./feeds.actions";
+import { resetFilter } from "./filter.actions";
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { message } from "./messages.actions";
-import { resetFilter } from "./filter.actions";
 
 import {
     IDispatch,
@@ -32,7 +24,7 @@ export function getAllFolders() {
 
 function fetchingInProgress() {
     return {
-        type: FOLDERS_FETCHING
+        type: ACT_TYPES.FOLDERS_FETCHING
     };
 }
 
@@ -72,7 +64,7 @@ function createOrderedMapAfterFetchingFolders(foldersArr: IFolder[]) {
 
 function fetchingComplete(folders: TFolders) {
     return {
-        type: FOLDERS_RECEIVED,
+        type: ACT_TYPES.FOLDERS_RECEIVED,
         folders
     };
 }
@@ -91,7 +83,7 @@ export function beginSaveFolder(folderInfo: IFolder) {
 
 function addingInProgress() {
     return {
-        type: FOLDERS_ADD_BEGIN
+        type: ACT_TYPES.FOLDERS_ADD_BEGIN
     };
 }
 
@@ -131,14 +123,14 @@ function updateStoreAfterAddFolder(newFolder: IFolder) {
 
 function addFolderComplete(folders: TFolders) {
     return {
-        type: FOLDERS_ADD_COMPLETE,
+        type: ACT_TYPES.FOLDERS_ADD_COMPLETE,
         folders
     };
 }
 
 function updatingInProgress() {
     return {
-        type: FOLDERS_UPDATE_BEGIN
+        type: ACT_TYPES.FOLDERS_UPDATE_BEGIN
     };
 }
 
@@ -179,7 +171,7 @@ function updateStoreAfterUpdate(updatedFolder: IFolder) {
 
 function updatingComplete(folders: TFolders) {
     return {
-        type: FOLDERS_UPDATE_COMPLETE,
+        type: ACT_TYPES.FOLDERS_UPDATE_COMPLETE,
         folders
     };
 }
@@ -193,7 +185,7 @@ export function beginDeleteFolder(folderId: TFolderID) {
 
 function deleteInProgress() {
     return {
-        type: FOLDERS_DELETE_BEGIN
+        type: ACT_TYPES.FOLDERS_DELETE_BEGIN
     };
 }
 
@@ -234,7 +226,7 @@ function updateFoldersAfterDelete(folderId: TFolderID) {
 
 function deleteComplete(folders: TFolders) {
     return {
-        type: FOLDERS_DELETE_COMPLETE,
+        type: ACT_TYPES.FOLDERS_DELETE_COMPLETE,
         folders
     };
 }
