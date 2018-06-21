@@ -2,15 +2,12 @@ import { OrderedMap } from "immutable";
 import * as moment from "moment";
 
 import { ENTRIES_SET_ALL } from "../actiontypes";
-
 import { API_ENTRIES_BASE } from "../apiendpoints";
 import { SETTING_SHOW_ENTRIES_READ } from "../../constants";
-
-import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { feedsDecrementUnread, feedsUpdateUnreadCount } from "./feeds.actions";
 import { filterVisibleEntries } from "./filter.actions";
+import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { message } from "./messages.actions";
-
 import * as Types from "../../types";
 
 export function getEntriesForFeed(feedId: Types.TFeedID) {
@@ -49,7 +46,7 @@ export function getEntriesForFeed(feedId: Types.TFeedID) {
 
 function ammendEntries(entries: Types.IEntry[]) {
     return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
-        const { feedsStore, filterStore } = getState();
+        const { feedsStore } = getState();
 
         const ammendedEntries = entries.map((entry: Types.IEntry) => {
             const feedTitle = feedsStore.feeds.get(entry.feed_id).title;
@@ -61,14 +58,13 @@ function ammendEntries(entries: Types.IEntry[]) {
             };
         });
         dispatch(getEntriesComplete(ammendedEntries));
-
         dispatch(feedsUpdateUnreadCount(ammendedEntries));
     };
 }
 
 function getEntriesComplete(entries: Types.IEntry[]) {
     return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
-        const { entriesStore, filterStore } = getState();
+        const { entriesStore } = getState();
         const currentEntries = entriesStore.entries;
 
         let newEntries = currentEntries.toOrderedMap();
