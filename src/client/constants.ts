@@ -78,3 +78,9 @@ export const SANITIZER_ALLOWED_TAG_ATTRIBUTES = {
     tr: <any>[],
     ul: <any>[]
 };
+
+export const UNCATEGORIZED_FOLDER = {
+    _id: "0",
+    name: "Uncategorized",
+    order: Infinity
+};
