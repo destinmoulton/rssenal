@@ -1,9 +1,7 @@
 import {
     AUTH_ERROR,
     AUTH_USER_IS_AUTHENTIC,
-    AUTH_LOGOUT,
-    AUTH_TOKEN_IS_VALIDATING,
-    AUTH_TOKEN_VALIDATION_COMPLETE
+    AUTH_LOGOUT
 } from "../actiontypes";
 import { IAuthAction, IReducerStateAuth } from "../../types";
 
