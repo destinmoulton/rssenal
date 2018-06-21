@@ -10,13 +10,13 @@ import LoginContainer from "../containers/LoginContainer";
 export interface IWindowComponentProps {
     isAuthorized?: boolean;
     isValidatingToken?: boolean;
-    validateToken?: () => void;
+    authValidateToken?: () => void;
 }
 
 class WindowComponent extends React.Component<IWindowComponentProps> {
     componentDidMount() {
         if (storage.get("jwt_token")) {
-            this.props.validateToken();
+            this.props.authValidateToken();
         }
     }
 

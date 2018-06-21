@@ -9,7 +9,7 @@ import {
 
 import { IDispatch } from "../../types";
 
-export function validateToken() {
+export function authValidateToken() {
     return (dispatch: IDispatch) => {
         const url = API_AUTH_VALIDATE_TOKEN;
         const init = {
@@ -28,7 +28,7 @@ export function validateToken() {
                 if (auth.status === "valid") {
                     dispatch(userIsAuthentic());
                 } else {
-                    dispatch(logoutUser());
+                    dispatch(authLogoutUser());
                 }
             })
             .catch(err => {
@@ -37,7 +37,7 @@ export function validateToken() {
     };
 }
 
-export function loginUser(username: string, password: string) {
+export function authLoginUser(username: string, password: string) {
     return (dispatch: IDispatch) => {
         const url = API_AUTH_LOGIN;
         const init = {
@@ -66,7 +66,7 @@ export function loginUser(username: string, password: string) {
     };
 }
 
-export function userIsAuthentic() {
+function userIsAuthentic() {
     return {
         type: AUTH_USER_IS_AUTHENTIC
     };
@@ -79,7 +79,7 @@ function authenticationError(message: string) {
     };
 }
 
-export function logoutUser() {
+export function authLogoutUser() {
     localStorage.removeItem("jwt_token");
     return {
         type: AUTH_LOGOUT

@@ -8,7 +8,7 @@ describe("<LoginComponent />", () => {
         const wrapper = shallow(
             <LoginComponent
                 authenticationError={"Test Error"}
-                loginUser={jest.fn()}
+                authLoginUser={jest.fn()}
             />
         );
 

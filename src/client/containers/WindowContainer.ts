@@ -6,7 +6,7 @@ import WindowComponent, {
     IWindowComponentProps
 } from "../components/WindowComponent";
 
-import { validateToken } from "../redux/actions/auth.actions";
+import { authValidateToken } from "../redux/actions/auth.actions";
 
 const mapStateToProps = (
     state: Types.IRootStoreState
@@ -21,7 +21,7 @@ const mapDispatchToProps = (
     dispatch: Types.IDispatch
 ): IWindowComponentProps => {
     return {
-        validateToken: () => dispatch(validateToken())
+        authValidateToken: () => dispatch(authValidateToken())
     };
 };
 
