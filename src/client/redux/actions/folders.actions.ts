@@ -7,16 +7,10 @@ import { getAllFeeds } from "./feeds.actions";
 import { resetFilter } from "./filter.actions";
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { message } from "./messages.actions";
+import * as Types from "../../types";
 
-import {
-    IDispatch,
-    IGetState,
-    IFolder,
-    TFolderID,
-    TFolders
-} from "../../types";
 export function getAllFolders() {
-    return (dispatch: IDispatch) => {
+    return (dispatch: Types.IDispatch) => {
         dispatch(fetchingInProgress());
         dispatch(fetchFolders());
     };
@@ -29,7 +23,7 @@ function fetchingInProgress() {
 }
 
 function fetchFolders() {
-    return (dispatch: IDispatch) => {
+    return (dispatch: Types.IDispatch) => {
         const url = API_FOLDERS_GET_ALL;
         const init = {
             method: "GET",
@@ -48,13 +42,13 @@ function fetchFolders() {
     };
 }
 
-function createOrderedMapAfterFetchingFolders(foldersArr: IFolder[]) {
-    return (dispatch: IDispatch) => {
+function createOrderedMapAfterFetchingFolders(foldersArr: Types.IFolder[]) {
+    return (dispatch: Types.IDispatch) => {
         const arrayMap = foldersArr.map(folder => {
             return [folder._id, folder];
         });
-        const mappedFolders: TFolders = OrderedMap(arrayMap);
-        const fullFolders: TFolders = mappedFolders.set(
+        const mappedFolders: Types.TFolders = OrderedMap(arrayMap);
+        const fullFolders: Types.TFolders = mappedFolders.set(
             UNCATEGORIZED_FOLDER._id,
             UNCATEGORIZED_FOLDER
         );
@@ -62,15 +56,15 @@ function createOrderedMapAfterFetchingFolders(foldersArr: IFolder[]) {
     };
 }
 
-function fetchingComplete(folders: TFolders) {
+function fetchingComplete(folders: Types.TFolders) {
     return {
         type: ACT_TYPES.FOLDERS_RECEIVED,
         folders
     };
 }
 
-export function beginSaveFolder(folderInfo: IFolder) {
-    return (dispatch: IDispatch) => {
+export function beginSaveFolder(folderInfo: Types.IFolder) {
+    return (dispatch: Types.IDispatch) => {
         if (folderInfo._id !== "") {
             dispatch(updatingInProgress());
             dispatch(updateFolder(folderInfo._id, folderInfo.name));
@@ -88,7 +82,7 @@ function addingInProgress() {
 }
 
 function addFolder(newFolderName: string) {
-    return (dispatch: IDispatch) => {
+    return (dispatch: Types.IDispatch) => {
         const url = API_FOLDERS_BASE;
         const init = {
             method: "POST",
@@ -113,15 +107,15 @@ function addFolder(newFolderName: string) {
     };
 }
 
-function updateStoreAfterAddFolder(newFolder: IFolder) {
-    return (dispatch: IDispatch, getState: IGetState) => {
+function updateStoreAfterAddFolder(newFolder: Types.IFolder) {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { folders } = getState().foldersStore;
         const updatedFolders = folders.set(newFolder._id, newFolder);
         dispatch(addFolderComplete(updatedFolders));
     };
 }
 
-function addFolderComplete(folders: TFolders) {
+function addFolderComplete(folders: Types.TFolders) {
     return {
         type: ACT_TYPES.FOLDERS_ADD_COMPLETE,
         folders
@@ -134,8 +128,8 @@ function updatingInProgress() {
     };
 }
 
-function updateFolder(folderId: TFolderID, newFolderName: string) {
-    return (dispatch: IDispatch) => {
+function updateFolder(folderId: Types.TFolderID, newFolderName: string) {
+    return (dispatch: Types.IDispatch) => {
         const url = API_FOLDERS_BASE + folderId;
         const init = {
             method: "PUT",
@@ -161,23 +155,23 @@ function updateFolder(folderId: TFolderID, newFolderName: string) {
     };
 }
 
-function updateStoreAfterUpdate(updatedFolder: IFolder) {
-    return (dispatch: IDispatch, getState: IGetState) => {
+function updateStoreAfterUpdate(updatedFolder: Types.IFolder) {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { folders } = getState().foldersStore;
         const updatedFolders = folders.set(updatedFolder._id, updatedFolder);
         dispatch(updatingComplete(updatedFolders));
     };
 }
 
-function updatingComplete(folders: TFolders) {
+function updatingComplete(folders: Types.TFolders) {
     return {
         type: ACT_TYPES.FOLDERS_UPDATE_COMPLETE,
         folders
     };
 }
 
-export function beginDeleteFolder(folderId: TFolderID) {
-    return (dispatch: IDispatch) => {
+export function beginDeleteFolder(folderId: Types.TFolderID) {
+    return (dispatch: Types.IDispatch) => {
         dispatch(deleteInProgress());
         dispatch(deleteFolder(folderId));
     };
@@ -189,8 +183,8 @@ function deleteInProgress() {
     };
 }
 
-function deleteFolder(folderId: TFolderID) {
-    return (dispatch: IDispatch) => {
+function deleteFolder(folderId: Types.TFolderID) {
+    return (dispatch: Types.IDispatch) => {
         const url = API_FOLDERS_BASE + folderId;
         const init = {
             method: "DELETE",
@@ -216,23 +210,23 @@ function deleteFolder(folderId: TFolderID) {
     };
 }
 
-function updateFoldersAfterDelete(folderId: TFolderID) {
-    return (dispatch: IDispatch, getState: IGetState) => {
+function updateFoldersAfterDelete(folderId: Types.TFolderID) {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { folders } = getState().foldersStore;
         const updatedFolders = folders.delete(folderId);
         dispatch(deleteComplete(updatedFolders));
     };
 }
 
-function deleteComplete(folders: TFolders) {
+function deleteComplete(folders: Types.TFolders) {
     return {
         type: ACT_TYPES.FOLDERS_DELETE_COMPLETE,
         folders
     };
 }
 
-export function beginReorderFolders(foldersArr: IFolder[]) {
-    return (dispatch: IDispatch) => {
+export function beginReorderFolders(foldersArr: Types.IFolder[]) {
+    return (dispatch: Types.IDispatch) => {
         const url = API_FOLDERS_BASE;
         const init = {
             method: "PUT",
