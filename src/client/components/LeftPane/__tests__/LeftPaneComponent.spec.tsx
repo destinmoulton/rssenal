@@ -12,7 +12,7 @@ describe("<LeftPaneComponent />", () => {
         it("matches snapshot when hasFolders = false", () => {
             const wrapper = shallow(
                 <LeftPaneComponent
-                    getAllFolders={jest.fn()}
+                    foldersGetAll={jest.fn()}
                     getAllFeeds={jest.fn()}
                     folders={OrderedMap()}
                     feeds={feeds}
@@ -24,7 +24,7 @@ describe("<LeftPaneComponent />", () => {
         it("matches snapshot when hasFolders = true", () => {
             const wrapper = shallow(
                 <LeftPaneComponent
-                    getAllFolders={jest.fn()}
+                    foldersGetAll={jest.fn()}
                     getAllFeeds={jest.fn()}
                     folders={folders}
                     feeds={feeds}

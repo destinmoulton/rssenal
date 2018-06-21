@@ -9,7 +9,7 @@ import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { message } from "./messages.actions";
 import * as Types from "../../types";
 
-export function getAllFolders() {
+export function foldersGetAll() {
     return (dispatch: Types.IDispatch) => {
         dispatch(fetchingInProgress());
         dispatch(fetchFolders());
@@ -63,7 +63,7 @@ function fetchingComplete(folders: Types.TFolders) {
     };
 }
 
-export function beginSaveFolder(folderInfo: Types.IFolder) {
+export function folderInitiateSave(folderInfo: Types.IFolder) {
     return (dispatch: Types.IDispatch) => {
         if (folderInfo._id !== "") {
             dispatch(updatingInProgress());
@@ -170,7 +170,7 @@ function updatingComplete(folders: Types.TFolders) {
     };
 }
 
-export function beginDeleteFolder(folderId: Types.TFolderID) {
+export function folderInitiateDelete(folderId: Types.TFolderID) {
     return (dispatch: Types.IDispatch) => {
         dispatch(deleteInProgress());
         dispatch(deleteFolder(folderId));
@@ -225,7 +225,7 @@ function deleteComplete(folders: Types.TFolders) {
     };
 }
 
-export function beginReorderFolders(foldersArr: Types.IFolder[]) {
+export function folderInitiateReorder(foldersArr: Types.IFolder[]) {
     return (dispatch: Types.IDispatch) => {
         const url = API_FOLDERS_BASE;
         const init = {
@@ -240,7 +240,7 @@ export function beginReorderFolders(foldersArr: Types.IFolder[]) {
             .then(resObj => {
                 if (resObj.status === "success") {
                     dispatch(message("Folders reordered.", "success"));
-                    return dispatch(getAllFolders());
+                    return dispatch(foldersGetAll());
                 }
             })
             .catch(err => {

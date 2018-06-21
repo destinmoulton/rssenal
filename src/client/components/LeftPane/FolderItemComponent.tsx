@@ -21,7 +21,7 @@ export interface IFolderItemMapState {
 }
 
 export interface IFolderItemMapDispatch {
-    beginDeleteFolder: (folderId: TFolderID) => void;
+    folderInitiateDelete: (folderId: TFolderID) => void;
     changeFilter: (filter: IFilter) => void;
 }
 
@@ -47,14 +47,14 @@ class FolderItemComponent extends React.Component<TAllProps, IFolderItemState> {
     };
 
     _handleClickDelete = () => {
-        const { beginDeleteFolder, folder } = this.props;
+        const { folderInitiateDelete, folder } = this.props;
         const conf = confirm(
             `Are you sure you want to delete the '${
                 folder.name
             }' folder?\nThe feeds will be moved to 'Uncategorized'.`
         );
         if (conf) {
-            beginDeleteFolder(folder._id);
+            folderInitiateDelete(folder._id);
         }
     };
 

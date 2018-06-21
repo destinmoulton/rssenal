@@ -14,7 +14,7 @@ describe("<EditFolderModalComponent />", () => {
                     folder={{ _id: "", name: "", order: 0 }}
                     isModalOpen={true}
                     onCloseModal={jest.fn()}
-                    beginSaveFolder={jest.fn()}
+                    folderInitiateSave={jest.fn()}
                 />
             );
             expect(wrapper).toMatchSnapshot();
@@ -26,7 +26,7 @@ describe("<EditFolderModalComponent />", () => {
                     folder={folder}
                     isModalOpen={true}
                     onCloseModal={jest.fn()}
-                    beginSaveFolder={jest.fn()}
+                    folderInitiateSave={jest.fn()}
                 />
             );
             expect(wrapper).toMatchSnapshot();

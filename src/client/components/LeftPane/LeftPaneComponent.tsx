@@ -20,7 +20,7 @@ export interface ILeftPaneMapState {
 }
 
 export interface ILeftPaneMapDispatch {
-    getAllFolders: () => void;
+    foldersGetAll: () => void;
     getAllFeeds: () => void;
 }
 
@@ -43,10 +43,10 @@ class LeftPaneComponent extends React.Component<IAllProps, ILeftPaneState> {
     };
 
     componentDidMount() {
-        const { getAllFolders, getAllFeeds, hasFolders } = this.props;
+        const { foldersGetAll, getAllFeeds, hasFolders } = this.props;
 
         if (!hasFolders) {
-            getAllFolders();
+            foldersGetAll();
             getAllFeeds();
         }
     }

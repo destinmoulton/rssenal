@@ -13,7 +13,7 @@ export interface IReorderFoldersMapState {
 }
 
 export interface IReorderFolderMapDispatch {
-    beginReorderFolders: (foldersArr: IFolder[]) => void;
+    folderInitiateReorder: (foldersArr: IFolder[]) => void;
 }
 
 type TAllProps = IReorderFolderMapDispatch & IReorderFoldersMapState;
@@ -62,7 +62,7 @@ class ReorderFoldersModalComponent extends React.Component<
             folder.order = index + 1;
             return folder;
         });
-        this.props.beginReorderFolders(orderedFolders);
+        this.props.folderInitiateReorder(orderedFolders);
         this._handleCloseModal();
     };
 

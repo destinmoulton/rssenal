@@ -6,7 +6,7 @@ import { IFolder } from "../../types";
 import EditFeedModalComponent from "./EditFeedModalComponent";
 
 export interface IEditFolderModalMapDispatch {
-    beginSaveFolder: (folder: any) => void;
+    folderInitiateSave: (folder: any) => void;
 }
 
 interface IEditFolderModalProps {
@@ -49,7 +49,7 @@ class EditFolderModalComponent extends React.Component<TAllProps, IState> {
         const { folderInfo } = this.state;
 
         if (folderInfo.name.trim() !== "") {
-            this.props.beginSaveFolder(folderInfo);
+            this.props.folderInitiateSave(folderInfo);
             this._handleClose();
         }
     };
