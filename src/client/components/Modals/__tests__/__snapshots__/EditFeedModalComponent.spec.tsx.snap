@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EditFeedModalComponent /> renders and matches the snapshot 1`] = `
+<span>
+  <Modal
+    centered={true}
+    className="rss-modal"
+    closeOnDimmerClick={true}
+    closeOnDocumentClick={false}
+    dimmer={true}
+    eventPool="Modal"
+    onClose={[Function]}
+    open={true}
+    size="tiny"
+  >
+    <Header
+      content="Edit Feed"
+      icon="pencil"
+    />
+    <ModalContent>
+      <div>
+        <label>
+          Feed Name
+        </label>
+        <input
+          autoFocus={true}
+          className="rss-editfeed-input"
+          onChange={[Function]}
+          onKeyPress={[Function]}
+          placeholder="Feed name..."
+          value="Dot Earth"
+        />
+        <br />
+        <br />
+        <label>
+          Folder
+        </label>
+        <br />
+        <SelectFolder
+          folders={
+            Immutable.OrderedMap {
+              "5a54f74838e78863ac6a8961": Object {
+                "__v": 0,
+                "_id": "5a54f74838e78863ac6a8961",
+                "name": "Lifestyle",
+                "order": 1,
+              },
+              "5a53ec3a94c3905e4a8328d4": Object {
+                "__v": 0,
+                "_id": "5a53ec3a94c3905e4a8328d4",
+                "name": "Programming",
+                "order": 2,
+              },
+              "5a54fcf538e78863ac6a89f7": Object {
+                "__v": 0,
+                "_id": "5a54fcf538e78863ac6a89f7",
+                "name": "Writing",
+                "order": 3,
+              },
+              "5a55035e38e78863ac6a89fe": Object {
+                "__v": 0,
+                "_id": "5a55035e38e78863ac6a89fe",
+                "name": "Random",
+                "order": 4,
+              },
+            }
+          }
+          onChange={[Function]}
+          selectedValue="5a54f74838e78863ac6a8961"
+        />
+      </div>
+    </ModalContent>
+    <ModalActions>
+      <div>
+        <Button
+          as="button"
+          color="orange"
+          content="Cancel"
+          floated="left"
+          icon="cancel"
+          inverted={true}
+          onClick={[Function]}
+          role="button"
+        />
+        <Button
+          as="button"
+          color="green"
+          content="Save"
+          icon="save"
+          inverted={true}
+          onClick={[Function]}
+          role="button"
+        />
+      </div>
+    </ModalActions>
+  </Modal>
+</span>
+`;
