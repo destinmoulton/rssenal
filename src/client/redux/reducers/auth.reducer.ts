@@ -1,13 +1,8 @@
 import * as ACT_TYPES from "../actiontypes";
-import { IAuthAction, IReducerStateAuth } from "../../types";
+import { IAuthAction } from "../../types";
+import { AUTH_INITIAL_STATE } from "../initialstate";
 
-const INITIAL_STATE: IReducerStateAuth = {
-    authenticationError: "",
-    isAuthorized: false,
-    isValidatingToken: false
-};
-
-const authReducer = (state = INITIAL_STATE, action: IAuthAction) => {
+const authReducer = (state = AUTH_INITIAL_STATE, action: IAuthAction) => {
     switch (action.type) {
         case ACT_TYPES.AUTH_ERROR:
             return {
