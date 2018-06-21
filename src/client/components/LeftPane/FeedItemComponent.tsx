@@ -12,7 +12,7 @@ export interface IFeedItemMapState {
 
 export interface IFeedItemMapDispatch {
     beginDeleteFeed: (feedId: TFeedID) => void;
-    changeFilter: (newFilter: object) => void;
+    filterChangeActive: (newFilter: object) => void;
 }
 
 interface IFeedItemProps {
@@ -46,9 +46,9 @@ class FeedItemComponent extends React.Component<TAllProps, IFeedItemState> {
     };
 
     _handleClickFeed = () => {
-        const { changeFilter, feed } = this.props;
+        const { filterChangeActive, feed } = this.props;
 
-        changeFilter({
+        filterChangeActive({
             limit: "feed",
             id: feed._id
         });

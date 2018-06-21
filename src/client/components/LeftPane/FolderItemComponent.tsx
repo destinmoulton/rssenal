@@ -22,7 +22,7 @@ export interface IFolderItemMapState {
 
 export interface IFolderItemMapDispatch {
     folderInitiateDelete: (folderId: TFolderID) => void;
-    changeFilter: (filter: IFilter) => void;
+    filterChangeActive: (filter: IFilter) => void;
 }
 
 interface IFolderItemProps {
@@ -63,9 +63,9 @@ class FolderItemComponent extends React.Component<TAllProps, IFolderItemState> {
     };
 
     _handleClickFolder = () => {
-        const { changeFilter, folder } = this.props;
+        const { filterChangeActive, folder } = this.props;
 
-        changeFilter({
+        filterChangeActive({
             limit: "folder",
             id: folder._id
         });

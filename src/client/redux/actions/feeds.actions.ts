@@ -3,7 +3,7 @@ import { OrderedMap } from "immutable";
 import * as ACT_TYPES from "../actiontypes";
 import { API_FEEDS_BASE } from "../apiendpoints";
 import { entriesClearAll, entriesGetAllForFeed } from "./entries.actions";
-import { resetFilter } from "./filter.actions";
+import { filterReset } from "./filter.actions";
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { message } from "./messages.actions";
 import { propertyComparator } from "../../lib/sort";
@@ -172,7 +172,7 @@ function deleteFeed(feedId: Types.TFeedID) {
             })
             .then(resObj => {
                 dispatch(message("Feed removed.", "success"));
-                dispatch(resetFilter());
+                dispatch(filterReset());
                 dispatch(deleteFeedComplete(feedId));
                 dispatch(feedsRefreshAll());
             })

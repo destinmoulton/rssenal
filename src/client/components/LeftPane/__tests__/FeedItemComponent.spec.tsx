@@ -18,7 +18,7 @@ describe("<FeedItemComponent />", () => {
         const wrapper = shallow(
             <FeedItemComponent
                 beginDeleteFeed={jest.fn()}
-                changeFilter={jest.fn()}
+                filterChangeActive={jest.fn()}
                 editFeed={jest.fn()}
                 feed={feed}
                 filter={FILTER}

@@ -4,7 +4,7 @@ import * as ACT_TYPES from "../actiontypes";
 import { API_FOLDERS_BASE, API_FOLDERS_GET_ALL } from "../apiendpoints";
 import { UNCATEGORIZED_FOLDER } from "../../constants";
 import { feedsGetAll } from "./feeds.actions";
-import { resetFilter } from "./filter.actions";
+import { filterReset } from "./filter.actions";
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { message } from "./messages.actions";
 import * as Types from "../../types";
@@ -197,7 +197,7 @@ function deleteFolder(folderId: Types.TFolderID) {
             .then(resObj => {
                 if (resObj.status === "success") {
                     dispatch(message("Folder removed.", "success"));
-                    dispatch(resetFilter());
+                    dispatch(filterReset());
                     dispatch(updateFoldersAfterDelete(folderId));
                     dispatch(feedsGetAll());
                 } else {
