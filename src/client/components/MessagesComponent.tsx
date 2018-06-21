@@ -4,7 +4,7 @@ import * as NotificationSystem from "react-notification-system";
 import { IMessage, TMessages } from "../types";
 
 export interface IMessagesMapDispatch {
-    removeMessage?: (message: IMessage) => void;
+    messageRemove?: (message: IMessage) => void;
 }
 
 export interface IMessagesMapState {
@@ -36,7 +36,7 @@ class MessagesComponent extends React.Component<TAllProps> {
     }
 
     _onCloseMessage = (message: IMessage) => {
-        this.props.removeMessage(message);
+        this.props.messageRemove(message);
     };
 
     render() {

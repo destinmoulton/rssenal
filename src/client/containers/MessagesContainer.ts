@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import { removeMessage } from "../redux/actions/messages.actions";
+import { messageRemove } from "../redux/actions/messages.actions";
 
 import MessagesComponent, {
     IMessagesMapDispatch,
@@ -19,8 +19,8 @@ const mapDispatchToProps = (
     dispatch: Types.IDispatch
 ): IMessagesMapDispatch => {
     return {
-        removeMessage: (message: Types.IMessage) =>
-            dispatch(removeMessage(message))
+        messageRemove: (message: Types.IMessage) =>
+            dispatch(messageRemove(message))
     };
 };
 export default connect(
