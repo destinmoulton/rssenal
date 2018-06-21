@@ -1,16 +1,6 @@
 import { OrderedMap } from "immutable";
 
-import {
-    FEEDS_ADD_BEGIN,
-    FEEDS_ADD_COMPLETE,
-    FEEDS_DELETE_BEGIN,
-    FEEDS_DELETE_COMPLETE,
-    FEEDS_GETALL_COMPLETE,
-    FEEDS_SET_UNREAD,
-    FEEDS_CLEAR_UNREAD,
-    FEEDS_UPDATE_BEGIN,
-    FEEDS_UPDATE_COMPLETE
-} from "../actiontypes";
+import * as ACT_TYPES from "../actiontypes";
 import { API_FEEDS_BASE } from "../apiendpoints";
 import { entriesClearAll, getEntriesForFeed } from "./entries.actions";
 import { resetFilter } from "./filter.actions";
@@ -28,7 +18,7 @@ export function beginAddFeed(feedInfo: Types.IFeed) {
 
 function beginAddFeedProcess() {
     return {
-        type: FEEDS_ADD_BEGIN
+        type: ACT_TYPES.FEEDS_ADD_BEGIN
     };
 }
 
@@ -73,7 +63,7 @@ function addFeedToOrderedMap(feed: Types.IFeed) {
 
 function addFeedComplete(feeds: Types.TFeeds) {
     return {
-        type: FEEDS_ADD_COMPLETE,
+        type: ACT_TYPES.FEEDS_ADD_COMPLETE,
         feeds
     };
 }
@@ -125,7 +115,7 @@ function sortFeeds(feeds: Types.TFeeds): Types.TFeeds {
 
 function getAllFeedsComplete(feeds: Types.TFeeds) {
     return {
-        type: FEEDS_GETALL_COMPLETE,
+        type: ACT_TYPES.FEEDS_GETALL_COMPLETE,
         feeds
     };
 }
@@ -141,7 +131,7 @@ function getAllEntriesForFeeds(feeds: Types.IFeed[]) {
 
 function clearUnread() {
     return {
-        type: FEEDS_CLEAR_UNREAD
+        type: ACT_TYPES.FEEDS_CLEAR_UNREAD
     };
 }
 
@@ -165,7 +155,7 @@ export function beginDeleteFeed(feedId: Types.TFeedID) {
 
 function beginDeleteProcess() {
     return {
-        type: FEEDS_DELETE_BEGIN
+        type: ACT_TYPES.FEEDS_DELETE_BEGIN
     };
 }
 
@@ -194,7 +184,7 @@ function deleteFeed(feedId: Types.TFeedID) {
 
 function deleteFeedComplete(feedId: Types.TFeedID) {
     return {
-        type: FEEDS_DELETE_COMPLETE,
+        type: ACT_TYPES.FEEDS_DELETE_COMPLETE,
         feedId
     };
 }
@@ -208,7 +198,7 @@ export function beginUpdateFeed(feedInfo: Types.IFeed) {
 
 function beginUpdateFeedProcess() {
     return {
-        type: FEEDS_UPDATE_BEGIN
+        type: ACT_TYPES.FEEDS_UPDATE_BEGIN
     };
 }
 
@@ -255,7 +245,7 @@ function applyUpdateFeed(feed: Types.IFeed) {
 
 function updateFeedComplete(feeds: Types.TFeeds) {
     return {
-        type: FEEDS_UPDATE_COMPLETE,
+        type: ACT_TYPES.FEEDS_UPDATE_COMPLETE,
         feeds
     };
 }
@@ -335,7 +325,7 @@ export function feedsDecrementUnread(feedId: Types.TFeedID) {
 
 function feedsSetUnread(unreadMap: Types.IFeedsUnreadMap) {
     return {
-        type: FEEDS_SET_UNREAD,
+        type: ACT_TYPES.FEEDS_SET_UNREAD,
         unreadMap
     };
 }
