@@ -1,3 +1,5 @@
+import { OrderedMap } from "immutable";
+
 import {
     FEEDS_ADD_BEGIN,
     FEEDS_ADD_COMPLETE,
@@ -9,19 +11,13 @@ import {
     FEEDS_UPDATE_BEGIN,
     FEEDS_UPDATE_COMPLETE
 } from "../actiontypes";
-
 import { API_FEEDS_BASE } from "../apiendpoints";
-
-import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
-
 import { entriesClearAll, getEntriesForFeed } from "./entries.actions";
-
 import { resetFilter } from "./filter.actions";
+import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { message } from "./messages.actions";
 import { propertyComparator } from "../../lib/sort";
-
 import * as Types from "../../types";
-import { OrderedMap } from "immutable";
 
 export function beginAddFeed(feedInfo: Types.IFeed) {
     return (dispatch: Types.IDispatch) => {
