@@ -10,7 +10,7 @@ import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { message } from "./messages.actions";
 import * as Types from "../../types";
 
-export function getEntriesForFeed(feedId: Types.TFeedID) {
+export function entriesGetAllForFeed(feedId: Types.TFeedID) {
     return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { settingsStore } = getState();
 
@@ -76,7 +76,7 @@ function getEntriesComplete(entries: Types.IEntry[]) {
     };
 }
 
-export function updateReadState(entry: Types.IEntry, hasRead: boolean) {
+export function entryUpdateHasRead(entry: Types.IEntry, hasRead: boolean) {
     return (dispatch: Types.IDispatch) => {
         const url = API_ENTRIES_BASE + entry._id;
         const init = {

@@ -2,7 +2,7 @@ import { OrderedMap } from "immutable";
 
 import * as ACT_TYPES from "../actiontypes";
 import { API_FEEDS_BASE } from "../apiendpoints";
-import { entriesClearAll, getEntriesForFeed } from "./entries.actions";
+import { entriesClearAll, entriesGetAllForFeed } from "./entries.actions";
 import { resetFilter } from "./filter.actions";
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { message } from "./messages.actions";
@@ -42,7 +42,7 @@ function addFeed(feedInfo: Types.IFeed) {
                 } else if (feedObj.status === "success") {
                     dispatch(message("Feed added.", "success"));
                     dispatch(addFeedToOrderedMap(feedObj.feedInfo));
-                    dispatch(getEntriesForFeed(feedObj.feedInfo._id));
+                    dispatch(entriesGetAllForFeed(feedObj.feedInfo._id));
                 }
             })
             .catch(err => {
@@ -124,7 +124,7 @@ function getAllEntriesForFeeds(feeds: Types.IFeed[]) {
     return (dispatch: Types.IDispatch) => {
         dispatch(clearUnread());
         feeds.forEach(feed => {
-            dispatch(getEntriesForFeed(feed._id));
+            dispatch(entriesGetAllForFeed(feed._id));
         });
     };
 }

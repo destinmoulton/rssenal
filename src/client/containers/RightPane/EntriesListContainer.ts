@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { updateReadState } from "../../redux/actions/entries.actions";
+import { entryUpdateHasRead } from "../../redux/actions/entries.actions";
 
 import * as Types from "../../types";
 
@@ -26,7 +26,7 @@ const mapDispatchToProps = (
     dispatch: Types.IDispatch
 ): IEntriesListMapDispatch => {
     return {
-        markEntryRead: entry => dispatch(updateReadState(entry, true))
+        markEntryRead: entry => dispatch(entryUpdateHasRead(entry, true))
     };
 };
 
