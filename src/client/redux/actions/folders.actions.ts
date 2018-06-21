@@ -3,7 +3,7 @@ import { OrderedMap } from "immutable";
 import * as ACT_TYPES from "../actiontypes";
 import { API_FOLDERS_BASE, API_FOLDERS_GET_ALL } from "../apiendpoints";
 import { UNCATEGORIZED_FOLDER } from "../../constants";
-import { getAllFeeds } from "./feeds.actions";
+import { feedsGetAll } from "./feeds.actions";
 import { resetFilter } from "./filter.actions";
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { message } from "./messages.actions";
@@ -199,7 +199,7 @@ function deleteFolder(folderId: Types.TFolderID) {
                     dispatch(message("Folder removed.", "success"));
                     dispatch(resetFilter());
                     dispatch(updateFoldersAfterDelete(folderId));
-                    dispatch(getAllFeeds());
+                    dispatch(feedsGetAll());
                 } else {
                     console.error(resObj);
                 }

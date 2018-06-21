@@ -11,7 +11,7 @@ describe("<AddFeedModalComponent />", () => {
         const wrapper = shallow(
             <AddFeedModalComponent
                 folders={folders}
-                beginAddFeed={jest.fn()}
+                feedInitiateAdd={jest.fn()}
                 isModalOpen={true}
                 onCloseModal={jest.fn()}
             />

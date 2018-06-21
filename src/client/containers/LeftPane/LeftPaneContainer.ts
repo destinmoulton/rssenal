@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { foldersGetAll } from "../../redux/actions/folders.actions";
-import { getAllFeeds } from "../../redux/actions/feeds.actions";
+import { feedsGetAll } from "../../redux/actions/feeds.actions";
 
 import LeftPaneComponent, {
     ILeftPaneMapDispatch,
@@ -24,7 +24,7 @@ const mapDispatchToProps = (
 ): ILeftPaneMapDispatch => {
     return {
         foldersGetAll: () => dispatch(foldersGetAll()),
-        getAllFeeds: () => dispatch(getAllFeeds())
+        feedsGetAll: () => dispatch(feedsGetAll())
     };
 };
 

@@ -8,7 +8,7 @@ describe("<ButtonBarComponent />", () => {
     it("renders and matches the snapshot", () => {
         const wrapper = shallow(
             <ButtonBarComponent
-                refreshAllFeeds={jest.fn()}
+                feedsRefreshAll={jest.fn()}
                 openAddFeedModal={jest.fn()}
                 openEditFolderModal={jest.fn()}
             />

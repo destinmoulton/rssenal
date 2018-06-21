@@ -12,7 +12,7 @@ describe("<SettingsModalComponent />", () => {
             <SettingsModalComponent
                 settings={settings}
                 settingChange={jest.fn()}
-                refreshAllFeeds={jest.fn()}
+                feedsRefreshAll={jest.fn()}
             />
         );
         expect(wrapper).toMatchSnapshot();

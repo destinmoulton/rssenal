@@ -13,7 +13,7 @@ describe("<EditFeedModalComponent />", () => {
             <EditFeedModalComponent
                 folders={folders}
                 feed={feed}
-                beginUpdateFeed={jest.fn()}
+                feedInitiateUpdate={jest.fn()}
                 isModalOpen={true}
                 onCloseModal={jest.fn()}
             />

@@ -9,7 +9,7 @@ import { message } from "./messages.actions";
 import { propertyComparator } from "../../lib/sort";
 import * as Types from "../../types";
 
-export function beginAddFeed(feedInfo: Types.IFeed) {
+export function feedInitiateAdd(feedInfo: Types.IFeed) {
     return (dispatch: Types.IDispatch) => {
         dispatch(beginAddFeedProcess());
         dispatch(addFeed(feedInfo));
@@ -68,7 +68,7 @@ function addFeedComplete(feeds: Types.TFeeds) {
     };
 }
 
-export function getAllFeeds() {
+export function feedsGetAll() {
     return (dispatch: Types.IDispatch) => {
         const url = API_FEEDS_BASE;
         const init = {
@@ -135,7 +135,7 @@ function clearUnread() {
     };
 }
 
-export function refreshAllFeeds() {
+export function feedsRefreshAll() {
     return (
         dispatch: Types.IDispatch,
         getState: () => Types.IRootStoreState
@@ -174,7 +174,7 @@ function deleteFeed(feedId: Types.TFeedID) {
                 dispatch(message("Feed removed.", "success"));
                 dispatch(resetFilter());
                 dispatch(deleteFeedComplete(feedId));
-                dispatch(refreshAllFeeds());
+                dispatch(feedsRefreshAll());
             })
             .catch(err => {
                 console.error(err);
@@ -189,7 +189,7 @@ function deleteFeedComplete(feedId: Types.TFeedID) {
     };
 }
 
-export function beginUpdateFeed(feedInfo: Types.IFeed) {
+export function feedInitiateUpdate(feedInfo: Types.IFeed) {
     return (dispatch: Types.IDispatch) => {
         dispatch(beginUpdateFeedProcess());
         dispatch(updateFeed(feedInfo));
@@ -224,7 +224,7 @@ function updateFeed(feedInfo: Types.IFeed) {
                 } else if (feedObj.status === "success") {
                     dispatch(message("Feed saved.", "success"));
                     dispatch(applyUpdateFeed(feedObj.feedInfo));
-                    dispatch(getAllFeeds());
+                    dispatch(feedsGetAll());
                 }
             })
             .catch(err => {

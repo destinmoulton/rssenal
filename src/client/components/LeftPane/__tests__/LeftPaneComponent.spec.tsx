@@ -13,7 +13,7 @@ describe("<LeftPaneComponent />", () => {
             const wrapper = shallow(
                 <LeftPaneComponent
                     foldersGetAll={jest.fn()}
-                    getAllFeeds={jest.fn()}
+                    feedsGetAll={jest.fn()}
                     folders={OrderedMap()}
                     feeds={feeds}
                     hasFolders={false}
@@ -25,7 +25,7 @@ describe("<LeftPaneComponent />", () => {
             const wrapper = shallow(
                 <LeftPaneComponent
                     foldersGetAll={jest.fn()}
-                    getAllFeeds={jest.fn()}
+                    feedsGetAll={jest.fn()}
                     folders={folders}
                     feeds={feeds}
                     hasFolders={true}

@@ -6,7 +6,7 @@ import SelectFolder from "./SelectFolder";
 import { TFolderID, TFolders } from "../../types";
 
 export interface IEditFeedModalMapDispatch {
-    beginUpdateFeed: (feedInfo: any) => void;
+    feedInitiateUpdate: (feedInfo: any) => void;
 }
 
 export interface IEditFeedModalMapState {
@@ -53,7 +53,7 @@ class EditFeedModalComponent extends React.Component<TAllProps, IState> {
         const { newFeed } = this.state;
 
         if (newFeed.name !== "") {
-            this.props.beginUpdateFeed(newFeed);
+            this.props.feedInitiateUpdate(newFeed);
             this._handleClose();
         }
     };

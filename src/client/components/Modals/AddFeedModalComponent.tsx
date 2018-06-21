@@ -21,7 +21,7 @@ export interface IAddFeedModalMapState {
 }
 
 export interface IAddFeedModalMapDispatch {
-    beginAddFeed: (feedInfo: any) => void;
+    feedInitiateAdd: (feedInfo: any) => void;
 }
 
 interface IAddFeedModalProps {
@@ -93,7 +93,7 @@ class AddFeedModalComponent extends React.Component<
             folder_id: folderId,
             url: feedURL
         };
-        this.props.beginAddFeed(dataToAdd);
+        this.props.feedInitiateAdd(dataToAdd);
         this._handleClose();
     };
 
