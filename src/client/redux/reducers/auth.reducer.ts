@@ -1,8 +1,4 @@
-import {
-    AUTH_ERROR,
-    AUTH_USER_IS_AUTHENTIC,
-    AUTH_LOGOUT
-} from "../actiontypes";
+import * as ACT_TYPES from "../actiontypes";
 import { IAuthAction, IReducerStateAuth } from "../../types";
 
 const INITIAL_STATE: IReducerStateAuth = {
@@ -13,17 +9,17 @@ const INITIAL_STATE: IReducerStateAuth = {
 
 const authReducer = (state = INITIAL_STATE, action: IAuthAction) => {
     switch (action.type) {
-        case AUTH_ERROR:
+        case ACT_TYPES.AUTH_ERROR:
             return {
                 ...state,
                 authenticationError: action.message
             };
-        case AUTH_LOGOUT:
+        case ACT_TYPES.AUTH_LOGOUT:
             return {
                 ...state,
                 isAuthorized: false
             };
-        case AUTH_USER_IS_AUTHENTIC:
+        case ACT_TYPES.AUTH_USER_IS_AUTHENTIC:
             return {
                 ...state,
                 authenticationError: "",
