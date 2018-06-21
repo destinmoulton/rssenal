@@ -25,7 +25,27 @@ describe("auth reducer", () => {
         });
     });
 
-    it("should handle AUTH_LOGOUT", () => {});
+    it("should handle AUTH_LOGOUT", () => {
+        const action = {
+            type: ACT_TYPES.AUTH_LOGOUT
+        };
+        const reduction = authReducer(undefined, action);
+        expect(reduction).toEqual({
+            authenticationError: "",
+            isAuthorized: false,
+            isValidatingToken: false
+        });
+    });
 
-    it("should handle AUTH_USER_IS_AUTHENTIC", () => {});
+    it("should handle AUTH_USER_IS_AUTHENTIC", () => {
+        const action = {
+            type: ACT_TYPES.AUTH_USER_IS_AUTHENTIC
+        };
+        const reduction = authReducer(undefined, action);
+        expect(reduction).toEqual({
+            authenticationError: "",
+            isAuthorized: true,
+            isValidatingToken: false
+        });
+    });
 });
