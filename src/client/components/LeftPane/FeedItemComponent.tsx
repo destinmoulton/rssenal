@@ -3,16 +3,16 @@ import * as React from "react";
 
 import { Icon } from "semantic-ui-react";
 
-import { TFeedID, IFeed, IFeedsUnreadMap, IFilter } from "../../types";
+import { TFeedID, IFeed, IFilter, TUnreadMapFeeds } from "../../types";
 
 export interface IFeedItemMapState {
     filter: IFilter;
-    unreadMapFeeds: Map<TFeedID, number>;
+    unreadMapFeeds: TUnreadMapFeeds;
 }
 
 export interface IFeedItemMapDispatch {
     beginDeleteFeed: (feedId: TFeedID) => void;
-    changeFilter: (newFilter: object) => void;
+    filterChangeActive: (newFilter: object) => void;
 }
 
 interface IFeedItemProps {
@@ -46,9 +46,9 @@ class FeedItemComponent extends React.Component<TAllProps, IFeedItemState> {
     };
 
     _handleClickFeed = () => {
-        const { changeFilter, feed } = this.props;
+        const { filterChangeActive, feed } = this.props;
 
-        changeFilter({
+        filterChangeActive({
             limit: "feed",
             id: feed._id
         });

@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import { refreshAllFeeds } from "../../redux/actions/feeds.actions";
+import { feedsRefreshAll } from "../../redux/actions/feeds.actions";
 
 import ButtonBarComponent, {
     IButtonBarMapDispatch,
@@ -17,7 +17,7 @@ const mapDispatchToProps = (
     dispatch: Types.IDispatch
 ): IButtonBarMapDispatch => {
     return {
-        refreshAllFeeds: () => dispatch(refreshAllFeeds())
+        feedsRefreshAll: () => dispatch(feedsRefreshAll())
     };
 };
 

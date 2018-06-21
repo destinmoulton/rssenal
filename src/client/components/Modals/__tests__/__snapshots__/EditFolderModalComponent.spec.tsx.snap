@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EditFolderModalComponent /> renders and matches the snapshots matches the snapshot for Add New Folder 1`] = `
+<Modal
+  centered={true}
+  className="rss-modal"
+  closeOnDimmerClick={true}
+  closeOnDocumentClick={false}
+  dimmer={true}
+  eventPool="Modal"
+  onClose={[Function]}
+  open={true}
+  size="tiny"
+>
+  <Header
+    content="Add Folder"
+    icon="plus"
+  />
+  <ModalContent>
+    <input
+      autoFocus={true}
+      className="rss-foldermodal-name"
+      onChange={[Function]}
+      onKeyPress={[Function]}
+      placeholder="Folder name..."
+      value=""
+    />
+  </ModalContent>
+  <ModalActions>
+    <div>
+      <Button
+        as="button"
+        color="orange"
+        content="Cancel"
+        floated="left"
+        icon="cancel"
+        inverted={true}
+        onClick={[Function]}
+        role="button"
+      />
+      <Button
+        as="button"
+        color="green"
+        content="Create"
+        icon="checkmark"
+        inverted={true}
+        onClick={[Function]}
+        role="button"
+      />
+    </div>
+  </ModalActions>
+</Modal>
+`;
+
+exports[`<EditFolderModalComponent /> renders and matches the snapshots matches the snapshot for Edit Existing Folder 1`] = `
+<Modal
+  centered={true}
+  className="rss-modal"
+  closeOnDimmerClick={true}
+  closeOnDocumentClick={false}
+  dimmer={true}
+  eventPool="Modal"
+  onClose={[Function]}
+  open={true}
+  size="tiny"
+>
+  <Header
+    content="Edit Folder"
+    icon="plus"
+  />
+  <ModalContent>
+    <input
+      autoFocus={true}
+      className="rss-foldermodal-name"
+      onChange={[Function]}
+      onKeyPress={[Function]}
+      placeholder="Folder name..."
+      value="Lifestyle"
+    />
+  </ModalContent>
+  <ModalActions>
+    <div>
+      <Button
+        as="button"
+        color="orange"
+        content="Cancel"
+        floated="left"
+        icon="cancel"
+        inverted={true}
+        onClick={[Function]}
+        role="button"
+      />
+      <Button
+        as="button"
+        color="green"
+        content="Save"
+        icon="checkmark"
+        inverted={true}
+        onClick={[Function]}
+        role="button"
+      />
+    </div>
+  </ModalActions>
+</Modal>
+`;

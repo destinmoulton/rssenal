@@ -6,7 +6,7 @@ import { ISetting, TSettings } from "../../types";
 
 export interface ISettingsModalMapDispatch {
     settingChange: (setting_key: string, setting_value: any) => void;
-    refreshAllFeeds: () => void;
+    feedsRefreshAll: () => void;
 }
 
 export interface ISettingsModalMapState {
@@ -77,7 +77,7 @@ class SettingsModalComponent extends React.Component<
         this.props.settingChange(setting_key, setting_value);
 
         if (setting.refresh_entries_on_change) {
-            this.props.refreshAllFeeds();
+            this.props.feedsRefreshAll();
         }
     }
 

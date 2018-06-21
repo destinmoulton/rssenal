@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import { beginUpdateFeed } from "../../redux/actions/feeds.actions";
+import { feedInitiateUpdate } from "../../redux/actions/feeds.actions";
 
 import * as Types from "../../types";
 import EditFeedModalComponent, {
@@ -21,7 +21,7 @@ const mapDispatchToProps = (
     dispatch: Types.IDispatch
 ): IEditFeedModalMapDispatch => {
     return {
-        beginUpdateFeed: feedInfo => dispatch(beginUpdateFeed(feedInfo))
+        feedInitiateUpdate: feedInfo => dispatch(feedInitiateUpdate(feedInfo))
     };
 };
 

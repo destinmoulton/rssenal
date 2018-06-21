@@ -1,3 +1,8 @@
+import {
+    SANITIZER_ALLOWED_CONTENT_TAGS,
+    SANITIZER_ALLOWED_TAG_ATTRIBUTES
+} from "../constants";
+
 interface ISanitizeHTML {
     (html: string, options: any): string;
 }
@@ -7,54 +12,10 @@ export const sanitizeEntryContent = (
     dirtyContent: string,
     shouldShowImages: boolean
 ): string => {
-    let allowedTags = [
-        "a",
-        "b",
-        "blockquote",
-        "br",
-        "code",
-        "em",
-        "figure",
-        "figcaption",
-        "li",
-        "ol",
-        "p",
-        "pre",
-        "span",
-        "strong",
-        "table",
-        "tbody",
-        "td",
-        "tr",
-        "ul"
-    ];
-
+    let allowedTags = SANITIZER_ALLOWED_CONTENT_TAGS.slice();
     if (shouldShowImages) {
         allowedTags.push("img");
     }
-
-    let allowedAttributes = {
-        a: ["href", "target"],
-        blockquote: <any>[],
-        code: <any>[],
-        figure: <any>[],
-        figcaption: <any>[],
-        h1: <any>[],
-        h2: <any>[],
-        h3: <any>[],
-        h4: <any>[],
-        h5: <any>[],
-        img: ["src", "class"],
-        li: <any>[],
-        ol: <any>[],
-        p: <any>[],
-        pre: <any>[],
-        span: <any>[],
-        strong: <any>[],
-        td: <any>[],
-        tr: <any>[],
-        ul: <any>[]
-    };
 
     let transformTags = {
         a: (tagName: string, attribs: any) => {
@@ -72,16 +33,19 @@ export const sanitizeEntryContent = (
                 };
             }
         },
+        b: "strong",
         h1: "strong",
         h2: "strong",
         h3: "strong",
         h4: "strong",
         h5: "strong",
+        i: "em",
         img: (tagName: string, attribs: any) => {
             if (attribs.src[0] === "/") {
                 // Don't display images with a relative path (as they don't exist on this server)
                 return {
-                    tagName: "span"
+                    tagName: "span",
+                    attribs: {}
                 };
             } else {
                 return {
@@ -95,14 +59,14 @@ export const sanitizeEntryContent = (
         }
     };
 
-    const tagsFilterIfEmpty = ["span", "p", "a"];
+    const tagsFilterIfEmpty = ["span", "p", "a", "em"];
     let exclusiveFilter = (frame: any) => {
         return tagsFilterIfEmpty.includes(frame.tag) && !frame.text.trim();
     };
 
     let sanitized = sanitizeHTML(dirtyContent, {
         allowedTags,
-        allowedAttributes,
+        SANITIZER_ALLOWED_TAG_ATTRIBUTES,
         exclusiveFilter,
         transformTags
     });

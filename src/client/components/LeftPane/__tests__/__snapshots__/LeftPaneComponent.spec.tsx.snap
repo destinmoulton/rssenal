@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LeftPaneComponent /> renders and matches the snapshot matches snapshot when hasFolders = false 1`] = `
+<div>
+  <div>
+    <Connect(ButtonBarComponent)
+      openAddFeedModal={[Function]}
+      openEditFolderModal={[Function]}
+    />
+    <Connect(AddFeedModalComponent)
+      isModalOpen={false}
+      onCloseModal={[Function]}
+    />
+    <Connect(EditFolderModalComponent)
+      folder={null}
+      isModalOpen={false}
+      onCloseModal={[Function]}
+    />
+    <Connect(EditFeedModalComponent)
+      feed={null}
+      isModalOpen={false}
+      onCloseModal={[Function]}
+    />
+  </div>
+  <div
+    className="rss-leftmenu-folders-box"
+  >
+    <div
+      key="all"
+    >
+      <Connect(FolderItemComponent)
+        editFeed={[Function]}
+        editFolder={[Function]}
+        folder={
+          Object {
+            "_id": "all",
+            "name": "All",
+            "order": -1,
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="rss-leftmenu-logo"
+  >
+    <Icon
+      as="i"
+      name="rss"
+    />
+     RSSenal
+  </div>
+</div>
+`;
+
+exports[`<LeftPaneComponent /> renders and matches the snapshot matches snapshot when hasFolders = true 1`] = `
+<div>
+  <div>
+    <Connect(ButtonBarComponent)
+      openAddFeedModal={[Function]}
+      openEditFolderModal={[Function]}
+    />
+    <Connect(AddFeedModalComponent)
+      isModalOpen={false}
+      onCloseModal={[Function]}
+    />
+    <Connect(EditFolderModalComponent)
+      folder={null}
+      isModalOpen={false}
+      onCloseModal={[Function]}
+    />
+    <Connect(EditFeedModalComponent)
+      feed={null}
+      isModalOpen={false}
+      onCloseModal={[Function]}
+    />
+  </div>
+  <div
+    className="rss-leftmenu-folders-box"
+  >
+    <div
+      key="all"
+    >
+      <Connect(FolderItemComponent)
+        editFeed={[Function]}
+        editFolder={[Function]}
+        folder={
+          Object {
+            "_id": "all",
+            "name": "All",
+            "order": -1,
+          }
+        }
+      />
+    </div>
+    <div
+      key="5a54f74838e78863ac6a8961"
+    >
+      <Connect(FolderItemComponent)
+        editFeed={[Function]}
+        editFolder={[Function]}
+        folder={
+          Object {
+            "__v": 0,
+            "_id": "5a54f74838e78863ac6a8961",
+            "name": "Lifestyle",
+            "order": 1,
+          }
+        }
+      />
+    </div>
+    <div
+      key="5a53ec3a94c3905e4a8328d4"
+    >
+      <Connect(FolderItemComponent)
+        editFeed={[Function]}
+        editFolder={[Function]}
+        folder={
+          Object {
+            "__v": 0,
+            "_id": "5a53ec3a94c3905e4a8328d4",
+            "name": "Programming",
+            "order": 2,
+          }
+        }
+      />
+    </div>
+    <div
+      key="5a54fcf538e78863ac6a89f7"
+    >
+      <Connect(FolderItemComponent)
+        editFeed={[Function]}
+        editFolder={[Function]}
+        folder={
+          Object {
+            "__v": 0,
+            "_id": "5a54fcf538e78863ac6a89f7",
+            "name": "Writing",
+            "order": 3,
+          }
+        }
+      />
+    </div>
+    <div
+      key="5a55035e38e78863ac6a89fe"
+    >
+      <Connect(FolderItemComponent)
+        editFeed={[Function]}
+        editFolder={[Function]}
+        folder={
+          Object {
+            "__v": 0,
+            "_id": "5a55035e38e78863ac6a89fe",
+            "name": "Random",
+            "order": 4,
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="rss-leftmenu-logo"
+  >
+    <Icon
+      as="i"
+      name="rss"
+    />
+     RSSenal
+  </div>
+</div>
+`;

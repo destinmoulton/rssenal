@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Browser /> renders a snapshot 1`] = `
+<div>
+  <div
+    className="rss-body-left-container"
+  >
+    <Connect(LeftPaneComponent) />
+  </div>
+  <div
+    className="rss-body-right-container"
+  >
+    <Connect(RightPaneComponent) />
+  </div>
+  <Connect(MessagesComponent) />
+</div>
+`;

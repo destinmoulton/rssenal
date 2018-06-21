@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 
 import * as Types from "../../types";
-import { beginAddFeed } from "../../redux/actions/feeds.actions";
+import { feedInitiateAdd } from "../../redux/actions/feeds.actions";
 import AddFeedModalComponent, {
     IAddFeedModalMapDispatch,
     IAddFeedModalMapState
@@ -20,7 +20,7 @@ const mapDispatchToProps = (
     dispatch: Types.IDispatch
 ): IAddFeedModalMapDispatch => {
     return {
-        beginAddFeed: feedInfo => dispatch(beginAddFeed(feedInfo))
+        feedInitiateAdd: feedInfo => dispatch(feedInitiateAdd(feedInfo))
     };
 };
 

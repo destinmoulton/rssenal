@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AddFeedModalComponent /> renders and matches the snapshot 1`] = `
+<Modal
+  centered={true}
+  className="rss-modal"
+  closeOnDimmerClick={true}
+  closeOnDocumentClick={false}
+  dimmer={true}
+  eventPool="Modal"
+  onClose={[Function]}
+  open={true}
+  size="small"
+>
+  <Header
+    content="Add Feed"
+    icon="plus"
+  />
+  <ModalContent>
+    <Form
+      as="form"
+    >
+      <FormField>
+        <label>
+          Feed Address
+        </label>
+        <input
+          autoFocus={true}
+          onChange={[Function]}
+          placeholder="http://feed.url.here"
+        />
+      </FormField>
+    </Form>
+  </ModalContent>
+  <ModalActions>
+    <Button
+      as="button"
+      color="orange"
+      content="Cancel"
+      floated="left"
+      icon="close"
+      inverted={true}
+      onClick={[Function]}
+      role="button"
+    />
+    <span>
+      <Button
+        as="button"
+        color="green"
+        inverted={true}
+        loading={false}
+        onClick={[Function]}
+        role="button"
+      >
+        <Icon
+          as="i"
+          name="chevron right"
+        />
+           Continue
+      </Button>
+    </span>
+  </ModalActions>
+</Modal>
+`;

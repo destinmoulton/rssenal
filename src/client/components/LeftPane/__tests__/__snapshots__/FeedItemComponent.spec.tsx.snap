@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FeedItemComponent /> renders and matches the snapshot 1`] = `
+<div
+  className="rss-folders-feeditem rss-folders-feeditem-active"
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+>
+  <div
+    className="rss-folders-feeditem-title"
+    onClick={[Function]}
+  >
+    Dot Earth
+  </div>
+  <div
+    className="rss-folders-feeditem-unread"
+    onClick={[Function]}
+  >
+     [10]
+  </div>
+</div>
+`;

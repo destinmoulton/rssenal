@@ -3,14 +3,14 @@ import * as React from "react";
 import { Button, Popup } from "semantic-ui-react";
 
 export interface ILogoutButtonComponentProps {
-    logoutUser?: () => void;
+    authLogoutUser?: () => void;
 }
 
 class LogoutButtonComponent extends React.Component<
     ILogoutButtonComponentProps
 > {
     _handleClickLogout = () => {
-        this.props.logoutUser();
+        this.props.authLogoutUser();
     };
 
     render() {

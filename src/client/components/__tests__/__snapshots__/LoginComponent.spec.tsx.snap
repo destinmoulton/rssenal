@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LoginComponent /> renders and matches snapshot 1`] = `
+<div
+  className="login-form"
+>
+  <style>
+    
+                body &gt; div,
+                body &gt; div &gt; div,
+                body &gt; div &gt; div &gt; div.login-form {
+                    height: 100%;
+                }
+                
+  </style>
+  <Grid
+    style={
+      Object {
+        "height": "100%",
+      }
+    }
+    textAlign="center"
+    verticalAlign="middle"
+  >
+    <GridColumn
+      style={
+        Object {
+          "maxWidth": 450,
+        }
+      }
+    >
+      <Header
+        as="h2"
+        className="rss-login-header"
+      >
+        <Icon
+          as="i"
+          name="rss"
+        />
+          RSSenal
+      </Header>
+      <Form
+        as="form"
+        size="large"
+      >
+        <Segment>
+          <FormInput
+            as={[Function]}
+            control={[Function]}
+            fluid={true}
+            icon="user"
+            iconPosition="left"
+            name="username"
+            onChange={[Function]}
+            placeholder="Username"
+          />
+          <FormInput
+            as={[Function]}
+            control={[Function]}
+            fluid={true}
+            icon="lock"
+            iconPosition="left"
+            name="password"
+            onChange={[Function]}
+            placeholder="Password"
+            type="password"
+          />
+          <Message
+            negative={true}
+          >
+            <p>
+              Test Error
+            </p>
+          </Message>
+          <Button
+            as="button"
+            className="rss-login-button"
+            fluid={true}
+            onClick={[Function]}
+            role="button"
+            size="large"
+          >
+            Login
+          </Button>
+        </Segment>
+      </Form>
+    </GridColumn>
+  </Grid>
+</div>
+`;

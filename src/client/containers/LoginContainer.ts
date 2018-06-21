@@ -5,7 +5,7 @@ import LoginComponent, {
     ILoginMapState
 } from "../components/LoginComponent";
 
-import { loginUser } from "../redux/actions/auth.actions";
+import { authLoginUser } from "../redux/actions/auth.actions";
 
 import * as Types from "../types";
 
@@ -17,8 +17,8 @@ const mapStateToProps = (state: Types.IRootStoreState): ILoginMapState => {
 
 const mapDispatchToProps = (dispatch: Types.IDispatch): ILoginMapDispatch => {
     return {
-        loginUser: (username: string, password: string) => {
-            return dispatch(loginUser(username, password));
+        authLoginUser: (username: string, password: string) => {
+            return dispatch(authLoginUser(username, password));
         }
     };
 };

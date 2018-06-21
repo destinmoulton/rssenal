@@ -4,28 +4,15 @@ import { mount, shallow } from "enzyme";
 
 import Entry from "../Entry";
 import Content from "../Content";
-
-const ENTRY = {
-    _id: "0test1",
-    content: "Test Content",
-    creator: "McJesty",
-    feed_id: "ABC123_test_feed_id",
-    feedTitle: "Test Feed Title",
-    guid: "guidtest",
-    timeAgo: "5 days ago",
-    title: "Test Title",
-    link: "https://test.link.com/blog-post.html",
-    content_snippet: "Content snippet",
-    publish_date: "2016-05-18T16:00:00Z"
-};
+import ENTRY_DATA from "../../../../../../test/data/entry";
 
 const ENTRY_HAS_READ = {
-    ...ENTRY,
+    ...ENTRY_DATA,
     has_read: true
 };
 
 const ENTRY_NOT_READ = {
-    ...ENTRY,
+    ...ENTRY_DATA,
     has_read: false
 };
 
@@ -47,7 +34,7 @@ describe("<Entry />", () => {
         );
 
         expect(wrapper.find("div.rss-entry-container").prop("id")).toBe(
-            `rss-entry-item-${ENTRY._id}`
+            `rss-entry-item-${ENTRY_DATA._id}`
         );
     });
 
@@ -88,7 +75,7 @@ describe("<Entry />", () => {
         );
 
         expect(wrapper.find("div.rss-entry-title-hasread").text()).toBe(
-            ENTRY.title
+            ENTRY_DATA.title
         );
     });
 
@@ -102,7 +89,7 @@ describe("<Entry />", () => {
             />
         );
         wrapper.find("div.rss-entry-title-hasread").simulate("click");
-        expect(mockToggleEntry.mock.calls).toEqual([[ENTRY._id]]);
+        expect(mockToggleEntry.mock.calls).toEqual([[ENTRY_DATA._id]]);
     });
 
     it("shows <Content /> when active", () => {

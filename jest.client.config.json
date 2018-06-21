@@ -1,5 +1,6 @@
 {
     "setupTestFrameworkScriptFile": "<rootDir>/test-client-setup.js",
+    "setupFiles": ["jest-localstorage-mock"],
     "moduleFileExtensions": ["ts", "tsx", "js"],
     "transform": {
         "^.+\\.(ts|tsx)$": "ts-jest"

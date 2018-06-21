@@ -28,3 +28,59 @@ export const DEFAULT_SETTINGS = [
         }
     ]
 ];
+
+// Allows Tags for the HTML Sanitizer
+export const SANITIZER_ALLOWED_CONTENT_TAGS = [
+    "a",
+    "b",
+    "blockquote",
+    "br",
+    "code",
+    "em",
+    "figure",
+    "figcaption",
+    "i",
+    "li",
+    "ol",
+    "p",
+    "pre",
+    "span",
+    "strong",
+    "table",
+    "tbody",
+    "thead",
+    "td",
+    "th",
+    "tr",
+    "ul"
+];
+
+export const SANITIZER_ALLOWED_TAG_ATTRIBUTES = {
+    a: ["href", "target"],
+    blockquote: <any>[],
+    code: <any>["class"],
+    em: <any>[],
+    figure: <any>[],
+    figcaption: <any>[],
+    h1: <any>[],
+    h2: <any>[],
+    h3: <any>[],
+    h4: <any>[],
+    h5: <any>[],
+    img: ["src", "class"],
+    li: <any>[],
+    ol: <any>[],
+    p: <any>[],
+    span: <any>[],
+    strong: <any>[],
+    td: <any>[],
+    th: <any>[],
+    tr: <any>[],
+    ul: <any>[]
+};
+
+export const UNCATEGORIZED_FOLDER = {
+    _id: "0",
+    name: "Uncategorized",
+    order: Infinity
+};

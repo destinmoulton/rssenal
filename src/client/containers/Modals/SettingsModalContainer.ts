@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { settingChange } from "../../redux/actions/settings.actions";
-import { refreshAllFeeds } from "../../redux/actions/feeds.actions";
+import { feedsRefreshAll } from "../../redux/actions/feeds.actions";
 
 import * as Types from "../../types";
 import SettingsModalComponent, {
@@ -23,7 +23,7 @@ const mapDispatchToProps = (
     return {
         settingChange: (setting_key: string, setting_value: any) =>
             dispatch(settingChange(setting_key, setting_value)),
-        refreshAllFeeds: () => dispatch(refreshAllFeeds())
+        feedsRefreshAll: () => dispatch(feedsRefreshAll())
     };
 };
 export default connect(

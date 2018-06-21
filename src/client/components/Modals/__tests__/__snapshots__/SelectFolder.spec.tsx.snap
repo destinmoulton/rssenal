@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SelectFolder /> renders and matches the snapshot 1`] = `
+<Dropdown
+  additionLabel="Add "
+  additionPosition="top"
+  closeOnBlur={true}
+  deburr={false}
+  icon="dropdown"
+  minCharacters={1}
+  noResultsMessage="No results found."
+  onChange={[Function]}
+  openOnFocus={true}
+  options={
+    Array [
+      Object {
+        "key": "5a55035e38e78863ac6a89fe",
+        "text": "Random",
+        "value": "5a55035e38e78863ac6a89fe",
+      },
+      Object {
+        "key": "5a54f74838e78863ac6a8961",
+        "text": "Lifestyle",
+        "value": "5a54f74838e78863ac6a8961",
+      },
+      Object {
+        "key": "5a53ec3a94c3905e4a8328d4",
+        "text": "Programming",
+        "value": "5a53ec3a94c3905e4a8328d4",
+      },
+      Object {
+        "key": "5a54fcf538e78863ac6a89f7",
+        "text": "Writing",
+        "value": "5a54fcf538e78863ac6a89f7",
+      },
+    ]
+  }
+  renderLabel={[Function]}
+  searchInput="text"
+  selectOnBlur={true}
+  selectOnNavigation={true}
+  selection={true}
+  value="5a54f74838e78863ac6a8961"
+  wrapSelection={true}
+/>
+`;

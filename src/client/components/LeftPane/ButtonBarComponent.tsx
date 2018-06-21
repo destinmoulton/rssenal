@@ -7,7 +7,7 @@ import ReorderFoldersModalContainer from "../../containers/Modals/ReorderFolders
 
 export interface IButtonBarMapState {}
 export interface IButtonBarMapDispatch {
-    refreshAllFeeds: () => void;
+    feedsRefreshAll: () => void;
 }
 
 interface IButtonBarProps {
@@ -27,7 +27,7 @@ class ButtonBarComponent extends React.Component<TAll> {
     };
 
     _handleClickRefresh = () => {
-        this.props.refreshAllFeeds();
+        this.props.feedsRefreshAll();
     };
 
     render() {

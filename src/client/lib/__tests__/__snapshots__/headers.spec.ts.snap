@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`lib/headers.ts generateJSONHeaders() 1`] = `
+Headers {
+  Symbol(map): Object {
+    "Accept": Array [
+      "application/json",
+    ],
+    "Content-Type": Array [
+      "application/json",
+    ],
+  },
+}
+`;
+
+exports[`lib/headers.ts generateJWTHeaders() 1`] = `
+Headers {
+  Symbol(map): Object {
+    "Authorization": Array [
+      "Bearer TEST_JWT_TOKEN",
+    ],
+  },
+}
+`;
+
+exports[`lib/headers.ts generateJWTJSONHeaders() 1`] = `
+Headers {
+  Symbol(map): Object {
+    "Accept": Array [
+      "application/json",
+    ],
+    "Authorization": Array [
+      "Bearer TEST_JWT_TOKEN",
+    ],
+    "Content-Type": Array [
+      "application/json",
+    ],
+  },
+}
+`;

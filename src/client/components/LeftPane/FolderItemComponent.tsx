@@ -10,19 +10,19 @@ import {
     IFolder,
     IFilter,
     TFolderID,
-    TFeedID,
-    TFeeds
+    TFeeds,
+    TUnreadMapFolders
 } from "../../types";
 
 export interface IFolderItemMapState {
     filter: IFilter;
-    unreadMapGroups: Map<TFolderID, number>;
+    unreadMapGroups: TUnreadMapFolders;
     feeds: TFeeds;
 }
 
 export interface IFolderItemMapDispatch {
-    beginDeleteFolder: (folderId: TFolderID) => void;
-    changeFilter: (filter: IFilter) => void;
+    folderInitiateDelete: (folderId: TFolderID) => void;
+    filterChangeActive: (filter: IFilter) => void;
 }
 
 interface IFolderItemProps {
@@ -47,14 +47,14 @@ class FolderItemComponent extends React.Component<TAllProps, IFolderItemState> {
     };
 
     _handleClickDelete = () => {
-        const { beginDeleteFolder, folder } = this.props;
+        const { folderInitiateDelete, folder } = this.props;
         const conf = confirm(
             `Are you sure you want to delete the '${
                 folder.name
             }' folder?\nThe feeds will be moved to 'Uncategorized'.`
         );
         if (conf) {
-            beginDeleteFolder(folder._id);
+            folderInitiateDelete(folder._id);
         }
     };
 
@@ -63,9 +63,9 @@ class FolderItemComponent extends React.Component<TAllProps, IFolderItemState> {
     };
 
     _handleClickFolder = () => {
-        const { changeFilter, folder } = this.props;
+        const { filterChangeActive, folder } = this.props;
 
-        changeFilter({
+        filterChangeActive({
             limit: "folder",
             id: folder._id
         });

@@ -1,17 +1,15 @@
 import { API_AUTH_LOGIN, API_AUTH_VALIDATE_TOKEN } from "../apiendpoints";
-import { JSON_HEADERS, generateJWTHeaders } from "../../lib/headers";
+import { generateJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 
 import {
     AUTH_ERROR,
     AUTH_LOGOUT,
-    AUTH_USER_IS_AUTHENTIC,
-    AUTH_TOKEN_IS_VALIDATING,
-    AUTH_TOKEN_VALIDATION_COMPLETE
+    AUTH_USER_IS_AUTHENTIC
 } from "../actiontypes";
 
 import { IDispatch } from "../../types";
 
-export function validateToken() {
+export function authValidateToken() {
     return (dispatch: IDispatch) => {
         const url = API_AUTH_VALIDATE_TOKEN;
         const init = {
@@ -30,7 +28,7 @@ export function validateToken() {
                 if (auth.status === "valid") {
                     dispatch(userIsAuthentic());
                 } else {
-                    dispatch(logoutUser());
+                    dispatch(authLogoutUser());
                 }
             })
             .catch(err => {
@@ -39,25 +37,13 @@ export function validateToken() {
     };
 }
 
-function tokenValidationInProgress() {
-    return {
-        type: AUTH_TOKEN_IS_VALIDATING
-    };
-}
-
-function tokenValidationComplete() {
-    return {
-        type: AUTH_TOKEN_VALIDATION_COMPLETE
-    };
-}
-
-export function loginUser(username: string, password: string) {
+export function authLoginUser(username: string, password: string) {
     return (dispatch: IDispatch) => {
         const url = API_AUTH_LOGIN;
         const init = {
             method: "POST",
             body: JSON.stringify({ username, password }),
-            headers: JSON_HEADERS
+            headers: generateJSONHeaders()
         };
 
         fetch(url, init)
@@ -80,7 +66,7 @@ export function loginUser(username: string, password: string) {
     };
 }
 
-export function userIsAuthentic() {
+function userIsAuthentic() {
     return {
         type: AUTH_USER_IS_AUTHENTIC
     };
@@ -93,7 +79,7 @@ function authenticationError(message: string) {
     };
 }
 
-export function logoutUser() {
+export function authLogoutUser() {
     localStorage.removeItem("jwt_token");
     return {
         type: AUTH_LOGOUT

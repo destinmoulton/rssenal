@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import {
-    beginDeleteFolder,
-    beginSaveFolder
+    folderInitiateDelete,
+    folderInitiateSave
 } from "../../redux/actions/folders.actions";
-import { changeFilter } from "../../redux/actions/filter.actions";
+import { filterChangeActive } from "../../redux/actions/filter.actions";
 
 import FolderItemComponent, {
     IFolderItemMapDispatch,
@@ -26,10 +26,10 @@ const mapDispatchToProps = (
     dispatch: Types.IDispatch
 ): IFolderItemMapDispatch => {
     return {
-        beginDeleteFolder: (folderId: Types.TFolderID) =>
-            dispatch(beginDeleteFolder(folderId)),
-        changeFilter: (newFilter: Types.IFilter) =>
-            dispatch(changeFilter(newFilter))
+        folderInitiateDelete: (folderId: Types.TFolderID) =>
+            dispatch(folderInitiateDelete(folderId)),
+        filterChangeActive: (newFilter: Types.IFilter) =>
+            dispatch(filterChangeActive(newFilter))
     };
 };
 

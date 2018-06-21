@@ -11,17 +11,17 @@ import FolderItemContainer from "../../containers/LeftPane/FolderItemContainer";
 
 import { propertyComparator } from "../../lib/sort";
 
-import { TFeeds, IFeed, IFolder, TFeedID, TFolderID } from "../../types";
+import { TFeeds, IFeed, IFolder, TFolders } from "../../types";
 
 export interface ILeftPaneMapState {
     feeds: TFeeds;
     hasFolders: boolean;
-    folders: OrderedMap<TFolderID, IFolder>;
+    folders: TFolders;
 }
 
 export interface ILeftPaneMapDispatch {
-    getAllFolders: () => void;
-    getAllFeeds: () => void;
+    foldersGetAll: () => void;
+    feedsGetAll: () => void;
 }
 
 type IAllProps = ILeftPaneMapDispatch & ILeftPaneMapState;
@@ -43,11 +43,11 @@ class LeftPaneComponent extends React.Component<IAllProps, ILeftPaneState> {
     };
 
     componentDidMount() {
-        const { getAllFolders, getAllFeeds, hasFolders } = this.props;
+        const { foldersGetAll, feedsGetAll, hasFolders } = this.props;
 
         if (!hasFolders) {
-            getAllFolders();
-            getAllFeeds();
+            foldersGetAll();
+            feedsGetAll();
         }
     }
 
@@ -104,7 +104,7 @@ class LeftPaneComponent extends React.Component<IAllProps, ILeftPaneState> {
         const { folders } = this.props;
         const sortedFolders = folders
             .sort((a: IFolder, b: IFolder) =>
-                propertyComparator<IFolder, number>(a, b, "asc", "order")
+                propertyComparator<IFolder, number>(a, b, "asc", "order", false)
             )
             .toArray();
         sortedFolders.unshift({ name: "All", _id: "all", order: -1 });

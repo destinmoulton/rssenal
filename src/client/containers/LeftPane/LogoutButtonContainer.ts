@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import { logoutUser } from "../../redux/actions/auth.actions";
+import { authLogoutUser } from "../../redux/actions/auth.actions";
 
 import LogoutButtonComponent, {
     ILogoutButtonComponentProps
@@ -18,7 +18,7 @@ const mapDispatchToProps = (
     dispatch: Types.IDispatch
 ): ILogoutButtonComponentProps => {
     return {
-        logoutUser: () => dispatch(logoutUser())
+        authLogoutUser: () => dispatch(authLogoutUser())
     };
 };
 export default connect(

@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SettingsModalComponent /> renders and matches the snapshot 1`] = `
+<span>
+  <Popup
+    content="Settings"
+    keepInViewPort={true}
+    on="hover"
+    position="top left"
+    trigger={
+      <Icon
+        as="i"
+        color="blue"
+        link={true}
+        name="setting"
+        onClick={[Function]}
+        size="large"
+      />
+    }
+  />
+  <Modal
+    centered={true}
+    className="rss-modal"
+    closeOnDimmerClick={true}
+    closeOnDocumentClick={false}
+    dimmer={true}
+    eventPool="Modal"
+    onClose={[Function]}
+    open={false}
+    size="tiny"
+  >
+    <Header
+      content="Settings"
+      icon="setting"
+    />
+    <ModalContent>
+      <div
+        className="rss-settings-toggle-box"
+        key="show_images"
+      >
+        <Radio
+          checked={true}
+          label="Show Images"
+          onChange={[Function]}
+          toggle={true}
+          type="radio"
+        />
+      </div>
+      <div
+        className="rss-settings-toggle-box"
+        key="show_entries_has_read"
+      >
+        <Radio
+          checked={false}
+          label="Show Entries Already Read"
+          onChange={[Function]}
+          toggle={true}
+          type="radio"
+        />
+      </div>
+    </ModalContent>
+    <ModalActions>
+      <Button
+        as="button"
+        color="green"
+        inverted={true}
+        onClick={[Function]}
+        role="button"
+      >
+        <Icon
+          as="i"
+          name="checkmark"
+        />
+         Done
+      </Button>
+    </ModalActions>
+  </Modal>
+</span>
+`;

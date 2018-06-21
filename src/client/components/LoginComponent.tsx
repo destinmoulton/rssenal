@@ -15,7 +15,7 @@ export interface ILoginMapState {
 }
 
 export interface ILoginMapDispatch {
-    loginUser: (username: string, password: string) => void;
+    authLoginUser: (username: string, password: string) => void;
 }
 
 type TAllProps = ILoginMapDispatch & ILoginMapState;
@@ -39,7 +39,7 @@ class LoginComponent extends React.Component<TAllProps, ILoginState> {
         const { username, password } = this.state;
 
         if (username && password) {
-            this.props.loginUser(username, password);
+            this.props.authLoginUser(username, password);
         }
     };
 
