@@ -1,3 +1,4 @@
+import { OrderedMap } from "immutable";
 import {
     FOLDERS_FETCHING,
     FOLDERS_RECEIVED,
@@ -8,14 +9,20 @@ import {
     FOLDERS_UPDATE_BEGIN,
     FOLDERS_UPDATE_COMPLETE
 } from "../actiontypes";
-
+import { UNCATEGORIZED_FOLDER } from "../../constants";
 import { API_FOLDERS_BASE, API_FOLDERS_GET_ALL } from "../apiendpoints";
 import { getAllFeeds } from "./feeds.actions";
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { message } from "./messages.actions";
 import { resetFilter } from "./filter.actions";
 
-import { IDispatch, IFolder, TFolderID } from "../../types";
+import {
+    IDispatch,
+    IGetState,
+    IFolder,
+    TFolderID,
+    TFolders
+} from "../../types";
 export function getAllFolders() {
     return (dispatch: IDispatch) => {
         dispatch(fetchingInProgress());
@@ -41,7 +48,7 @@ function fetchFolders() {
                 return res.json();
             })
             .then(folders => {
-                dispatch(fetchingComplete(folders));
+                dispatch(createOrderedMapAfterFetchingFolders(folders));
             })
             .catch(err => {
                 console.error(err);
@@ -49,10 +56,24 @@ function fetchFolders() {
     };
 }
 
-function fetchingComplete(data: IFolder[]) {
+function createOrderedMapAfterFetchingFolders(foldersArr: IFolder[]) {
+    return (dispatch: IDispatch) => {
+        const arrayMap = foldersArr.map(folder => {
+            return [folder._id, folder];
+        });
+        const mappedFolders: TFolders = OrderedMap(arrayMap);
+        const fullFolders: TFolders = mappedFolders.set(
+            UNCATEGORIZED_FOLDER._id,
+            UNCATEGORIZED_FOLDER
+        );
+        dispatch(fetchingComplete(fullFolders));
+    };
+}
+
+function fetchingComplete(folders: TFolders) {
     return {
         type: FOLDERS_RECEIVED,
-        folders: data
+        folders
     };
 }
 
@@ -91,7 +112,7 @@ function addFolder(newFolderName: string) {
                     return console.error(resObj);
                 } else {
                     dispatch(message("Folder added.", "success"));
-                    return dispatch(addingFolderComplete(resObj));
+                    return dispatch(updateStoreAfterAddFolder(resObj));
                 }
             })
             .catch(err => {
@@ -100,10 +121,18 @@ function addFolder(newFolderName: string) {
     };
 }
 
-function addingFolderComplete(folder: IFolder) {
+function updateStoreAfterAddFolder(newFolder: IFolder) {
+    return (dispatch: IDispatch, getState: IGetState) => {
+        const { folders } = getState().foldersStore;
+        const updatedFolders = folders.set(newFolder._id, newFolder);
+        dispatch(addFolderComplete(updatedFolders));
+    };
+}
+
+function addFolderComplete(folders: TFolders) {
     return {
         type: FOLDERS_ADD_COMPLETE,
-        folder
+        folders
     };
 }
 
@@ -131,7 +160,7 @@ function updateFolder(folderId: TFolderID, newFolderName: string) {
                     return console.error(resObj);
                 } else {
                     dispatch(message("Folder saved.", "success"));
-                    return dispatch(updatingComplete(resObj));
+                    return dispatch(updateStoreAfterUpdate(resObj));
                 }
             })
             .catch(err => {
@@ -140,10 +169,18 @@ function updateFolder(folderId: TFolderID, newFolderName: string) {
     };
 }
 
-function updatingComplete(newFolder: IFolder) {
+function updateStoreAfterUpdate(updatedFolder: IFolder) {
+    return (dispatch: IDispatch, getState: IGetState) => {
+        const { folders } = getState().foldersStore;
+        const updatedFolders = folders.set(updatedFolder._id, updatedFolder);
+        dispatch(updatingComplete(updatedFolders));
+    };
+}
+
+function updatingComplete(folders: TFolders) {
     return {
         type: FOLDERS_UPDATE_COMPLETE,
-        folder: newFolder
+        folders
     };
 }
 
@@ -175,7 +212,7 @@ function deleteFolder(folderId: TFolderID) {
                 if (resObj.status === "success") {
                     dispatch(message("Folder removed.", "success"));
                     dispatch(resetFilter());
-                    dispatch(deleteComplete(folderId));
+                    dispatch(updateFoldersAfterDelete(folderId));
                     dispatch(getAllFeeds());
                 } else {
                     console.error(resObj);
@@ -187,10 +224,18 @@ function deleteFolder(folderId: TFolderID) {
     };
 }
 
-function deleteComplete(folderId: TFolderID) {
+function updateFoldersAfterDelete(folderId: TFolderID) {
+    return (dispatch: IDispatch, getState: IGetState) => {
+        const { folders } = getState().foldersStore;
+        const updatedFolders = folders.delete(folderId);
+        dispatch(deleteComplete(updatedFolders));
+    };
+}
+
+function deleteComplete(folders: TFolders) {
     return {
         type: FOLDERS_DELETE_COMPLETE,
-        folderId
+        folders
     };
 }
 
