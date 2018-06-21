@@ -23,16 +23,6 @@ const authReducer = (state = INITIAL_STATE, action: IAuthAction) => {
                 ...state,
                 isAuthorized: false
             };
-        case AUTH_TOKEN_IS_VALIDATING:
-            return {
-                ...state,
-                isValidatingToken: true
-            };
-        case AUTH_TOKEN_VALIDATION_COMPLETE:
-            return {
-                ...state,
-                isValidatingToken: false
-            };
         case AUTH_USER_IS_AUTHENTIC:
             return {
                 ...state,
