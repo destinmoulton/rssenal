@@ -11,17 +11,10 @@ import { feedsDecrementUnread, feedsUpdateUnreadCount } from "./feeds.actions";
 import { filterVisibleEntries } from "./filter.actions";
 import { message } from "./messages.actions";
 
-import {
-    IDispatch,
-    IEntry,
-    IGetState,
-    TFeedID,
-    TEntryID,
-    TEntries
-} from "../../types";
+import * as Types from "../../types";
 
-export function getEntriesForFeed(feedId: TFeedID) {
-    return (dispatch: IDispatch, getState: IGetState) => {
+export function getEntriesForFeed(feedId: Types.TFeedID) {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { settingsStore } = getState();
 
         const setting = settingsStore.settings.get(SETTING_SHOW_ENTRIES_READ);
@@ -54,11 +47,11 @@ export function getEntriesForFeed(feedId: TFeedID) {
     };
 }
 
-function ammendEntries(entries: IEntry[]) {
-    return (dispatch: IDispatch, getState: IGetState) => {
+function ammendEntries(entries: Types.IEntry[]) {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { feedsStore, filterStore } = getState();
 
-        const ammendedEntries = entries.map((entry: IEntry) => {
+        const ammendedEntries = entries.map((entry: Types.IEntry) => {
             const feedTitle = feedsStore.feeds.get(entry.feed_id).title;
             const timeAgo = moment(entry.publish_date).fromNow();
             return {
@@ -73,8 +66,8 @@ function ammendEntries(entries: IEntry[]) {
     };
 }
 
-function getEntriesComplete(entries: IEntry[]) {
-    return (dispatch: IDispatch, getState: IGetState) => {
+function getEntriesComplete(entries: Types.IEntry[]) {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { entriesStore, filterStore } = getState();
         const currentEntries = entriesStore.entries;
 
@@ -87,8 +80,8 @@ function getEntriesComplete(entries: IEntry[]) {
     };
 }
 
-export function updateReadState(entry: IEntry, hasRead: boolean) {
-    return (dispatch: IDispatch) => {
+export function updateReadState(entry: Types.IEntry, hasRead: boolean) {
+    return (dispatch: Types.IDispatch) => {
         const url = API_ENTRIES_BASE + entry._id;
         const init = {
             method: "PUT",
@@ -113,8 +106,8 @@ export function updateReadState(entry: IEntry, hasRead: boolean) {
     };
 }
 
-function entryAmmendMarkRead(entryId: TEntryID) {
-    return (dispatch: IDispatch, getState: IGetState) => {
+function entryAmmendMarkRead(entryId: Types.TEntryID) {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { entriesStore } = getState();
         const allEntries = entriesStore.entries;
         const entry = allEntries.get(entryId);
@@ -128,20 +121,22 @@ function entryAmmendMarkRead(entryId: TEntryID) {
 }
 
 export function entriesClearAll() {
-    return (dispatch: IDispatch) => {
-        dispatch(entriesSetAndFilter(OrderedMap<TEntryID, IEntry>()));
+    return (dispatch: Types.IDispatch) => {
+        dispatch(
+            entriesSetAndFilter(OrderedMap<Types.TEntryID, Types.IEntry>())
+        );
     };
 }
 
-function entriesSetAndFilter(entries: TEntries) {
-    return (dispatch: IDispatch, getState: IGetState) => {
+function entriesSetAndFilter(entries: Types.TEntries) {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { filterStore } = getState();
         dispatch(entriesSetAll(entries));
         dispatch(filterVisibleEntries(filterStore.filter, entries));
     };
 }
 
-function entriesSetAll(entries: TEntries) {
+function entriesSetAll(entries: Types.TEntries) {
     return {
         type: ENTRIES_SET_ALL,
         entries
