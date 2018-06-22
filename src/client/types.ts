@@ -188,5 +188,5 @@ export type TSettings = Map<string, ISetting>;
 
 export interface ISettingsAction {
     type: string;
-    settings: TSettings;
+    settings?: TSettings;
 }
