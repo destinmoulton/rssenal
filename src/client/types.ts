@@ -64,7 +64,7 @@ export type TFeeds = OrderedMap<TFeedID, IFeed>;
 
 export interface IFeedsAction {
     type: string;
-    feeds?: IFeed[];
+    feeds?: TFeeds;
     unreadMap?: IFeedsUnreadMap;
 }
 
