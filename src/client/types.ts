@@ -103,7 +103,7 @@ export type TFolders = OrderedMap<TFolderID, IFolder>;
 
 export interface IFolderAction {
     type: string;
-    folders?: IFolder[];
+    folders?: TFolders;
 }
 
 /** Messages Interfaces */
