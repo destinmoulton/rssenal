@@ -1,75 +1,55 @@
-import { Map, OrderedMap } from "immutable";
+import * as ACT_TYPES from "../actiontypes";
 
-import {
-    FOLDERS_FETCHING,
-    FOLDERS_RECEIVED,
-    FOLDERS_ADD_BEGIN,
-    FOLDERS_ADD_COMPLETE,
-    FOLDERS_DELETE_BEGIN,
-    FOLDERS_DELETE_COMPLETE,
-    FOLDERS_UPDATE_BEGIN,
-    FOLDERS_UPDATE_COMPLETE
-} from "../actiontypes";
+import { IFolderAction } from "../../types";
+import { FOLDERS_INITIAL_STATE } from "../initialstate";
 
-import {
-    TFolderID,
-    IFolder,
-    IFolderAction,
-    IReducerStateFolders
-} from "../../types";
-
-const INITIAL_STATE: IReducerStateFolders = {
-    folders: OrderedMap<TFolderID, IFolder>(),
-    hasFolders: false,
-    isDeletingFolder: false,
-    isFetchingFolders: false,
-    isSavingFolder: false
-};
-
-const foldersReducer = function(state = INITIAL_STATE, action: IFolderAction) {
+const foldersReducer = function(
+    state = FOLDERS_INITIAL_STATE,
+    action: IFolderAction
+) {
     switch (action.type) {
-        case FOLDERS_FETCHING:
+        case ACT_TYPES.FOLDERS_FETCHING:
             return {
                 ...state,
                 isFetchingFolders: true
             };
-        case FOLDERS_RECEIVED:
+        case ACT_TYPES.FOLDERS_RECEIVED:
             return {
                 ...state,
                 folders: action.folders,
                 hasFolders: true
             };
-        case FOLDERS_ADD_BEGIN:
+        case ACT_TYPES.FOLDERS_ADD_BEGIN:
             return {
                 ...state,
                 isSavingFolder: true
             };
-        case FOLDERS_ADD_COMPLETE: {
+        case ACT_TYPES.FOLDERS_ADD_COMPLETE: {
             return {
                 ...state,
                 folders: action.folders,
                 isSavingFolder: false
             };
         }
-        case FOLDERS_DELETE_BEGIN:
+        case ACT_TYPES.FOLDERS_DELETE_BEGIN:
             return {
                 ...state,
                 isDeletingFolder: true
             };
-        case FOLDERS_DELETE_COMPLETE: {
+        case ACT_TYPES.FOLDERS_DELETE_COMPLETE: {
             return {
                 ...state,
                 folders: action.folders,
                 isDeletingFolder: false
             };
         }
-        case FOLDERS_UPDATE_BEGIN: {
+        case ACT_TYPES.FOLDERS_UPDATE_BEGIN: {
             return {
                 ...state,
                 isSavingFolder: true
             };
         }
-        case FOLDERS_UPDATE_COMPLETE: {
+        case ACT_TYPES.FOLDERS_UPDATE_COMPLETE: {
             return {
                 ...state,
                 folders: action.folders,
