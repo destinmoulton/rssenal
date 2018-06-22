@@ -23,3 +23,9 @@ export const FEEDS_INITIAL_STATE: Types.IReducerStateFeeds = {
     isAddingFeed: false,
     isUpdatingFeed: false
 };
+
+export const FILTER_INITIAL_STATE: Types.IReducerStateFilter = {
+    filter: { limit: "folder", id: "all" },
+    filterTitle: "All",
+    filteredEntries: OrderedMap<Types.TEntryID, Types.IEntry>()
+};

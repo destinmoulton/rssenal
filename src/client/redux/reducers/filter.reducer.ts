@@ -1,15 +1,13 @@
-import { OrderedMap } from "immutable";
 import { FILTER_CHANGE, FILTER_RESET } from "../actiontypes";
 
 import * as Types from "../../types";
 
-const INITIAL_STATE: Types.IReducerStateFilter = {
-    filter: { limit: "folder", id: "all" },
-    filterTitle: "All",
-    filteredEntries: OrderedMap<Types.TEntryID, Types.IEntry>()
-};
+import { FILTER_INITIAL_STATE } from "../initialstate";
 
-function filterReducer(state = INITIAL_STATE, action: Types.IFilterAction) {
+function filterReducer(
+    state = FILTER_INITIAL_STATE,
+    action: Types.IFilterAction
+) {
     switch (action.type) {
         case FILTER_CHANGE: {
             return {
@@ -21,7 +19,7 @@ function filterReducer(state = INITIAL_STATE, action: Types.IFilterAction) {
         }
         case FILTER_RESET: {
             return {
-                ...INITIAL_STATE
+                ...FILTER_INITIAL_STATE
             };
         }
         default:
