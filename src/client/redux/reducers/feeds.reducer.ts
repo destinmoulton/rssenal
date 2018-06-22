@@ -2,28 +2,14 @@ import { Map, OrderedMap, Set } from "immutable";
 
 import * as ACT_TYPES from "../actiontypes";
 
-import {
-    TFeedID,
-    IFeed,
-    IFeedsAction,
-    IFeedsUnreadMap,
-    IReducerStateFeeds
-} from "../../types";
+import * as Types from "../../types";
 
-const INITIAL_UNREAD_MAP: IFeedsUnreadMap = {
-    entriesCounted: Set<TFeedID>(),
-    feeds: Map<TFeedID, number>(),
-    folders: Map<string, number>()
-};
+import { FEEDS_INITIAL_STATE, FEEDS_INITIAL_UNREAD_MAP } from "../initialstate";
 
-const INITIAL_STATE: IReducerStateFeeds = {
-    feeds: OrderedMap<TFeedID, IFeed>(),
-    unreadMap: INITIAL_UNREAD_MAP,
-    isAddingFeed: false,
-    isUpdatingFeed: false
-};
-
-function feedsReducer(state = INITIAL_STATE, action: IFeedsAction) {
+function feedsReducer(
+    state = FEEDS_INITIAL_STATE,
+    action: Types.IFeedsAction
+): Types.IReducerStateFeeds {
     switch (action.type) {
         case ACT_TYPES.FEEDS_ADD_BEGIN:
             return {
@@ -52,7 +38,7 @@ function feedsReducer(state = INITIAL_STATE, action: IFeedsAction) {
         case ACT_TYPES.FEEDS_CLEAR_UNREAD: {
             return {
                 ...state,
-                unreadMap: INITIAL_UNREAD_MAP
+                unreadMap: FEEDS_INITIAL_UNREAD_MAP
             };
         }
         case ACT_TYPES.FEEDS_UPDATE_BEGIN:
