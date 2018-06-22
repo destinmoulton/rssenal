@@ -4,7 +4,7 @@ import entriesReducer from "../entries.reducer";
 
 import { ENTRIES_INITIAL_STATE } from "../../initialstate";
 import DATA_ENTRIES from "../../../../../test/data/entries";
-describe("auth reducer", () => {
+describe("entries reducer", () => {
     it("should return initial state", () => {
         const reduction = entriesReducer(undefined, { type: null });
 
