@@ -1,5 +1,6 @@
 import { List, Map, OrderedMap, Set } from "immutable";
 import * as Types from "../types";
+import { DEFAULT_SETTINGS } from "../constants";
 
 export const AUTH_INITIAL_STATE: Types.IReducerStateAuth = {
     authenticationError: "",
@@ -41,4 +42,8 @@ export const FOLDERS_INITIAL_STATE: Types.IReducerStateFolders = {
 export const MESSAGES_INITIAL_STATE: Types.IReducerStateMessages = {
     messages: List(),
     lastUID: 0
+};
+
+export const SETTINGS_INITIAL_STATE: Types.IReducerStateSettings = {
+    settings: Map(DEFAULT_SETTINGS)
 };
