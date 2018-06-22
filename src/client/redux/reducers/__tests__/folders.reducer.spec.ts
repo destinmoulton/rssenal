@@ -1,9 +1,4 @@
-import { Map, Set } from "immutable";
-
 import * as ACT_TYPES from "../../actiontypes";
-import DATA_ENTRY from "../../../../../test/data/entry";
-import DATA_FEEDS from "../../../../../test/data/feeds";
-import DATA_FEED from "../../../../../test/data/feed";
 import DATA_FOLDERS from "../../../../../test/data/folders";
 import foldersReducer from "../folders.reducer";
 
@@ -77,6 +72,19 @@ describe("folders reducer", () => {
         });
     });
 
+    it("should reduce FOLDERS_DELETE_COMPLETE", () => {
+        const action: Types.IFolderAction = {
+            type: ACT_TYPES.FOLDERS_DELETE_COMPLETE,
+            folders: DATA_FOLDERS
+        };
+        const reduction = foldersReducer(undefined, action);
+        expect(reduction).toEqual({
+            ...FOLDERS_INITIAL_STATE,
+            isDeletingFolder: false,
+            folders: DATA_FOLDERS
+        });
+    });
+
     it("should reduce FOLDERS_UPDATE_BEGIN", () => {
         const action: Types.IFolderAction = {
             type: ACT_TYPES.FOLDERS_UPDATE_BEGIN
@@ -85,6 +93,19 @@ describe("folders reducer", () => {
         expect(reduction).toEqual({
             ...FOLDERS_INITIAL_STATE,
             isSavingFolder: true
+        });
+    });
+
+    it("should reduce FOLDERS_UPDATE_COMPLETE", () => {
+        const action: Types.IFolderAction = {
+            type: ACT_TYPES.FOLDERS_UPDATE_COMPLETE,
+            folders: DATA_FOLDERS
+        };
+        const reduction = foldersReducer(undefined, action);
+        expect(reduction).toEqual({
+            ...FOLDERS_INITIAL_STATE,
+            isSavingFolder: false,
+            folders: DATA_FOLDERS
         });
     });
 });
