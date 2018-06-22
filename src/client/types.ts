@@ -1,5 +1,5 @@
 import { List, Map, OrderedMap, Set } from "immutable";
-
+import { Notification } from "react-notification-system";
 /** Redux Interfaces */
 export interface IDispatch {
     <R>(
@@ -109,8 +109,8 @@ export interface IFolderAction {
 /** Messages Interfaces */
 export interface IMessage {
     message: string;
-    type: string;
-    uid?: number;
+    level: "error" | "warning" | "info" | "success";
+    uid: number;
     onRemove?: (message: IMessage) => void;
     position?: "br" | "tr" | "tl" | "tc" | "bl" | "bc";
 }
@@ -119,7 +119,8 @@ export type TMessages = List<IMessage>;
 
 export interface IMessageAction {
     type: string;
-    message?: IMessage;
+    messages: List<IMessage>;
+    lastUID?: number;
 }
 
 /** Redux Reducer Interfaces */
