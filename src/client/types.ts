@@ -110,7 +110,7 @@ export interface IFolderAction {
 export interface IMessage {
     message: string;
     level: "error" | "warning" | "info" | "success";
-    uid: number;
+    uid?: number;
     onRemove?: (message: IMessage) => void;
     position?: "br" | "tr" | "tl" | "tc" | "bl" | "bc";
 }
