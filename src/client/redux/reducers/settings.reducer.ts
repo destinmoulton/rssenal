@@ -1,15 +1,11 @@
-import { Map } from "immutable";
-
 import { SETTINGS_CHANGE } from "../actiontypes";
-import { DEFAULT_SETTINGS } from "../../constants";
-
+import { SETTINGS_INITIAL_STATE } from "../initialstate";
 import * as Types from "../../types";
 
-const INITIAL_STATE: Types.IReducerStateSettings = {
-    settings: Map(DEFAULT_SETTINGS)
-};
-
-function settingsReducer(state = INITIAL_STATE, action: Types.ISettingsAction) {
+function settingsReducer(
+    state = SETTINGS_INITIAL_STATE,
+    action: Types.ISettingsAction
+) {
     switch (action.type) {
         case SETTINGS_CHANGE:
             return {
