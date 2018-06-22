@@ -1,6 +1,9 @@
-import { MESSAGES_ADD, MESSAGES_REMOVE } from "../actiontypes";
+import {
+    MESSAGES_ADD_COMPLETE,
+    MESSAGES_REMOVE_COMPLETE
+} from "../actiontypes";
 
-import { IMessage, IMessageAction, IReducerStateMessages } from "../../types";
+import { IMessageAction } from "../../types";
 
 import { MESSAGES_INITIAL_STATE } from "../initialstate";
 
@@ -9,23 +12,16 @@ const messagesReducer = function(
     action: IMessageAction
 ) {
     switch (action.type) {
-        case MESSAGES_ADD:
-            const nextUID = state.lastUID + 1;
-            const newMessage = (Object as any).assign({}, action.message);
-            newMessage.uid = nextUID;
+        case MESSAGES_ADD_COMPLETE:
             return {
                 ...state,
-                messages: state.messages.push(newMessage),
-                lastUID: nextUID
+                messages: action.messages,
+                lastUID: action.lastUID
             };
-        case MESSAGES_REMOVE:
-            const index = state.messages.findIndex((message: IMessage) => {
-                return message.uid === action.message.uid;
-            });
-
+        case MESSAGES_REMOVE_COMPLETE:
             return {
                 ...state,
-                messages: state.messages.remove(index)
+                messages: action.messages
             };
         default:
             return state;
