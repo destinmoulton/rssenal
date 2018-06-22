@@ -17,6 +17,7 @@ const foldersReducer = function(
             return {
                 ...state,
                 folders: action.folders,
+                isFetchingFolders: false,
                 hasFolders: true
             };
         case ACT_TYPES.FOLDERS_ADD_BEGIN:

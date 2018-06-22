@@ -29,3 +29,11 @@ export const FILTER_INITIAL_STATE: Types.IReducerStateFilter = {
     filterTitle: "All",
     filteredEntries: OrderedMap<Types.TEntryID, Types.IEntry>()
 };
+
+export const FOLDERS_INITIAL_STATE: Types.IReducerStateFolders = {
+    folders: OrderedMap<Types.TFolderID, Types.IFolder>(),
+    hasFolders: false,
+    isDeletingFolder: false,
+    isFetchingFolders: false,
+    isSavingFolder: false
+};
