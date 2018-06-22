@@ -1,4 +1,4 @@
-import { Map, OrderedMap, Set } from "immutable";
+import { List, Map, OrderedMap, Set } from "immutable";
 import * as Types from "../types";
 
 export const AUTH_INITIAL_STATE: Types.IReducerStateAuth = {
@@ -36,4 +36,9 @@ export const FOLDERS_INITIAL_STATE: Types.IReducerStateFolders = {
     isDeletingFolder: false,
     isFetchingFolders: false,
     isSavingFolder: false
+};
+
+export const MESSAGES_INITIAL_STATE: Types.IReducerStateMessages = {
+    messages: List(),
+    lastUID: 0
 };
