@@ -4,9 +4,9 @@ describe("lib/storage.ts", () => {
     beforeEach(() => {
         localStorage.clear();
     });
+
     it("set() works", () => {
         expect(storage.set("test", "CONTENT")).toBe(true);
-        expect(storage.has("test")).toBe(true);
     });
 
     it("has() works", () => {
