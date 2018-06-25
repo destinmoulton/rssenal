@@ -12,8 +12,6 @@ const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
 
 describe("messages redux actions", () => {
-    afterEach(() => {});
-
     it("message action fires MESSAGES_ADD_COMPLETE", () => {
         const messageText = "TEST MESSAGE";
         const level = "error";
