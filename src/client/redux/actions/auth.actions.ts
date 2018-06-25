@@ -1,6 +1,6 @@
 import { API_AUTH_LOGIN, API_AUTH_VALIDATE_TOKEN } from "../apiendpoints";
 import { generateJSONHeaders, generateJWTHeaders } from "../../lib/headers";
-
+import storage from "../../lib/storage";
 import {
     AUTH_ERROR,
     AUTH_LOGOUT,
@@ -52,7 +52,7 @@ export function authLoginUser(username: string, password: string) {
             })
             .then(auth => {
                 if (auth.status === "success") {
-                    localStorage.setItem("jwt_token", auth.token);
+                    storage.set("jwt_token", auth.token);
                     dispatch(userIsAuthentic());
                 } else {
                     dispatch(
@@ -80,7 +80,7 @@ function authenticationError(message: string) {
 }
 
 export function authLogoutUser() {
-    localStorage.removeItem("jwt_token");
+    storage.remove("jwt_token");
     return {
         type: AUTH_LOGOUT
     };
