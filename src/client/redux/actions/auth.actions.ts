@@ -16,7 +16,7 @@ export function authValidateToken() {
             method: "GET",
             headers: generateJWTHeaders()
         };
-        fetch(url, init)
+        return fetch(url, init)
             .then(res => {
                 if (!res.ok) {
                     return { status: "invalid" };
@@ -46,7 +46,7 @@ export function authLoginUser(username: string, password: string) {
             headers: generateJSONHeaders()
         };
 
-        fetch(url, init)
+        return fetch(url, init)
             .then(res => {
                 return res.json();
             })
