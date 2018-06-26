@@ -14,6 +14,7 @@ describe("auth.actions", () => {
     afterEach(() => {
         fetchMock.reset();
         fetchMock.restore();
+        localStorage.clear();
     });
 
     it("authValidateToken() fetches and handles an invalid response", () => {
@@ -80,8 +81,9 @@ describe("auth.actions", () => {
     });
 
     it("authLoginUser() authenticates when the credentials are correct", () => {
+        const testToken = "TESTJWTTOKEN";
         fetchMock.postOnce("/api/auth/login", {
-            body: { status: "success" },
+            body: { status: "success", token: testToken },
             status: 200
         });
 
@@ -96,10 +98,12 @@ describe("auth.actions", () => {
             .dispatch(AuthActions.authLoginUser("TESTUSER", "TESTPASS"))
             .then(() => {
                 expect(store.getActions()).toEqual(expectedActions);
+                expect(localStorage.getItem("jwt_token")).toBe(testToken);
             });
     });
 
     it("authLogoutUser() logs out the user", () => {
+        const testToken = "TESTJWTTOKEN";
         const expectedActions = [
             {
                 type: ACT_TYPES.AUTH_LOGOUT
@@ -107,7 +111,9 @@ describe("auth.actions", () => {
         ];
 
         const store = mockStore({ authStore: AUTH_INITIAL_STATE });
+        localStorage.setItem("jwt_token", testToken);
         store.dispatch(AuthActions.authLogoutUser());
         expect(store.getActions()).toEqual(expectedActions);
+        expect(localStorage.getItem("jwt_token")).toBe(null);
     });
 });
