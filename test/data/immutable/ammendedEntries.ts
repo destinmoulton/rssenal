@@ -1,10 +1,10 @@
 import { OrderedMap } from "immutable";
 import { readFileSync } from "fs";
 import { resolve } from "path";
-import * as Types from "../../src/client/types";
+import * as Types from "../../../src/client/types";
 
 const ammendedEntriesJSON = readFileSync(
-    resolve(__dirname + "/json/ammendedEntries.json")
+    resolve(__dirname + "/../json/ammendedEntries.json")
 );
 const entriesArray = JSON.parse(ammendedEntriesJSON.toString());
 

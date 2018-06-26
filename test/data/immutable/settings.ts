@@ -1,5 +1,5 @@
 import { Map } from "immutable";
-import * as Types from "../../src/client/types";
+import * as Types from "../../../src/client/types";
 const settings = [
     [
         "show_images",
