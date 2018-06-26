@@ -25,7 +25,7 @@ export function entriesGetAllForFeed(feedId: Types.TFeedID) {
             headers: generateJWTHeaders()
         };
 
-        fetch(url, init)
+        return fetch(url, init)
             .then(res => {
                 return res.json();
             })
@@ -85,7 +85,7 @@ export function entryUpdateHasRead(entry: Types.IEntry, hasRead: boolean) {
             headers: generateJWTJSONHeaders()
         };
 
-        fetch(url, init)
+        return fetch(url, init)
             .then(res => {
                 return res.json();
             })
