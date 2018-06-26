@@ -1,8 +1,9 @@
+export default `
 {
     "status": "success",
     "entries": [
         {
-            "has_read": false,
+            "has_read": true,
             "_id": "5b32bf8ab2438d5708dc1949",
             "feed_id": "5a54f74e38e78863ac6a8962",
             "guid": "http://tynan.com/kazakhstan",
@@ -17,7 +18,7 @@
             "__v": 0
         },
         {
-            "has_read": false,
+            "has_read": true,
             "_id": "5b2412c8b2438d5708dc1860",
             "feed_id": "5a54f74e38e78863ac6a8962",
             "guid": "http://tynan.com/boring",
@@ -33,3 +34,4 @@
         }
     ]
 }
+`;
