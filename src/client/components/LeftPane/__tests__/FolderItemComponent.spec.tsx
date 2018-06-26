@@ -4,7 +4,7 @@ import * as React from "react";
 import { shallow } from "enzyme";
 import * as Types from "../../../types";
 import FolderItemComponent from "../FolderItemComponent";
-import feeds from "../../../../../test/data/feeds";
+import feeds from "../../../../../test/data/immutable/feeds";
 import folder from "../../../../../test/data/folder";
 
 const FILTER = {

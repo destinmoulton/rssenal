@@ -3,7 +3,7 @@ import * as React from "react";
 import { shallow } from "enzyme";
 import ListFeeds from "../ListFeeds";
 
-import feeds from "../../../../../test/data/feeds";
+import feeds from "../../../../../test/data/immutable/feeds";
 
 describe("<ListFeeds />", () => {
     it("renders and matches the snapshot", () => {

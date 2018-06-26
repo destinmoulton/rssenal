@@ -19,6 +19,9 @@ describe("entries.actions", () => {
 
     it("entriesGetAllForFeed() fetches and ammends entries", () => {
         fetchMock.getOnce("/api/entries/", {
+            body: {
+                
+            }
             status: 200
         });
 
