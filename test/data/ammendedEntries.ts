@@ -3,10 +3,10 @@ import { readFileSync } from "fs";
 import { resolve } from "path";
 import * as Types from "../../src/client/types";
 
-const entriesJson = readFileSync(
-    resolve(__dirname + "/../rawdata/entries.raw.json")
+const ammendedEntriesJSON = readFileSync(
+    resolve(__dirname + "/../rawdata/ammendedEntries.json")
 );
-const entriesArray = JSON.parse(entriesJson.toString());
+const entriesArray = JSON.parse(ammendedEntriesJSON.toString());
 
 let entriesOrderedMap: Types.TEntries = OrderedMap();
 entriesArray.map((entry: Types.IEntry) => {
