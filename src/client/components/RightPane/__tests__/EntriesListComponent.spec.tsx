@@ -2,7 +2,7 @@ import * as React from "react";
 import { shallow } from "enzyme";
 import EntriesListComponent from "../EntriesListComponent";
 
-import ENTRIES from "../../../../../test/data/entries";
+import ENTRIES from "../../../../../test/data/ammendedEntries";
 import FEEDS from "../../../../../test/data/feeds";
 import SETTINGS_DATA from "../../../../../test/data/settings";
 const FILTER = {
