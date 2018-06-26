@@ -4,7 +4,7 @@ import { resolve } from "path";
 import * as Types from "../../src/client/types";
 
 const ammendedEntriesJSON = readFileSync(
-    resolve(__dirname + "/../rawdata/ammendedEntries.json")
+    resolve(__dirname + "/json/ammendedEntries.json")
 );
 const entriesArray = JSON.parse(ammendedEntriesJSON.toString());
 
