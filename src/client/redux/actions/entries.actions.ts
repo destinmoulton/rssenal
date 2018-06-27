@@ -46,8 +46,8 @@ export function entriesGetAllForFeed(feedId: Types.TFeedID) {
 
 function ammendEntries(entries: Types.IEntry[]) {
     return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
-        const { feedsStore } = getState();
-
+        const { entriesStore, feedsStore } = getState();
+        const currentEntries = entriesStore.entries;
         const ammendedEntries = entries.map((entry: Types.IEntry) => {
             const feedTitle = feedsStore.feeds.get(entry.feed_id).title;
             const timeAgo = moment(entry.publish_date).fromNow();
@@ -57,15 +57,6 @@ function ammendEntries(entries: Types.IEntry[]) {
                 timeAgo
             };
         });
-        dispatch(getEntriesComplete(ammendedEntries));
-        dispatch(feedsUpdateUnreadCount(ammendedEntries));
-    };
-}
-
-function getEntriesComplete(entries: Types.IEntry[]) {
-    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
-        const { entriesStore } = getState();
-        const currentEntries = entriesStore.entries;
 
         let newEntries = currentEntries.toOrderedMap();
         entries.forEach(entry => {
@@ -73,6 +64,7 @@ function getEntriesComplete(entries: Types.IEntry[]) {
         });
 
         dispatch(entriesSetAndFilter(newEntries));
+        dispatch(feedsUpdateUnreadCount(ammendedEntries));
     };
 }
 
