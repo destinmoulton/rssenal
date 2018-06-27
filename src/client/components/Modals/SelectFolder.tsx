@@ -1,9 +1,8 @@
 import * as React from "react";
-import { connect } from "react-redux";
 
 import { Dropdown } from "semantic-ui-react";
 
-import { IRootStoreState, TFolders, TFolderID } from "../../types";
+import { TFolders, TFolderID } from "../../types";
 
 interface ISelectFolderProps {
     onChange: (folderId: TFolderID) => void;
