@@ -198,7 +198,7 @@ class AddFeedModalComponent extends React.Component<
     }
 
     _buildFeedInfo() {
-        const { feedInfo, feedURL } = this.state;
+        const { feedInfo, feedURL, folderId } = this.state;
         const { folders } = this.props;
 
         const description =
@@ -222,7 +222,7 @@ class AddFeedModalComponent extends React.Component<
                 <Segment attached="bottom">
                     <SelectFolder
                         onChange={this._handleSelectFolder}
-                        selectedValue={"0"}
+                        selectedValue={folderId}
                         folders={folders}
                     />
                 </Segment>
