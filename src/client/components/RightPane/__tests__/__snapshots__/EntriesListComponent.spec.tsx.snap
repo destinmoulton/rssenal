@@ -8,22 +8,22 @@ exports[`<EntriesListComponent /> renders and matches the snapshot 1`] = `
     entry={
       Object {
         "__v": 0,
-        "_id": "5b28050db2438d5708dc188f",
-        "content": "<p><img class=\\"alignnone size-full wp-image-3763\\" src=\\"https://www.reviewgeek.com/p/uploads/2018/05/d98f911b.png\\" alt=\\"\\" width=\\"2000\\" height=\\"1125\\" /></p> <p>Bluetooth PC mice aren’t hard to find, but the sheer variety of options can be intimidating.<p><h3><a href='https://www.reviewgeek.com/3762/the-best-bluetooth-mouse-for-every-user/'>Click Here to Continue Reading</a></h3></p>",
-        "content_snippet": "<p><img class=\\"alignnone size-full wp-image-3763\\" src=\\"https://www.reviewgeek.com/p/uploads/2018/05/d98f911b.png\\" alt=\\"\\" width=\\"2000\\" height=\\"1125\\" /></p> <p>Bluetooth PC mice aren’t hard to find, but the sheer variety of options can be intimidating.<p><h3><a href='https://www.reviewgeek.com/3762/the-best-bluetooth-mouse-for-every-user/'>Click Here to Continue Reading</a></h3></p>",
-        "creator": "Michael Crider",
-        "feedTitle": "How-To Geek",
-        "feed_id": "5a54fb1338e78863ac6a89b1",
-        "guid": "https://www.reviewgeek.com/3762/the-best-bluetooth-mouse-for-every-user/",
+        "_id": "5b33c76cb2438d5708dc1987",
+        "content": "<p>Content for Open Source Database HA Resources from Severalnines</p>",
+        "content_snippet": "<p>Content for Open Source Database HA Resources from Severalnines</p>",
+        "creator": "Forrest Lymburner",
+        "feedTitle": "High Scalability",
+        "feed_id": "5b33c76cb2438d5708dc197e",
+        "guid": "426227:4867632:36078004",
         "has_read": false,
-        "link": "https://www.reviewgeek.com/3762/the-best-bluetooth-mouse-for-every-user/",
-        "publish_date": "2018-06-18T16:00:59.000Z",
-        "timeAgo": "3 hours ago",
-        "title": "The Best Bluetooth Mouse For Every User",
+        "link": "http://feedproxy.google.com/~r/HighScalability/~3/FFJQudxO2bU/open-source-database-ha-resources-from-severalnines.html",
+        "publish_date": "2018-06-08T19:46:22.000Z",
+        "timeAgo": "19 days ago",
+        "title": "Open Source Database HA Resources from Severalnines",
       }
     }
     isActive={false}
-    key="5b28050db2438d5708dc188f"
+    key="5b33c76cb2438d5708dc1987"
     shouldShowImages={true}
     toggleEntry={[Function]}
   />
@@ -31,22 +31,22 @@ exports[`<EntriesListComponent /> renders and matches the snapshot 1`] = `
     entry={
       Object {
         "__v": 0,
-        "_id": "5b28050db2438d5708dc1890",
-        "content": "Think you know the answer? Click through to see if you're right!",
-        "content_snippet": "Think you know the answer? Click through to see if you're right!",
-        "creator": "Jason Fitzpatrick",
-        "feedTitle": "How-To Geek",
-        "feed_id": "5a54fb1338e78863ac6a89b1",
-        "guid": "https://www.howtogeek.com/?post_type=trivia&p=356334",
+        "_id": "5b33c76cb2438d5708dc1985",
+        "content": "<p>Content for June 15th, 2018</p>",
+        "content_snippet": "<p>Content for June 15th, 2018</p>",
+        "creator": "Todd Hoff",
+        "feedTitle": "High Scalability",
+        "feed_id": "5b33c76cb2438d5708dc197e",
+        "guid": "426227:4867632:36079455",
         "has_read": false,
-        "link": "https://www.howtogeek.com/trivia/the-most-venomous-fish-in-the-world-is-the/",
-        "publish_date": "2018-06-18T17:37:55.000Z",
-        "timeAgo": "2 hours ago",
-        "title": "Geek Trivia: The Most Venomous Fish In The World Is The?",
+        "link": "http://feedproxy.google.com/~r/HighScalability/~3/sacuGsRa2G0/stuff-the-internet-says-on-scalability-for-june-15th-2018.html",
+        "publish_date": "2018-06-15T15:57:00.000Z",
+        "timeAgo": "12 days ago",
+        "title": "Stuff The Internet Says On Scalability For June 15th, 2018",
       }
     }
     isActive={false}
-    key="5b28050db2438d5708dc1890"
+    key="5b33c76cb2438d5708dc1985"
     shouldShowImages={true}
     toggleEntry={[Function]}
   />
@@ -54,22 +54,22 @@ exports[`<EntriesListComponent /> renders and matches the snapshot 1`] = `
     entry={
       Object {
         "__v": 0,
-        "_id": "5b28050db2438d5708dc188e",
-        "content": "<p><img class=\\"alignnone size-full wp-image-4681\\" src=\\"https://www.reviewgeek.com/p/uploads/2018/06/45d3b776.jpg\\" alt=\\"\\" width=\\"2000\\" height=\\"1125\\" /></p> <p>A French press is a great way to enjoy really delicious coffee without a lot of effort.<p><h3><a href='https://www.reviewgeek.com/4621/the-best-french-press-coffee-makers-for-every-budget/'>Click Here to Continue Reading</a></h3></p>",
-        "content_snippet": "<p><img class=\\"alignnone size-full wp-image-4681\\" src=\\"https://www.reviewgeek.com/p/uploads/2018/06/45d3b776.jpg\\" alt=\\"\\" width=\\"2000\\" height=\\"1125\\" /></p> <p>A French press is a great way to enjoy really delicious coffee without a lot of effort.<p><h3><a href='https://www.reviewgeek.com/4621/the-best-french-press-coffee-makers-for-every-budget/'>Click Here to Continue Reading</a></h3></p>",
-        "creator": "Jennifer Allen",
-        "feedTitle": "How-To Geek",
-        "feed_id": "5a54fb1338e78863ac6a89b1",
-        "guid": "https://www.reviewgeek.com/4621/the-best-french-press-coffee-makers-for-every-budget/",
+        "_id": "5b33c76cb2438d5708dc1983",
+        "content": "<p>Content for How Ably Efficiently Implemented Consistent Hashing</p>",
+        "content_snippet": "<p>Content for How Ably Efficiently Implemented Consistent Hashing</p>",
+        "creator": "Todd Hoff",
+        "feedTitle": "High Scalability",
+        "feed_id": "5b33c76cb2438d5708dc197e",
+        "guid": "426227:4867632:36081325",
         "has_read": false,
-        "link": "https://www.reviewgeek.com/4621/the-best-french-press-coffee-makers-for-every-budget/",
-        "publish_date": "2018-06-18T18:00:38.000Z",
-        "timeAgo": "an hour ago",
-        "title": "The Best French Press Coffee Makers For Every Budget",
+        "link": "http://feedproxy.google.com/~r/HighScalability/~3/EU6Dy48k59o/how-ably-efficiently-implemented-consistent-hashing.html",
+        "publish_date": "2018-06-18T16:06:17.000Z",
+        "timeAgo": "9 days ago",
+        "title": "How Ably Efficiently Implemented Consistent Hashing",
       }
     }
     isActive={false}
-    key="5b28050db2438d5708dc188e"
+    key="5b33c76cb2438d5708dc1983"
     shouldShowImages={true}
     toggleEntry={[Function]}
   />
@@ -77,22 +77,45 @@ exports[`<EntriesListComponent /> renders and matches the snapshot 1`] = `
     entry={
       Object {
         "__v": 0,
-        "_id": "5b28050db2438d5708dc1891",
-        "content": "If you don&#8217;t use a password manager, those complex passwords can be pretty hard to remember. If you&#8217;ve forgotten your Facebook password, you can&#8217;t really recover that same password, but it&#8217;s easy enough to recover your account by resetting your password to something new.",
-        "content_snippet": "If you don&#8217;t use a password manager, those complex passwords can be pretty hard to remember. If you&#8217;ve forgotten your Facebook password, you can&#8217;t really recover that same password, but it&#8217;s easy enough to recover your account by resetting your password to something new.",
-        "creator": "Brady Gavin",
-        "feedTitle": "How-To Geek",
-        "feed_id": "5a54fb1338e78863ac6a89b1",
-        "guid": "https://www.howtogeek.com/?p=355419",
+        "_id": "5b33c76cb2438d5708dc1981",
+        "content": "<p>Content for Sponsored Post: Datadog, InMemory.Net, Triplebyte, Etleap, Scalyr, MemSQL</p>",
+        "content_snippet": "<p>Content for Sponsored Post: Datadog, InMemory.Net, Triplebyte, Etleap, Scalyr, MemSQL</p>",
+        "creator": "Todd Hoff",
+        "feedTitle": "High Scalability",
+        "feed_id": "5b33c76cb2438d5708dc197e",
+        "guid": "426227:4867632:36081782",
         "has_read": false,
-        "link": "https://www.howtogeek.com/355419/how-to-recover-your-forgotten-facebook-password/",
-        "publish_date": "2018-06-18T19:00:00.000Z",
-        "timeAgo": "24 minutes ago",
-        "title": "How To Recover Your Forgotten Facebook Password",
+        "link": "http://feedproxy.google.com/~r/HighScalability/~3/gKe2fkOoT0I/sponsored-post-datadog-inmemorynet-triplebyte-etleap-scalyr.html",
+        "publish_date": "2018-06-19T16:10:13.000Z",
+        "timeAgo": "8 days ago",
+        "title": "Sponsored Post: Datadog, InMemory.Net, Triplebyte, Etleap, Scalyr, MemSQL",
       }
     }
     isActive={false}
-    key="5b28050db2438d5708dc1891"
+    key="5b33c76cb2438d5708dc1981"
+    shouldShowImages={true}
+    toggleEntry={[Function]}
+  />
+  <Entry
+    entry={
+      Object {
+        "__v": 0,
+        "_id": "5b33c76cb2438d5708dc197f",
+        "content": "<p>Content for Stuff The Internet Says On Scalability For June 22nd, 2018</p>",
+        "content_snippet": "<p>Content for Stuff The Internet Says On Scalability For June 22nd, 2018</p>",
+        "creator": "Todd Hoff",
+        "feedTitle": "High Scalability",
+        "feed_id": "5b33c76cb2438d5708dc197e",
+        "guid": "426227:4867632:36082622",
+        "has_read": false,
+        "link": "http://feedproxy.google.com/~r/HighScalability/~3/uqbrISxcA-E/stuff-the-internet-says-on-scalability-for-june-22nd-2018.html",
+        "publish_date": "2018-06-22T15:56:46.000Z",
+        "timeAgo": "5 days ago",
+        "title": "Stuff The Internet Says On Scalability For June 22nd, 2018",
+      }
+    }
+    isActive={false}
+    key="5b33c76cb2438d5708dc197f"
     shouldShowImages={true}
     toggleEntry={[Function]}
   />

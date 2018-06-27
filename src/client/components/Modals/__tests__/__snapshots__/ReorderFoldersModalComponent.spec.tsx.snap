@@ -43,21 +43,9 @@ exports[`<ReorderFoldersModalComponent /> renders and matches the snapshot 1`] =
           Array [
             Object {
               "__v": 0,
-              "_id": "5a54f74838e78863ac6a8961",
-              "name": "Lifestyle",
-              "order": 1,
-            },
-            Object {
-              "__v": 0,
-              "_id": "5a53ec3a94c3905e4a8328d4",
-              "name": "Programming",
-              "order": 2,
-            },
-            Object {
-              "__v": 0,
-              "_id": "5a54fcf538e78863ac6a89f7",
-              "name": "Writing",
-              "order": 3,
+              "_id": "5b33c4bab2438d5708dc1967",
+              "name": "Random",
+              "order": 0,
             },
           ]
         }
