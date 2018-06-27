@@ -33,9 +33,8 @@ export function entriesGetAllForFeed(feedId: Types.TFeedID) {
                 if (resObj.status === "error") {
                     dispatch(message(resObj.error, "error"));
                     console.error(resObj.error);
-                } else {
-                    let entries = resObj.entries;
-                    dispatch(ammendEntries(entries));
+                } else if (Array.isArray(resObj.entries)) {
+                    dispatch(ammendEntries(resObj.entries));
                 }
             })
             .catch(err => {

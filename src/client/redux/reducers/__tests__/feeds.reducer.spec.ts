@@ -2,7 +2,7 @@ import { Map, Set } from "immutable";
 
 import * as ACT_TYPES from "../../actiontypes";
 import DATA_ENTRY from "../../../../../test/data/entry";
-import DATA_FEEDS from "../../../../../test/data/feeds";
+import DATA_FEEDS from "../../../../../test/data/immutable/feeds";
 import DATA_FEED from "../../../../../test/data/feed";
 import DATA_FOLDER from "../../../../../test/data/folder";
 import feedsReducer from "../feeds.reducer";

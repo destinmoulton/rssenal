@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 
 import SettingsModalComponent from "../SettingsModalComponent";
 
-import settings from "../../../../../test/data/settings";
+import settings from "../../../../../test/data/immutable/settings";
 
 describe("<SettingsModalComponent />", () => {
     it("renders and matches the snapshot", () => {

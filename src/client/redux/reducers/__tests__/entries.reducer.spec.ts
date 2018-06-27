@@ -3,7 +3,7 @@ import * as ACT_TYPES from "../../actiontypes";
 import entriesReducer from "../entries.reducer";
 
 import { ENTRIES_INITIAL_STATE } from "../../initialstate";
-import DATA_ENTRIES from "../../../../../test/data/ammendedEntries";
+import DATA_ENTRIES from "../../../../../test/data/immutable/ammendedEntries";
 describe("entries reducer", () => {
     it("should return initial state", () => {
         const reduction = entriesReducer(undefined, { type: null });

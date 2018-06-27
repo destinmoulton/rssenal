@@ -1,5 +1,5 @@
 import * as ACT_TYPES from "../../actiontypes";
-import DATA_FOLDERS from "../../../../../test/data/folders";
+import DATA_FOLDERS from "../../../../../test/data/immutable/folders";
 import foldersReducer from "../folders.reducer";
 
 import { FOLDERS_INITIAL_STATE } from "../../initialstate";

@@ -1,5 +1,5 @@
 import * as ACT_TYPES from "../../actiontypes";
-import DATA_ENTRIES from "../../../../../test/data/ammendedEntries";
+import DATA_ENTRIES from "../../../../../test/data/immutable/ammendedEntries";
 import * as Types from "../../../types";
 import filterReducer from "../filter.reducer";
 
