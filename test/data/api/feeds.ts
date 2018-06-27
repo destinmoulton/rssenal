@@ -1,0 +1,27 @@
+export default `
+{
+    "status": "success",
+    "feeds": [
+        {
+            "_id": "5b33c76cb2438d5708dc197e",
+            "title": "High Scalability",
+            "description": null,
+            "link": "http://highscalability.com/blog/",
+            "folder_id": "5b33c57eb2438d5708dc1968",
+            "url": "http://feeds.feedburner.com/HighScalability",
+            "creation_date": "2018-06-27T17:20:44.037Z",
+            "__v": 0
+        },
+        {
+            "_id": "5b33c6beb2438d5708dc1969",
+            "title": "Trivium",
+            "description": null,
+            "link": "http://chneukirchen.org/trivium/",
+            "folder_id": "5b33c4bab2438d5708dc1967",
+            "url": "http://chneukirchen.org/trivium/index.atom",
+            "creation_date": "2018-06-27T17:17:50.487Z",
+            "__v": 0
+        }
+    ]
+}
+`;
