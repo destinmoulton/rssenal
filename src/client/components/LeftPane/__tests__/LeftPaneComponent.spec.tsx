@@ -4,8 +4,8 @@ import * as React from "react";
 import { shallow } from "enzyme";
 
 import LeftPaneComponent from "../LeftPaneComponent";
-import feeds from "../../../../../test/data/feeds";
-import folders from "../../../../../test/data/folders";
+import feeds from "../../../../../test/data/immutable/feeds";
+import folders from "../../../../../test/data/immutable/folders";
 
 describe("<LeftPaneComponent />", () => {
     describe("renders and matches the snapshot", () => {
