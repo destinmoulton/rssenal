@@ -44,11 +44,11 @@ export function entriesGetAllForFeed(feedId: Types.TFeedID) {
     };
 }
 
-function ammendEntries(entries: Types.IEntry[]) {
+function ammendEntries(rawEntries: Types.IEntry[]) {
     return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { entriesStore, feedsStore } = getState();
         const currentEntries = entriesStore.entries;
-        const ammendedEntries = entries.map((entry: Types.IEntry) => {
+        const ammendedEntries = rawEntries.map((entry: Types.IEntry) => {
             const feedTitle = feedsStore.feeds.get(entry.feed_id).title;
             const timeAgo = moment(entry.publish_date).fromNow();
             return {
@@ -58,12 +58,12 @@ function ammendEntries(entries: Types.IEntry[]) {
             };
         });
 
-        let newEntries = currentEntries.toOrderedMap();
-        entries.forEach(entry => {
-            newEntries = newEntries.set(entry._id, entry);
+        let fullEntries = currentEntries.toOrderedMap();
+        ammendedEntries.forEach(entry => {
+            fullEntries = fullEntries.set(entry._id, entry);
         });
 
-        dispatch(entriesSetAndFilter(newEntries));
+        dispatch(entriesSetAndFilter(fullEntries));
         dispatch(feedsUpdateUnreadCount(ammendedEntries));
     };
 }
