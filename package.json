@@ -4,7 +4,9 @@
     "description": "RSS reader.",
     "main": "index.js",
     "scripts": {
-        "test:client": "jest --watch --config=jest.client.config.json",
+        "test:client:singlerun": "jest --config=jest.client.config.json",
+        "test:client:watch": "jest --watch --config=jest.client.config.json --no-watchman",
+        "test:clearCache": "jest --clearCache",
         "build:client": "webpack --config webpack.config.js -d --watch",
         "clean:server": "rm -rf dist/server/*",
         "build:server": "npm run clean:server && babel --watch src/server --out-dir dist/server --source-maps inline",
