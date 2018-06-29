@@ -4,10 +4,8 @@ import { resolve } from "path";
 
 import FEEDS from "./feeds";
 
-const ammendedEntriesJSON = readFileSync(
-    resolve(__dirname + "/../json/ammendedEntries.json")
-);
-const entriesArray = JSON.parse(ammendedEntriesJSON.toString());
+import AMMENDED_ENTRIES from "./ammendedEntries";
+const entriesArray = AMMENDED_ENTRIES.toArray();
 let entriesCounted = Set();
 let count = 0;
 let feed_id = "";
