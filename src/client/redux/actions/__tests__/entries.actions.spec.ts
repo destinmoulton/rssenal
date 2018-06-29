@@ -1,4 +1,4 @@
-import { Map, OrderedMap } from "immutable";
+import { OrderedMap } from "immutable";
 import * as fetchMock from "fetch-mock";
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
