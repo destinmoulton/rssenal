@@ -75,7 +75,7 @@ export function feedsGetAll() {
             method: "GET",
             headers: generateJWTHeaders()
         };
-        fetch(url, init)
+        return fetch(url, init)
             .then(res => {
                 return res.json();
             })
