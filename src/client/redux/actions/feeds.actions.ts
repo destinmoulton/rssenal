@@ -2,63 +2,32 @@ import * as ACT_TYPES from "../actiontypes";
 
 import { entriesClearAll, entriesGetAllForFeed } from "./entries.actions";
 import { filterReset } from "./filter.actions";
-import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { message } from "./messages.actions";
 import * as FeedsServices from "../services/feeds.services";
 
 import * as Types from "../../types";
-import { Feed } from "semantic-ui-react";
 
-export function feedInitiateAdd(feedInfo: Types.IFeed) {
-    return (dispatch: Types.IDispatch) => {
+export function addFeed(feedInfo: Types.IFeed) {
+    return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+        const { feeds } = getState().feedsStore;
         dispatch(beginAddFeedProcess());
-        dispatch(addFeed(feedInfo));
+
+        try {
+            const newFeed = await FeedsServices.apiAddFeed(feedInfo);
+            let newFeeds = FeedsServices.setSingleFeed(newFeed, feeds);
+            newFeeds = FeedsServices.sortFeeds(newFeeds);
+            dispatch(message("Feed added.", "success"));
+            dispatch(addFeedComplete(newFeeds));
+            dispatch(entriesGetAllForFeed(newFeed._id));
+        } catch (err) {
+            dispatch(message(err, "error"));
+        }
     };
 }
 
 function beginAddFeedProcess() {
     return {
         type: ACT_TYPES.FEEDS_ADD_BEGIN
-    };
-}
-
-function addFeed(feedInfo: Types.IFeed) {
-    console.log("addFeed called");
-    return (dispatch: Types.IDispatch) => {
-        const url = API_FEEDS_BASE;
-        const headers = generateJWTJSONHeaders();
-        const init = {
-            method: "POST",
-            body: JSON.stringify({ ...feedInfo }),
-            headers
-        };
-
-        return fetch(url, init)
-            .then(res => {
-                return res.json();
-            })
-            .then(feedObj => {
-                if (feedObj.status === "error") {
-                    console.error(feedObj.error);
-                } else if (feedObj.status === "success") {
-                    dispatch(message("Feed added.", "success"));
-                    dispatch(addFeedToOrderedMap(feedObj.feedInfo));
-                    dispatch(entriesGetAllForFeed(feedObj.feedInfo._id));
-                }
-            })
-            .catch(err => {
-                console.error(err);
-            });
-    };
-}
-
-function addFeedToOrderedMap(feed: Types.IFeed) {
-    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
-        const { feeds } = getState().feedsStore;
-
-        let newFeeds = feeds.set(feed._id, feed);
-        newFeeds = sortFeeds(newFeeds);
-        dispatch(addFeedComplete(newFeeds));
     };
 }
 
@@ -72,7 +41,7 @@ function addFeedComplete(feeds: Types.TFeeds) {
 export function feedsGetAll() {
     return async (dispatch: Types.IDispatch) => {
         try {
-            const feedsArr = await FeedsServices.getAllFeeds();
+            const feedsArr = await FeedsServices.apiGetAllFeeds();
             let newFeeds = FeedsServices.convertRawFeedsToOrderedMap(feedsArr);
             newFeeds = FeedsServices.sortFeeds(newFeeds);
 
@@ -113,7 +82,7 @@ export function feedsRefreshAll() {
     ) => {
         const { feeds } = getState().feedsStore;
         dispatch(entriesClearAll());
-        dispatch(getAllEntriesForFeeds(feeds.toArray()));
+        dispatch(getAllEntriesForFeeds(feeds));
     };
 }
 
@@ -146,15 +115,18 @@ export function saveFeed(feedInfo: Types.IFeed) {
 
         dispatch(beginUpdateFeedProcess());
 
-        const updatedFeed = await FeedsServices.apiUpdateFeed(feedInfo);
+        try {
+            const updatedFeed = await FeedsServices.apiUpdateFeed(feedInfo);
+            dispatch(message("Feed saved.", "success"));
 
-        dispatch(message("Feed saved.", "success"));
+            let newFeeds = FeedsServices.setSingleFeed(updatedFeed, feeds);
+            newFeeds = FeedsServices.sortFeeds(newFeeds);
+            dispatch(updateFeedComplete(newFeeds));
 
-        let newFeeds = FeedsServices.setSingleFeed(updatedFeed, feeds);
-        newFeeds = FeedsServices.sortFeeds(newFeeds);
-        dispatch(updateFeedComplete(newFeeds));
-
-        dispatch(feedsGetAll());
+            dispatch(feedsGetAll());
+        } catch (err) {
+            dispatch(message(err, "error"));
+        }
     };
 }
 

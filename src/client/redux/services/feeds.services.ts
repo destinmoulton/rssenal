@@ -5,6 +5,31 @@ import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { propertyComparator } from "../../lib/sort";
 import * as Types from "../../types";
 
+export async function apiAddFeed(feedInfo: Types.IFeed) {
+    const url = API_FEEDS_BASE;
+    const headers = generateJWTJSONHeaders();
+    const init = {
+        method: "POST",
+        body: JSON.stringify({ ...feedInfo }),
+        headers
+    };
+
+    return fetch(url, init)
+        .then(res => {
+            return res.json();
+        })
+        .then(feedObj => {
+            if (feedObj.status === "error") {
+                throw new Error(feedObj.error);
+            } else if (feedObj.status === "success") {
+                return feedObj.feedInfo;
+            }
+        })
+        .catch(err => {
+            throw new Error(err);
+        });
+}
+
 export async function apiDeleteFeed(feedID: Types.TFeedID) {
     const url = API_FEEDS_BASE + feedID;
     const init = {
@@ -21,6 +46,9 @@ export async function apiDeleteFeed(feedID: Types.TFeedID) {
             } else if (resObj.status === "success") {
                 return true;
             }
+        })
+        .catch(err => {
+            throw new Error(err);
         });
 }
 
@@ -38,8 +66,11 @@ export async function apiGetAllFeeds() {
             if (resObj.status === "error") {
                 throw new Error(resObj.error);
             } else if (resObj.status === "success") {
-                return true;
+                return resObj.feeds;
             }
+        })
+        .catch(err => {
+            throw new Error(err);
         });
 }
 
@@ -64,6 +95,9 @@ export async function apiUpdateFeed(feedInfo: Types.IFeed) {
             } else if (feedObj.status === "success") {
                 return feedObj.feedInfo;
             }
+        })
+        .catch(err => {
+            throw new Error(err);
         });
 }
 
