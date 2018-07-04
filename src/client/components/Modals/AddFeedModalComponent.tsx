@@ -93,7 +93,7 @@ class AddFeedModalComponent extends React.Component<
             folder_id: folderId,
             url: feedURL
         };
-        this.props.feedInitiateAdd(dataToAdd);
+        this.props.feedAdd(dataToAdd);
         this._handleClose();
     };
 
