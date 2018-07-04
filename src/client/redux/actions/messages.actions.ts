@@ -1,24 +1,19 @@
-import { Notification } from "react-notification-system";
-
 import {
     MESSAGES_ADD_COMPLETE,
     MESSAGES_REMOVE_COMPLETE
 } from "../actiontypes";
+import * as MessagesServices from "../services/messages.services";
 import * as Types from "../../types";
 
 export function message(messageText: string, level: any) {
     return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { lastUID, messages } = getState().messagesStore;
-
-        const nextUID: number = lastUID + 1;
-
-        const message: Types.IMessage = {
-            message: messageText,
-            level,
-            uid: nextUID
-        };
-
-        const newMessages = messages.push(message);
+        const nextUID = MessagesServices.getNextUID(lastUID);
+        const newMessages = MessagesServices.addMessage(
+            { messageText, level },
+            nextUID,
+            messages
+        );
         dispatch(messageAddComplete(newMessages, nextUID));
     };
 }
@@ -35,11 +30,10 @@ export function messageRemove(messageToRemove: Types.IMessage) {
     return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { messages } = getState().messagesStore;
 
-        const index = messages.findIndex((message: Types.IMessage) => {
-            return message.uid === messageToRemove.uid;
-        });
-
-        const newMessages = messages.remove(index);
+        const newMessages = MessagesServices.removeMessage(
+            messageToRemove,
+            messages
+        );
         dispatch(messageRemoveComplete(newMessages));
     };
 }
