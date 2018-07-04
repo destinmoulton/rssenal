@@ -5,16 +5,26 @@ import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { propertyComparator } from "../../lib/sort";
 import * as Types from "../../types";
 
-export function convertRawFeedsToOrderedMap(
-    feedsArr: Types.IFeed[]
-): Types.TFeeds {
-    const feedsTuples = feedsArr.map(feed => {
-        return [feed._id, feed];
-    });
-    return OrderedMap(feedsTuples);
+export async function apiDeleteFeed(feedID: Types.TFeedID) {
+    const url = API_FEEDS_BASE + feedID;
+    const init = {
+        method: "DELETE",
+        headers: generateJWTHeaders()
+    };
+    return fetch(url, init)
+        .then(res => {
+            return res.json();
+        })
+        .then(resObj => {
+            if (resObj.status === "error") {
+                throw new Error(resObj.error);
+            } else if (resObj.status === "success") {
+                return true;
+            }
+        });
 }
 
-export async function getAllFeeds() {
+export async function apiGetAllFeeds() {
     const url = API_FEEDS_BASE;
     const init = {
         method: "GET",
@@ -31,6 +41,39 @@ export async function getAllFeeds() {
                 return true;
             }
         });
+}
+
+export async function apiUpdateFeed(feedInfo: Types.IFeed) {
+    const url = API_FEEDS_BASE + feedInfo._id;
+    const init = {
+        method: "PUT",
+        body: JSON.stringify({
+            title: feedInfo.title,
+            folder_id: feedInfo.folder_id
+        }),
+        headers: generateJWTJSONHeaders()
+    };
+
+    return fetch(url, init)
+        .then(res => {
+            return res.json();
+        })
+        .then(feedObj => {
+            if (feedObj.status === "error") {
+                throw new Error(feedObj.error);
+            } else if (feedObj.status === "success") {
+                return feedObj.feedInfo;
+            }
+        });
+}
+
+export function convertRawFeedsToOrderedMap(
+    feedsArr: Types.IFeed[]
+): Types.TFeeds {
+    const feedsTuples = feedsArr.map(feed => {
+        return [feed._id, feed];
+    });
+    return OrderedMap(feedsTuples);
 }
 
 export function updateUnreadCount(
@@ -103,30 +146,6 @@ export function decrementUnread(
     };
 }
 
-export async function apiUpdateFeed(feedInfo: Types.IFeed) {
-    const url = API_FEEDS_BASE + feedInfo._id;
-    const init = {
-        method: "PUT",
-        body: JSON.stringify({
-            title: feedInfo.title,
-            folder_id: feedInfo.folder_id
-        }),
-        headers: generateJWTJSONHeaders()
-    };
-
-    return fetch(url, init)
-        .then(res => {
-            return res.json();
-        })
-        .then(feedObj => {
-            if (feedObj.status === "error") {
-                throw new Error(feedObj.error);
-            } else if (feedObj.status === "success") {
-                return feedObj.feedInfo;
-            }
-        });
-}
-
 export function setSingleFeed(feed: Types.IFeed, feeds: Types.TFeeds) {
     return feeds.set(feed._id, feed);
 }
@@ -137,26 +156,4 @@ export function sortFeeds(feeds: Types.TFeeds): Types.TFeeds {
             propertyComparator(a, b, "asc", "title", true)
         )
         .toOrderedMap();
-}
-
-export async function apiDeleteFeed(feedID: Types.TFeedID) {
-    const url = API_FEEDS_BASE + feedID;
-    const init = {
-        method: "DELETE",
-        headers: generateJWTHeaders()
-    };
-    return fetch(url, init)
-        .then(res => {
-            return res.json();
-        })
-        .then(resObj => {
-            if (resObj.status === "error") {
-                throw new Error(resObj.error);
-            } else if (resObj.status === "success") {
-                return true;
-            }
-        })
-        .catch(err => {
-            console.error(err);
-        });
 }
