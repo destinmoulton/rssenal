@@ -53,7 +53,7 @@ class EditFeedModalComponent extends React.Component<TAllProps, IState> {
         const { newFeed } = this.state;
 
         if (newFeed.name !== "") {
-            this.props.feedInitiateUpdate(newFeed);
+            this.props.saveFeed(newFeed);
             this._handleClose();
         }
     };
