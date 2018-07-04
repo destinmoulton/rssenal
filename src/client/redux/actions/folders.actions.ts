@@ -97,19 +97,24 @@ function updatingComplete(folders: Types.TFolders) {
     };
 }
 
-export function folderInitiateDelete(folderId: Types.TFolderID) {
-    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+export function folderInitiateDelete(folderID: Types.TFolderID) {
+    return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { folders } = getState().foldersStore;
         dispatch(deleteInProgress());
 
         try {
-            await FoldersServices.apiDeleteFolder(folderId);
+            await FoldersServices.apiDeleteFolder(folderID);
+
+            dispatch(message("Folder removed.", "success"));
+
             const updatedFolders = FoldersServices.removeFolderFromOrderedMap(
-                folderId,
+                folderID,
                 folders
             );
 
             dispatch(deleteComplete(updatedFolders));
+            dispatch(filterReset());
+            dispatch(feedsGetAll());
         } catch (err) {
             console.error(err);
         }
@@ -130,25 +135,13 @@ function deleteComplete(folders: Types.TFolders) {
 }
 
 export function folderInitiateReorder(foldersArr: Types.IFolder[]) {
-    return (dispatch: Types.IDispatch) => {
-        const url = API_FOLDERS_BASE;
-        const init = {
-            method: "PUT",
-            body: JSON.stringify({ folders: foldersArr }),
-            headers: generateJWTJSONHeaders()
-        };
-        fetch(url, init)
-            .then(res => {
-                return res.json();
-            })
-            .then(resObj => {
-                if (resObj.status === "success") {
-                    dispatch(message("Folders reordered.", "success"));
-                    return dispatch(foldersGetAll());
-                }
-            })
-            .catch(err => {
-                console.error(err);
-            });
+    return async (dispatch: Types.IDispatch) => {
+        try {
+            await FoldersServices.apiReorderFolders(foldersArr);
+            dispatch(message("Folders reordered.", "success"));
+            dispatch(foldersGetAll());
+        } catch (err) {
+            console.error(err);
+        }
     };
 }

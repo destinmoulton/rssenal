@@ -68,6 +68,29 @@ export async function apiGetAllFolders() {
         });
 }
 
+export async function apiReorderFolders(foldersArr: Types.IFolder[]) {
+    const url = API_FOLDERS_BASE;
+    const init = {
+        method: "PUT",
+        body: JSON.stringify({ folders: foldersArr }),
+        headers: generateJWTJSONHeaders()
+    };
+    return fetch(url, init)
+        .then(res => {
+            return res.json();
+        })
+        .then(resObj => {
+            if (resObj.status === "success") {
+                return true;
+            } else {
+                throw new Error("Failed to reorder folders.");
+            }
+        })
+        .catch(err => {
+            throw new Error(err);
+        });
+}
+
 export async function apiSaveFolder(folderInfo: Types.IFolder) {
     const url = API_FOLDERS_BASE + folderInfo._id;
     const init = {
