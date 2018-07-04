@@ -1,19 +1,20 @@
 import { SETTINGS_CHANGE } from "../actiontypes";
 
+import * as SettingsServices from "../services/settings.services";
 import * as Types from "../../types";
 
 export function settingChange(setting_key: string, setting_value: any) {
     return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { settingsStore } = getState();
-
         const { settings } = settingsStore;
 
-        const setting = Object.assign({}, settings.get(setting_key));
+        const updatedSettings = SettingsServices.addSetting(
+            settings,
+            setting_key,
+            setting_value
+        );
 
-        setting.value = setting_value;
-        const newSettings = settings.set(setting_key, setting);
-
-        dispatch(settingsChangeAll(newSettings));
+        dispatch(settingsChangeAll(updatedSettings));
     };
 }
 
