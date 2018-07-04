@@ -1,4 +1,4 @@
-import { FILTER_CHANGE, FILTER_RESET } from "../actiontypes";
+import * as ACT_TYPES from "../actiontypes";
 
 import * as Types from "../../types";
 
@@ -9,15 +9,20 @@ function filterReducer(
     action: Types.IFilterAction
 ) {
     switch (action.type) {
-        case FILTER_CHANGE: {
+        case ACT_TYPES.FILTER_CHANGE: {
             return {
                 ...state,
-                filter: action.newFilter,
+                filter: action.newFilter
+            };
+        }
+        case ACT_TYPES.FILTER_SET_DATA: {
+            return {
+                ...state,
                 filterTitle: action.filterTitle,
                 filteredEntries: action.filteredEntries
             };
         }
-        case FILTER_RESET: {
+        case ACT_TYPES.FILTER_RESET: {
             return {
                 ...FILTER_INITIAL_STATE
             };

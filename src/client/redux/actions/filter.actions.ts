@@ -1,6 +1,6 @@
 import { OrderedMap } from "immutable";
 
-import { FILTER_CHANGE, FILTER_RESET } from "../actiontypes";
+import * as ACT_TYPES from "../actiontypes";
 import * as FilterServices from "../services/filter.services";
 import * as Types from "../../types";
 
@@ -24,18 +24,23 @@ export function filterVisibleEntries() {
             feeds
         );
 
-        dispatch(setNewFilter(filter, title, filteredEntries));
+        dispatch(setNewFilter(title, filteredEntries));
+    };
+}
+
+export function filterChange(newFilter: Types.IFilter) {
+    return {
+        type: ACT_TYPES.FILTER_CHANGE,
+        newFilter
     };
 }
 
 function setNewFilter(
-    newFilter: Types.IFilter,
     filterTitle: string,
     filteredEntries: OrderedMap<Types.TEntryID, Types.IEntry>
 ) {
     return {
-        type: FILTER_CHANGE,
-        newFilter,
+        type: ACT_TYPES.FILTER_SET_DATA,
         filterTitle,
         filteredEntries
     };
@@ -43,6 +48,6 @@ function setNewFilter(
 
 export function filterReset() {
     return {
-        type: FILTER_RESET
+        type: ACT_TYPES.FILTER_RESET
     };
 }
