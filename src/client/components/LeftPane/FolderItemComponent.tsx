@@ -22,7 +22,8 @@ export interface IFolderItemMapState {
 
 export interface IFolderItemMapDispatch {
     folderInitiateDelete: (folderId: TFolderID) => void;
-    filterChangeActive: (filter: IFilter) => void;
+    filterChange: (filter: IFilter) => void;
+    filterVisibleEntries: () => void;
 }
 
 interface IFolderItemProps {
