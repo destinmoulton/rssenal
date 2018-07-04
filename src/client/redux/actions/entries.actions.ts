@@ -72,10 +72,9 @@ export function entriesClearAll() {
 }
 
 function entriesSetAndFilter(entries: Types.TEntries) {
-    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
-        const { filterStore } = getState();
+    return (dispatch: Types.IDispatch) => {
         dispatch(entriesSetAll(entries));
-        dispatch(filterVisibleEntries(filterStore.filter, entries));
+        dispatch(filterVisibleEntries());
     };
 }
 
