@@ -1,4 +1,3 @@
-import { Map, OrderedMap } from "immutable";
 import * as React from "react";
 
 import { Icon, SemanticICONS } from "semantic-ui-react";
@@ -64,12 +63,14 @@ class FolderItemComponent extends React.Component<TAllProps, IFolderItemState> {
     };
 
     _handleClickFolder = () => {
-        const { filterChangeActive, folder } = this.props;
+        const { filterChange, filterVisibleEntries, folder } = this.props;
 
-        filterChangeActive({
+        filterChange({
             limit: "folder",
             id: folder._id
         });
+
+        filterVisibleEntries();
     };
 
     _handleHideOptions = () => {
