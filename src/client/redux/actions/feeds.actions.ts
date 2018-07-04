@@ -7,7 +7,7 @@ import * as FeedsServices from "../services/feeds.services";
 
 import * as Types from "../../types";
 
-export function addFeed(feedInfo: Types.IFeed) {
+export function feedAdd(feedInfo: Types.IFeed) {
     return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { feeds } = getState().feedsStore;
         dispatch(beginAddFeedProcess());
