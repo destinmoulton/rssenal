@@ -17,23 +17,27 @@ export function entriesGetAllForFeed(feedId: Types.TFeedID) {
         const setting = settingsStore.settings.get(SETTING_SHOW_ENTRIES_READ);
         let shouldShowRead = setting.value;
 
-        const newEntries: Types.IEntry[] = await EntriesServices.getEntriesForFeed(
-            feedId,
-            shouldShowRead
-        );
+        try {
+            const newEntries: Types.IEntry[] = await EntriesServices.apiGetEntriesForFeed(
+                feedId,
+                shouldShowRead
+            );
 
-        const ammendedEntries = EntriesServices.ammendRawEntries(
-            currentFeed,
-            newEntries
-        );
+            // Add data to the returned json
+            const ammendedEntries = EntriesServices.ammendRawEntries(
+                currentFeed,
+                newEntries
+            );
 
-        const fullEntries = EntriesServices.addAmmendedEntries(
-            currentEntries,
-            ammendedEntries
-        );
-
-        dispatch(entriesSetAndFilter(fullEntries));
-        dispatch(feedsUpdateUnreadCount(ammendedEntries));
+            const fullEntries = EntriesServices.addAmmendedEntries(
+                currentEntries,
+                ammendedEntries
+            );
+            dispatch(entriesSetAndFilter(fullEntries));
+            dispatch(feedsUpdateUnreadCount(fullEntries));
+        } catch (err) {
+            console.error(err);
+        }
     };
 }
 
@@ -41,16 +45,21 @@ export function entryUpdateHasRead(entry: Types.IEntry, hasRead: boolean) {
     return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { entriesStore } = getState();
         const currentEntries = entriesStore.entries;
-        await EntriesServices.updateEntryHasRead(entry, hasRead);
 
-        const newEntries = EntriesServices.ammendEntryReadStatus(
-            currentEntries,
-            entry._id,
-            hasRead
-        );
+        try {
+            await EntriesServices.apiUpdateEntryHasRead(entry, hasRead);
 
-        dispatch(feedsDecrementUnread(entry.feed_id));
-        dispatch(entriesSetAndFilter(newEntries));
+            const newEntries = EntriesServices.ammendEntryReadStatus(
+                currentEntries,
+                entry._id,
+                hasRead
+            );
+
+            dispatch(feedsDecrementUnread(entry.feed_id));
+            dispatch(entriesSetAndFilter(newEntries));
+        } catch (err) {
+            console.error(err);
+        }
     };
 }
 
