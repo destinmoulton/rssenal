@@ -1,18 +1,13 @@
 import * as Types from "../../types";
 
-export function filterVisibleEntries(
+export function getFilteredEntries(
     filter: Types.IFilter,
     currentEntries: Types.TEntries,
     feeds: Types.TFeeds
-) {
-    let title = "All";
-
+): Types.TEntries {
     let filteredEntries = currentEntries.toOrderedMap();
     switch (filter.limit) {
         case "feed":
-            const activeFeed = feeds.get(filter.id);
-            title = activeFeed.title;
-
             filteredEntries = currentEntries
                 .filter(entry => {
                     return entry.feed_id === filter.id;
@@ -21,10 +16,6 @@ export function filterVisibleEntries(
             break;
         case "folder":
             if (filter.id !== "all") {
-                const activeFolder = folders.get(filter.id);
-
-                title = activeFolder.name;
-
                 const feedIds = feeds
                     .filter(feed => {
                         return feed.folder_id === filter.id;
@@ -42,5 +33,25 @@ export function filterVisibleEntries(
             break;
     }
 
-    return { title, filteredEntries };
+    return filteredEntries;
+}
+
+export function getFilterTitle(
+    filter: Types.IFilter,
+    feeds: Types.TFeeds,
+    folders: Types.TFolders
+): string {
+    switch (filter.limit) {
+        case "feed":
+            const activeFeed = feeds.get(filter.id);
+            return activeFeed.title;
+        case "folder":
+            if (filter.id !== "all") {
+                const activeFolder = folders.get(filter.id);
+
+                return activeFolder.name;
+            }
+            break;
+    }
+    return "All";
 }
