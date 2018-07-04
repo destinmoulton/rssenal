@@ -6,7 +6,7 @@ import SelectFolder from "./SelectFolder";
 import { TFolderID, TFolders } from "../../types";
 
 export interface IEditFeedModalMapDispatch {
-    feedInitiateUpdate: (feedInfo: any) => void;
+    saveFeed: (feedInfo: any) => void;
 }
 
 export interface IEditFeedModalMapState {
