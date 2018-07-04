@@ -21,7 +21,7 @@ export interface IAddFeedModalMapState {
 }
 
 export interface IAddFeedModalMapDispatch {
-    feedInitiateAdd: (feedInfo: any) => void;
+    feedAdd: (feedInfo: any) => void;
 }
 
 interface IAddFeedModalProps {
