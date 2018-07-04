@@ -4,7 +4,7 @@ import { API_ENTRIES_BASE } from "../apiendpoints";
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import * as Types from "../../types";
 
-export async function getEntriesForFeed(
+export async function apiGetEntriesForFeed(
     feedId: Types.TFeedID,
     shouldShowRead: boolean
 ) {
@@ -27,7 +27,34 @@ export async function getEntriesForFeed(
             }
         })
         .catch(err => {
-            console.error(err);
+            throw new Error(err);
+        });
+}
+
+export async function apiUpdateEntryHasRead(
+    entry: Types.IEntry,
+    hasRead: boolean
+) {
+    const url = API_ENTRIES_BASE + entry._id;
+    const init = {
+        method: "PUT",
+        body: JSON.stringify({ has_read: hasRead }),
+        headers: generateJWTJSONHeaders()
+    };
+
+    return fetch(url, init)
+        .then(res => {
+            return res.json();
+        })
+        .then(resObj => {
+            if (resObj.status === "error") {
+                throw new Error(resObj.error);
+            } else {
+                return true;
+            }
+        })
+        .catch(err => {
+            throw new Error(err);
         });
 }
 
@@ -55,33 +82,6 @@ export function addAmmendedEntries(
         fullEntries = fullEntries.set(entry._id, entry);
     });
     return fullEntries;
-}
-
-export async function updateEntryHasRead(
-    entry: Types.IEntry,
-    hasRead: boolean
-) {
-    const url = API_ENTRIES_BASE + entry._id;
-    const init = {
-        method: "PUT",
-        body: JSON.stringify({ has_read: hasRead }),
-        headers: generateJWTJSONHeaders()
-    };
-
-    return fetch(url, init)
-        .then(res => {
-            return res.json();
-        })
-        .then(resObj => {
-            if (resObj.status === "error") {
-                throw new Error(resObj.error);
-            } else {
-                return true;
-            }
-        })
-        .catch(err => {
-            console.error(err);
-        });
 }
 
 export function ammendEntryReadStatus(
