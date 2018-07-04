@@ -4,12 +4,18 @@ import { FILTER_CHANGE, FILTER_RESET } from "../actiontypes";
 import * as FilterServices from "../services/filter.services";
 import * as Types from "../../types";
 
-export function filterVisibleEntries(filter: Types.IFilter) {
+export function filterVisibleEntries() {
     return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
-        const { entriesStore, feedsStore, foldersStore } = getState();
-        const feeds = feedsStore.feeds;
-        const folders = foldersStore.folders;
+        const {
+            entriesStore,
+            feedsStore,
+            filterStore,
+            foldersStore
+        } = getState();
         const entries = entriesStore.entries;
+        const feeds = feedsStore.feeds;
+        const filter = filterStore.filter;
+        const folders = foldersStore.folders;
 
         const title = FilterServices.getFilterTitle(filter, feeds, folders);
         const filteredEntries = FilterServices.getFilteredEntries(
