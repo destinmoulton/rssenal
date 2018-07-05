@@ -10,31 +10,23 @@ import * as Types from "../../types";
 export function feedAdd(feedInfo: Types.IFeed) {
     return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { feeds } = getState().feedsStore;
-        dispatch(beginAddFeedProcess());
+        dispatch({
+            type: ACT_TYPES.FEEDS_ADD_BEGIN
+        });
 
         try {
             const newFeed = await FeedsServices.apiAddFeed(feedInfo);
             let newFeeds = FeedsServices.setSingleFeed(newFeed, feeds);
             newFeeds = FeedsServices.sortFeeds(newFeeds);
             dispatch(message("Feed added.", "success"));
-            dispatch(addFeedComplete(newFeeds));
+            dispatch({
+                type: ACT_TYPES.FEEDS_ADD_COMPLETE,
+                feeds: newFeeds
+            });
             dispatch(entriesGetAllForFeed(newFeed._id));
         } catch (err) {
             dispatch(message(err, "error"));
         }
-    };
-}
-
-function beginAddFeedProcess() {
-    return {
-        type: ACT_TYPES.FEEDS_ADD_BEGIN
-    };
-}
-
-function addFeedComplete(feeds: Types.TFeeds) {
-    return {
-        type: ACT_TYPES.FEEDS_ADD_COMPLETE,
-        feeds
     };
 }
 
@@ -45,7 +37,10 @@ export function feedsGetAll() {
             let newFeeds = FeedsServices.convertRawFeedsToOrderedMap(feedsArr);
             newFeeds = FeedsServices.sortFeeds(newFeeds);
 
-            dispatch(getAllFeedsComplete(newFeeds));
+            dispatch({
+                type: ACT_TYPES.FEEDS_GETALL_COMPLETE,
+                feeds: newFeeds
+            });
             dispatch(getAllEntriesForFeeds(newFeeds));
         } catch (err) {
             dispatch(message(err, "error"));
@@ -53,25 +48,16 @@ export function feedsGetAll() {
     };
 }
 
-function getAllFeedsComplete(feeds: Types.TFeeds) {
-    return {
-        type: ACT_TYPES.FEEDS_GETALL_COMPLETE,
-        feeds
-    };
-}
-
 function getAllEntriesForFeeds(feeds: Types.TFeeds) {
-    return (dispatch: Types.IDispatch) => {
-        dispatch(clearUnread());
-        feeds.forEach(feed => {
-            dispatch(entriesGetAllForFeed(feed._id));
+    return async (dispatch: Types.IDispatch) => {
+        dispatch({
+            type: ACT_TYPES.FEEDS_CLEAR_UNREAD
         });
-    };
-}
-
-function clearUnread() {
-    return {
-        type: ACT_TYPES.FEEDS_CLEAR_UNREAD
+        let promises: any[] = [];
+        feeds.forEach(feed => {
+            promises.push(dispatch(entriesGetAllForFeed(feed._id)));
+        });
+        return await Promise.all(promises);
     };
 }
 
@@ -94,7 +80,9 @@ export function beginDeleteFeed(feedId: Types.TFeedID) {
 
 export function deleteFeed(feedId: Types.TFeedID) {
     return async (dispatch: Types.IDispatch) => {
-        dispatch(beginDeleteProcess());
+        dispatch({
+            type: ACT_TYPES.FEEDS_DELETE_BEGIN
+        });
 
         await FeedsServices.apiDeleteFeed(feedId);
         dispatch(message("Feed removed.", "success"));
@@ -103,17 +91,13 @@ export function deleteFeed(feedId: Types.TFeedID) {
     };
 }
 
-function beginDeleteProcess() {
-    return {
-        type: ACT_TYPES.FEEDS_DELETE_BEGIN
-    };
-}
-
 export function saveFeed(feedInfo: Types.IFeed) {
     return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { feeds } = getState().feedsStore;
 
-        dispatch(beginUpdateFeedProcess());
+        dispatch({
+            type: ACT_TYPES.FEEDS_UPDATE_BEGIN
+        });
 
         try {
             const updatedFeed = await FeedsServices.apiUpdateFeed(feedInfo);
@@ -121,25 +105,15 @@ export function saveFeed(feedInfo: Types.IFeed) {
 
             let newFeeds = FeedsServices.setSingleFeed(updatedFeed, feeds);
             newFeeds = FeedsServices.sortFeeds(newFeeds);
-            dispatch(updateFeedComplete(newFeeds));
+            dispatch({
+                type: ACT_TYPES.FEEDS_UPDATE_COMPLETE,
+                feeds: newFeeds
+            });
 
             dispatch(feedsGetAll());
         } catch (err) {
             dispatch(message(err, "error"));
         }
-    };
-}
-
-function beginUpdateFeedProcess() {
-    return {
-        type: ACT_TYPES.FEEDS_UPDATE_BEGIN
-    };
-}
-
-function updateFeedComplete(feeds: Types.TFeeds) {
-    return {
-        type: ACT_TYPES.FEEDS_UPDATE_COMPLETE,
-        feeds
     };
 }
 
