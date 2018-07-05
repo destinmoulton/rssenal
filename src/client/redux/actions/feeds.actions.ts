@@ -1,6 +1,6 @@
 import * as ACT_TYPES from "../actiontypes";
 
-import { entriesClearAll, entriesGetAllForFeed } from "./entries.actions";
+import { entriesClearAll, entriesGetForFeed } from "./entries.actions";
 import { filterReset } from "./filter.actions";
 import { message } from "./messages.actions";
 import * as FeedsServices from "../services/feeds.services";
@@ -23,7 +23,7 @@ export function feedAdd(feedInfo: Types.IFeed) {
                 type: ACT_TYPES.FEEDS_ADD_COMPLETE,
                 feeds: newFeeds
             });
-            dispatch(entriesGetAllForFeed(newFeed._id));
+            dispatch(entriesGetForFeed(newFeed._id));
         } catch (err) {
             dispatch(message(err, "error"));
         }
@@ -41,7 +41,7 @@ export function feedsGetAll() {
                 type: ACT_TYPES.FEEDS_GETALL_COMPLETE,
                 feeds: newFeeds
             });
-            dispatch(getAllEntriesForFeeds(newFeeds));
+            await dispatch(getAllEntriesForFeeds(newFeeds));
         } catch (err) {
             dispatch(message(err, "error"));
         }
@@ -49,13 +49,13 @@ export function feedsGetAll() {
 }
 
 function getAllEntriesForFeeds(feeds: Types.TFeeds) {
-    return async (dispatch: Types.IDispatch) => {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         dispatch({
             type: ACT_TYPES.FEEDS_CLEAR_UNREAD
         });
 
-        feeds.map(async feed => {
-            await dispatch(entriesGetAllForFeed(feed._id));
+        feeds.forEach(async feed => {
+            dispatch(entriesGetForFeed(feed._id));
         });
     };
 }

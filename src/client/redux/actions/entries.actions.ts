@@ -8,10 +8,9 @@ import { filterVisibleEntries } from "./filter.actions";
 
 import * as Types from "../../types";
 
-export function entriesGetAllForFeed(feedId: Types.TFeedID) {
+export function entriesGetForFeed(feedId: Types.TFeedID) {
     return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { entriesStore, feedsStore, settingsStore } = getState();
-        const currentEntries = entriesStore.entries;
         const currentFeed = feedsStore.feeds.get(feedId);
 
         const setting = settingsStore.settings.get(SETTING_SHOW_ENTRIES_READ);
@@ -32,7 +31,7 @@ export function entriesGetAllForFeed(feedId: Types.TFeedID) {
             );
 
             const fullEntries = EntriesServices.addAmmendedEntries(
-                currentEntries,
+                getState().entriesStore.entries,
                 ammendedEntries
             );
             dispatch(entriesSetAndFilter(fullEntries));
