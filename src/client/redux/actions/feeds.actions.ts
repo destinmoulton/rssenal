@@ -9,15 +9,18 @@ import * as Types from "../../types";
 
 export function feedAdd(feedInfo: Types.IFeed) {
     return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
-        const { feeds } = getState().feedsStore;
         dispatch({
             type: ACT_TYPES.FEEDS_ADD_BEGIN
         });
 
         try {
             const newFeed = await FeedsServices.apiAddFeed(feedInfo);
-            let newFeeds = FeedsServices.setSingleFeed(newFeed, feeds);
+            let newFeeds = FeedsServices.setSingleFeed(
+                newFeed,
+                getState().feedsStore.feeds
+            );
             newFeeds = FeedsServices.sortFeeds(newFeeds);
+
             dispatch(message("Feed added.", "success"));
             dispatch({
                 type: ACT_TYPES.FEEDS_ADD_COMPLETE,
