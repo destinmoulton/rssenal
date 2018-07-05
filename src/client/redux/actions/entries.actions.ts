@@ -10,18 +10,20 @@ import * as Types from "../../types";
 
 export function entriesGetForFeed(feedId: Types.TFeedID) {
     return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
-        const { entriesStore, feedsStore, settingsStore } = getState();
+        const { feedsStore, settingsStore } = getState();
         const currentFeed = feedsStore.feeds.get(feedId);
 
         const setting = settingsStore.settings.get(SETTING_SHOW_ENTRIES_READ);
         let shouldShowRead = setting.value;
 
         dispatch({ type: ACT_TYPES.ENTRIES_GET_ALL_REQUEST });
+
         try {
             const newEntries: Types.IEntry[] = await EntriesServices.apiGetEntriesForFeed(
                 feedId,
                 shouldShowRead
             );
+
             dispatch({ type: ACT_TYPES.ENTRIES_GET_ALL_SUCCESS });
 
             // Add data to the returned json
@@ -34,6 +36,7 @@ export function entriesGetForFeed(feedId: Types.TFeedID) {
                 getState().entriesStore.entries,
                 ammendedEntries
             );
+
             dispatch(entriesSetAndFilter(fullEntries));
             dispatch(feedsUpdateUnreadCount(fullEntries));
         } catch (err) {
