@@ -72,12 +72,6 @@ export function feedsRefreshAll() {
     };
 }
 
-export function beginDeleteFeed(feedId: Types.TFeedID) {
-    return (dispatch: Types.IDispatch) => {
-        dispatch(deleteFeed(feedId));
-    };
-}
-
 export function deleteFeed(feedId: Types.TFeedID) {
     return async (dispatch: Types.IDispatch) => {
         dispatch({

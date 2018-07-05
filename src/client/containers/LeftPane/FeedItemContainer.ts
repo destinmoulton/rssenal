@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import { beginDeleteFeed } from "../../redux/actions/feeds.actions";
+import { deleteFeed } from "../../redux/actions/feeds.actions";
 import * as FilterActions from "../../redux/actions/filter.actions";
 import FeedItemComponent, {
     IFeedItemMapState,
@@ -20,8 +20,7 @@ const mapDispatchToProps = (
     dispatch: Types.IDispatch
 ): IFeedItemMapDispatch => {
     return {
-        beginDeleteFeed: (feedId: Types.TFeedID) =>
-            dispatch(beginDeleteFeed(feedId)),
+        deleteFeed: (feedId: Types.TFeedID) => dispatch(deleteFeed(feedId)),
         filterChange: (newFilter: Types.IFilter) =>
             dispatch(FilterActions.filterChange(newFilter)),
         filterVisibleEntries: () =>
