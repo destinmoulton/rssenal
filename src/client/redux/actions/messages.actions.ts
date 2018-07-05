@@ -14,15 +14,11 @@ export function message(messageText: string, level: any) {
             nextUID,
             messages
         );
-        dispatch(messageAddComplete(newMessages, nextUID));
-    };
-}
-
-function messageAddComplete(messages: Types.TMessages, lastUID: number) {
-    return {
-        type: MESSAGES_ADD_COMPLETE,
-        messages,
-        lastUID
+        dispatch({
+            type: MESSAGES_ADD_COMPLETE,
+            messages: newMessages,
+            lastUID: nextUID
+        });
     };
 }
 
@@ -34,13 +30,9 @@ export function messageRemove(messageToRemove: Types.IMessage) {
             messageToRemove,
             messages
         );
-        dispatch(messageRemoveComplete(newMessages));
-    };
-}
-
-function messageRemoveComplete(messages: Types.TMessages) {
-    return {
-        type: MESSAGES_REMOVE_COMPLETE,
-        messages
+        dispatch({
+            type: MESSAGES_REMOVE_COMPLETE,
+            messages: newMessages
+        });
     };
 }
