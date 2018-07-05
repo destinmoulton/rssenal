@@ -53,11 +53,10 @@ function getAllEntriesForFeeds(feeds: Types.TFeeds) {
         dispatch({
             type: ACT_TYPES.FEEDS_CLEAR_UNREAD
         });
-        let promises: any[] = [];
-        feeds.forEach(feed => {
-            promises.push(dispatch(entriesGetAllForFeed(feed._id)));
+
+        feeds.map(async feed => {
+            await dispatch(entriesGetAllForFeed(feed._id));
         });
-        return await Promise.all(promises);
     };
 }
 
