@@ -4,7 +4,7 @@ import { API_ENTRIES_BASE } from "../apiendpoints";
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import * as Types from "../../types";
 
-export async function apiGetEntriesForFeed(
+export function apiGetEntriesForFeed(
     feedId: Types.TFeedID,
     shouldShowRead: boolean
 ) {
