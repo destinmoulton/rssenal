@@ -18,7 +18,7 @@ exports[`<EntriesListComponent /> renders and matches the snapshot 1`] = `
         "has_read": false,
         "link": "http://feedproxy.google.com/~r/HighScalability/~3/FFJQudxO2bU/open-source-database-ha-resources-from-severalnines.html",
         "publish_date": "2018-06-08T19:46:22.000Z",
-        "timeAgo": "24 days ago",
+        "timeAgo": "a month ago",
         "title": "Open Source Database HA Resources from Severalnines",
       }
     }
@@ -41,7 +41,7 @@ exports[`<EntriesListComponent /> renders and matches the snapshot 1`] = `
         "has_read": false,
         "link": "http://feedproxy.google.com/~r/HighScalability/~3/sacuGsRa2G0/stuff-the-internet-says-on-scalability-for-june-15th-2018.html",
         "publish_date": "2018-06-15T15:57:00.000Z",
-        "timeAgo": "17 days ago",
+        "timeAgo": "20 days ago",
         "title": "Stuff The Internet Says On Scalability For June 15th, 2018",
       }
     }
@@ -64,7 +64,7 @@ exports[`<EntriesListComponent /> renders and matches the snapshot 1`] = `
         "has_read": false,
         "link": "http://feedproxy.google.com/~r/HighScalability/~3/EU6Dy48k59o/how-ably-efficiently-implemented-consistent-hashing.html",
         "publish_date": "2018-06-18T16:06:17.000Z",
-        "timeAgo": "14 days ago",
+        "timeAgo": "17 days ago",
         "title": "How Ably Efficiently Implemented Consistent Hashing",
       }
     }
@@ -87,7 +87,7 @@ exports[`<EntriesListComponent /> renders and matches the snapshot 1`] = `
         "has_read": false,
         "link": "http://feedproxy.google.com/~r/HighScalability/~3/gKe2fkOoT0I/sponsored-post-datadog-inmemorynet-triplebyte-etleap-scalyr.html",
         "publish_date": "2018-06-19T16:10:13.000Z",
-        "timeAgo": "13 days ago",
+        "timeAgo": "16 days ago",
         "title": "Sponsored Post: Datadog, InMemory.Net, Triplebyte, Etleap, Scalyr, MemSQL",
       }
     }
@@ -110,7 +110,7 @@ exports[`<EntriesListComponent /> renders and matches the snapshot 1`] = `
         "has_read": false,
         "link": "http://feedproxy.google.com/~r/HighScalability/~3/uqbrISxcA-E/stuff-the-internet-says-on-scalability-for-june-22nd-2018.html",
         "publish_date": "2018-06-22T15:56:46.000Z",
-        "timeAgo": "10 days ago",
+        "timeAgo": "13 days ago",
         "title": "Stuff The Internet Says On Scalability For June 22nd, 2018",
       }
     }
