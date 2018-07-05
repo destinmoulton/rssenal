@@ -5,6 +5,11 @@ import filterReducer from "../filter.reducer";
 
 import { FILTER_INITIAL_STATE } from "../../initialstate";
 
+const NEW_FILTER: Types.IFilter = {
+    limit: "feed",
+    id: "000"
+};
+
 describe("filter reducer", () => {
     it("should return initial state", () => {
         const defaultAction = {
@@ -15,23 +20,32 @@ describe("filter reducer", () => {
         expect(reduction).toEqual(FILTER_INITIAL_STATE);
     });
 
-    it("should reduce FILTER_CHANGE ", () => {
-        const newFilter: Types.IFilter = {
-            limit: "feed",
-            id: "000"
-        };
+    it("should reduce FILTER_SET_DATA", () => {
         const action = {
-            type: ACT_TYPES.FILTER_CHANGE,
-            newFilter,
+            type: ACT_TYPES.FILTER_SET_DATA,
             filterTitle: "Test Feed",
             filteredEntries: DATA_ENTRIES
         };
 
         const reduction = filterReducer(undefined, action);
         expect(reduction).toEqual({
-            filter: newFilter,
+            filter: FILTER_INITIAL_STATE.filter,
             filterTitle: "Test Feed",
             filteredEntries: DATA_ENTRIES
+        });
+    });
+
+    it("should reduce FILTER_CHANGE", () => {
+        const action = {
+            type: ACT_TYPES.FILTER_CHANGE,
+            newFilter: NEW_FILTER
+        };
+
+        const reduction = filterReducer(undefined, action);
+        expect(reduction).toEqual({
+            filter: NEW_FILTER,
+            filterTitle: "All",
+            filteredEntries: FILTER_INITIAL_STATE.filteredEntries
         });
     });
 
