@@ -78,12 +78,11 @@ export function entriesClearAll() {
 
 function entriesSetAndFilter(entries: Types.TEntries) {
     return (dispatch: Types.IDispatch) => {
-        console.log("entriesSetAndFilter");
-
         dispatch({
             type: ACT_TYPES.ENTRIES_SET_ALL,
             entries
         });
+
         dispatch(filterVisibleEntries());
     };
 }
