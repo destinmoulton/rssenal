@@ -8,30 +8,22 @@ import * as Types from "../../types";
 
 export function foldersGetAll() {
     return async (dispatch: Types.IDispatch) => {
-        dispatch(fetchingInProgress());
+        dispatch({
+            type: ACT_TYPES.FOLDERS_FETCHING
+        });
 
         try {
             const foldersArr = await FoldersServices.apiGetAllFolders();
             const newFolders = FoldersServices.convertRawFoldersToOrderedMap(
                 foldersArr
             );
-            dispatch(fetchingComplete(newFolders));
+            dispatch({
+                type: ACT_TYPES.FOLDERS_RECEIVED,
+                folders: newFolders
+            });
         } catch (err) {
             console.error(err);
         }
-    };
-}
-
-function fetchingInProgress() {
-    return {
-        type: ACT_TYPES.FOLDERS_FETCHING
-    };
-}
-
-function fetchingComplete(folders: Types.TFolders) {
-    return {
-        type: ACT_TYPES.FOLDERS_RECEIVED,
-        folders
     };
 }
 
@@ -39,7 +31,9 @@ export function folderInitiateSave(folderInfo: Types.IFolder) {
     return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { folders } = getState().foldersStore;
         if (folderInfo._id !== "") {
-            dispatch(updatingInProgress());
+            dispatch({
+                type: ACT_TYPES.FOLDERS_UPDATE_BEGIN
+            });
             const updatedFolder = await FoldersServices.apiSaveFolder(
                 folderInfo
             );
@@ -50,9 +44,14 @@ export function folderInitiateSave(folderInfo: Types.IFolder) {
                 updatedFolder,
                 folders
             );
-            dispatch(updatingComplete(updatedFolders));
+            dispatch({
+                type: ACT_TYPES.FOLDERS_UPDATE_COMPLETE,
+                folders: updatedFolders
+            });
         } else {
-            dispatch(addingInProgress());
+            dispatch({
+                type: ACT_TYPES.FOLDERS_ADD_BEGIN
+            });
             try {
                 const newFolder = await FoldersServices.apiAddFolder(
                     folderInfo.name
@@ -63,7 +62,10 @@ export function folderInitiateSave(folderInfo: Types.IFolder) {
                     newFolder,
                     folders
                 );
-                dispatch(addFolderComplete(updatedFolders));
+                dispatch({
+                    type: ACT_TYPES.FOLDERS_ADD_COMPLETE,
+                    folders: updatedFolders
+                });
             } catch (err) {
                 console.error(err);
             }
@@ -71,36 +73,12 @@ export function folderInitiateSave(folderInfo: Types.IFolder) {
     };
 }
 
-function addingInProgress() {
-    return {
-        type: ACT_TYPES.FOLDERS_ADD_BEGIN
-    };
-}
-
-function addFolderComplete(folders: Types.TFolders) {
-    return {
-        type: ACT_TYPES.FOLDERS_ADD_COMPLETE,
-        folders
-    };
-}
-
-function updatingInProgress() {
-    return {
-        type: ACT_TYPES.FOLDERS_UPDATE_BEGIN
-    };
-}
-
-function updatingComplete(folders: Types.TFolders) {
-    return {
-        type: ACT_TYPES.FOLDERS_UPDATE_COMPLETE,
-        folders
-    };
-}
-
 export function folderInitiateDelete(folderID: Types.TFolderID) {
     return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { folders } = getState().foldersStore;
-        dispatch(deleteInProgress());
+        dispatch({
+            type: ACT_TYPES.FOLDERS_DELETE_BEGIN
+        });
 
         try {
             await FoldersServices.apiDeleteFolder(folderID);
@@ -112,25 +90,15 @@ export function folderInitiateDelete(folderID: Types.TFolderID) {
                 folders
             );
 
-            dispatch(deleteComplete(updatedFolders));
+            dispatch({
+                type: ACT_TYPES.FOLDERS_DELETE_COMPLETE,
+                folders: updatedFolders
+            });
             dispatch(filterReset());
             dispatch(feedsGetAll());
         } catch (err) {
             console.error(err);
         }
-    };
-}
-
-function deleteInProgress() {
-    return {
-        type: ACT_TYPES.FOLDERS_DELETE_BEGIN
-    };
-}
-
-function deleteComplete(folders: Types.TFolders) {
-    return {
-        type: ACT_TYPES.FOLDERS_DELETE_COMPLETE,
-        folders
     };
 }
 
