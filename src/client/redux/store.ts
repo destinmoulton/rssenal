@@ -1,5 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 
+import { createLogger } from "redux-logger";
 import thunk from "redux-thunk";
 
 import authReducer from "./reducers/auth.reducer";
@@ -10,6 +11,9 @@ import foldersReducer from "./reducers/folders.reducer";
 import messagesReducer from "./reducers/messages.reducer";
 import settingsReducer from "./reducers/settings.reducer";
 
+const logger = createLogger({
+    collapsed: true
+});
 const store = createStore(
     combineReducers({
         authStore: authReducer,
@@ -20,7 +24,7 @@ const store = createStore(
         messagesStore: messagesReducer,
         settingsStore: settingsReducer
     }),
-    applyMiddleware(thunk)
+    applyMiddleware(logger, thunk)
 );
 
 export default store;
