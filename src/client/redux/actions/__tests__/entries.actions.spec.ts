@@ -28,20 +28,6 @@ describe("entries.actions", () => {
 
         fetchMock.getOnce(url, JSON.parse(API_ENTRIES_STRING));
 
-        const expectedActions = [
-            { type: ACT_TYPES.ENTRIES_SET_ALL, entries: AMMENDED_ENTRIES },
-            {
-                type: ACT_TYPES.FILTER_CHANGE,
-                filterTitle: "All",
-                newFilter: { id: "all", limit: "folder" },
-                filteredEntries: AMMENDED_ENTRIES
-            },
-            {
-                type: ACT_TYPES.FEEDS_SET_UNREAD,
-                unreadMap: IMM_UNREAD.UNREAD_MAP
-            }
-        ];
-
         const store = mockStore({
             entriesStore: INIT_STATE.ENTRIES_INITIAL_STATE,
             feedsStore: {
@@ -49,13 +35,14 @@ describe("entries.actions", () => {
                 feeds: IMM_FEEDS
             },
             filterStore: INIT_STATE.FILTER_INITIAL_STATE,
+            foldersStore: INIT_STATE.FOLDERS_INITIAL_STATE,
             settingsStore: INIT_STATE.SETTINGS_INITIAL_STATE
         });
 
         return store
-            .dispatch(EntriesActions.entriesGetAllForFeed(feedID))
+            .dispatch(EntriesActions.entriesGetForFeed(feedID))
             .then(() => {
-                expect(store.getActions()).toEqual(expectedActions);
+                expect(store.getActions()).toMatchSnapshot();
             });
     });
 
@@ -80,6 +67,7 @@ describe("entries.actions", () => {
                 ...INIT_STATE.FILTER_INITIAL_STATE,
                 filteredEntries: AMMENDED_ENTRIES
             },
+            foldersStore: INIT_STATE.FOLDERS_INITIAL_STATE,
             settingsStore: INIT_STATE.SETTINGS_INITIAL_STATE
         });
 
@@ -97,22 +85,10 @@ describe("entries.actions", () => {
             )
         };
 
-        const expectedActions = [
-            { type: ACT_TYPES.FEEDS_SET_UNREAD, unreadMap: expectedUnreadMap },
-            { type: ACT_TYPES.ENTRIES_SET_ALL, entries: expectedEntries },
-
-            {
-                type: ACT_TYPES.FILTER_CHANGE,
-                filterTitle: "All",
-                newFilter: { id: "all", limit: "folder" },
-                filteredEntries: expectedEntries
-            }
-        ];
-
         return store
             .dispatch(EntriesActions.entryUpdateHasRead(entry, true))
             .then(() => {
-                expect(store.getActions()).toEqual(expectedActions);
+                expect(store.getActions()).toMatchSnapshot();
             });
     });
 
@@ -124,20 +100,11 @@ describe("entries.actions", () => {
                 feeds: IMM_FEEDS
             },
             filterStore: INIT_STATE.FILTER_INITIAL_STATE,
+            foldersStore: INIT_STATE.FOLDERS_INITIAL_STATE,
             settingsStore: INIT_STATE.SETTINGS_INITIAL_STATE
         });
 
-        const expectedActions = [
-            { type: ACT_TYPES.ENTRIES_SET_ALL, entries: OrderedMap() },
-            {
-                type: ACT_TYPES.FILTER_CHANGE,
-                filterTitle: "All",
-                newFilter: { id: "all", limit: "folder" },
-                filteredEntries: OrderedMap()
-            }
-        ];
-
         store.dispatch(EntriesActions.entriesClearAll());
-        expect(store.getActions()).toEqual(expectedActions);
+        expect(store.getActions()).toMatchSnapshot();
     });
 });
