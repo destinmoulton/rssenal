@@ -51,13 +51,13 @@ export type TEntries = OrderedMap<TEntryID, IEntry>;
 export type TFeedID = string;
 
 export interface IFeed {
-    _id: TFeedID;
+    _id?: TFeedID;
     title: string;
     folder_id: string;
     description: string;
     link: string;
-    creation_date: string;
-    last_updated: string;
+    creation_date?: string;
+    last_updated?: string;
 }
 
 export type TFeeds = OrderedMap<TFeedID, IFeed>;
