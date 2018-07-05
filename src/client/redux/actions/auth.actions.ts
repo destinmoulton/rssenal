@@ -10,8 +10,8 @@ import { IDispatch } from "../../types";
 export function authValidateToken() {
     return async (dispatch: IDispatch) => {
         try {
-            dispatch(userIsAuthentic());
             await AuthServices.apiValidateToken();
+            dispatch(userIsAuthentic());
         } catch (err) {
             dispatch(authLogoutUser());
         }
