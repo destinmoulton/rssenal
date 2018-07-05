@@ -14,13 +14,9 @@ export function settingChange(setting_key: string, setting_value: any) {
             setting_value
         );
 
-        dispatch(settingsChangeAll(updatedSettings));
-    };
-}
-
-function settingsChangeAll(settings: Types.TSettings) {
-    return {
-        type: SETTINGS_CHANGE,
-        settings
+        dispatch({
+            type: SETTINGS_CHANGE,
+            settings: updatedSettings
+        });
     };
 }
