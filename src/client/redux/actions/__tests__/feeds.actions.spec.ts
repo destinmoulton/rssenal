@@ -8,6 +8,8 @@ import * as ACT_TYPES from "../../actiontypes";
 import * as INIT_STATE from "../../initialstate";
 
 import API_ENTRIES_STRING from "../../../../../test/data/api/entries.unread";
+import API_FEEDS_STRING from "../../../../../test/data/api/feeds";
+import FEED from "../../../../../test/data/feed";
 import AMMENDED_ENTRIES from "../../../../../test/data/immutable/ammendedEntries";
 import IMM_FEEDS from "../../../../../test/data/immutable/feeds";
 import * as IMM_UNREAD from "../../../../../test/data/immutable/unreadMap";
@@ -15,7 +17,7 @@ import * as IMM_UNREAD from "../../../../../test/data/immutable/unreadMap";
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
 
-describe("entries.actions", () => {
+describe("feeds.actions", () => {
     afterEach(() => {
         fetchMock.reset();
         fetchMock.restore();
@@ -23,47 +25,37 @@ describe("entries.actions", () => {
     });
 
     it("feedInitiateAdd() handles adding a feed", () => {
-        const url = "/api/feeds";
+        const feedID = "5b33c76cb2438d5708dc197e";
+        const entries_url =
+            "/api/entries/?showEntriesHasRead=false&feedId=" + feedID;
 
-        fetchMock.getOnce(url);
+        fetchMock.getOnce(entries_url, JSON.parse(API_ENTRIES_STRING));
 
-        let expectedMessages = List([
-            { message: "Feed added.", level: "success", uid: 1 }
-        ]);
+        const feed_url = "/api/feeds/";
 
-        const expectedActions = [
-            { type: ACT_TYPES.FEEDS_ADD_BEGIN },
-            {
-                type: ACT_TYPES.MESSAGES_ADD_COMPLETE,
-                messages: expectedMessages,
-                lastUID: 1
-            },
-            {
-                type: ACT_TYPES.FEEDS_ADD_COMPLETE,
-                feeds: IMM_FEEDS
-            },
-            { type: ACT_TYPES.ENTRIES_SET_ALL, entries: AMMENDED_ENTRIES },
-            {
-                type: ACT_TYPES.FILTER_CHANGE,
-                filterTitle: "All",
-                newFilter: { id: "all", limit: "folder" },
-                filteredEntries: AMMENDED_ENTRIES
-            },
-            {
-                type: ACT_TYPES.FEEDS_SET_UNREAD,
-                unreadMap: IMM_UNREAD.UNREAD_MAP
-            }
-        ];
+        fetchMock.postOnce(feed_url, { status: "success", feedInfo: FEED });
 
         const store = mockStore({
             entriesStore: INIT_STATE.ENTRIES_INITIAL_STATE,
-            feedsStore: INIT_STATE.FEEDS_INITIAL_STATE,
+            feedsStore: {
+                ...INIT_STATE.FEEDS_INITIAL_STATE,
+                feeds: IMM_FEEDS
+            },
             filterStore: INIT_STATE.FILTER_INITIAL_STATE,
+            foldersStore: INIT_STATE.FOLDERS_INITIAL_STATE,
+            messagesStore: INIT_STATE.MESSAGES_INITIAL_STATE,
             settingsStore: INIT_STATE.SETTINGS_INITIAL_STATE
         });
 
-        return store.dispatch(FeedsActions.feedsGetAll()).then(() => {
-            expect(store.getActions()).toEqual(expectedActions);
+        const newFeed = {
+            title: "NEW_FEED",
+            folder_id: "FOLDER_ID",
+            description: "DESCRIPTION",
+            link: "LINK_HERE"
+        };
+
+        return store.dispatch(FeedsActions.feedAdd(newFeed)).then(() => {
+            expect(store.getActions()).toMatchSnapshot();
         });
     });
 });
