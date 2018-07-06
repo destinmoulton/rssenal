@@ -1,118 +1,70 @@
 import { OrderedMap } from "immutable";
-import * as moment from "moment";
 
-import { ENTRIES_SET_ALL } from "../actiontypes";
-import { API_ENTRIES_BASE } from "../apiendpoints";
+import * as ACT_TYPES from "../actiontypes";
+import * as EntriesServices from "../services/entries.services";
 import { SETTING_SHOW_ENTRIES_READ } from "../../constants";
 import { feedsDecrementUnread, feedsUpdateUnreadCount } from "./feeds.actions";
 import { filterVisibleEntries } from "./filter.actions";
-import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
-import { message } from "./messages.actions";
+
 import * as Types from "../../types";
 
-export function entriesGetAllForFeed(feedId: Types.TFeedID) {
-    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
-        const { settingsStore } = getState();
+export function entriesGetForFeed(feedId: Types.TFeedID) {
+    return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+        const { feedsStore, settingsStore } = getState();
+        const currentFeed = feedsStore.feeds.get(feedId);
 
         const setting = settingsStore.settings.get(SETTING_SHOW_ENTRIES_READ);
-        let showRead = setting.value;
+        let shouldShowRead = setting.value;
 
-        const queryString =
-            "?showEntriesHasRead=" + showRead + "&feedId=" + feedId;
-        const url = API_ENTRIES_BASE + queryString;
-        const init = {
-            method: "GET",
-            headers: generateJWTHeaders()
-        };
+        dispatch({ type: ACT_TYPES.ENTRIES_GET_ALL_REQUEST });
 
-        fetch(url, init)
-            .then(res => {
-                return res.json();
-            })
-            .then(resObj => {
-                if (resObj.status === "error") {
-                    dispatch(message(resObj.error, "error"));
-                    console.error(resObj.error);
-                } else {
-                    let entries = resObj.entries;
-                    dispatch(ammendEntries(entries));
-                }
-            })
-            .catch(err => {
-                console.error(err);
-            });
-    };
-}
+        try {
+            const newEntries: Types.IEntry[] = await EntriesServices.apiGetEntriesForFeed(
+                feedId,
+                shouldShowRead
+            );
 
-function ammendEntries(entries: Types.IEntry[]) {
-    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
-        const { feedsStore } = getState();
+            dispatch({ type: ACT_TYPES.ENTRIES_GET_ALL_SUCCESS });
 
-        const ammendedEntries = entries.map((entry: Types.IEntry) => {
-            const feedTitle = feedsStore.feeds.get(entry.feed_id).title;
-            const timeAgo = moment(entry.publish_date).fromNow();
-            return {
-                ...entry,
-                feedTitle,
-                timeAgo
-            };
-        });
-        dispatch(getEntriesComplete(ammendedEntries));
-        dispatch(feedsUpdateUnreadCount(ammendedEntries));
-    };
-}
+            // Add data to the returned json
+            const ammendedEntries = EntriesServices.ammendRawEntries(
+                currentFeed,
+                newEntries
+            );
 
-function getEntriesComplete(entries: Types.IEntry[]) {
-    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
-        const { entriesStore } = getState();
-        const currentEntries = entriesStore.entries;
+            const fullEntries = EntriesServices.addAmmendedEntries(
+                getState().entriesStore.entries,
+                ammendedEntries
+            );
 
-        let newEntries = currentEntries.toOrderedMap();
-        entries.forEach(entry => {
-            newEntries = newEntries.set(entry._id, entry);
-        });
-
-        dispatch(entriesSetAndFilter(newEntries));
+            dispatch(entriesSetAndFilter(fullEntries));
+            dispatch(feedsUpdateUnreadCount(fullEntries));
+        } catch (err) {
+            dispatch({ type: ACT_TYPES.ENTRIES_GET_ALL_FAIL });
+            console.error(err);
+        }
     };
 }
 
 export function entryUpdateHasRead(entry: Types.IEntry, hasRead: boolean) {
-    return (dispatch: Types.IDispatch) => {
-        const url = API_ENTRIES_BASE + entry._id;
-        const init = {
-            method: "PUT",
-            body: JSON.stringify({ has_read: hasRead }),
-            headers: generateJWTJSONHeaders()
-        };
-
-        fetch(url, init)
-            .then(res => {
-                return res.json();
-            })
-            .then(resObj => {
-                if (resObj.status === "error") {
-                    console.error(resObj.error);
-                } else {
-                    dispatch(entryAmmendMarkRead(entry._id));
-                }
-            })
-            .catch(err => {
-                console.error(err);
-            });
-    };
-}
-
-function entryAmmendMarkRead(entryId: Types.TEntryID) {
-    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+    return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { entriesStore } = getState();
-        const allEntries = entriesStore.entries;
-        const entry = allEntries.get(entryId);
+        const currentEntries = entriesStore.entries;
 
-        const newEntry = { ...entry, has_read: true };
-        const newEntries = allEntries.set(entryId, newEntry);
+        try {
+            await EntriesServices.apiUpdateEntryHasRead(entry, hasRead);
 
-        dispatch(feedsDecrementUnread(entry.feed_id));
-        dispatch(entriesSetAndFilter(newEntries));
+            const newEntries = EntriesServices.ammendEntryReadStatus(
+                currentEntries,
+                entry._id,
+                hasRead
+            );
+
+            dispatch(feedsDecrementUnread(entry.feed_id));
+            dispatch(entriesSetAndFilter(newEntries));
+        } catch (err) {
+            console.error(err);
+        }
     };
 }
 
@@ -125,16 +77,12 @@ export function entriesClearAll() {
 }
 
 function entriesSetAndFilter(entries: Types.TEntries) {
-    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
-        const { filterStore } = getState();
-        dispatch(entriesSetAll(entries));
-        dispatch(filterVisibleEntries(filterStore.filter, entries));
-    };
-}
+    return (dispatch: Types.IDispatch) => {
+        dispatch({
+            type: ACT_TYPES.ENTRIES_SET_ALL,
+            entries
+        });
 
-function entriesSetAll(entries: Types.TEntries) {
-    return {
-        type: ENTRIES_SET_ALL,
-        entries
+        dispatch(filterVisibleEntries());
     };
 }

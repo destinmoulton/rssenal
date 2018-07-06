@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 
 import SelectFolder from "../SelectFolder";
 import folder from "../../../../../test/data/folder";
-import folders from "../../../../../test/data/folders";
+import folders from "../../../../../test/data/immutable/folders";
 
 describe("<SelectFolder />", () => {
     it("renders and matches the snapshot", () => {

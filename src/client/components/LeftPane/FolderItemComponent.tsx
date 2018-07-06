@@ -1,4 +1,3 @@
-import { Map, OrderedMap } from "immutable";
 import * as React from "react";
 
 import { Icon, SemanticICONS } from "semantic-ui-react";
@@ -21,8 +20,9 @@ export interface IFolderItemMapState {
 }
 
 export interface IFolderItemMapDispatch {
-    folderInitiateDelete: (folderId: TFolderID) => void;
-    filterChangeActive: (filter: IFilter) => void;
+    folderDelete: (folderId: TFolderID) => void;
+    filterChange: (filter: IFilter) => void;
+    filterVisibleEntries: () => void;
 }
 
 interface IFolderItemProps {
@@ -47,14 +47,14 @@ class FolderItemComponent extends React.Component<TAllProps, IFolderItemState> {
     };
 
     _handleClickDelete = () => {
-        const { folderInitiateDelete, folder } = this.props;
+        const { folderDelete, folder } = this.props;
         const conf = confirm(
             `Are you sure you want to delete the '${
                 folder.name
             }' folder?\nThe feeds will be moved to 'Uncategorized'.`
         );
         if (conf) {
-            folderInitiateDelete(folder._id);
+            folderDelete(folder._id);
         }
     };
 
@@ -63,12 +63,14 @@ class FolderItemComponent extends React.Component<TAllProps, IFolderItemState> {
     };
 
     _handleClickFolder = () => {
-        const { filterChangeActive, folder } = this.props;
+        const { filterChange, filterVisibleEntries, folder } = this.props;
 
-        filterChangeActive({
+        filterChange({
             limit: "folder",
             id: folder._id
         });
+
+        filterVisibleEntries();
     };
 
     _handleHideOptions = () => {

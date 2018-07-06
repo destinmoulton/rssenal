@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 
 import AddFeedModalComponent from "../AddFeedModalComponent";
 
-import folders from "../../../../../test/data/folders";
+import folders from "../../../../../test/data/immutable/folders";
 
 describe("<AddFeedModalComponent />", () => {
     it("renders and matches the snapshot", () => {

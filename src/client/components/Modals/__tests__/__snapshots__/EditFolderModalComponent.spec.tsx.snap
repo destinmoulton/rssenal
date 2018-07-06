@@ -75,7 +75,7 @@ exports[`<EditFolderModalComponent /> renders and matches the snapshots matches 
       onChange={[Function]}
       onKeyPress={[Function]}
       placeholder="Folder name..."
-      value="Lifestyle"
+      value="Random"
     />
   </ModalContent>
   <ModalActions>

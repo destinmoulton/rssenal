@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { folderInitiateSave } from "../../redux/actions/folders.actions";
+import { folderSave } from "../../redux/actions/folders.actions";
 
 import * as Types from "../../types";
 import EditFolderModalComponent, {
@@ -14,8 +14,7 @@ const mapDispatchToProps = (
     dispatch: Types.IDispatch
 ): IEditFolderModalMapDispatch => {
     return {
-        folderInitiateSave: folderInfo =>
-            dispatch(folderInitiateSave(folderInfo))
+        folderSave: folderInfo => dispatch(folderSave(folderInfo))
     };
 };
 

@@ -14,24 +14,14 @@ exports[`<SelectFolder /> renders and matches the snapshot 1`] = `
   options={
     Array [
       Object {
-        "key": "5a55035e38e78863ac6a89fe",
-        "text": "Random",
-        "value": "5a55035e38e78863ac6a89fe",
-      },
-      Object {
-        "key": "5a54f74838e78863ac6a8961",
-        "text": "Lifestyle",
-        "value": "5a54f74838e78863ac6a8961",
-      },
-      Object {
-        "key": "5a53ec3a94c3905e4a8328d4",
+        "key": "5b33c57eb2438d5708dc1968",
         "text": "Programming",
-        "value": "5a53ec3a94c3905e4a8328d4",
+        "value": "5b33c57eb2438d5708dc1968",
       },
       Object {
-        "key": "5a54fcf538e78863ac6a89f7",
-        "text": "Writing",
-        "value": "5a54fcf538e78863ac6a89f7",
+        "key": "5b33c4bab2438d5708dc1967",
+        "text": "Random",
+        "value": "5b33c4bab2438d5708dc1967",
       },
     ]
   }
@@ -40,7 +30,7 @@ exports[`<SelectFolder /> renders and matches the snapshot 1`] = `
   selectOnBlur={true}
   selectOnNavigation={true}
   selection={true}
-  value="5a54f74838e78863ac6a8961"
+  value="5b33c4bab2438d5708dc1967"
   wrapSelection={true}
 />
 `;

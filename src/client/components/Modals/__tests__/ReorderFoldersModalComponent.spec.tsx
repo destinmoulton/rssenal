@@ -4,14 +4,14 @@ import { shallow } from "enzyme";
 
 import ReorderFoldersModalComponent from "../ReorderFoldersModalComponent";
 
-import folders from "../../../../../test/data/folders";
+import folders from "../../../../../test/data/immutable/folders";
 
 describe("<ReorderFoldersModalComponent />", () => {
     it("renders and matches the snapshot", () => {
         const wrapper = shallow(
             <ReorderFoldersModalComponent
                 folders={folders}
-                folderInitiateReorder={jest.fn()}
+                foldersReorder={jest.fn()}
             />
         );
         expect(wrapper).toMatchSnapshot();

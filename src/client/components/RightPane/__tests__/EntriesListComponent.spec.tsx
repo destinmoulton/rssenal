@@ -2,9 +2,9 @@ import * as React from "react";
 import { shallow } from "enzyme";
 import EntriesListComponent from "../EntriesListComponent";
 
-import ENTRIES from "../../../../../test/data/entries";
-import FEEDS from "../../../../../test/data/feeds";
-import SETTINGS_DATA from "../../../../../test/data/settings";
+import ENTRIES from "../../../../../test/data/immutable/ammendedEntries";
+import FEEDS from "../../../../../test/data/immutable/feeds";
+import SETTINGS_DATA from "../../../../../test/data/immutable/settings";
 const FILTER = {
     limit: "all"
 };

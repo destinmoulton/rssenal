@@ -20,7 +20,7 @@ exports[`<FolderItemComponent /> renders and matches the snapshot 1`] = `
       className="rss-folders-folderitem-title"
       onClick={[Function]}
     >
-      Lifestyle
+      Random
     </div>
     <div
       className="rss-folders-folderitem-unread"

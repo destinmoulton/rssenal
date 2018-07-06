@@ -4,13 +4,23 @@ describe("lib/storage.ts", () => {
     beforeEach(() => {
         localStorage.clear();
     });
-    it("set() and has() work", () => {
-        storage.set("test", "CONTENT");
-        expect(storage.has("test")).toBe(true);
+
+    it("set() works", () => {
+        expect(storage.set("test", "CONTENT")).toBe(true);
+    });
+
+    it("has() works", () => {
+        storage.set("testhas", "TEST HAS");
+        expect(storage.has("testhas")).toBe(true);
     });
 
     it("get() retrieves a stored item", () => {
-        storage.set("testget", "get CONTENT");
-        expect(storage.get("testget")).toBe("get CONTENT");
+        storage.set("testget", "TEST GET");
+        expect(storage.get("testget")).toBe("TEST GET");
+    });
+
+    it("remove() works", () => {
+        storage.set("testremove", "TEST REMOVE");
+        expect(storage.remove("testremove")).toBe(true);
     });
 });

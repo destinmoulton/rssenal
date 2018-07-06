@@ -94,7 +94,7 @@ exports[`<LeftPaneComponent /> renders and matches the snapshot matches snapshot
       />
     </div>
     <div
-      key="5a54f74838e78863ac6a8961"
+      key="5b33c4bab2438d5708dc1967"
     >
       <Connect(FolderItemComponent)
         editFeed={[Function]}
@@ -102,57 +102,25 @@ exports[`<LeftPaneComponent /> renders and matches the snapshot matches snapshot
         folder={
           Object {
             "__v": 0,
-            "_id": "5a54f74838e78863ac6a8961",
-            "name": "Lifestyle",
-            "order": 1,
-          }
-        }
-      />
-    </div>
-    <div
-      key="5a53ec3a94c3905e4a8328d4"
-    >
-      <Connect(FolderItemComponent)
-        editFeed={[Function]}
-        editFolder={[Function]}
-        folder={
-          Object {
-            "__v": 0,
-            "_id": "5a53ec3a94c3905e4a8328d4",
-            "name": "Programming",
-            "order": 2,
-          }
-        }
-      />
-    </div>
-    <div
-      key="5a54fcf538e78863ac6a89f7"
-    >
-      <Connect(FolderItemComponent)
-        editFeed={[Function]}
-        editFolder={[Function]}
-        folder={
-          Object {
-            "__v": 0,
-            "_id": "5a54fcf538e78863ac6a89f7",
-            "name": "Writing",
-            "order": 3,
-          }
-        }
-      />
-    </div>
-    <div
-      key="5a55035e38e78863ac6a89fe"
-    >
-      <Connect(FolderItemComponent)
-        editFeed={[Function]}
-        editFolder={[Function]}
-        folder={
-          Object {
-            "__v": 0,
-            "_id": "5a55035e38e78863ac6a89fe",
+            "_id": "5b33c4bab2438d5708dc1967",
             "name": "Random",
-            "order": 4,
+            "order": 0,
+          }
+        }
+      />
+    </div>
+    <div
+      key="5b33c57eb2438d5708dc1968"
+    >
+      <Connect(FolderItemComponent)
+        editFeed={[Function]}
+        editFolder={[Function]}
+        folder={
+          Object {
+            "__v": 0,
+            "_id": "5b33c57eb2438d5708dc1968",
+            "name": "Programming",
+            "order": 1,
           }
         }
       />

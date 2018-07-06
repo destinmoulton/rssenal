@@ -11,8 +11,9 @@ export interface IFeedItemMapState {
 }
 
 export interface IFeedItemMapDispatch {
-    beginDeleteFeed: (feedId: TFeedID) => void;
-    filterChangeActive: (newFilter: object) => void;
+    deleteFeed: (feedId: TFeedID) => void;
+    filterChange: (newFilter: object) => void;
+    filterVisibleEntries: () => void;
 }
 
 interface IFeedItemProps {
@@ -32,12 +33,12 @@ class FeedItemComponent extends React.Component<TAllProps, IFeedItemState> {
     };
 
     _handleClickDelete = () => {
-        const { beginDeleteFeed, feed } = this.props;
+        const { deleteFeed, feed } = this.props;
         const conf = confirm(
             `Are you sure you want to delete "${feed.title}"?`
         );
         if (conf) {
-            beginDeleteFeed(feed._id);
+            deleteFeed(feed._id);
         }
     };
 
@@ -46,12 +47,14 @@ class FeedItemComponent extends React.Component<TAllProps, IFeedItemState> {
     };
 
     _handleClickFeed = () => {
-        const { filterChangeActive, feed } = this.props;
+        const { filterChange, filterVisibleEntries, feed } = this.props;
 
-        filterChangeActive({
+        filterChange({
             limit: "feed",
             id: feed._id
         });
+
+        filterVisibleEntries();
     };
 
     _handleHideOptions = () => {

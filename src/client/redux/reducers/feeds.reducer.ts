@@ -1,74 +1,52 @@
 import { Map, OrderedMap, Set } from "immutable";
 
-import {
-    FEEDS_ADD_BEGIN,
-    FEEDS_ADD_COMPLETE,
-    FEEDS_GETALL_COMPLETE,
-    FEEDS_SET_UNREAD,
-    FEEDS_CLEAR_UNREAD,
-    FEEDS_UPDATE_BEGIN,
-    FEEDS_UPDATE_COMPLETE
-} from "../actiontypes";
+import * as ACT_TYPES from "../actiontypes";
 
-import {
-    TFeedID,
-    IFeed,
-    IFeedsAction,
-    IFeedsUnreadMap,
-    IReducerStateFeeds
-} from "../../types";
+import * as Types from "../../types";
 
-const INITIAL_UNREAD_MAP: IFeedsUnreadMap = {
-    entriesCounted: Set<TFeedID>(),
-    feeds: Map<TFeedID, number>(),
-    folders: Map<string, number>()
-};
+import { FEEDS_INITIAL_STATE, FEEDS_INITIAL_UNREAD_MAP } from "../initialstate";
 
-const INITIAL_STATE: IReducerStateFeeds = {
-    feeds: OrderedMap<TFeedID, IFeed>(),
-    unreadMap: INITIAL_UNREAD_MAP,
-    isAddingFeed: false,
-    isUpdatingFeed: false
-};
-
-function feedsReducer(state = INITIAL_STATE, action: IFeedsAction) {
+function feedsReducer(
+    state = FEEDS_INITIAL_STATE,
+    action: Types.IFeedsAction
+): Types.IReducerStateFeeds {
     switch (action.type) {
-        case FEEDS_ADD_BEGIN:
+        case ACT_TYPES.FEEDS_ADD_BEGIN:
             return {
                 ...state,
                 isAddingFeed: true
             };
-        case FEEDS_ADD_COMPLETE: {
+        case ACT_TYPES.FEEDS_ADD_COMPLETE: {
             return {
                 ...state,
                 feeds: action.feeds,
                 isAddingFeed: false
             };
         }
-        case FEEDS_GETALL_COMPLETE: {
+        case ACT_TYPES.FEEDS_GETALL_COMPLETE: {
             return {
                 ...state,
                 feeds: action.feeds
             };
         }
-        case FEEDS_SET_UNREAD: {
+        case ACT_TYPES.FEEDS_SET_UNREAD: {
             return {
                 ...state,
                 unreadMap: action.unreadMap
             };
         }
-        case FEEDS_CLEAR_UNREAD: {
+        case ACT_TYPES.FEEDS_CLEAR_UNREAD: {
             return {
                 ...state,
-                unreadMap: INITIAL_UNREAD_MAP
+                unreadMap: FEEDS_INITIAL_UNREAD_MAP
             };
         }
-        case FEEDS_UPDATE_BEGIN:
+        case ACT_TYPES.FEEDS_UPDATE_BEGIN:
             return {
                 ...state,
                 isUpdatingFeed: true
             };
-        case FEEDS_UPDATE_COMPLETE: {
+        case ACT_TYPES.FEEDS_UPDATE_COMPLETE: {
             return {
                 ...state,
                 feeds: action.feeds,

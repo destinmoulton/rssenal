@@ -10,7 +10,7 @@ exports[`<FeedItemComponent /> renders and matches the snapshot 1`] = `
     className="rss-folders-feeditem-title"
     onClick={[Function]}
   >
-    Dot Earth
+    High Scalability
   </div>
   <div
     className="rss-folders-feeditem-unread"

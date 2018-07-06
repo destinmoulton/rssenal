@@ -1,37 +1,31 @@
-import { List } from "immutable";
+import {
+    MESSAGES_ADD_COMPLETE,
+    MESSAGES_REMOVE_COMPLETE
+} from "../actiontypes";
 
-import { MESSAGES_ADD, MESSAGES_REMOVE } from "../actiontypes";
+import { IMessageAction } from "../../types";
 
-import { IMessage, IMessageAction,IReducerStateMessages } from "../../types";
+import { MESSAGES_INITIAL_STATE } from "../initialstate";
 
-const INITIAL_STATE: IReducerStateMessages = {
-    messages: List(),
-    lastUID: 0
-}
-
-const messagesReducer = function(state = INITIAL_STATE, action: IMessageAction){
-    switch(action.type){
-        case MESSAGES_ADD:
-            const nextUID = state.lastUID + 1;
-            const newMessage = (Object as any).assign({}, action.message);
-            newMessage.uid = nextUID;
+const messagesReducer = function(
+    state = MESSAGES_INITIAL_STATE,
+    action: IMessageAction
+) {
+    switch (action.type) {
+        case MESSAGES_ADD_COMPLETE:
             return {
                 ...state,
-                messages: state.messages.push(newMessage),
-                lastUID: nextUID
-            }
-        case MESSAGES_REMOVE:
-            const index = state.messages.findIndex((message: IMessage)=>{
-                return message.uid === action.message.uid;
-            });
-            
+                messages: action.messages,
+                lastUID: action.lastUID
+            };
+        case MESSAGES_REMOVE_COMPLETE:
             return {
                 ...state,
-                messages: state.messages.remove(index)
-            }
+                messages: action.messages
+            };
         default:
             return state;
     }
-}
+};
 
 export default messagesReducer;

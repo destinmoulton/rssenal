@@ -1,5 +1,5 @@
 import { List, Map, OrderedMap, Set } from "immutable";
-
+import { Notification } from "react-notification-system";
 /** Redux Interfaces */
 export interface IDispatch {
     <R>(
@@ -41,7 +41,7 @@ export interface IEntry {
 
 export interface IEntriesAction {
     type: string;
-    entries?: IEntry[];
+    entries?: TEntries;
 }
 
 export type TEntries = OrderedMap<TEntryID, IEntry>;
@@ -51,20 +51,20 @@ export type TEntries = OrderedMap<TEntryID, IEntry>;
 export type TFeedID = string;
 
 export interface IFeed {
-    _id: TFeedID;
+    _id?: TFeedID;
     title: string;
     folder_id: string;
     description: string;
     link: string;
-    creation_date: string;
-    last_updated: string;
+    creation_date?: string;
+    last_updated?: string;
 }
 
 export type TFeeds = OrderedMap<TFeedID, IFeed>;
 
 export interface IFeedsAction {
     type: string;
-    feeds?: IFeed[];
+    feeds?: TFeeds;
     unreadMap?: IFeedsUnreadMap;
 }
 
@@ -84,9 +84,9 @@ export interface IFilter {
 }
 export interface IFilterAction {
     type: string;
-    newFilter: object;
-    filterTitle: string;
-    filteredEntries: TEntries;
+    newFilter?: object;
+    filterTitle?: string;
+    filteredEntries?: TEntries;
 }
 
 /** Folders Interfaces & Types */
@@ -94,22 +94,22 @@ export interface IFilterAction {
 export type TFolderID = string;
 
 export interface IFolder {
-    _id: TFolderID;
+    _id?: TFolderID;
     name: string;
-    order: number;
+    order?: number;
 }
 
 export type TFolders = OrderedMap<TFolderID, IFolder>;
 
 export interface IFolderAction {
     type: string;
-    folders?: IFolder[];
+    folders?: TFolders;
 }
 
 /** Messages Interfaces */
 export interface IMessage {
     message: string;
-    type: string;
+    level: "error" | "warning" | "info" | "success";
     uid?: number;
     onRemove?: (message: IMessage) => void;
     position?: "br" | "tr" | "tl" | "tc" | "bl" | "bc";
@@ -119,7 +119,8 @@ export type TMessages = List<IMessage>;
 
 export interface IMessageAction {
     type: string;
-    message?: IMessage;
+    messages: List<IMessage>;
+    lastUID?: number;
 }
 
 /** Redux Reducer Interfaces */
@@ -187,5 +188,5 @@ export type TSettings = Map<string, ISetting>;
 
 export interface ISettingsAction {
     type: string;
-    settings: TSettings;
+    settings?: TSettings;
 }

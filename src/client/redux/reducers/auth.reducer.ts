@@ -1,29 +1,20 @@
-import {
-    AUTH_ERROR,
-    AUTH_USER_IS_AUTHENTIC,
-    AUTH_LOGOUT
-} from "../actiontypes";
-import { IAuthAction, IReducerStateAuth } from "../../types";
+import * as ACT_TYPES from "../actiontypes";
+import { IAuthAction } from "../../types";
+import { AUTH_INITIAL_STATE } from "../initialstate";
 
-const INITIAL_STATE: IReducerStateAuth = {
-    authenticationError: "",
-    isAuthorized: false,
-    isValidatingToken: false
-};
-
-const authReducer = (state = INITIAL_STATE, action: IAuthAction) => {
+const authReducer = (state = AUTH_INITIAL_STATE, action: IAuthAction) => {
     switch (action.type) {
-        case AUTH_ERROR:
+        case ACT_TYPES.AUTH_ERROR:
             return {
                 ...state,
                 authenticationError: action.message
             };
-        case AUTH_LOGOUT:
+        case ACT_TYPES.AUTH_LOGOUT:
             return {
                 ...state,
                 isAuthorized: false
             };
-        case AUTH_USER_IS_AUTHENTIC:
+        case ACT_TYPES.AUTH_USER_IS_AUTHENTIC:
             return {
                 ...state,
                 authenticationError: "",

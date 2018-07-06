@@ -1,250 +1,115 @@
-import { OrderedMap } from "immutable";
-
 import * as ACT_TYPES from "../actiontypes";
-import { API_FOLDERS_BASE, API_FOLDERS_GET_ALL } from "../apiendpoints";
-import { UNCATEGORIZED_FOLDER } from "../../constants";
+
 import { feedsGetAll } from "./feeds.actions";
 import { filterReset } from "./filter.actions";
-import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
+import * as FoldersServices from "../services/folders.services";
 import { message } from "./messages.actions";
 import * as Types from "../../types";
 
 export function foldersGetAll() {
-    return (dispatch: Types.IDispatch) => {
-        dispatch(fetchingInProgress());
-        dispatch(fetchFolders());
-    };
-}
-
-function fetchingInProgress() {
-    return {
-        type: ACT_TYPES.FOLDERS_FETCHING
-    };
-}
-
-function fetchFolders() {
-    return (dispatch: Types.IDispatch) => {
-        const url = API_FOLDERS_GET_ALL;
-        const init = {
-            method: "GET",
-            headers: generateJWTHeaders()
-        };
-        fetch(url, init)
-            .then(res => {
-                return res.json();
-            })
-            .then(folders => {
-                dispatch(createOrderedMapAfterFetchingFolders(folders));
-            })
-            .catch(err => {
-                console.error(err);
-            });
-    };
-}
-
-function createOrderedMapAfterFetchingFolders(foldersArr: Types.IFolder[]) {
-    return (dispatch: Types.IDispatch) => {
-        const arrayMap = foldersArr.map(folder => {
-            return [folder._id, folder];
+    return async (dispatch: Types.IDispatch) => {
+        dispatch({
+            type: ACT_TYPES.FOLDERS_FETCHING
         });
-        const mappedFolders: Types.TFolders = OrderedMap(arrayMap);
-        const fullFolders: Types.TFolders = mappedFolders.set(
-            UNCATEGORIZED_FOLDER._id,
-            UNCATEGORIZED_FOLDER
-        );
-        dispatch(fetchingComplete(fullFolders));
-    };
-}
 
-function fetchingComplete(folders: Types.TFolders) {
-    return {
-        type: ACT_TYPES.FOLDERS_RECEIVED,
-        folders
-    };
-}
-
-export function folderInitiateSave(folderInfo: Types.IFolder) {
-    return (dispatch: Types.IDispatch) => {
-        if (folderInfo._id !== "") {
-            dispatch(updatingInProgress());
-            dispatch(updateFolder(folderInfo._id, folderInfo.name));
-        } else {
-            dispatch(addingInProgress());
-            dispatch(addFolder(folderInfo.name));
+        try {
+            const foldersArr = await FoldersServices.apiGetAllFolders();
+            const newFolders = FoldersServices.convertRawFoldersToOrderedMap(
+                foldersArr
+            );
+            dispatch({
+                type: ACT_TYPES.FOLDERS_RECEIVED,
+                folders: newFolders
+            });
+        } catch (err) {
+            console.error(err);
         }
     };
 }
 
-function addingInProgress() {
-    return {
-        type: ACT_TYPES.FOLDERS_ADD_BEGIN
-    };
-}
-
-function addFolder(newFolderName: string) {
-    return (dispatch: Types.IDispatch) => {
-        const url = API_FOLDERS_BASE;
-        const init = {
-            method: "POST",
-            body: JSON.stringify({ name: newFolderName }),
-            headers: generateJWTJSONHeaders()
-        };
-        fetch(url, init)
-            .then(res => {
-                return res.json();
-            })
-            .then(resObj => {
-                if (resObj.status === "error") {
-                    return console.error(resObj);
-                } else {
-                    dispatch(message("Folder added.", "success"));
-                    return dispatch(updateStoreAfterAddFolder(resObj));
-                }
-            })
-            .catch(err => {
-                console.error(err);
-            });
-    };
-}
-
-function updateStoreAfterAddFolder(newFolder: Types.IFolder) {
-    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+export function folderSave(folderInfo: Types.IFolder) {
+    return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { folders } = getState().foldersStore;
-        const updatedFolders = folders.set(newFolder._id, newFolder);
-        dispatch(addFolderComplete(updatedFolders));
-    };
-}
-
-function addFolderComplete(folders: Types.TFolders) {
-    return {
-        type: ACT_TYPES.FOLDERS_ADD_COMPLETE,
-        folders
-    };
-}
-
-function updatingInProgress() {
-    return {
-        type: ACT_TYPES.FOLDERS_UPDATE_BEGIN
-    };
-}
-
-function updateFolder(folderId: Types.TFolderID, newFolderName: string) {
-    return (dispatch: Types.IDispatch) => {
-        const url = API_FOLDERS_BASE + folderId;
-        const init = {
-            method: "PUT",
-            body: JSON.stringify({ name: newFolderName }),
-            headers: generateJWTJSONHeaders()
-        };
-
-        fetch(url, init)
-            .then(res => {
-                return res.json();
-            })
-            .then(resObj => {
-                if (resObj.status === "error") {
-                    return console.error(resObj);
-                } else {
-                    dispatch(message("Folder saved.", "success"));
-                    return dispatch(updateStoreAfterUpdate(resObj));
-                }
-            })
-            .catch(err => {
-                console.error(err);
+        if (folderInfo._id !== "") {
+            dispatch({
+                type: ACT_TYPES.FOLDERS_UPDATE_BEGIN
             });
+            const updatedFolder = await FoldersServices.apiSaveFolder(
+                folderInfo
+            );
+
+            dispatch(message("Folder saved.", "success"));
+
+            const updatedFolders = FoldersServices.setFolder(
+                updatedFolder,
+                folders
+            );
+            dispatch({
+                type: ACT_TYPES.FOLDERS_UPDATE_COMPLETE,
+                folders: updatedFolders
+            });
+        } else {
+            dispatch({
+                type: ACT_TYPES.FOLDERS_ADD_BEGIN
+            });
+            try {
+                const newFolder = await FoldersServices.apiAddFolder(
+                    folderInfo.name
+                );
+                dispatch(message("Folder added.", "success"));
+
+                const updatedFolders = FoldersServices.setFolder(
+                    newFolder,
+                    folders
+                );
+                dispatch({
+                    type: ACT_TYPES.FOLDERS_ADD_COMPLETE,
+                    folders: updatedFolders
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        }
     };
 }
 
-function updateStoreAfterUpdate(updatedFolder: Types.IFolder) {
-    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+export function folderDelete(folderID: Types.TFolderID) {
+    return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { folders } = getState().foldersStore;
-        const updatedFolders = folders.set(updatedFolder._id, updatedFolder);
-        dispatch(updatingComplete(updatedFolders));
-    };
-}
+        dispatch({
+            type: ACT_TYPES.FOLDERS_DELETE_BEGIN
+        });
 
-function updatingComplete(folders: Types.TFolders) {
-    return {
-        type: ACT_TYPES.FOLDERS_UPDATE_COMPLETE,
-        folders
-    };
-}
+        try {
+            await FoldersServices.apiDeleteFolder(folderID);
 
-export function folderInitiateDelete(folderId: Types.TFolderID) {
-    return (dispatch: Types.IDispatch) => {
-        dispatch(deleteInProgress());
-        dispatch(deleteFolder(folderId));
-    };
-}
+            dispatch(message("Folder removed.", "success"));
 
-function deleteInProgress() {
-    return {
-        type: ACT_TYPES.FOLDERS_DELETE_BEGIN
-    };
-}
+            const updatedFolders = FoldersServices.removeFolderFromOrderedMap(
+                folderID,
+                folders
+            );
 
-function deleteFolder(folderId: Types.TFolderID) {
-    return (dispatch: Types.IDispatch) => {
-        const url = API_FOLDERS_BASE + folderId;
-        const init = {
-            method: "DELETE",
-            headers: generateJWTHeaders()
-        };
-        fetch(url, init)
-            .then(res => {
-                return res.json();
-            })
-            .then(resObj => {
-                if (resObj.status === "success") {
-                    dispatch(message("Folder removed.", "success"));
-                    dispatch(filterReset());
-                    dispatch(updateFoldersAfterDelete(folderId));
-                    dispatch(feedsGetAll());
-                } else {
-                    console.error(resObj);
-                }
-            })
-            .catch(err => {
-                console.error(err);
+            dispatch({
+                type: ACT_TYPES.FOLDERS_DELETE_COMPLETE,
+                folders: updatedFolders
             });
+            dispatch(filterReset());
+            dispatch(feedsGetAll());
+        } catch (err) {
+            console.error(err);
+        }
     };
 }
 
-function updateFoldersAfterDelete(folderId: Types.TFolderID) {
-    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
-        const { folders } = getState().foldersStore;
-        const updatedFolders = folders.delete(folderId);
-        dispatch(deleteComplete(updatedFolders));
-    };
-}
-
-function deleteComplete(folders: Types.TFolders) {
-    return {
-        type: ACT_TYPES.FOLDERS_DELETE_COMPLETE,
-        folders
-    };
-}
-
-export function folderInitiateReorder(foldersArr: Types.IFolder[]) {
-    return (dispatch: Types.IDispatch) => {
-        const url = API_FOLDERS_BASE;
-        const init = {
-            method: "PUT",
-            body: JSON.stringify({ folders: foldersArr }),
-            headers: generateJWTJSONHeaders()
-        };
-        fetch(url, init)
-            .then(res => {
-                return res.json();
-            })
-            .then(resObj => {
-                if (resObj.status === "success") {
-                    dispatch(message("Folders reordered.", "success"));
-                    return dispatch(foldersGetAll());
-                }
-            })
-            .catch(err => {
-                console.error(err);
-            });
+export function foldersReorder(foldersArr: Types.IFolder[]) {
+    return async (dispatch: Types.IDispatch) => {
+        try {
+            await FoldersServices.apiReorderFolders(foldersArr);
+            dispatch(message("Folders reordered.", "success"));
+            dispatch(foldersGetAll());
+        } catch (err) {
+            console.error(err);
+        }
     };
 }

@@ -1,10 +1,10 @@
 import { OrderedMap } from "immutable";
 import { readFileSync } from "fs";
 import { resolve } from "path";
-import * as Types from "../../src/client/types";
+import * as Types from "../../../src/client/types";
 
 const foldersJson = readFileSync(
-    resolve(__dirname + "/../rawdata/folders.raw.json")
+    resolve(__dirname + "/../json/folders.raw.json")
 );
 const foldersArr = JSON.parse(foldersJson.toString());
 
