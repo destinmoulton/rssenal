@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`feeds.actions feedInitiateAdd() handles adding a feed 1`] = `
+Array [
+  Object {
+    "type": "FEEDS_ADD_BEGIN",
+  },
+  Object {
+    "lastUID": 1,
+    "messages": Immutable.List [
+      Object {
+        "level": "success",
+        "message": "Feed added.",
+        "uid": 1,
+      },
+    ],
+    "type": "MESSAGES_ADD_COMPLETE",
+  },
+  Object {
+    "feeds": Immutable.OrderedMap {
+      "5b33c76cb2438d5708dc197e": Object {
+        "__v": 0,
+        "_id": "5b33c76cb2438d5708dc197e",
+        "creation_date": "2018-06-27T17:20:44.037Z",
+        "description": null,
+        "folder_id": "5b33c57eb2438d5708dc1968",
+        "link": "http://highscalability.com/blog/",
+        "title": "High Scalability",
+        "url": "http://feeds.feedburner.com/HighScalability",
+      },
+    },
+    "type": "FEEDS_ADD_COMPLETE",
+  },
+  Object {
+    "type": "ENTRIES_GET_ALL_REQUEST",
+  },
+]
+`;
