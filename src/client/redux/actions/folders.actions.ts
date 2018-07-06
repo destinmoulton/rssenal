@@ -27,7 +27,7 @@ export function foldersGetAll() {
     };
 }
 
-export function folderInitiateSave(folderInfo: Types.IFolder) {
+export function folderSave(folderInfo: Types.IFolder) {
     return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { folders } = getState().foldersStore;
         if (folderInfo._id !== "") {
