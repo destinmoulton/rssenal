@@ -94,9 +94,9 @@ export interface IFilterAction {
 export type TFolderID = string;
 
 export interface IFolder {
-    _id: TFolderID;
+    _id?: TFolderID;
     name: string;
-    order: number;
+    order?: number;
 }
 
 export type TFolders = OrderedMap<TFolderID, IFolder>;
