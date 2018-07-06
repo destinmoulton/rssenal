@@ -73,7 +73,7 @@ export function folderInitiateSave(folderInfo: Types.IFolder) {
     };
 }
 
-export function folderInitiateDelete(folderID: Types.TFolderID) {
+export function folderDelete(folderID: Types.TFolderID) {
     return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         const { folders } = getState().foldersStore;
         dispatch({
