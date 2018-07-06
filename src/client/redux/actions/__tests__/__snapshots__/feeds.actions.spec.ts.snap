@@ -1,17 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`feeds.actions deleteFeed handles refreshing entries for current feeds 1`] = `
-Array [
-  Object {
-    "type": "FEEDS_DELETE_BEGIN",
-  },
-]
-`;
-
 exports[`feeds.actions deleteFeed() handles refreshing entries for current feeds 1`] = `
 Array [
   Object {
     "type": "FEEDS_DELETE_BEGIN",
+  },
+  Object {
+    "lastUID": 1,
+    "messages": Immutable.List [
+      Object {
+        "level": "success",
+        "message": "Feed removed.",
+        "uid": 1,
+      },
+    ],
+    "type": "MESSAGES_ADD_COMPLETE",
+  },
+  Object {
+    "type": "FILTER_RESET",
+  },
+  Object {
+    "entries": Immutable.OrderedMap {},
+    "type": "ENTRIES_SET_ALL",
+  },
+  Object {
+    "filterTitle": "All",
+    "filteredEntries": Immutable.OrderedMap {},
+    "type": "FILTER_SET_DATA",
+  },
+  Object {
+    "type": "FEEDS_CLEAR_UNREAD",
+  },
+  Object {
+    "type": "ENTRIES_GET_ALL_REQUEST",
   },
 ]
 `;
@@ -49,6 +70,19 @@ Array [
   },
   Object {
     "type": "ENTRIES_GET_ALL_REQUEST",
+  },
+]
+`;
+
+exports[`feeds.actions feedsDecrementUnread() handles decrementing the read count 1`] = `
+Array [
+  Object {
+    "type": "FEEDS_SET_UNREAD",
+    "unreadMap": Object {
+      "entriesCounted": Immutable.Set [],
+      "feeds": Immutable.Map {},
+      "folders": Immutable.Map {},
+    },
   },
 ]
 `;
@@ -95,6 +129,63 @@ Array [
   },
   Object {
     "type": "ENTRIES_GET_ALL_REQUEST",
+  },
+]
+`;
+
+exports[`feeds.actions feedsUpdateUnreadCount() handles updating the unread count 1`] = `
+Array [
+  Object {
+    "type": "FEEDS_SET_UNREAD",
+    "unreadMap": Object {
+      "entriesCounted": Immutable.Set [
+        "5b33c76cb2438d5708dc197f",
+        "5b33c76cb2438d5708dc1981",
+        "5b33c76cb2438d5708dc1983",
+        "5b33c76cb2438d5708dc1985",
+        "5b33c76cb2438d5708dc1987",
+      ],
+      "feeds": Immutable.Map {
+        "5b33c76cb2438d5708dc197e": 5,
+      },
+      "folders": Immutable.Map {
+        "5b33c57eb2438d5708dc1968": 5,
+      },
+    },
+  },
+]
+`;
+
+exports[`feeds.actions saveFeed() handles refreshing entries for current feeds 1`] = `
+Array [
+  Object {
+    "type": "FEEDS_UPDATE_BEGIN",
+  },
+  Object {
+    "lastUID": 1,
+    "messages": Immutable.List [
+      Object {
+        "level": "success",
+        "message": "Feed saved.",
+        "uid": 1,
+      },
+    ],
+    "type": "MESSAGES_ADD_COMPLETE",
+  },
+  Object {
+    "feeds": Immutable.OrderedMap {
+      "5b33c76cb2438d5708dc197e": Object {
+        "__v": 0,
+        "_id": "5b33c76cb2438d5708dc197e",
+        "creation_date": "2018-06-27T17:20:44.037Z",
+        "description": null,
+        "folder_id": "5b33c57eb2438d5708dc1968",
+        "link": "http://highscalability.com/blog/",
+        "title": "High Scalability",
+        "url": "http://feeds.feedburner.com/HighScalability",
+      },
+    },
+    "type": "FEEDS_UPDATE_COMPLETE",
   },
 ]
 `;
