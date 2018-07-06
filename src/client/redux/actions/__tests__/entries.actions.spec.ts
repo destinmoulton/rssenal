@@ -22,7 +22,7 @@ describe("entries.actions", () => {
         localStorage.clear();
     });
 
-    it("entriesGetAllForFeed() fetches and ammends entries", () => {
+    it("entriesGetForFeed() fetches and ammends entries", () => {
         const feedID = "5b33c76cb2438d5708dc197e";
         const url = "/api/entries/?showEntriesHasRead=false&feedId=" + feedID;
 

@@ -14,7 +14,7 @@ Array [
 ]
 `;
 
-exports[`entries.actions entriesGetAllForFeed() fetches and ammends entries 1`] = `
+exports[`entries.actions entriesGetForFeed() fetches and ammends entries 1`] = `
 Array [
   Object {
     "type": "ENTRIES_GET_ALL_REQUEST",
