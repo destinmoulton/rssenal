@@ -1,5 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`feeds.actions deleteFeed handles refreshing entries for current feeds 1`] = `
+Array [
+  Object {
+    "type": "FEEDS_DELETE_BEGIN",
+  },
+]
+`;
+
+exports[`feeds.actions deleteFeed() handles refreshing entries for current feeds 1`] = `
+Array [
+  Object {
+    "type": "FEEDS_DELETE_BEGIN",
+  },
+]
+`;
+
 exports[`feeds.actions feedAdd() handles adding a feed 1`] = `
 Array [
   Object {

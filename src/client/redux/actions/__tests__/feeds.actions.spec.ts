@@ -13,6 +13,7 @@ import FEED from "../../../../../test/data/feed";
 import AMMENDED_ENTRIES from "../../../../../test/data/immutable/ammendedEntries";
 import IMM_FEEDS from "../../../../../test/data/immutable/feeds";
 import * as IMM_UNREAD from "../../../../../test/data/immutable/unreadMap";
+import feed from "../../../../../test/data/feed";
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
@@ -107,6 +108,26 @@ describe("feeds.actions", () => {
         });
 
         store.dispatch(FeedsActions.feedsRefreshAll());
+        expect(store.getActions()).toMatchSnapshot();
+    });
+
+    it("deleteFeed() handles refreshing entries for current feeds", () => {
+        const feedID = "5b33c76cb2438d5708dc197e";
+        const url = "/api/feeds/" + feedID;
+        fetchMock.deleteOnce(url, { status: "success" });
+        const store = mockStore({
+            entriesStore: INIT_STATE.ENTRIES_INITIAL_STATE,
+            feedsStore: {
+                ...INIT_STATE.FEEDS_INITIAL_STATE,
+                feeds: IMM_FEEDS
+            },
+            filterStore: INIT_STATE.FILTER_INITIAL_STATE,
+            foldersStore: INIT_STATE.FOLDERS_INITIAL_STATE,
+            messagesStore: INIT_STATE.MESSAGES_INITIAL_STATE,
+            settingsStore: INIT_STATE.SETTINGS_INITIAL_STATE
+        });
+
+        store.dispatch(FeedsActions.deleteFeed(feedID));
         expect(store.getActions()).toMatchSnapshot();
     });
 });
