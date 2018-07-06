@@ -80,10 +80,14 @@ export function deleteFeed(feedId: Types.TFeedID) {
             type: ACT_TYPES.FEEDS_DELETE_BEGIN
         });
 
-        await FeedsServices.apiDeleteFeed(feedId);
-        dispatch(message("Feed removed.", "success"));
-        dispatch(filterReset());
-        dispatch(feedsRefreshAll());
+        try {
+            await FeedsServices.apiDeleteFeed(feedId);
+            dispatch(message("Feed removed.", "success"));
+            dispatch(filterReset());
+            dispatch(feedsRefreshAll());
+        } catch (err) {
+            dispatch(message(err, "error"));
+        }
     };
 }
 
