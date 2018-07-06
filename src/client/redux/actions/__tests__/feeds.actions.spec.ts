@@ -86,4 +86,27 @@ describe("feeds.actions", () => {
             expect(store.getActions()).toMatchSnapshot();
         });
     });
+
+    it("feedsRefreshAll() handles refreshing entries for current feeds", () => {
+        const feedID = "5b33c76cb2438d5708dc197e";
+        const entries_url =
+            "/api/entries/?showEntriesHasRead=false&feedId=" + feedID;
+
+        fetchMock.getOnce(entries_url, JSON.parse(API_ENTRIES_STRING));
+
+        const store = mockStore({
+            entriesStore: INIT_STATE.ENTRIES_INITIAL_STATE,
+            feedsStore: {
+                ...INIT_STATE.FEEDS_INITIAL_STATE,
+                feeds: IMM_FEEDS
+            },
+            filterStore: INIT_STATE.FILTER_INITIAL_STATE,
+            foldersStore: INIT_STATE.FOLDERS_INITIAL_STATE,
+            messagesStore: INIT_STATE.MESSAGES_INITIAL_STATE,
+            settingsStore: INIT_STATE.SETTINGS_INITIAL_STATE
+        });
+
+        store.dispatch(FeedsActions.feedsRefreshAll());
+        expect(store.getActions()).toMatchSnapshot();
+    });
 });
