@@ -102,7 +102,7 @@ export function folderDelete(folderID: Types.TFolderID) {
     };
 }
 
-export function folderInitiateReorder(foldersArr: Types.IFolder[]) {
+export function foldersReorder(foldersArr: Types.IFolder[]) {
     return async (dispatch: Types.IDispatch) => {
         try {
             await FoldersServices.apiReorderFolders(foldersArr);

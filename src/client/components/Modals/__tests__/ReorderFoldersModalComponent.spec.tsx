@@ -11,7 +11,7 @@ describe("<ReorderFoldersModalComponent />", () => {
         const wrapper = shallow(
             <ReorderFoldersModalComponent
                 folders={folders}
-                folderInitiateReorder={jest.fn()}
+                foldersReorder={jest.fn()}
             />
         );
         expect(wrapper).toMatchSnapshot();

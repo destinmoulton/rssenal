@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { folderInitiateReorder } from "../../redux/actions/folders.actions";
+import { foldersReorder } from "../../redux/actions/folders.actions";
 
 import * as Types from "../../types";
 import ReorderFoldersModalComponent, {
@@ -20,8 +20,8 @@ const mapDispatchToProps = (
     dispatch: Types.IDispatch
 ): IReorderFolderMapDispatch => {
     return {
-        folderInitiateReorder: (foldersArr: Types.IFolder[]) =>
-            dispatch(folderInitiateReorder(foldersArr))
+        foldersReorder: (foldersArr: Types.IFolder[]) =>
+            dispatch(foldersReorder(foldersArr))
     };
 };
 
