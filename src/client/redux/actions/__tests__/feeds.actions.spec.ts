@@ -24,7 +24,7 @@ describe("feeds.actions", () => {
         localStorage.clear();
     });
 
-    it("feedInitiateAdd() handles adding a feed", () => {
+    it("feedAdd() handles adding a feed", () => {
         const feedID = "5b33c76cb2438d5708dc197e";
         const entries_url =
             "/api/entries/?showEntriesHasRead=false&feedId=" + feedID;
@@ -55,6 +55,34 @@ describe("feeds.actions", () => {
         };
 
         return store.dispatch(FeedsActions.feedAdd(newFeed)).then(() => {
+            expect(store.getActions()).toMatchSnapshot();
+        });
+    });
+
+    it("feedsGetAll() handles getting feeds", () => {
+        const feedID = "5b33c76cb2438d5708dc197e";
+        const entries_url =
+            "/api/entries/?showEntriesHasRead=false&feedId=" + feedID;
+
+        fetchMock.getOnce(entries_url, JSON.parse(API_ENTRIES_STRING));
+
+        const feed_url = "/api/feeds/";
+
+        fetchMock.getOnce(feed_url, JSON.parse(API_FEEDS_STRING));
+
+        const store = mockStore({
+            entriesStore: INIT_STATE.ENTRIES_INITIAL_STATE,
+            feedsStore: {
+                ...INIT_STATE.FEEDS_INITIAL_STATE,
+                feeds: IMM_FEEDS
+            },
+            filterStore: INIT_STATE.FILTER_INITIAL_STATE,
+            foldersStore: INIT_STATE.FOLDERS_INITIAL_STATE,
+            messagesStore: INIT_STATE.MESSAGES_INITIAL_STATE,
+            settingsStore: INIT_STATE.SETTINGS_INITIAL_STATE
+        });
+
+        return store.dispatch(FeedsActions.feedsGetAll()).then(() => {
             expect(store.getActions()).toMatchSnapshot();
         });
     });
