@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`feeds.actions foldersGetAll() handles getting the folders 1`] = `
+Array [
+  Object {
+    "type": "FOLDERS_FETCHING",
+  },
+  Object {
+    "folders": Immutable.OrderedMap {
+      "5b33c4bab2438d5708dc1967": Object {
+        "__v": 0,
+        "_id": "5b33c4bab2438d5708dc1967",
+        "name": "Random",
+        "order": 0,
+      },
+      "5b33c57eb2438d5708dc1968": Object {
+        "__v": 0,
+        "_id": "5b33c57eb2438d5708dc1968",
+        "name": "Programming",
+        "order": 1,
+      },
+      "0": Object {
+        "_id": "0",
+        "name": "Uncategorized",
+        "order": Infinity,
+      },
+    },
+    "type": "FOLDERS_RECEIVED",
+  },
+]
+`;
