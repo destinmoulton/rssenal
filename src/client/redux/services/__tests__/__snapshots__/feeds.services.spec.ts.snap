@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`feeds.services decrementUnreadCount() decreases the read count for a feed; matches snapshot 1`] = `
+Object {
+  "entriesCounted": Immutable.Set [
+    "5b33c76cb2438d5708dc197f",
+    "5b33c76cb2438d5708dc1981",
+    "5b33c76cb2438d5708dc1983",
+    "5b33c76cb2438d5708dc1985",
+    "5b33c76cb2438d5708dc1987",
+  ],
+  "feeds": Immutable.Map {
+    "5b33c76cb2438d5708dc197e": 4,
+  },
+  "folders": Immutable.Map {
+    "5b33c57eb2438d5708dc1968": 4,
+  },
+}
+`;
+
+exports[`feeds.services updateUnreadCont() creates a new unread count; matches snapshot 1`] = `
+Object {
+  "entriesCounted": Immutable.Set [
+    "5b33c76cb2438d5708dc197f",
+    "5b33c76cb2438d5708dc1981",
+    "5b33c76cb2438d5708dc1983",
+    "5b33c76cb2438d5708dc1985",
+    "5b33c76cb2438d5708dc1987",
+  ],
+  "feeds": Immutable.Map {
+    "5b33c76cb2438d5708dc197e": 5,
+  },
+  "folders": Immutable.Map {
+    "5b33c57eb2438d5708dc1968": 5,
+  },
+}
+`;
