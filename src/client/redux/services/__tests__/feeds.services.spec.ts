@@ -1,13 +1,13 @@
 import * as fetchMock from "fetch-mock";
 
-import * as FeedsServices from "../feeds.services";
-import ENTRY from "../../../../../test/data/entry";
-import FEED from "../../../../../test/data/feed";
-import API_ENTRIES_STRING from "../../../../../test/data/api/entries.unread";
-import AMMENDED_ENTRIES from "../../../../../test/data/immutable/ammendedEntries";
+import { Map, Set, OrderedMap } from "immutable";
 
-import { OrderedMap } from "immutable";
-import entry from "../../../../../test/data/entry";
+import * as FeedsServices from "../feeds.services";
+
+import FEED from "../../../../../test/data/feed";
+import API_FEEDS_STRING from "../../../../../test/data/api/feeds";
+import IMM_FEEDS from "../../../../../test/data/immutable/feeds";
+import IMM_ENTRIES from "../../../../../test/data/immutable/ammendedEntries";
 
 describe("feeds.services", () => {
     afterEach(() => {
@@ -68,8 +68,8 @@ describe("feeds.services", () => {
 
         it("returns the new feed for a valid response", async () => {
             const expectedFeed = { feedData: "FEED DATA HERE" };
-            const URL = "/api/feeds/FEED_ID";
-            fetchMock.deleteOnce(URL, {
+            const url = "/api/feeds/FEED_ID";
+            fetchMock.deleteOnce(url, {
                 body: {
                     status: "success"
                 }
@@ -83,5 +83,149 @@ describe("feeds.services", () => {
                 expect(fetchMock.done()).toBe(true);
             } catch (err) {}
         });
+    });
+
+    describe("apiGetAllFeeds()", () => {
+        it("throws an error for an error response", async () => {
+            const url = "/api/feeds/";
+            fetchMock.getOnce(url, { status: "error" });
+
+            expect.assertions(2);
+
+            try {
+                await FeedsServices.apiGetAllFeeds();
+            } catch (err) {
+                expect(err).toBeInstanceOf(Error);
+                expect(fetchMock.done()).toBe(true);
+            }
+        });
+
+        it("returns the feeds for a valid response", async () => {
+            const expectedFeeds = ["feed1", "feed2"];
+            const url = "/api/feeds/";
+            fetchMock.getOnce(url, {
+                status: "success",
+                feeds: expectedFeeds
+            });
+
+            expect.assertions(2);
+
+            try {
+                const res = await FeedsServices.apiGetAllFeeds();
+                expect(res).toEqual(expectedFeeds);
+                expect(fetchMock.done()).toBe(true);
+            } catch (err) {}
+        });
+    });
+
+    describe("apiUpdateFeed()", () => {
+        it("throws an error for an error response", async () => {
+            const feedID = "5b33c76cb2438d5708dc197e";
+            const url = "/api/feeds/" + feedID;
+            fetchMock.putOnce(url, { body: { status: "error" } });
+
+            expect.assertions(2);
+
+            try {
+                await FeedsServices.apiUpdateFeed(FEED);
+            } catch (err) {
+                expect(err).toBeInstanceOf(Error);
+                expect(fetchMock.done()).toBe(true);
+            }
+        });
+
+        it("returns the updated feed for a valid response", async () => {
+            const expectedFeed = { feed: "UPDATED FEED" };
+            const feedID = "5b33c76cb2438d5708dc197e";
+            const url = "/api/feeds/" + feedID;
+            fetchMock.putOnce(url, {
+                body: {
+                    status: "success",
+                    feedInfo: expectedFeed
+                }
+            });
+
+            expect.assertions(2);
+
+            try {
+                const res = await FeedsServices.apiUpdateFeed(FEED);
+                expect(res).toEqual(expectedFeed);
+                expect(fetchMock.done()).toBe(true);
+            } catch (err) {}
+        });
+    });
+
+    it("convertRawFeedsToOrderedMap() returns an OrderedMap<> of feeds", () => {
+        const om = FeedsServices.convertRawFeedsToOrderedMap(
+            JSON.parse(API_FEEDS_STRING).feeds
+        );
+        expect(om).toEqual(IMM_FEEDS);
+    });
+
+    it("updateUnreadCont() creates a new unread count; matches snapshot", () => {
+        const initUnreadMap = {
+            entriesCounted: Set<string>(),
+            feeds: Map<string, number>(),
+            folders: Map<string, number>()
+        };
+        const newUnreadCount = FeedsServices.updateUnreadCount(
+            initUnreadMap,
+            IMM_ENTRIES,
+            IMM_FEEDS
+        );
+
+        expect(newUnreadCount).toMatchSnapshot();
+    });
+
+    it("decrementUnreadCount() decreases the read count for a feed; matches snapshot", () => {
+        const feedID = "5b33c76cb2438d5708dc197e";
+        const initUnreadMap = {
+            entriesCounted: Set<string>(),
+            feeds: Map<string, number>(),
+            folders: Map<string, number>()
+        };
+        const initUnreadCount = FeedsServices.updateUnreadCount(
+            initUnreadMap,
+            IMM_ENTRIES,
+            IMM_FEEDS
+        );
+
+        const updatedUnreadCount = FeedsServices.decrementUnread(
+            feedID,
+            IMM_FEEDS,
+            initUnreadCount
+        );
+
+        expect(updatedUnreadCount).toMatchSnapshot();
+    });
+
+    it("setSingleFeed() sets a feed in the OrderedMap of feeds", () => {
+        const feedID = "5b33c76cb2438d5708dc197e";
+        const CLONED_FEED = { ...FEED, title: "NEW TITLE" };
+        const newFeedsOM = FeedsServices.setSingleFeed(CLONED_FEED, IMM_FEEDS);
+        expect(newFeedsOM).toEqual(OrderedMap([[feedID, CLONED_FEED]]));
+    });
+
+    it("sortFeeds() sorts feeds in asc titular order", () => {
+        const unorderedFeeds = [
+            { ...FEED, _id: "BID", title: "b9Second" },
+            { ...FEED, _id: "AID", title: "a9First" },
+            { ...FEED, _id: "0ID", title: "09Num" }
+        ];
+
+        const orderedFeeds = [
+            { ...FEED, _id: "0ID", title: "09Num" },
+            { ...FEED, _id: "AID", title: "a9First" },
+            { ...FEED, _id: "BID", title: "b9Second" }
+        ];
+
+        const unorderedOM = FeedsServices.convertRawFeedsToOrderedMap(
+            unorderedFeeds
+        );
+        const expectedOM = FeedsServices.convertRawFeedsToOrderedMap(
+            orderedFeeds
+        );
+        const sorted = FeedsServices.sortFeeds(unorderedOM);
+        expect(sorted).toEqual(expectedOM);
     });
 });
