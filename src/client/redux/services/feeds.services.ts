@@ -26,7 +26,7 @@ export async function apiAddFeed(feedInfo: Types.IFeed) {
             }
         })
         .catch(err => {
-            throw new Error(err);
+            throw err;
         });
 }
 
@@ -48,7 +48,7 @@ export async function apiDeleteFeed(feedID: Types.TFeedID) {
             }
         })
         .catch(err => {
-            throw new Error(err);
+            throw err;
         });
 }
 
@@ -70,7 +70,7 @@ export async function apiGetAllFeeds() {
             }
         })
         .catch(err => {
-            throw new Error(err);
+            throw err;
         });
 }
 
@@ -97,7 +97,7 @@ export async function apiUpdateFeed(feedInfo: Types.IFeed) {
             }
         })
         .catch(err => {
-            throw new Error(err);
+            throw err;
         });
 }
 
