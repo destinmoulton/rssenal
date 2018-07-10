@@ -29,7 +29,7 @@ export async function apiValidateToken() {
             }
         })
         .catch(err => {
-            throw new Error(err);
+            throw err;
         });
 }
 
@@ -53,6 +53,6 @@ export async function apiLoginUser(username: string, password: string) {
             }
         })
         .catch(err => {
-            throw new Error(err);
+            throw err;
         });
 }
