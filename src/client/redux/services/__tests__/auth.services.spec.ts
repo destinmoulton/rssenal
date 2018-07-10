@@ -42,4 +42,33 @@ describe("auth.services", () => {
             }
         });
     });
+
+    describe("apiLoginUser()", () => {
+        it("throws on invalid username/password", async () => {
+            fetchMock.postOnce("/api/auth/login", {
+                body: { status: "error" }
+            });
+
+            expect.assertions(2);
+            try {
+                await AuthServices.apiLoginUser("testu", "testp");
+            } catch (err) {
+                expect(fetchMock.done()).toBe(true);
+                expect(err).toEqual(new Error("Invalid username or password."));
+            }
+        });
+
+        it("returns true on valid username/password", async () => {
+            fetchMock.postOnce("/api/auth/login", {
+                body: { status: "success" }
+            });
+
+            expect.assertions(2);
+            try {
+                const ret = await AuthServices.apiLoginUser("testu", "testp");
+                expect(fetchMock.done()).toBe(true);
+                expect(ret).toBe(true);
+            } catch (err) {}
+        });
+    });
 });
