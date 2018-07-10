@@ -2,6 +2,13 @@ import * as fetchMock from "fetch-mock";
 
 import * as EntriesServices from "../entries.services";
 import ENTRY from "../../../../../test/data/entry";
+import FEED from "../../../../../test/data/feed";
+import API_ENTRIES_STRING from "../../../../../test/data/api/entries.unread";
+import AMMENDED_ENTRIES from "../../../../../test/data/immutable/ammendedEntries";
+
+import { OrderedMap } from "immutable";
+import entry from "../../../../../test/data/entry";
+
 describe("entries.services", () => {
     afterEach(() => {
         fetchMock.reset();
@@ -77,5 +84,46 @@ describe("entries.services", () => {
                 expect(fetchMock.done()).toBe(true);
             } catch (err) {}
         });
+    });
+
+    it("ammendRawEntries() builds an array of entries", () => {
+        const ammended = EntriesServices.ammendRawEntries(
+            FEED,
+            JSON.parse(API_ENTRIES_STRING).entries
+        );
+        expect(ammended).toEqual(AMMENDED_ENTRIES.toArray());
+    });
+
+    it("addAmmendedEntries() adds the ammended entry array to the current Entries OrderedMap<>", () => {
+        const ammended = EntriesServices.ammendRawEntries(
+            FEED,
+            JSON.parse(API_ENTRIES_STRING).entries
+        );
+        const added = EntriesServices.addAmmendedEntries(
+            OrderedMap(),
+            ammended
+        );
+        expect(added).toEqual(AMMENDED_ENTRIES);
+    });
+
+    it("ammendEntryReadStatus() changes the has_read property of an entry", () => {
+        const entryID = "5b33c76cb2438d5708dc197f";
+
+        const changedEntry = {
+            ...AMMENDED_ENTRIES.get(entryID),
+            has_read: true
+        };
+
+        const clonedEntries = AMMENDED_ENTRIES.toOrderedMap();
+
+        const newEntries = EntriesServices.ammendEntryReadStatus(
+            clonedEntries,
+            entryID,
+            true
+        );
+
+        const EXPECTED_ENTRIES = clonedEntries.set(entryID, changedEntry);
+
+        expect(newEntries).toEqual(EXPECTED_ENTRIES);
     });
 });
