@@ -27,14 +27,11 @@ export function apiGetEntriesForFeed(
             }
         })
         .catch(err => {
-            throw new Error(err);
+            throw err;
         });
 }
 
-export async function apiUpdateEntryHasRead(
-    entry: Types.IEntry,
-    hasRead: boolean
-) {
+export function apiUpdateEntryHasRead(entry: Types.IEntry, hasRead: boolean) {
     const url = API_ENTRIES_BASE + entry._id;
     const init = {
         method: "PUT",
@@ -54,7 +51,7 @@ export async function apiUpdateEntryHasRead(
             }
         })
         .catch(err => {
-            throw new Error(err);
+            throw err;
         });
 }
 

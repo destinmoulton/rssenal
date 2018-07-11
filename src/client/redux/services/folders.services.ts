@@ -24,7 +24,7 @@ export async function apiAddFolder(newFolderName: string) {
             }
         })
         .catch(err => {
-            throw new Error(err);
+            throw err;
         });
 }
 
@@ -46,7 +46,7 @@ export async function apiDeleteFolder(folderID: Types.TFolderID) {
             }
         })
         .catch(err => {
-            throw new Error(err);
+            throw err;
         });
 }
 
@@ -64,7 +64,7 @@ export async function apiGetAllFolders() {
             return folders;
         })
         .catch(err => {
-            throw new Error(err);
+            throw err;
         });
 }
 
@@ -87,7 +87,7 @@ export async function apiReorderFolders(foldersArr: Types.IFolder[]) {
             }
         })
         .catch(err => {
-            throw new Error(err);
+            throw err;
         });
 }
 
@@ -111,7 +111,7 @@ export async function apiSaveFolder(folderInfo: Types.IFolder) {
             }
         })
         .catch(err => {
-            throw new Error(err);
+            throw err;
         });
 }
 
