@@ -10,7 +10,7 @@ import * as Types from "../../types";
 
 export function entriesGetForFeed(feed: Types.IFeed) {
     return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
-        const { feedsStore, settingsStore } = getState();
+        const { settingsStore } = getState();
 
         const setting = settingsStore.settings.get(SETTING_SHOW_ENTRIES_READ);
         let shouldShowRead = setting.value;
