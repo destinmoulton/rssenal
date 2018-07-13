@@ -21,13 +21,16 @@ describe("<LeftPaneContainer />", () => {
         fetchMock.restore();
         localStorage.clear();
     });
-    it("renders and matches the snapshot", () => {
+    it("renders and matches the snapshot", async () => {
         const folders_url = "/api/folders/";
         fetchMock.getOnce(folders_url, JSON.parse(API_FOLDERS_STRING));
 
         const feeds_url = "/api/feeds/";
-
         fetchMock.getOnce(feeds_url, JSON.parse(API_FEEDS_STRING));
+
+        const entries_url =
+            "/api/entries/?showEntriesHasRead=false&feedId=5b33c76cb2438d5708dc197e";
+        fetchMock.getOnce(entries_url, JSON.parse(API_ENTRIES_STRING));
 
         const store = mockStore({
             authStore: INIT_STATE.AUTH_INITIAL_STATE,
@@ -44,17 +47,16 @@ describe("<LeftPaneContainer />", () => {
                 <LeftPaneContainer />
             </Provider>
         );
+        fetchMock.catch(404);
 
-        fetchMock.flush().then(() => {
+        try {
+            await fetchMock.flush();
             console.log(fetchMock.calls());
-            const entries_url =
-                "/api/entries/?showEntriesHasRead=false&feedId=5b33c76cb2438d5708dc197e";
-            fetchMock.getOnce(entries_url, JSON.parse(API_ENTRIES_STRING));
+            console.log("Completed all (done())?", fetchMock.done());
 
-            fetchMock.flush().then(() => {
-                console.log(fetchMock.calls());
-                expect(wrapper).toMatchSnapshot();
-            });
-        });
+            expect(wrapper).toMatchSnapshot();
+        } catch (err) {
+            throw err;
+        }
     });
 });

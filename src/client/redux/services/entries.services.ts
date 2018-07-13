@@ -8,6 +8,7 @@ export function apiGetEntriesForFeed(
     feedId: Types.TFeedID,
     shouldShowRead: boolean
 ) {
+    console.log("running apiGetEntriesForFeed", feedId);
     const queryString = `?showEntriesHasRead=${shouldShowRead}&feedId=${feedId}`;
     const url = API_ENTRIES_BASE + queryString;
     const init = {

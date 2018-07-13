@@ -31,6 +31,9 @@ describe("feeds.actions", () => {
         try {
             await store.dispatch(FoldersActions.foldersGetAll());
             expect(store.getActions()).toMatchSnapshot();
+
+            await fetchMock.flush();
+            expect(fetchMock.done()).toBe(true);
         } catch (err) {
             throw err;
         }
@@ -55,8 +58,10 @@ describe("feeds.actions", () => {
 
             try {
                 await store.dispatch(FoldersActions.folderSave(folderInfo));
-
                 expect(store.getActions()).toMatchSnapshot();
+
+                await fetchMock.flush();
+                expect(fetchMock.done()).toBe(true);
             } catch (err) {
                 throw err;
             }
@@ -78,8 +83,10 @@ describe("feeds.actions", () => {
 
             try {
                 await store.dispatch(FoldersActions.folderSave(folderInfo));
-
                 expect(store.getActions()).toMatchSnapshot();
+
+                await fetchMock.flush();
+                expect(fetchMock.done()).toBe(true);
             } catch (err) {
                 throw err;
             }
@@ -101,8 +108,10 @@ describe("feeds.actions", () => {
         fetchMock.getOnce(feed_url, JSON.parse(API_FEEDS_STRING));
         try {
             await store.dispatch(FoldersActions.folderDelete(folder_id));
-
             expect(store.getActions()).toMatchSnapshot();
+
+            await fetchMock.flush();
+            expect(fetchMock.done()).toBe(true);
         } catch (err) {
             throw err;
         }
@@ -126,6 +135,9 @@ describe("feeds.actions", () => {
             );
 
             expect(store.getActions()).toMatchSnapshot();
+
+            await fetchMock.flush();
+            expect(fetchMock.done()).toBe(true);
         } catch (err) {
             throw err;
         }

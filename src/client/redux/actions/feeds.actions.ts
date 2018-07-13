@@ -52,13 +52,14 @@ export function feedsGetAll() {
 }
 
 function getAllEntriesForFeeds(feeds: Types.TFeeds) {
-    return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+    return async (dispatch: Types.IDispatch) => {
         dispatch({
             type: ACT_TYPES.FEEDS_CLEAR_UNREAD
         });
 
         try {
-            feeds.forEach(async feed => {
+            const feedsArr: Types.IFeed[] = feeds.toArray();
+            feedsArr.forEach(async feed => {
                 await dispatch(EntriesActions.entriesGetForFeed(feed));
             });
         } catch (err) {
@@ -68,13 +69,13 @@ function getAllEntriesForFeeds(feeds: Types.TFeeds) {
 }
 
 export function feedsRefreshAll() {
-    return (
+    return async (
         dispatch: Types.IDispatch,
         getState: () => Types.IRootStoreState
     ) => {
         const { feeds } = getState().feedsStore;
         dispatch(EntriesActions.entriesClearAll());
-        dispatch(getAllEntriesForFeeds(feeds));
+        await dispatch(getAllEntriesForFeeds(feeds));
     };
 }
 
@@ -88,7 +89,7 @@ export function deleteFeed(feedId: Types.TFeedID) {
             await FeedsServices.apiDeleteFeed(feedId);
             dispatch(message("Feed removed.", "success"));
             dispatch(filterReset());
-            dispatch(feedsRefreshAll());
+            await dispatch(feedsRefreshAll());
         } catch (err) {
             dispatch(message(err, "error"));
         }
@@ -114,7 +115,7 @@ export function saveFeed(feedInfo: Types.IFeed) {
                 feeds: newFeeds
             });
 
-            dispatch(feedsGetAll());
+            await dispatch(feedsGetAll());
         } catch (err) {
             dispatch(message(err, "error"));
         }

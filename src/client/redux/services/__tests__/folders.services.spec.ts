@@ -26,6 +26,8 @@ describe("feeds.services", () => {
                 await FoldersServices.apiAddFolder("NEW_FOLDER_NAME");
             } catch (err) {
                 expect(err).toBeInstanceOf(Error);
+
+                await fetchMock.flush();
                 expect(fetchMock.done()).toBe(true);
             }
         });
@@ -46,8 +48,12 @@ describe("feeds.services", () => {
                     "NEW_FOLDER_NAME"
                 );
                 expect(feedInfo).toEqual(expectedFolder);
+
+                await fetchMock.flush();
                 expect(fetchMock.done()).toBe(true);
-            } catch (err) {}
+            } catch (err) {
+                throw err;
+            }
         });
     });
 
@@ -62,6 +68,8 @@ describe("feeds.services", () => {
                 await FoldersServices.apiDeleteFolder("FOLDER_ID");
             } catch (err) {
                 expect(err).toBeInstanceOf(Error);
+
+                await fetchMock.flush();
                 expect(fetchMock.done()).toBe(true);
             }
         });
@@ -80,8 +88,12 @@ describe("feeds.services", () => {
             try {
                 const res = await FoldersServices.apiDeleteFolder("FOLDER_ID");
                 expect(res).toBe(true);
+
+                await fetchMock.flush();
                 expect(fetchMock.done()).toBe(true);
-            } catch (err) {}
+            } catch (err) {
+                throw err;
+            }
         });
     });
 
@@ -97,8 +109,10 @@ describe("feeds.services", () => {
 
             try {
                 const res = await FoldersServices.apiGetAllFolders();
-                expect(fetchMock.done()).toBe(true);
                 expect(res).toEqual(expectedFolders);
+
+                await fetchMock.flush();
+                expect(fetchMock.done()).toBe(true);
             } catch (err) {}
         });
     });
@@ -114,6 +128,8 @@ describe("feeds.services", () => {
                 await FoldersServices.apiReorderFolders(IMM_FOLDERS.toArray());
             } catch (err) {
                 expect(err).toBeInstanceOf(Error);
+
+                await fetchMock.flush();
                 expect(fetchMock.done()).toBe(true);
             }
         });
@@ -135,8 +151,12 @@ describe("feeds.services", () => {
                     IMM_FOLDERS.toArray()
                 );
                 expect(res).toEqual(true);
+
+                await fetchMock.flush();
                 expect(fetchMock.done()).toBe(true);
-            } catch (err) {}
+            } catch (err) {
+                throw err;
+            }
         });
     });
 
@@ -152,6 +172,8 @@ describe("feeds.services", () => {
                 await FoldersServices.apiSaveFolder(FOLDER);
             } catch (err) {
                 expect(err).toBeInstanceOf(Error);
+
+                await fetchMock.flush();
                 expect(fetchMock.done()).toBe(true);
             }
         });
@@ -171,8 +193,12 @@ describe("feeds.services", () => {
             try {
                 const res = await FoldersServices.apiSaveFolder(FOLDER);
                 expect(res).toEqual(expectedFolder);
+
+                await fetchMock.flush();
                 expect(fetchMock.done()).toBe(true);
-            } catch (err) {}
+            } catch (err) {
+                throw err;
+            }
         });
     });
 

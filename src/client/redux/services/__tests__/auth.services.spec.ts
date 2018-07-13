@@ -9,7 +9,7 @@ describe("auth.services", () => {
         localStorage.clear();
     });
 
-    describe("apiValidateToken()", () => {
+    describe("apiValidateToken()", async () => {
         it("throws when the token is invalid", async () => {
             localStorage.setItem("jwt_token", "TEST_TOKEN");
             fetchMock.getOnce("/api/auth/validatetoken", {
@@ -35,8 +35,10 @@ describe("auth.services", () => {
             expect.assertions(2);
             try {
                 const validated = await AuthServices.apiValidateToken();
-                expect(fetchMock.done()).toBe(true);
                 expect(validated).toBe(true);
+
+                await fetchMock.flush();
+                expect(fetchMock.done()).toBe(true);
             } catch (err) {
                 throw err;
             }
@@ -53,8 +55,10 @@ describe("auth.services", () => {
             try {
                 await AuthServices.apiLoginUser("testu", "testp");
             } catch (err) {
-                expect(fetchMock.done()).toBe(true);
                 expect(err).toEqual(new Error("Invalid username or password."));
+
+                await fetchMock.flush();
+                expect(fetchMock.done()).toBe(true);
             }
         });
 
@@ -66,9 +70,13 @@ describe("auth.services", () => {
             expect.assertions(2);
             try {
                 const ret = await AuthServices.apiLoginUser("testu", "testp");
-                expect(fetchMock.done()).toBe(true);
                 expect(ret).toBe(true);
-            } catch (err) {}
+
+                await fetchMock.flush();
+                expect(fetchMock.done()).toBe(true);
+            } catch (err) {
+                throw err;
+            }
         });
     });
 });

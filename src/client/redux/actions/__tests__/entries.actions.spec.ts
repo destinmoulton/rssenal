@@ -41,8 +41,10 @@ describe("entries.actions", () => {
 
         try {
             await store.dispatch(EntriesActions.entriesGetForFeed(FEED));
-
             expect(store.getActions()).toMatchSnapshot();
+
+            await fetchMock.flush();
+            expect(fetchMock.done()).toBe(true);
         } catch (err) {
             throw err;
         }
@@ -92,6 +94,9 @@ describe("entries.actions", () => {
                 EntriesActions.entryUpdateHasRead(entry, true)
             );
             expect(store.getActions()).toMatchSnapshot();
+
+            await fetchMock.flush();
+            expect(fetchMock.done()).toBe(true);
         } catch (err) {
             throw err;
         }
