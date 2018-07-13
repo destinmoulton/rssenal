@@ -64,46 +64,54 @@ exports[`<LeftPaneContainer /> renders and matches the snapshot 1`] = `
                         </Button>
                       }
                     >
-                      <Ref
-                        innerRef={[Function]}
-                      >
-                        <Portal
-                          closeOnDocumentClick={true}
-                          closeOnEscape={true}
-                          closeOnTriggerMouseLeave={true}
-                          eventPool="default"
-                          mouseEnterDelay={50}
-                          mouseLeaveDelay={70}
-                          onClose={[Function]}
-                          onMount={[Function]}
-                          onOpen={[Function]}
-                          onUnmount={[Function]}
-                          openOnTriggerClick={true}
-                          openOnTriggerMouseEnter={true}
-                          trigger={
-                            <Button
-                              as="button"
-                              className="rss-leftmenu-button-addrss"
-                              onClick={[Function]}
-                              role="button"
-                            >
-                              <Icon
-                                as="i"
-                                name="plus"
-                              />
-                              <Icon
-                                as="i"
-                                name="rss"
-                              />
-                            </Button>
-                          }
-                        >
-                          <Ref
-                            innerRef={[Function]}
+                      <Portal
+                        closeOnDocumentClick={true}
+                        closeOnEscape={true}
+                        closeOnTriggerMouseLeave={true}
+                        eventPool="default"
+                        mouseEnterDelay={50}
+                        mouseLeaveDelay={70}
+                        onClose={[Function]}
+                        onMount={[Function]}
+                        onOpen={[Function]}
+                        onUnmount={[Function]}
+                        openOnTriggerClick={true}
+                        openOnTriggerMouseEnter={true}
+                        trigger={
+                          <Button
+                            as="button"
+                            className="rss-leftmenu-button-addrss"
+                            onClick={[Function]}
+                            role="button"
                           >
-                            <Button
-                              as="button"
-                              className="rss-leftmenu-button-addrss"
+                            <Icon
+                              as="i"
+                              name="plus"
+                            />
+                            <Icon
+                              as="i"
+                              name="rss"
+                            />
+                          </Button>
+                        }
+                        triggerRef={[Function]}
+                      >
+                        <Ref
+                          innerRef={[Function]}
+                          key="trigger"
+                        >
+                          <Button
+                            as="button"
+                            className="rss-leftmenu-button-addrss"
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
+                            role="button"
+                          >
+                            <button
+                              className="ui button rss-leftmenu-button-addrss"
                               onBlur={[Function]}
                               onClick={[Function]}
                               onFocus={[Function]}
@@ -111,38 +119,28 @@ exports[`<LeftPaneContainer /> renders and matches the snapshot 1`] = `
                               onMouseLeave={[Function]}
                               role="button"
                             >
-                              <button
-                                className="ui button rss-leftmenu-button-addrss"
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                                role="button"
+                              <Icon
+                                as="i"
+                                name="plus"
                               >
-                                <Icon
-                                  as="i"
-                                  name="plus"
-                                >
-                                  <i
-                                    aria-hidden="true"
-                                    className="plus icon"
-                                  />
-                                </Icon>
-                                <Icon
-                                  as="i"
-                                  name="rss"
-                                >
-                                  <i
-                                    aria-hidden="true"
-                                    className="rss icon"
-                                  />
-                                </Icon>
-                              </button>
-                            </Button>
-                          </Ref>
-                        </Portal>
-                      </Ref>
+                                <i
+                                  aria-hidden="true"
+                                  className="plus icon"
+                                />
+                              </Icon>
+                              <Icon
+                                as="i"
+                                name="rss"
+                              >
+                                <i
+                                  aria-hidden="true"
+                                  className="rss icon"
+                                />
+                              </Icon>
+                            </button>
+                          </Button>
+                        </Ref>
+                      </Portal>
                     </Popup>
                     <Popup
                       content="Add Folder"
@@ -167,46 +165,54 @@ exports[`<LeftPaneContainer /> renders and matches the snapshot 1`] = `
                         </Button>
                       }
                     >
-                      <Ref
-                        innerRef={[Function]}
-                      >
-                        <Portal
-                          closeOnDocumentClick={true}
-                          closeOnEscape={true}
-                          closeOnTriggerMouseLeave={true}
-                          eventPool="default"
-                          mouseEnterDelay={50}
-                          mouseLeaveDelay={70}
-                          onClose={[Function]}
-                          onMount={[Function]}
-                          onOpen={[Function]}
-                          onUnmount={[Function]}
-                          openOnTriggerClick={true}
-                          openOnTriggerMouseEnter={true}
-                          trigger={
-                            <Button
-                              as="button"
-                              className="rss-leftmenu-button-addfolder"
-                              onClick={[Function]}
-                              role="button"
-                            >
-                              <Icon
-                                as="i"
-                                name="plus"
-                              />
-                              <Icon
-                                as="i"
-                                name="folder"
-                              />
-                            </Button>
-                          }
-                        >
-                          <Ref
-                            innerRef={[Function]}
+                      <Portal
+                        closeOnDocumentClick={true}
+                        closeOnEscape={true}
+                        closeOnTriggerMouseLeave={true}
+                        eventPool="default"
+                        mouseEnterDelay={50}
+                        mouseLeaveDelay={70}
+                        onClose={[Function]}
+                        onMount={[Function]}
+                        onOpen={[Function]}
+                        onUnmount={[Function]}
+                        openOnTriggerClick={true}
+                        openOnTriggerMouseEnter={true}
+                        trigger={
+                          <Button
+                            as="button"
+                            className="rss-leftmenu-button-addfolder"
+                            onClick={[Function]}
+                            role="button"
                           >
-                            <Button
-                              as="button"
-                              className="rss-leftmenu-button-addfolder"
+                            <Icon
+                              as="i"
+                              name="plus"
+                            />
+                            <Icon
+                              as="i"
+                              name="folder"
+                            />
+                          </Button>
+                        }
+                        triggerRef={[Function]}
+                      >
+                        <Ref
+                          innerRef={[Function]}
+                          key="trigger"
+                        >
+                          <Button
+                            as="button"
+                            className="rss-leftmenu-button-addfolder"
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
+                            role="button"
+                          >
+                            <button
+                              className="ui button rss-leftmenu-button-addfolder"
                               onBlur={[Function]}
                               onClick={[Function]}
                               onFocus={[Function]}
@@ -214,38 +220,28 @@ exports[`<LeftPaneContainer /> renders and matches the snapshot 1`] = `
                               onMouseLeave={[Function]}
                               role="button"
                             >
-                              <button
-                                className="ui button rss-leftmenu-button-addfolder"
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                                role="button"
+                              <Icon
+                                as="i"
+                                name="plus"
                               >
-                                <Icon
-                                  as="i"
-                                  name="plus"
-                                >
-                                  <i
-                                    aria-hidden="true"
-                                    className="plus icon"
-                                  />
-                                </Icon>
-                                <Icon
-                                  as="i"
-                                  name="folder"
-                                >
-                                  <i
-                                    aria-hidden="true"
-                                    className="folder icon"
-                                  />
-                                </Icon>
-                              </button>
-                            </Button>
-                          </Ref>
-                        </Portal>
-                      </Ref>
+                                <i
+                                  aria-hidden="true"
+                                  className="plus icon"
+                                />
+                              </Icon>
+                              <Icon
+                                as="i"
+                                name="folder"
+                              >
+                                <i
+                                  aria-hidden="true"
+                                  className="folder icon"
+                                />
+                              </Icon>
+                            </button>
+                          </Button>
+                        </Ref>
+                      </Portal>
                     </Popup>
                   </div>
                 </ButtonGroup>
@@ -271,71 +267,69 @@ exports[`<LeftPaneContainer /> renders and matches the snapshot 1`] = `
                           />
                         }
                       >
-                        <Ref
-                          innerRef={[Function]}
+                        <Portal
+                          closeOnDocumentClick={true}
+                          closeOnEscape={true}
+                          closeOnTriggerMouseLeave={true}
+                          eventPool="default"
+                          mouseEnterDelay={50}
+                          mouseLeaveDelay={70}
+                          onClose={[Function]}
+                          onMount={[Function]}
+                          onOpen={[Function]}
+                          onUnmount={[Function]}
+                          openOnTriggerClick={true}
+                          openOnTriggerMouseEnter={true}
+                          trigger={
+                            <Button
+                              as="button"
+                              className="rss-leftmenu-button-reorder"
+                              icon="numbered list"
+                              onClick={[Function]}
+                              role="button"
+                              size="mini"
+                            />
+                          }
+                          triggerRef={[Function]}
                         >
-                          <Portal
-                            closeOnDocumentClick={true}
-                            closeOnEscape={true}
-                            closeOnTriggerMouseLeave={true}
-                            eventPool="default"
-                            mouseEnterDelay={50}
-                            mouseLeaveDelay={70}
-                            onClose={[Function]}
-                            onMount={[Function]}
-                            onOpen={[Function]}
-                            onUnmount={[Function]}
-                            openOnTriggerClick={true}
-                            openOnTriggerMouseEnter={true}
-                            trigger={
-                              <Button
-                                as="button"
-                                className="rss-leftmenu-button-reorder"
-                                icon="numbered list"
-                                onClick={[Function]}
-                                role="button"
-                                size="mini"
-                              />
-                            }
+                          <Ref
+                            innerRef={[Function]}
+                            key="trigger"
                           >
-                            <Ref
-                              innerRef={[Function]}
+                            <Button
+                              as="button"
+                              className="rss-leftmenu-button-reorder"
+                              icon="numbered list"
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
+                              role="button"
+                              size="mini"
                             >
-                              <Button
-                                as="button"
-                                className="rss-leftmenu-button-reorder"
-                                icon="numbered list"
+                              <button
+                                className="ui mini icon button rss-leftmenu-button-reorder"
                                 onBlur={[Function]}
                                 onClick={[Function]}
                                 onFocus={[Function]}
                                 onMouseEnter={[Function]}
                                 onMouseLeave={[Function]}
                                 role="button"
-                                size="mini"
                               >
-                                <button
-                                  className="ui mini icon button rss-leftmenu-button-reorder"
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onMouseEnter={[Function]}
-                                  onMouseLeave={[Function]}
-                                  role="button"
+                                <Icon
+                                  as="i"
+                                  name="numbered list"
                                 >
-                                  <Icon
-                                    as="i"
-                                    name="numbered list"
-                                  >
-                                    <i
-                                      aria-hidden="true"
-                                      className="numbered list icon"
-                                    />
-                                  </Icon>
-                                </button>
-                              </Button>
-                            </Ref>
-                          </Portal>
-                        </Ref>
+                                  <i
+                                    aria-hidden="true"
+                                    className="numbered list icon"
+                                  />
+                                </Icon>
+                              </button>
+                            </Button>
+                          </Ref>
+                        </Portal>
                       </Popup>
                       <Modal
                         centered={true}
@@ -349,10 +343,8 @@ exports[`<LeftPaneContainer /> renders and matches the snapshot 1`] = `
                         size="tiny"
                       >
                         <Portal
-                          className="ui page modals dimmer transition visible active"
                           closeOnDocumentClick={false}
                           closeOnEscape={true}
-                          closeOnRootNodeClick={true}
                           eventPool="Modal"
                           mountNode={<body />}
                           onClose={[Function]}
@@ -382,71 +374,69 @@ exports[`<LeftPaneContainer /> renders and matches the snapshot 1`] = `
                     />
                   }
                 >
-                  <Ref
-                    innerRef={[Function]}
+                  <Portal
+                    closeOnDocumentClick={true}
+                    closeOnEscape={true}
+                    closeOnTriggerMouseLeave={true}
+                    eventPool="default"
+                    mouseEnterDelay={50}
+                    mouseLeaveDelay={70}
+                    onClose={[Function]}
+                    onMount={[Function]}
+                    onOpen={[Function]}
+                    onUnmount={[Function]}
+                    openOnTriggerClick={true}
+                    openOnTriggerMouseEnter={true}
+                    trigger={
+                      <Button
+                        as="button"
+                        className="rss-leftmenu-button-reload"
+                        icon="refresh"
+                        onClick={[Function]}
+                        role="button"
+                        size="mini"
+                      />
+                    }
+                    triggerRef={[Function]}
                   >
-                    <Portal
-                      closeOnDocumentClick={true}
-                      closeOnEscape={true}
-                      closeOnTriggerMouseLeave={true}
-                      eventPool="default"
-                      mouseEnterDelay={50}
-                      mouseLeaveDelay={70}
-                      onClose={[Function]}
-                      onMount={[Function]}
-                      onOpen={[Function]}
-                      onUnmount={[Function]}
-                      openOnTriggerClick={true}
-                      openOnTriggerMouseEnter={true}
-                      trigger={
-                        <Button
-                          as="button"
-                          className="rss-leftmenu-button-reload"
-                          icon="refresh"
-                          onClick={[Function]}
-                          role="button"
-                          size="mini"
-                        />
-                      }
+                    <Ref
+                      innerRef={[Function]}
+                      key="trigger"
                     >
-                      <Ref
-                        innerRef={[Function]}
+                      <Button
+                        as="button"
+                        className="rss-leftmenu-button-reload"
+                        icon="refresh"
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onFocus={[Function]}
+                        onMouseEnter={[Function]}
+                        onMouseLeave={[Function]}
+                        role="button"
+                        size="mini"
                       >
-                        <Button
-                          as="button"
-                          className="rss-leftmenu-button-reload"
-                          icon="refresh"
+                        <button
+                          className="ui mini icon button rss-leftmenu-button-reload"
                           onBlur={[Function]}
                           onClick={[Function]}
                           onFocus={[Function]}
                           onMouseEnter={[Function]}
                           onMouseLeave={[Function]}
                           role="button"
-                          size="mini"
                         >
-                          <button
-                            className="ui mini icon button rss-leftmenu-button-reload"
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onMouseEnter={[Function]}
-                            onMouseLeave={[Function]}
-                            role="button"
+                          <Icon
+                            as="i"
+                            name="refresh"
                           >
-                            <Icon
-                              as="i"
-                              name="refresh"
-                            >
-                              <i
-                                aria-hidden="true"
-                                className="refresh icon"
-                              />
-                            </Icon>
-                          </button>
-                        </Button>
-                      </Ref>
-                    </Portal>
-                  </Ref>
+                            <i
+                              aria-hidden="true"
+                              className="refresh icon"
+                            />
+                          </Icon>
+                        </button>
+                      </Button>
+                    </Ref>
+                  </Portal>
                 </Popup>
                 <Connect(LogoutButtonComponent)>
                   <LogoutButtonComponent
@@ -469,73 +459,71 @@ exports[`<LeftPaneContainer /> renders and matches the snapshot 1`] = `
                         />
                       }
                     >
-                      <Ref
-                        innerRef={[Function]}
+                      <Portal
+                        closeOnDocumentClick={true}
+                        closeOnEscape={true}
+                        closeOnTriggerMouseLeave={true}
+                        eventPool="default"
+                        mouseEnterDelay={50}
+                        mouseLeaveDelay={70}
+                        onClose={[Function]}
+                        onMount={[Function]}
+                        onOpen={[Function]}
+                        onUnmount={[Function]}
+                        openOnTriggerClick={true}
+                        openOnTriggerMouseEnter={true}
+                        trigger={
+                          <Button
+                            as="button"
+                            className="rss-leftmenu-button-logout"
+                            floated="right"
+                            icon="sign out"
+                            onClick={[Function]}
+                            role="button"
+                            size="mini"
+                          />
+                        }
+                        triggerRef={[Function]}
                       >
-                        <Portal
-                          closeOnDocumentClick={true}
-                          closeOnEscape={true}
-                          closeOnTriggerMouseLeave={true}
-                          eventPool="default"
-                          mouseEnterDelay={50}
-                          mouseLeaveDelay={70}
-                          onClose={[Function]}
-                          onMount={[Function]}
-                          onOpen={[Function]}
-                          onUnmount={[Function]}
-                          openOnTriggerClick={true}
-                          openOnTriggerMouseEnter={true}
-                          trigger={
-                            <Button
-                              as="button"
-                              className="rss-leftmenu-button-logout"
-                              floated="right"
-                              icon="sign out"
-                              onClick={[Function]}
-                              role="button"
-                              size="mini"
-                            />
-                          }
+                        <Ref
+                          innerRef={[Function]}
+                          key="trigger"
                         >
-                          <Ref
-                            innerRef={[Function]}
+                          <Button
+                            as="button"
+                            className="rss-leftmenu-button-logout"
+                            floated="right"
+                            icon="sign out"
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
+                            role="button"
+                            size="mini"
                           >
-                            <Button
-                              as="button"
-                              className="rss-leftmenu-button-logout"
-                              floated="right"
-                              icon="sign out"
+                            <button
+                              className="ui mini icon right floated button rss-leftmenu-button-logout"
                               onBlur={[Function]}
                               onClick={[Function]}
                               onFocus={[Function]}
                               onMouseEnter={[Function]}
                               onMouseLeave={[Function]}
                               role="button"
-                              size="mini"
                             >
-                              <button
-                                className="ui mini icon right floated button rss-leftmenu-button-logout"
-                                onBlur={[Function]}
-                                onClick={[Function]}
-                                onFocus={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                                role="button"
+                              <Icon
+                                as="i"
+                                name="sign out"
                               >
-                                <Icon
-                                  as="i"
-                                  name="sign out"
-                                >
-                                  <i
-                                    aria-hidden="true"
-                                    className="sign out icon"
-                                  />
-                                </Icon>
-                              </button>
-                            </Button>
-                          </Ref>
-                        </Portal>
-                      </Ref>
+                                <i
+                                  aria-hidden="true"
+                                  className="sign out icon"
+                                />
+                              </Icon>
+                            </button>
+                          </Button>
+                        </Ref>
+                      </Portal>
                     </Popup>
                   </LogoutButtonComponent>
                 </Connect(LogoutButtonComponent)>
@@ -564,10 +552,8 @@ exports[`<LeftPaneContainer /> renders and matches the snapshot 1`] = `
                 size="small"
               >
                 <Portal
-                  className="ui page modals dimmer transition visible active"
                   closeOnDocumentClick={false}
                   closeOnEscape={true}
-                  closeOnRootNodeClick={true}
                   eventPool="Modal"
                   mountNode={<body />}
                   onClose={[Function]}
@@ -603,10 +589,8 @@ exports[`<LeftPaneContainer /> renders and matches the snapshot 1`] = `
                 size="tiny"
               >
                 <Portal
-                  className="ui page modals dimmer transition visible active"
                   closeOnDocumentClick={false}
                   closeOnEscape={true}
-                  closeOnRootNodeClick={true}
                   eventPool="Modal"
                   mountNode={<body />}
                   onClose={[Function]}
@@ -644,10 +628,8 @@ exports[`<LeftPaneContainer /> renders and matches the snapshot 1`] = `
                   size="tiny"
                 >
                   <Portal
-                    className="ui page modals dimmer transition visible active"
                     closeOnDocumentClick={false}
                     closeOnEscape={true}
-                    closeOnRootNodeClick={true}
                     eventPool="Modal"
                     mountNode={<body />}
                     onClose={[Function]}
