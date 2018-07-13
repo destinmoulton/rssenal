@@ -17,7 +17,7 @@ describe("auth.actions", () => {
         localStorage.clear();
     });
 
-    it("authValidateToken() fetches and handles an invalid response", () => {
+    it("authValidateToken() fetches and handles an invalid response", async () => {
         fetchMock.getOnce("/api/auth/validatetoken", {
             body: {},
             status: 400
@@ -26,12 +26,19 @@ describe("auth.actions", () => {
         const expectedActions = [{ type: ACT_TYPES.AUTH_LOGOUT }];
 
         const store = mockStore({ authStore: AUTH_INITIAL_STATE });
-        return store.dispatch(AuthActions.authValidateToken()).then(() => {
+
+        try {
+            await store.dispatch(AuthActions.authValidateToken());
             expect(store.getActions()).toEqual(expectedActions);
-        });
+
+            await fetchMock.flush();
+            expect(fetchMock.done()).toBe(true);
+        } catch (err) {
+            throw err;
+        }
     });
 
-    it("authValidateToken() fetches and handles a valid token", () => {
+    it("authValidateToken() fetches and handles a valid token", async () => {
         fetchMock.getOnce("/api/auth/validatetoken", {
             body: { status: "valid" },
             status: 200
@@ -40,12 +47,17 @@ describe("auth.actions", () => {
         const expectedActions = [{ type: ACT_TYPES.AUTH_USER_IS_AUTHENTIC }];
 
         const store = mockStore({ authStore: AUTH_INITIAL_STATE });
-        return store.dispatch(AuthActions.authValidateToken()).then(() => {
+        try {
+            await store.dispatch(AuthActions.authValidateToken());
+            await fetchMock.flush();
             expect(store.getActions()).toEqual(expectedActions);
-        });
+            expect(fetchMock.done()).toBe(true);
+        } catch (err) {
+            throw err;
+        }
     });
 
-    it("authValidateToken() fetches and handles an invalid token", () => {
+    it("authValidateToken() fetches and handles an invalid token", async () => {
         fetchMock.getOnce("/api/auth/validatetoken", {
             body: { status: "invalid" },
             status: 200
@@ -54,12 +66,18 @@ describe("auth.actions", () => {
         const expectedActions = [{ type: ACT_TYPES.AUTH_LOGOUT }];
 
         const store = mockStore({ authStore: AUTH_INITIAL_STATE });
-        return store.dispatch(AuthActions.authValidateToken()).then(() => {
+        try {
+            await store.dispatch(AuthActions.authValidateToken());
             expect(store.getActions()).toEqual(expectedActions);
-        });
+
+            await fetchMock.flush();
+            expect(fetchMock.done()).toBe(true);
+        } catch (err) {
+            throw err;
+        }
     });
 
-    it("authLoginUser() errors when invalid credentials are passed", () => {
+    it("authLoginUser() errors when invalid credentials are passed", async () => {
         fetchMock.postOnce("/api/auth/login", {
             body: { status: "error" },
             status: 200
@@ -73,14 +91,20 @@ describe("auth.actions", () => {
         ];
 
         const store = mockStore({ authStore: AUTH_INITIAL_STATE });
-        return store
-            .dispatch(AuthActions.authLoginUser("TESTUSER", "TESTPASS"))
-            .then(() => {
-                expect(store.getActions()).toEqual(expectedActions);
-            });
+        try {
+            await store.dispatch(
+                AuthActions.authLoginUser("TESTUSER", "TESTPASS")
+            );
+            expect(store.getActions()).toEqual(expectedActions);
+
+            await fetchMock.flush();
+            expect(fetchMock.done()).toBe(true);
+        } catch (err) {
+            throw err;
+        }
     });
 
-    it("authLoginUser() authenticates when the credentials are correct", () => {
+    it("authLoginUser() authenticates when the credentials are correct", async () => {
         const testToken = "TESTJWTTOKEN";
         fetchMock.postOnce("/api/auth/login", {
             body: { status: "success", token: testToken },
@@ -94,12 +118,19 @@ describe("auth.actions", () => {
         ];
 
         const store = mockStore({ authStore: AUTH_INITIAL_STATE });
-        return store
-            .dispatch(AuthActions.authLoginUser("TESTUSER", "TESTPASS"))
-            .then(() => {
-                expect(store.getActions()).toEqual(expectedActions);
-                expect(localStorage.getItem("jwt_token")).toBe(testToken);
-            });
+        try {
+            await store.dispatch(
+                AuthActions.authLoginUser("TESTUSER", "TESTPASS")
+            );
+
+            expect(store.getActions()).toEqual(expectedActions);
+            expect(localStorage.getItem("jwt_token")).toBe(testToken);
+
+            await fetchMock.flush();
+            expect(fetchMock.done()).toBe(true);
+        } catch (err) {
+            throw err;
+        }
     });
 
     it("authLogoutUser() logs out the user", () => {
