@@ -57,9 +57,13 @@ function getAllEntriesForFeeds(feeds: Types.TFeeds) {
             type: ACT_TYPES.FEEDS_CLEAR_UNREAD
         });
 
-        await feeds.forEach(async feed => {
-            await dispatch(EntriesActions.entriesGetForFeed(feed));
-        });
+        try {
+            feeds.forEach(async feed => {
+                await dispatch(EntriesActions.entriesGetForFeed(feed));
+            });
+        } catch (err) {
+            console.error(err);
+        }
     };
 }
 
