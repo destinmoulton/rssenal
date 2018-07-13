@@ -1,6 +1,6 @@
 import * as ACT_TYPES from "../actiontypes";
 
-import { entriesClearAll, entriesGetForFeed } from "./entries.actions";
+import * as EntriesActions from "./entries.actions";
 import { filterReset } from "./filter.actions";
 import { message } from "./messages.actions";
 import * as FeedsServices from "../services/feeds.services";
@@ -26,7 +26,7 @@ export function feedAdd(feedInfo: Types.IFeed) {
                 type: ACT_TYPES.FEEDS_ADD_COMPLETE,
                 feeds: newFeeds
             });
-            await dispatch(entriesGetForFeed(newFeed));
+            await dispatch(EntriesActions.entriesGetForFeed(newFeed));
         } catch (err) {
             dispatch(message(err, "error"));
         }
@@ -58,7 +58,7 @@ function getAllEntriesForFeeds(feeds: Types.TFeeds) {
         });
 
         await feeds.forEach(async feed => {
-            await dispatch(entriesGetForFeed(feed));
+            await dispatch(EntriesActions.entriesGetForFeed(feed));
         });
     };
 }
@@ -69,7 +69,7 @@ export function feedsRefreshAll() {
         getState: () => Types.IRootStoreState
     ) => {
         const { feeds } = getState().feedsStore;
-        dispatch(entriesClearAll());
+        dispatch(EntriesActions.entriesClearAll());
         dispatch(getAllEntriesForFeeds(feeds));
     };
 }
