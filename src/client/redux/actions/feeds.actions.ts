@@ -26,7 +26,7 @@ export function feedAdd(feedInfo: Types.IFeed) {
                 type: ACT_TYPES.FEEDS_ADD_COMPLETE,
                 feeds: newFeeds
             });
-            dispatch(entriesGetForFeed(newFeed._id));
+            await dispatch(entriesGetForFeed(newFeed));
         } catch (err) {
             dispatch(message(err, "error"));
         }
@@ -52,13 +52,13 @@ export function feedsGetAll() {
 }
 
 function getAllEntriesForFeeds(feeds: Types.TFeeds) {
-    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+    return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         dispatch({
             type: ACT_TYPES.FEEDS_CLEAR_UNREAD
         });
 
-        feeds.forEach(async feed => {
-            dispatch(entriesGetForFeed(feed._id));
+        await feeds.forEach(async feed => {
+            await dispatch(entriesGetForFeed(feed));
         });
     };
 }
