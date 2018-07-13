@@ -9,6 +9,7 @@ import * as INIT_STATE from "../../initialstate";
 
 import API_ENTRIES_STRING from "../../../../../test/data/api/entries.unread";
 import AMMENDED_ENTRIES from "../../../../../test/data/immutable/ammendedEntries";
+import FEED from "../../../../../test/data/feed";
 import IMM_FEEDS from "../../../../../test/data/immutable/feeds";
 import * as IMM_UNREAD from "../../../../../test/data/immutable/unreadMap";
 
@@ -22,9 +23,8 @@ describe("entries.actions", () => {
         localStorage.clear();
     });
 
-    it("entriesGetForFeed() fetches and ammends entries", () => {
-        const feedID = "5b33c76cb2438d5708dc197e";
-        const url = "/api/entries/?showEntriesHasRead=false&feedId=" + feedID;
+    it("entriesGetForFeed() fetches and ammends entries", async () => {
+        const url = "/api/entries/?showEntriesHasRead=false&feedId=" + FEED._id;
 
         fetchMock.getOnce(url, JSON.parse(API_ENTRIES_STRING));
 
@@ -39,14 +39,16 @@ describe("entries.actions", () => {
             settingsStore: INIT_STATE.SETTINGS_INITIAL_STATE
         });
 
-        return store
-            .dispatch(EntriesActions.entriesGetForFeed(feedID))
-            .then(() => {
-                expect(store.getActions()).toMatchSnapshot();
-            });
+        try {
+            await store.dispatch(EntriesActions.entriesGetForFeed(FEED));
+
+            expect(store.getActions()).toMatchSnapshot();
+        } catch (err) {
+            throw err;
+        }
     });
 
-    it("entryUpdateHasRead() marks an entry read", () => {
+    it("entryUpdateHasRead() marks an entry read", async () => {
         const entryID = "5b33c76cb2438d5708dc1983";
         const url = "/api/entries/" + entryID;
         fetchMock.putOnce(url, { body: { status: "success" } });
@@ -85,11 +87,14 @@ describe("entries.actions", () => {
             )
         };
 
-        return store
-            .dispatch(EntriesActions.entryUpdateHasRead(entry, true))
-            .then(() => {
-                expect(store.getActions()).toMatchSnapshot();
-            });
+        try {
+            await store.dispatch(
+                EntriesActions.entryUpdateHasRead(entry, true)
+            );
+            expect(store.getActions()).toMatchSnapshot();
+        } catch (err) {
+            throw err;
+        }
     });
 
     it("entriesClearAll() clears the current entries", () => {
