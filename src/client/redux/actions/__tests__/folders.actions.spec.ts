@@ -20,7 +20,7 @@ describe("feeds.actions", () => {
         localStorage.clear();
     });
 
-    it("foldersGetAll() handles getting the folders", () => {
+    it("foldersGetAll() handles getting the folders", async () => {
         const folders_url = "/api/folders/";
         fetchMock.getOnce(folders_url, JSON.parse(API_FOLDERS_STRING));
 
@@ -28,13 +28,16 @@ describe("feeds.actions", () => {
             foldersStore: INIT_STATE.FOLDERS_INITIAL_STATE
         });
 
-        return store.dispatch(FoldersActions.foldersGetAll()).then(() => {
+        try {
+            await store.dispatch(FoldersActions.foldersGetAll());
             expect(store.getActions()).toMatchSnapshot();
-        });
+        } catch (err) {
+            throw err;
+        }
     });
 
     describe("folderSave()", () => {
-        it("handles saving an existing folder", () => {
+        it("handles saving an existing folder", async () => {
             const folder_id = "5b33c4bab2438d5708dc1967";
             const folders_url = "/api/folders/" + folder_id;
             fetchMock.putOnce(folders_url, FOLDER);
@@ -50,14 +53,16 @@ describe("feeds.actions", () => {
                 order: 99
             };
 
-            return store
-                .dispatch(FoldersActions.folderSave(folderInfo))
-                .then(() => {
-                    expect(store.getActions()).toMatchSnapshot();
-                });
+            try {
+                await store.dispatch(FoldersActions.folderSave(folderInfo));
+
+                expect(store.getActions()).toMatchSnapshot();
+            } catch (err) {
+                throw err;
+            }
         });
 
-        it("handles adding a new folder", () => {
+        it("handles adding a new folder", async () => {
             const folders_url = "/api/folders/";
             fetchMock.postOnce(folders_url, FOLDER);
 
@@ -71,15 +76,17 @@ describe("feeds.actions", () => {
                 name: "FOLDER NAME"
             };
 
-            return store
-                .dispatch(FoldersActions.folderSave(folderInfo))
-                .then(() => {
-                    expect(store.getActions()).toMatchSnapshot();
-                });
+            try {
+                await store.dispatch(FoldersActions.folderSave(folderInfo));
+
+                expect(store.getActions()).toMatchSnapshot();
+            } catch (err) {
+                throw err;
+            }
         });
     });
 
-    it("folderDelete() handles removing a folder", () => {
+    it("folderDelete() handles removing a folder", async () => {
         const folder_id = "5b33c4bab2438d5708dc1967";
         const delete_url = "/api/folders/" + folder_id;
         fetchMock.deleteOnce(delete_url, { body: { status: "success" } });
@@ -92,15 +99,16 @@ describe("feeds.actions", () => {
         const feed_url = "/api/feeds/";
 
         fetchMock.getOnce(feed_url, JSON.parse(API_FEEDS_STRING));
+        try {
+            await store.dispatch(FoldersActions.folderDelete(folder_id));
 
-        return store
-            .dispatch(FoldersActions.folderDelete(folder_id))
-            .then(() => {
-                expect(store.getActions()).toMatchSnapshot();
-            });
+            expect(store.getActions()).toMatchSnapshot();
+        } catch (err) {
+            throw err;
+        }
     });
 
-    it("foldersReorder() handles reordering folders", () => {
+    it("foldersReorder() handles reordering folders", async () => {
         const reorder_url = "/api/folders/";
         fetchMock.putOnce(reorder_url, { body: { status: "success" } });
 
@@ -112,10 +120,14 @@ describe("feeds.actions", () => {
             messagesStore: INIT_STATE.MESSAGES_INITIAL_STATE
         });
 
-        return store
-            .dispatch(FoldersActions.foldersReorder(IMM_FOLDERS.toArray()))
-            .then(() => {
-                expect(store.getActions()).toMatchSnapshot();
-            });
+        try {
+            await store.dispatch(
+                FoldersActions.foldersReorder(IMM_FOLDERS.toArray())
+            );
+
+            expect(store.getActions()).toMatchSnapshot();
+        } catch (err) {
+            throw err;
+        }
     });
 });
