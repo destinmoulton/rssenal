@@ -55,18 +55,10 @@ describe("<LeftPaneContainer />", () => {
 
         try {
             await fetchMock.flush();
-            //console.log(fetchMock.calls());
-            //console.log("Completed all (done())?", fetchMock.done());
 
             expect(wrapper).toMatchSnapshot();
-
-            //done();
         } catch (err) {
             throw err;
         }
-
-        // setTimeout(async () => {
-
-        // }, 10);
     });
 });
