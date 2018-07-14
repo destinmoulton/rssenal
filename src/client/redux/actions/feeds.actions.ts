@@ -44,7 +44,7 @@ export function feedsGetAll() {
                 type: ACT_TYPES.FEEDS_GETALL_COMPLETE,
                 feeds: newFeeds
             });
-            await dispatch(getAllEntriesForFeeds(newFeeds));
+            return await dispatch(getAllEntriesForFeeds(newFeeds));
         } catch (err) {
             dispatch(message(err, "error"));
         }
