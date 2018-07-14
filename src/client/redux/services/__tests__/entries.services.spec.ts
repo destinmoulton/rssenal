@@ -28,6 +28,8 @@ describe("entries.services", () => {
                 await EntriesServices.apiGetEntriesForFeed("TESTFEEDID", true);
             } catch (err) {
                 expect(err).toBeInstanceOf(Error);
+
+                await fetchMock.flush();
                 expect(fetchMock.done()).toBe(true);
             }
         });
@@ -49,8 +51,12 @@ describe("entries.services", () => {
                     true
                 );
                 expect(entries).toEqual(expectedEntries);
+
+                await fetchMock.flush();
                 expect(fetchMock.done()).toBe(true);
-            } catch (err) {}
+            } catch (err) {
+                throw err;
+            }
         });
     });
 
@@ -65,6 +71,8 @@ describe("entries.services", () => {
                 await EntriesServices.apiUpdateEntryHasRead(ENTRY, true);
             } catch (err) {
                 expect(err).toBeInstanceOf(Error);
+
+                await fetchMock.flush();
                 expect(fetchMock.done()).toBe(true);
             }
         });
@@ -81,8 +89,12 @@ describe("entries.services", () => {
                     true
                 );
                 expect(res).toBe(true);
+
+                await fetchMock.flush();
                 expect(fetchMock.done()).toBe(true);
-            } catch (err) {}
+            } catch (err) {
+                throw err;
+            }
         });
     });
 

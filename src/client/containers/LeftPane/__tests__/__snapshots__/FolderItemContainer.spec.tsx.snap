@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FolderItemContainer /> renders and matches the snapshot 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <Connect(FolderItemComponent)
+    editFeed={[MockFunction]}
+    editFolder={[MockFunction]}
+    folder={
+      Object {
+        "__v": 0,
+        "_id": "5b33c4bab2438d5708dc1967",
+        "name": "Random",
+        "order": 0,
+      }
+    }
+  >
+    <FolderItemComponent
+      editFeed={[MockFunction]}
+      editFolder={[MockFunction]}
+      feeds={Immutable.OrderedMap {}}
+      filter={
+        Object {
+          "id": "all",
+          "limit": "folder",
+        }
+      }
+      filterChange={[Function]}
+      filterVisibleEntries={[Function]}
+      folder={
+        Object {
+          "__v": 0,
+          "_id": "5b33c4bab2438d5708dc1967",
+          "name": "Random",
+          "order": 0,
+        }
+      }
+      folderDelete={[Function]}
+      unreadMapGroups={Immutable.Map {}}
+    >
+      <div>
+        <div
+          className="rss-folders-folderitem"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <div
+            className="rss-folders-folderitem-icon"
+          >
+            <Icon
+              as="i"
+              name="caret right"
+              onClick={[Function]}
+            >
+              <i
+                aria-hidden="true"
+                className="caret right icon"
+                onClick={[Function]}
+              />
+            </Icon>
+          </div>
+          <div
+            className="rss-folders-folderitem-title"
+            onClick={[Function]}
+          >
+            Random
+          </div>
+          <div
+            className="rss-folders-folderitem-unread"
+            onClick={[Function]}
+          />
+        </div>
+        <div
+          className="clear"
+        />
+      </div>
+    </FolderItemComponent>
+  </Connect(FolderItemComponent)>
+</Provider>
+`;

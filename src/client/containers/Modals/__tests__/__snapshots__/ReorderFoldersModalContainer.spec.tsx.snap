@@ -1,0 +1,145 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ReorderFoldersModalContainer /> renders and matches the snapshot 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <Connect(ReorderFoldersModalComponent)>
+    <ReorderFoldersModalComponent
+      folders={
+        Immutable.OrderedMap {
+          "5b33c4bab2438d5708dc1967": Object {
+            "__v": 0,
+            "_id": "5b33c4bab2438d5708dc1967",
+            "name": "Random",
+            "order": 0,
+          },
+          "5b33c57eb2438d5708dc1968": Object {
+            "__v": 0,
+            "_id": "5b33c57eb2438d5708dc1968",
+            "name": "Programming",
+            "order": 1,
+          },
+        }
+      }
+      foldersReorder={[Function]}
+    >
+      <span>
+        <Popup
+          content="Reorder Folders"
+          keepInViewPort={true}
+          on="hover"
+          position="top left"
+          trigger={
+            <Button
+              as="button"
+              className="rss-leftmenu-button-reorder"
+              icon="numbered list"
+              onClick={[Function]}
+              role="button"
+              size="mini"
+            />
+          }
+        >
+          <Portal
+            closeOnDocumentClick={true}
+            closeOnEscape={true}
+            closeOnTriggerMouseLeave={true}
+            eventPool="default"
+            mouseEnterDelay={50}
+            mouseLeaveDelay={70}
+            onClose={[Function]}
+            onMount={[Function]}
+            onOpen={[Function]}
+            onUnmount={[Function]}
+            openOnTriggerClick={true}
+            openOnTriggerMouseEnter={true}
+            trigger={
+              <Button
+                as="button"
+                className="rss-leftmenu-button-reorder"
+                icon="numbered list"
+                onClick={[Function]}
+                role="button"
+                size="mini"
+              />
+            }
+            triggerRef={[Function]}
+          >
+            <Ref
+              innerRef={[Function]}
+              key="trigger"
+            >
+              <Button
+                as="button"
+                className="rss-leftmenu-button-reorder"
+                icon="numbered list"
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onMouseEnter={[Function]}
+                onMouseLeave={[Function]}
+                role="button"
+                size="mini"
+              >
+                <button
+                  className="ui mini icon button rss-leftmenu-button-reorder"
+                  onBlur={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                  role="button"
+                >
+                  <Icon
+                    as="i"
+                    name="numbered list"
+                  >
+                    <i
+                      aria-hidden="true"
+                      className="numbered list icon"
+                    />
+                  </Icon>
+                </button>
+              </Button>
+            </Ref>
+          </Portal>
+        </Popup>
+        <Modal
+          centered={true}
+          className="rss-modal"
+          closeOnDimmerClick={true}
+          closeOnDocumentClick={false}
+          dimmer={true}
+          eventPool="Modal"
+          onClose={[Function]}
+          open={false}
+          size="tiny"
+        >
+          <Portal
+            closeOnDocumentClick={false}
+            closeOnEscape={true}
+            eventPool="Modal"
+            mountNode={<body />}
+            onClose={[Function]}
+            onMount={[Function]}
+            onOpen={[Function]}
+            onUnmount={[Function]}
+            open={false}
+            openOnTriggerClick={true}
+          />
+        </Modal>
+      </span>
+    </ReorderFoldersModalComponent>
+  </Connect(ReorderFoldersModalComponent)>
+</Provider>
+`;

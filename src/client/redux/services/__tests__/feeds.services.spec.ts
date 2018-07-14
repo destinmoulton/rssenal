@@ -27,6 +27,8 @@ describe("feeds.services", () => {
                 await FeedsServices.apiAddFeed(FEED);
             } catch (err) {
                 expect(err).toBeInstanceOf(Error);
+
+                await fetchMock.flush();
                 expect(fetchMock.done()).toBe(true);
             }
         });
@@ -46,8 +48,12 @@ describe("feeds.services", () => {
             try {
                 const feedInfo = await FeedsServices.apiAddFeed(FEED);
                 expect(feedInfo).toEqual(expectedFeed);
+
+                await fetchMock.flush();
                 expect(fetchMock.done()).toBe(true);
-            } catch (err) {}
+            } catch (err) {
+                throw err;
+            }
         });
     });
 
@@ -80,8 +86,12 @@ describe("feeds.services", () => {
             try {
                 const res = await FeedsServices.apiDeleteFeed("FEED_ID");
                 expect(res).toBe(true);
+
+                await fetchMock.flush();
                 expect(fetchMock.done()).toBe(true);
-            } catch (err) {}
+            } catch (err) {
+                throw err;
+            }
         });
     });
 
@@ -113,8 +123,12 @@ describe("feeds.services", () => {
             try {
                 const res = await FeedsServices.apiGetAllFeeds();
                 expect(res).toEqual(expectedFeeds);
+
+                await fetchMock.flush();
                 expect(fetchMock.done()).toBe(true);
-            } catch (err) {}
+            } catch (err) {
+                throw err;
+            }
         });
     });
 
@@ -150,8 +164,12 @@ describe("feeds.services", () => {
             try {
                 const res = await FeedsServices.apiUpdateFeed(FEED);
                 expect(res).toEqual(expectedFeed);
+
+                await fetchMock.flush();
                 expect(fetchMock.done()).toBe(true);
-            } catch (err) {}
+            } catch (err) {
+                throw err;
+            }
         });
     });
 

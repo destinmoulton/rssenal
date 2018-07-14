@@ -1,6 +1,6 @@
 import * as ACT_TYPES from "../actiontypes";
 
-import { entriesClearAll, entriesGetForFeed } from "./entries.actions";
+import * as EntriesActions from "./entries.actions";
 import { filterReset } from "./filter.actions";
 import { message } from "./messages.actions";
 import * as FeedsServices from "../services/feeds.services";
@@ -26,7 +26,7 @@ export function feedAdd(feedInfo: Types.IFeed) {
                 type: ACT_TYPES.FEEDS_ADD_COMPLETE,
                 feeds: newFeeds
             });
-            dispatch(entriesGetForFeed(newFeed._id));
+            await dispatch(EntriesActions.entriesGetForFeed(newFeed));
         } catch (err) {
             dispatch(message(err, "error"));
         }
@@ -44,7 +44,7 @@ export function feedsGetAll() {
                 type: ACT_TYPES.FEEDS_GETALL_COMPLETE,
                 feeds: newFeeds
             });
-            await dispatch(getAllEntriesForFeeds(newFeeds));
+            return await dispatch(getAllEntriesForFeeds(newFeeds));
         } catch (err) {
             dispatch(message(err, "error"));
         }
@@ -52,25 +52,31 @@ export function feedsGetAll() {
 }
 
 function getAllEntriesForFeeds(feeds: Types.TFeeds) {
-    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+    return async (dispatch: Types.IDispatch) => {
         dispatch({
             type: ACT_TYPES.FEEDS_CLEAR_UNREAD
         });
 
-        feeds.forEach(async feed => {
-            dispatch(entriesGetForFeed(feed._id));
-        });
+        try {
+            const feedsArr: Types.IFeed[] = feeds.toArray();
+            const prom = feedsArr.map(feed => {
+                dispatch(EntriesActions.entriesGetForFeed(feed));
+            });
+            await Promise.all(prom);
+        } catch (err) {
+            console.error(err);
+        }
     };
 }
 
 export function feedsRefreshAll() {
-    return (
+    return async (
         dispatch: Types.IDispatch,
         getState: () => Types.IRootStoreState
     ) => {
         const { feeds } = getState().feedsStore;
-        dispatch(entriesClearAll());
-        dispatch(getAllEntriesForFeeds(feeds));
+        dispatch(EntriesActions.entriesClearAll());
+        await dispatch(getAllEntriesForFeeds(feeds));
     };
 }
 
@@ -84,7 +90,7 @@ export function deleteFeed(feedId: Types.TFeedID) {
             await FeedsServices.apiDeleteFeed(feedId);
             dispatch(message("Feed removed.", "success"));
             dispatch(filterReset());
-            dispatch(feedsRefreshAll());
+            await dispatch(feedsRefreshAll());
         } catch (err) {
             dispatch(message(err, "error"));
         }
@@ -110,7 +116,7 @@ export function saveFeed(feedInfo: Types.IFeed) {
                 feeds: newFeeds
             });
 
-            dispatch(feedsGetAll());
+            await dispatch(feedsGetAll());
         } catch (err) {
             dispatch(message(err, "error"));
         }

@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MessagesContainer /> renders and matches the snapshot 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <Connect(MessagesComponent)>
+    <MessagesComponent
+      messageRemove={[Function]}
+      messages={Immutable.List []}
+    >
+      <Component
+        allowHTML={false}
+        noAnimation={false}
+        style={Object {}}
+      >
+        <div
+          className="notifications-wrapper"
+          style={Object {}}
+        />
+      </Component>
+    </MessagesComponent>
+  </Connect(MessagesComponent)>
+</Provider>
+`;

@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FeedItemContainer /> renders and matches the snapshot 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <Connect(FeedItemComponent)
+    editFeed={[MockFunction]}
+    feed={
+      Object {
+        "__v": 0,
+        "_id": "5b33c76cb2438d5708dc197e",
+        "creation_date": "2018-06-27T17:20:44.037Z",
+        "description": null,
+        "folder_id": "5b33c57eb2438d5708dc1968",
+        "link": "http://highscalability.com/blog/",
+        "title": "High Scalability",
+        "url": "http://feeds.feedburner.com/HighScalability",
+      }
+    }
+  >
+    <FeedItemComponent
+      deleteFeed={[Function]}
+      editFeed={[MockFunction]}
+      feed={
+        Object {
+          "__v": 0,
+          "_id": "5b33c76cb2438d5708dc197e",
+          "creation_date": "2018-06-27T17:20:44.037Z",
+          "description": null,
+          "folder_id": "5b33c57eb2438d5708dc1968",
+          "link": "http://highscalability.com/blog/",
+          "title": "High Scalability",
+          "url": "http://feeds.feedburner.com/HighScalability",
+        }
+      }
+      filter={
+        Object {
+          "id": "all",
+          "limit": "folder",
+        }
+      }
+      filterChange={[Function]}
+      filterVisibleEntries={[Function]}
+      unreadMapFeeds={Immutable.Map {}}
+    >
+      <div
+        className="rss-folders-feeditem"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <div
+          className="rss-folders-feeditem-title"
+          onClick={[Function]}
+        >
+          High Scalability
+        </div>
+        <div
+          className="rss-folders-feeditem-unread"
+          onClick={[Function]}
+        />
+      </div>
+    </FeedItemComponent>
+  </Connect(FeedItemComponent)>
+</Provider>
+`;

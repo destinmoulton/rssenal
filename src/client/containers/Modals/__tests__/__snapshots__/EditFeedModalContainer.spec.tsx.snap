@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EditFeedModalContainer /> renders and matches the snapshot 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <Connect(EditFeedModalComponent)>
+    <EditFeedModalComponent
+      folders={Immutable.OrderedMap {}}
+      saveFeed={[Function]}
+    >
+      <span>
+        <Modal
+          centered={true}
+          className="rss-modal"
+          closeOnDimmerClick={true}
+          closeOnDocumentClick={false}
+          dimmer={true}
+          eventPool="Modal"
+          onClose={[Function]}
+          size="tiny"
+        >
+          <Portal
+            closeOnDocumentClick={false}
+            closeOnEscape={true}
+            eventPool="Modal"
+            mountNode={<body />}
+            onClose={[Function]}
+            onMount={[Function]}
+            onOpen={[Function]}
+            onUnmount={[Function]}
+            openOnTriggerClick={true}
+          />
+        </Modal>
+      </span>
+    </EditFeedModalComponent>
+  </Connect(EditFeedModalComponent)>
+</Provider>
+`;

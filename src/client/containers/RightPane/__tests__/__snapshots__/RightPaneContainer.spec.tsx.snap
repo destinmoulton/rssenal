@@ -1,0 +1,721 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RightPaneContainer /> renders and matches the snapshot 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <Connect(RightPaneComponent)>
+    <RightPaneComponent
+      filterTitle="All"
+    >
+      <div>
+        <TopBarComponent
+          onChangeSort={[Function]}
+          sortBy="publish_date:asc"
+          title="All"
+        >
+          <div
+            className="rss-rightpane-topbar"
+          >
+            <div
+              className="rss-rightpane-topbar-title-container"
+            >
+              All
+            </div>
+            <div
+              className="rss-rightpane-topbar-sortselect-container"
+            >
+              <SortMenu
+                currentSortBy="publish_date:asc"
+                onChange={[Function]}
+              >
+                <span>
+                  Sorting by 
+                  <Dropdown
+                    additionLabel="Add "
+                    additionPosition="top"
+                    closeOnBlur={true}
+                    deburr={false}
+                    defaultValue="publish_date:asc"
+                    icon="dropdown"
+                    inline={true}
+                    minCharacters={1}
+                    noResultsMessage="No results found."
+                    onChange={[Function]}
+                    openOnFocus={true}
+                    options={
+                      Array [
+                        Object {
+                          "text": "Date - Oldest First",
+                          "value": "publish_date:asc",
+                        },
+                        Object {
+                          "text": "Date - Newest First",
+                          "value": "publish_date:desc",
+                        },
+                        Object {
+                          "text": "Title",
+                          "value": "title:asc",
+                        },
+                      ]
+                    }
+                    renderLabel={[Function]}
+                    searchInput="text"
+                    selectOnBlur={true}
+                    selectOnNavigation={true}
+                    wrapSelection={true}
+                  >
+                    <div
+                      aria-expanded={false}
+                      className="ui inline dropdown"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onClick={[Function]}
+                      onFocus={[Function]}
+                      onMouseDown={[Function]}
+                      role="listbox"
+                      tabIndex={0}
+                    >
+                      <div
+                        aria-live="polite"
+                        className="text"
+                        role="alert"
+                      >
+                        Date - Oldest First
+                      </div>
+                      <Icon
+                        as="i"
+                        name="dropdown"
+                        onClick={[Function]}
+                      >
+                        <i
+                          aria-hidden="true"
+                          className="dropdown icon"
+                          onClick={[Function]}
+                        />
+                      </Icon>
+                      <DropdownMenu>
+                        <div
+                          className="menu transition"
+                        >
+                          <DropdownItem
+                            active={true}
+                            key="publish_date:asc"
+                            onClick={[Function]}
+                            selected={true}
+                            style={
+                              Object {
+                                "pointerEvents": "all",
+                              }
+                            }
+                            text="Date - Oldest First"
+                            value="publish_date:asc"
+                          >
+                            <div
+                              aria-checked={true}
+                              aria-selected={true}
+                              className="active selected item"
+                              onClick={[Function]}
+                              role="option"
+                              style={
+                                Object {
+                                  "pointerEvents": "all",
+                                }
+                              }
+                            >
+                              <span
+                                className="text"
+                              >
+                                Date - Oldest First
+                              </span>
+                            </div>
+                          </DropdownItem>
+                          <DropdownItem
+                            active={false}
+                            key="publish_date:desc"
+                            onClick={[Function]}
+                            selected={false}
+                            style={
+                              Object {
+                                "pointerEvents": "all",
+                              }
+                            }
+                            text="Date - Newest First"
+                            value="publish_date:desc"
+                          >
+                            <div
+                              aria-checked={false}
+                              aria-selected={false}
+                              className="item"
+                              onClick={[Function]}
+                              role="option"
+                              style={
+                                Object {
+                                  "pointerEvents": "all",
+                                }
+                              }
+                            >
+                              <span
+                                className="text"
+                              >
+                                Date - Newest First
+                              </span>
+                            </div>
+                          </DropdownItem>
+                          <DropdownItem
+                            active={false}
+                            key="title:asc"
+                            onClick={[Function]}
+                            selected={false}
+                            style={
+                              Object {
+                                "pointerEvents": "all",
+                              }
+                            }
+                            text="Title"
+                            value="title:asc"
+                          >
+                            <div
+                              aria-checked={false}
+                              aria-selected={false}
+                              className="item"
+                              onClick={[Function]}
+                              role="option"
+                              style={
+                                Object {
+                                  "pointerEvents": "all",
+                                }
+                              }
+                            >
+                              <span
+                                className="text"
+                              >
+                                Title
+                              </span>
+                            </div>
+                          </DropdownItem>
+                        </div>
+                      </DropdownMenu>
+                    </div>
+                  </Dropdown>
+                </span>
+              </SortMenu>
+                
+              <Connect(SettingsModalComponent)>
+                <SettingsModalComponent
+                  feedsRefreshAll={[Function]}
+                  settingChange={[Function]}
+                  settings={
+                    Immutable.Map {
+                      "show_images": Object {
+                        "name": "Show Images",
+                        "refresh_entries_on_change": false,
+                        "type": "toggle",
+                        "value": true,
+                      },
+                      "show_entries_has_read": Object {
+                        "name": "Show Entries Already Read",
+                        "refresh_entries_on_change": true,
+                        "type": "toggle",
+                        "value": false,
+                      },
+                    }
+                  }
+                >
+                  <span>
+                    <Popup
+                      content="Settings"
+                      keepInViewPort={true}
+                      on="hover"
+                      position="top left"
+                      trigger={
+                        <Icon
+                          as="i"
+                          color="blue"
+                          link={true}
+                          name="setting"
+                          onClick={[Function]}
+                          size="large"
+                        />
+                      }
+                    >
+                      <Portal
+                        closeOnDocumentClick={true}
+                        closeOnEscape={true}
+                        closeOnTriggerMouseLeave={true}
+                        eventPool="default"
+                        mouseEnterDelay={50}
+                        mouseLeaveDelay={70}
+                        onClose={[Function]}
+                        onMount={[Function]}
+                        onOpen={[Function]}
+                        onUnmount={[Function]}
+                        openOnTriggerClick={true}
+                        openOnTriggerMouseEnter={true}
+                        trigger={
+                          <Icon
+                            as="i"
+                            color="blue"
+                            link={true}
+                            name="setting"
+                            onClick={[Function]}
+                            size="large"
+                          />
+                        }
+                        triggerRef={[Function]}
+                      >
+                        <Ref
+                          innerRef={[Function]}
+                          key="trigger"
+                        >
+                          <Icon
+                            as="i"
+                            color="blue"
+                            link={true}
+                            name="setting"
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
+                            size="large"
+                          >
+                            <i
+                              aria-hidden="true"
+                              className="blue setting large link icon"
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
+                            />
+                          </Icon>
+                        </Ref>
+                      </Portal>
+                    </Popup>
+                    <Modal
+                      centered={true}
+                      className="rss-modal"
+                      closeOnDimmerClick={true}
+                      closeOnDocumentClick={false}
+                      dimmer={true}
+                      eventPool="Modal"
+                      onClose={[Function]}
+                      open={false}
+                      size="tiny"
+                    >
+                      <Portal
+                        closeOnDocumentClick={false}
+                        closeOnEscape={true}
+                        eventPool="Modal"
+                        mountNode={<body />}
+                        onClose={[Function]}
+                        onMount={[Function]}
+                        onOpen={[Function]}
+                        onUnmount={[Function]}
+                        open={false}
+                        openOnTriggerClick={true}
+                      />
+                    </Modal>
+                  </span>
+                </SettingsModalComponent>
+              </Connect(SettingsModalComponent)>
+            </div>
+          </div>
+        </TopBarComponent>
+        <Connect(EntriesListComponent)
+          sortBy="publish_date:asc"
+        >
+          <EntriesListComponent
+            entries={
+              Immutable.OrderedMap {
+                "5b33c76cb2438d5708dc197f": Object {
+                  "__v": 0,
+                  "_id": "5b33c76cb2438d5708dc197f",
+                  "content": "<p>Content for Stuff The Internet Says On Scalability For June 22nd, 2018</p>",
+                  "content_snippet": "<p>Content for Stuff The Internet Says On Scalability For June 22nd, 2018</p>",
+                  "creator": "Todd Hoff",
+                  "feedTitle": "High Scalability",
+                  "feed_id": "5b33c76cb2438d5708dc197e",
+                  "guid": "426227:4867632:36082622",
+                  "has_read": false,
+                  "link": "http://feedproxy.google.com/~r/HighScalability/~3/uqbrISxcA-E/stuff-the-internet-says-on-scalability-for-june-22nd-2018.html",
+                  "publish_date": "2018-06-22T15:56:46.000Z",
+                  "timeAgo": "22 days ago",
+                  "title": "Stuff The Internet Says On Scalability For June 22nd, 2018",
+                },
+                "5b33c76cb2438d5708dc1981": Object {
+                  "__v": 0,
+                  "_id": "5b33c76cb2438d5708dc1981",
+                  "content": "<p>Content for Sponsored Post: Datadog, InMemory.Net, Triplebyte, Etleap, Scalyr, MemSQL</p>",
+                  "content_snippet": "<p>Content for Sponsored Post: Datadog, InMemory.Net, Triplebyte, Etleap, Scalyr, MemSQL</p>",
+                  "creator": "Todd Hoff",
+                  "feedTitle": "High Scalability",
+                  "feed_id": "5b33c76cb2438d5708dc197e",
+                  "guid": "426227:4867632:36081782",
+                  "has_read": false,
+                  "link": "http://feedproxy.google.com/~r/HighScalability/~3/gKe2fkOoT0I/sponsored-post-datadog-inmemorynet-triplebyte-etleap-scalyr.html",
+                  "publish_date": "2018-06-19T16:10:13.000Z",
+                  "timeAgo": "25 days ago",
+                  "title": "Sponsored Post: Datadog, InMemory.Net, Triplebyte, Etleap, Scalyr, MemSQL",
+                },
+                "5b33c76cb2438d5708dc1983": Object {
+                  "__v": 0,
+                  "_id": "5b33c76cb2438d5708dc1983",
+                  "content": "<p>Content for How Ably Efficiently Implemented Consistent Hashing</p>",
+                  "content_snippet": "<p>Content for How Ably Efficiently Implemented Consistent Hashing</p>",
+                  "creator": "Todd Hoff",
+                  "feedTitle": "High Scalability",
+                  "feed_id": "5b33c76cb2438d5708dc197e",
+                  "guid": "426227:4867632:36081325",
+                  "has_read": false,
+                  "link": "http://feedproxy.google.com/~r/HighScalability/~3/EU6Dy48k59o/how-ably-efficiently-implemented-consistent-hashing.html",
+                  "publish_date": "2018-06-18T16:06:17.000Z",
+                  "timeAgo": "a month ago",
+                  "title": "How Ably Efficiently Implemented Consistent Hashing",
+                },
+                "5b33c76cb2438d5708dc1985": Object {
+                  "__v": 0,
+                  "_id": "5b33c76cb2438d5708dc1985",
+                  "content": "<p>Content for June 15th, 2018</p>",
+                  "content_snippet": "<p>Content for June 15th, 2018</p>",
+                  "creator": "Todd Hoff",
+                  "feedTitle": "High Scalability",
+                  "feed_id": "5b33c76cb2438d5708dc197e",
+                  "guid": "426227:4867632:36079455",
+                  "has_read": false,
+                  "link": "http://feedproxy.google.com/~r/HighScalability/~3/sacuGsRa2G0/stuff-the-internet-says-on-scalability-for-june-15th-2018.html",
+                  "publish_date": "2018-06-15T15:57:00.000Z",
+                  "timeAgo": "a month ago",
+                  "title": "Stuff The Internet Says On Scalability For June 15th, 2018",
+                },
+                "5b33c76cb2438d5708dc1987": Object {
+                  "__v": 0,
+                  "_id": "5b33c76cb2438d5708dc1987",
+                  "content": "<p>Content for Open Source Database HA Resources from Severalnines</p>",
+                  "content_snippet": "<p>Content for Open Source Database HA Resources from Severalnines</p>",
+                  "creator": "Forrest Lymburner",
+                  "feedTitle": "High Scalability",
+                  "feed_id": "5b33c76cb2438d5708dc197e",
+                  "guid": "426227:4867632:36078004",
+                  "has_read": false,
+                  "link": "http://feedproxy.google.com/~r/HighScalability/~3/FFJQudxO2bU/open-source-database-ha-resources-from-severalnines.html",
+                  "publish_date": "2018-06-08T19:46:22.000Z",
+                  "timeAgo": "a month ago",
+                  "title": "Open Source Database HA Resources from Severalnines",
+                },
+              }
+            }
+            feeds={
+              Immutable.OrderedMap {
+                "5b33c76cb2438d5708dc197e": Object {
+                  "__v": 0,
+                  "_id": "5b33c76cb2438d5708dc197e",
+                  "creation_date": "2018-06-27T17:20:44.037Z",
+                  "description": null,
+                  "folder_id": "5b33c57eb2438d5708dc1968",
+                  "link": "http://highscalability.com/blog/",
+                  "title": "High Scalability",
+                  "url": "http://feeds.feedburner.com/HighScalability",
+                },
+              }
+            }
+            filter={
+              Object {
+                "id": "all",
+                "limit": "folder",
+              }
+            }
+            filteredEntries={
+              Immutable.OrderedMap {
+                "5b33c76cb2438d5708dc197f": Object {
+                  "__v": 0,
+                  "_id": "5b33c76cb2438d5708dc197f",
+                  "content": "<p>Content for Stuff The Internet Says On Scalability For June 22nd, 2018</p>",
+                  "content_snippet": "<p>Content for Stuff The Internet Says On Scalability For June 22nd, 2018</p>",
+                  "creator": "Todd Hoff",
+                  "feedTitle": "High Scalability",
+                  "feed_id": "5b33c76cb2438d5708dc197e",
+                  "guid": "426227:4867632:36082622",
+                  "has_read": false,
+                  "link": "http://feedproxy.google.com/~r/HighScalability/~3/uqbrISxcA-E/stuff-the-internet-says-on-scalability-for-june-22nd-2018.html",
+                  "publish_date": "2018-06-22T15:56:46.000Z",
+                  "timeAgo": "22 days ago",
+                  "title": "Stuff The Internet Says On Scalability For June 22nd, 2018",
+                },
+                "5b33c76cb2438d5708dc1981": Object {
+                  "__v": 0,
+                  "_id": "5b33c76cb2438d5708dc1981",
+                  "content": "<p>Content for Sponsored Post: Datadog, InMemory.Net, Triplebyte, Etleap, Scalyr, MemSQL</p>",
+                  "content_snippet": "<p>Content for Sponsored Post: Datadog, InMemory.Net, Triplebyte, Etleap, Scalyr, MemSQL</p>",
+                  "creator": "Todd Hoff",
+                  "feedTitle": "High Scalability",
+                  "feed_id": "5b33c76cb2438d5708dc197e",
+                  "guid": "426227:4867632:36081782",
+                  "has_read": false,
+                  "link": "http://feedproxy.google.com/~r/HighScalability/~3/gKe2fkOoT0I/sponsored-post-datadog-inmemorynet-triplebyte-etleap-scalyr.html",
+                  "publish_date": "2018-06-19T16:10:13.000Z",
+                  "timeAgo": "25 days ago",
+                  "title": "Sponsored Post: Datadog, InMemory.Net, Triplebyte, Etleap, Scalyr, MemSQL",
+                },
+                "5b33c76cb2438d5708dc1983": Object {
+                  "__v": 0,
+                  "_id": "5b33c76cb2438d5708dc1983",
+                  "content": "<p>Content for How Ably Efficiently Implemented Consistent Hashing</p>",
+                  "content_snippet": "<p>Content for How Ably Efficiently Implemented Consistent Hashing</p>",
+                  "creator": "Todd Hoff",
+                  "feedTitle": "High Scalability",
+                  "feed_id": "5b33c76cb2438d5708dc197e",
+                  "guid": "426227:4867632:36081325",
+                  "has_read": false,
+                  "link": "http://feedproxy.google.com/~r/HighScalability/~3/EU6Dy48k59o/how-ably-efficiently-implemented-consistent-hashing.html",
+                  "publish_date": "2018-06-18T16:06:17.000Z",
+                  "timeAgo": "a month ago",
+                  "title": "How Ably Efficiently Implemented Consistent Hashing",
+                },
+                "5b33c76cb2438d5708dc1985": Object {
+                  "__v": 0,
+                  "_id": "5b33c76cb2438d5708dc1985",
+                  "content": "<p>Content for June 15th, 2018</p>",
+                  "content_snippet": "<p>Content for June 15th, 2018</p>",
+                  "creator": "Todd Hoff",
+                  "feedTitle": "High Scalability",
+                  "feed_id": "5b33c76cb2438d5708dc197e",
+                  "guid": "426227:4867632:36079455",
+                  "has_read": false,
+                  "link": "http://feedproxy.google.com/~r/HighScalability/~3/sacuGsRa2G0/stuff-the-internet-says-on-scalability-for-june-15th-2018.html",
+                  "publish_date": "2018-06-15T15:57:00.000Z",
+                  "timeAgo": "a month ago",
+                  "title": "Stuff The Internet Says On Scalability For June 15th, 2018",
+                },
+                "5b33c76cb2438d5708dc1987": Object {
+                  "__v": 0,
+                  "_id": "5b33c76cb2438d5708dc1987",
+                  "content": "<p>Content for Open Source Database HA Resources from Severalnines</p>",
+                  "content_snippet": "<p>Content for Open Source Database HA Resources from Severalnines</p>",
+                  "creator": "Forrest Lymburner",
+                  "feedTitle": "High Scalability",
+                  "feed_id": "5b33c76cb2438d5708dc197e",
+                  "guid": "426227:4867632:36078004",
+                  "has_read": false,
+                  "link": "http://feedproxy.google.com/~r/HighScalability/~3/FFJQudxO2bU/open-source-database-ha-resources-from-severalnines.html",
+                  "publish_date": "2018-06-08T19:46:22.000Z",
+                  "timeAgo": "a month ago",
+                  "title": "Open Source Database HA Resources from Severalnines",
+                },
+              }
+            }
+            markEntryRead={[Function]}
+            settings={
+              Immutable.Map {
+                "show_images": Object {
+                  "name": "Show Images",
+                  "refresh_entries_on_change": false,
+                  "type": "toggle",
+                  "value": true,
+                },
+                "show_entries_has_read": Object {
+                  "name": "Show Entries Already Read",
+                  "refresh_entries_on_change": true,
+                  "type": "toggle",
+                  "value": false,
+                },
+              }
+            }
+            sortBy="publish_date:asc"
+          >
+            <div
+              className="rss-entrylist-container"
+            >
+              <Entry
+                entry={
+                  Object {
+                    "__v": 0,
+                    "_id": "5b33c76cb2438d5708dc1987",
+                    "content": "<p>Content for Open Source Database HA Resources from Severalnines</p>",
+                    "content_snippet": "<p>Content for Open Source Database HA Resources from Severalnines</p>",
+                    "creator": "Forrest Lymburner",
+                    "feedTitle": "High Scalability",
+                    "feed_id": "5b33c76cb2438d5708dc197e",
+                    "guid": "426227:4867632:36078004",
+                    "has_read": false,
+                    "link": "http://feedproxy.google.com/~r/HighScalability/~3/FFJQudxO2bU/open-source-database-ha-resources-from-severalnines.html",
+                    "publish_date": "2018-06-08T19:46:22.000Z",
+                    "timeAgo": "a month ago",
+                    "title": "Open Source Database HA Resources from Severalnines",
+                  }
+                }
+                isActive={false}
+                key="5b33c76cb2438d5708dc1987"
+                shouldShowImages={true}
+                toggleEntry={[Function]}
+              >
+                <div
+                  className="rss-entry-container"
+                  id="rss-entry-item-5b33c76cb2438d5708dc1987"
+                >
+                  <div
+                    className="rss-entry-title-unread"
+                    onClick={[Function]}
+                  >
+                    Open Source Database HA Resources from Severalnines
+                  </div>
+                </div>
+              </Entry>
+              <Entry
+                entry={
+                  Object {
+                    "__v": 0,
+                    "_id": "5b33c76cb2438d5708dc1985",
+                    "content": "<p>Content for June 15th, 2018</p>",
+                    "content_snippet": "<p>Content for June 15th, 2018</p>",
+                    "creator": "Todd Hoff",
+                    "feedTitle": "High Scalability",
+                    "feed_id": "5b33c76cb2438d5708dc197e",
+                    "guid": "426227:4867632:36079455",
+                    "has_read": false,
+                    "link": "http://feedproxy.google.com/~r/HighScalability/~3/sacuGsRa2G0/stuff-the-internet-says-on-scalability-for-june-15th-2018.html",
+                    "publish_date": "2018-06-15T15:57:00.000Z",
+                    "timeAgo": "a month ago",
+                    "title": "Stuff The Internet Says On Scalability For June 15th, 2018",
+                  }
+                }
+                isActive={false}
+                key="5b33c76cb2438d5708dc1985"
+                shouldShowImages={true}
+                toggleEntry={[Function]}
+              >
+                <div
+                  className="rss-entry-container"
+                  id="rss-entry-item-5b33c76cb2438d5708dc1985"
+                >
+                  <div
+                    className="rss-entry-title-unread"
+                    onClick={[Function]}
+                  >
+                    Stuff The Internet Says On Scalability For June 15th, 2018
+                  </div>
+                </div>
+              </Entry>
+              <Entry
+                entry={
+                  Object {
+                    "__v": 0,
+                    "_id": "5b33c76cb2438d5708dc1983",
+                    "content": "<p>Content for How Ably Efficiently Implemented Consistent Hashing</p>",
+                    "content_snippet": "<p>Content for How Ably Efficiently Implemented Consistent Hashing</p>",
+                    "creator": "Todd Hoff",
+                    "feedTitle": "High Scalability",
+                    "feed_id": "5b33c76cb2438d5708dc197e",
+                    "guid": "426227:4867632:36081325",
+                    "has_read": false,
+                    "link": "http://feedproxy.google.com/~r/HighScalability/~3/EU6Dy48k59o/how-ably-efficiently-implemented-consistent-hashing.html",
+                    "publish_date": "2018-06-18T16:06:17.000Z",
+                    "timeAgo": "a month ago",
+                    "title": "How Ably Efficiently Implemented Consistent Hashing",
+                  }
+                }
+                isActive={false}
+                key="5b33c76cb2438d5708dc1983"
+                shouldShowImages={true}
+                toggleEntry={[Function]}
+              >
+                <div
+                  className="rss-entry-container"
+                  id="rss-entry-item-5b33c76cb2438d5708dc1983"
+                >
+                  <div
+                    className="rss-entry-title-unread"
+                    onClick={[Function]}
+                  >
+                    How Ably Efficiently Implemented Consistent Hashing
+                  </div>
+                </div>
+              </Entry>
+              <Entry
+                entry={
+                  Object {
+                    "__v": 0,
+                    "_id": "5b33c76cb2438d5708dc1981",
+                    "content": "<p>Content for Sponsored Post: Datadog, InMemory.Net, Triplebyte, Etleap, Scalyr, MemSQL</p>",
+                    "content_snippet": "<p>Content for Sponsored Post: Datadog, InMemory.Net, Triplebyte, Etleap, Scalyr, MemSQL</p>",
+                    "creator": "Todd Hoff",
+                    "feedTitle": "High Scalability",
+                    "feed_id": "5b33c76cb2438d5708dc197e",
+                    "guid": "426227:4867632:36081782",
+                    "has_read": false,
+                    "link": "http://feedproxy.google.com/~r/HighScalability/~3/gKe2fkOoT0I/sponsored-post-datadog-inmemorynet-triplebyte-etleap-scalyr.html",
+                    "publish_date": "2018-06-19T16:10:13.000Z",
+                    "timeAgo": "25 days ago",
+                    "title": "Sponsored Post: Datadog, InMemory.Net, Triplebyte, Etleap, Scalyr, MemSQL",
+                  }
+                }
+                isActive={false}
+                key="5b33c76cb2438d5708dc1981"
+                shouldShowImages={true}
+                toggleEntry={[Function]}
+              >
+                <div
+                  className="rss-entry-container"
+                  id="rss-entry-item-5b33c76cb2438d5708dc1981"
+                >
+                  <div
+                    className="rss-entry-title-unread"
+                    onClick={[Function]}
+                  >
+                    Sponsored Post: Datadog, InMemory.Net, Triplebyte, Etleap, Scalyr, MemSQL
+                  </div>
+                </div>
+              </Entry>
+              <Entry
+                entry={
+                  Object {
+                    "__v": 0,
+                    "_id": "5b33c76cb2438d5708dc197f",
+                    "content": "<p>Content for Stuff The Internet Says On Scalability For June 22nd, 2018</p>",
+                    "content_snippet": "<p>Content for Stuff The Internet Says On Scalability For June 22nd, 2018</p>",
+                    "creator": "Todd Hoff",
+                    "feedTitle": "High Scalability",
+                    "feed_id": "5b33c76cb2438d5708dc197e",
+                    "guid": "426227:4867632:36082622",
+                    "has_read": false,
+                    "link": "http://feedproxy.google.com/~r/HighScalability/~3/uqbrISxcA-E/stuff-the-internet-says-on-scalability-for-june-22nd-2018.html",
+                    "publish_date": "2018-06-22T15:56:46.000Z",
+                    "timeAgo": "22 days ago",
+                    "title": "Stuff The Internet Says On Scalability For June 22nd, 2018",
+                  }
+                }
+                isActive={false}
+                key="5b33c76cb2438d5708dc197f"
+                shouldShowImages={true}
+                toggleEntry={[Function]}
+              >
+                <div
+                  className="rss-entry-container"
+                  id="rss-entry-item-5b33c76cb2438d5708dc197f"
+                >
+                  <div
+                    className="rss-entry-title-unread"
+                    onClick={[Function]}
+                  >
+                    Stuff The Internet Says On Scalability For June 22nd, 2018
+                  </div>
+                </div>
+              </Entry>
+            </div>
+          </EntriesListComponent>
+        </Connect(EntriesListComponent)>
+      </div>
+    </RightPaneComponent>
+  </Connect(RightPaneComponent)>
+</Provider>
+`;

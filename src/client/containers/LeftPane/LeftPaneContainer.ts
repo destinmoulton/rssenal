@@ -24,7 +24,7 @@ const mapDispatchToProps = (
 ): ILeftPaneMapDispatch => {
     return {
         foldersGetAll: () => dispatch(foldersGetAll()),
-        feedsGetAll: () => dispatch(feedsGetAll())
+        feedsGetAll: async () => await dispatch(feedsGetAll())
     };
 };
 

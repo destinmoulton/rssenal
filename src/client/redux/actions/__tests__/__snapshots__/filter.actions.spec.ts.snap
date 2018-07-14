@@ -37,7 +37,7 @@ Array [
         "has_read": false,
         "link": "http://feedproxy.google.com/~r/HighScalability/~3/uqbrISxcA-E/stuff-the-internet-says-on-scalability-for-june-22nd-2018.html",
         "publish_date": "2018-06-22T15:56:46.000Z",
-        "timeAgo": "14 days ago",
+        "timeAgo": "22 days ago",
         "title": "Stuff The Internet Says On Scalability For June 22nd, 2018",
       },
       "5b33c76cb2438d5708dc1981": Object {
@@ -52,7 +52,7 @@ Array [
         "has_read": false,
         "link": "http://feedproxy.google.com/~r/HighScalability/~3/gKe2fkOoT0I/sponsored-post-datadog-inmemorynet-triplebyte-etleap-scalyr.html",
         "publish_date": "2018-06-19T16:10:13.000Z",
-        "timeAgo": "17 days ago",
+        "timeAgo": "25 days ago",
         "title": "Sponsored Post: Datadog, InMemory.Net, Triplebyte, Etleap, Scalyr, MemSQL",
       },
       "5b33c76cb2438d5708dc1983": Object {
@@ -67,7 +67,7 @@ Array [
         "has_read": false,
         "link": "http://feedproxy.google.com/~r/HighScalability/~3/EU6Dy48k59o/how-ably-efficiently-implemented-consistent-hashing.html",
         "publish_date": "2018-06-18T16:06:17.000Z",
-        "timeAgo": "18 days ago",
+        "timeAgo": "a month ago",
         "title": "How Ably Efficiently Implemented Consistent Hashing",
       },
       "5b33c76cb2438d5708dc1985": Object {
@@ -82,7 +82,7 @@ Array [
         "has_read": false,
         "link": "http://feedproxy.google.com/~r/HighScalability/~3/sacuGsRa2G0/stuff-the-internet-says-on-scalability-for-june-15th-2018.html",
         "publish_date": "2018-06-15T15:57:00.000Z",
-        "timeAgo": "21 days ago",
+        "timeAgo": "a month ago",
         "title": "Stuff The Internet Says On Scalability For June 15th, 2018",
       },
       "5b33c76cb2438d5708dc1987": Object {
