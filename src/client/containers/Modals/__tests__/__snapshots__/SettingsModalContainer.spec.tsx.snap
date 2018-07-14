@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SettingsModalContainer /> renders and matches the snapshot 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <Connect(SettingsModalComponent)>
+    <SettingsModalComponent
+      feedsRefreshAll={[Function]}
+      settingChange={[Function]}
+      settings={
+        Immutable.Map {
+          "show_images": Object {
+            "name": "Show Images",
+            "refresh_entries_on_change": false,
+            "type": "toggle",
+            "value": true,
+          },
+          "show_entries_has_read": Object {
+            "name": "Show Entries Already Read",
+            "refresh_entries_on_change": true,
+            "type": "toggle",
+            "value": false,
+          },
+        }
+      }
+    >
+      <span>
+        <Popup
+          content="Settings"
+          keepInViewPort={true}
+          on="hover"
+          position="top left"
+          trigger={
+            <Icon
+              as="i"
+              color="blue"
+              link={true}
+              name="setting"
+              onClick={[Function]}
+              size="large"
+            />
+          }
+        >
+          <Portal
+            closeOnDocumentClick={true}
+            closeOnEscape={true}
+            closeOnTriggerMouseLeave={true}
+            eventPool="default"
+            mouseEnterDelay={50}
+            mouseLeaveDelay={70}
+            onClose={[Function]}
+            onMount={[Function]}
+            onOpen={[Function]}
+            onUnmount={[Function]}
+            openOnTriggerClick={true}
+            openOnTriggerMouseEnter={true}
+            trigger={
+              <Icon
+                as="i"
+                color="blue"
+                link={true}
+                name="setting"
+                onClick={[Function]}
+                size="large"
+              />
+            }
+            triggerRef={[Function]}
+          >
+            <Ref
+              innerRef={[Function]}
+              key="trigger"
+            >
+              <Icon
+                as="i"
+                color="blue"
+                link={true}
+                name="setting"
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onMouseEnter={[Function]}
+                onMouseLeave={[Function]}
+                size="large"
+              >
+                <i
+                  aria-hidden="true"
+                  className="blue setting large link icon"
+                  onBlur={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                />
+              </Icon>
+            </Ref>
+          </Portal>
+        </Popup>
+        <Modal
+          centered={true}
+          className="rss-modal"
+          closeOnDimmerClick={true}
+          closeOnDocumentClick={false}
+          dimmer={true}
+          eventPool="Modal"
+          onClose={[Function]}
+          open={false}
+          size="tiny"
+        >
+          <Portal
+            closeOnDocumentClick={false}
+            closeOnEscape={true}
+            eventPool="Modal"
+            mountNode={<body />}
+            onClose={[Function]}
+            onMount={[Function]}
+            onOpen={[Function]}
+            onUnmount={[Function]}
+            open={false}
+            openOnTriggerClick={true}
+          />
+        </Modal>
+      </span>
+    </SettingsModalComponent>
+  </Connect(SettingsModalComponent)>
+</Provider>
+`;
