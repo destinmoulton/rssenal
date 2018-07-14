@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as fetchMock from "fetch-mock";
+
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
@@ -15,12 +15,6 @@ const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
 
 describe("<EntriesListContainer />", () => {
-    afterEach(() => {
-        fetchMock.reset();
-        fetchMock.restore();
-        localStorage.clear();
-    });
-
     it("renders and matches the snapshot", async () => {
         const store = mockStore({
             entriesStore: {
@@ -47,13 +41,6 @@ describe("<EntriesListContainer />", () => {
                 <EntriesListContainer sortBy={"publish_date:asc"} />
             </Provider>
         );
-
-        try {
-            await fetchMock.flush();
-
-            expect(wrapper).toMatchSnapshot();
-        } catch (err) {
-            throw err;
-        }
+        expect(wrapper).toMatchSnapshot();
     });
 });
