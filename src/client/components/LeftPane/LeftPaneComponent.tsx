@@ -21,7 +21,7 @@ export interface ILeftPaneMapState {
 
 export interface ILeftPaneMapDispatch {
     foldersGetAll: () => void;
-    feedsGetAll: () => void;
+    feedsGetAll: () => Promise<void>;
 }
 
 type IAllProps = ILeftPaneMapDispatch & ILeftPaneMapState;
@@ -43,13 +43,22 @@ class LeftPaneComponent extends React.Component<IAllProps, ILeftPaneState> {
     };
 
     componentDidMount() {
+        this._reloadData();
+    }
+
+    _reloadData = async () => {
         const { foldersGetAll, feedsGetAll, hasFolders } = this.props;
 
         if (!hasFolders) {
-            foldersGetAll();
-            feedsGetAll();
+            try {
+                foldersGetAll();
+
+                await feedsGetAll();
+            } catch (err) {
+                throw err;
+            }
         }
-    }
+    };
 
     _handleOpenAddFeedModal = (feed: IFeed) => {
         this.setState({
