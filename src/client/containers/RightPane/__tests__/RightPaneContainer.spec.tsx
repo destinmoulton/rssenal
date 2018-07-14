@@ -15,12 +15,6 @@ const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
 
 describe("<RightPaneContainer />", () => {
-    afterEach(() => {
-        fetchMock.reset();
-        fetchMock.restore();
-        localStorage.clear();
-    });
-
     it("renders and matches the snapshot", async () => {
         const store = mockStore({
             entriesStore: {
