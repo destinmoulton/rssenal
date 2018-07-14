@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LogoutButtonContainer /> renders and matches the snapshot 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <Connect(LogoutButtonComponent)>
+    <LogoutButtonComponent
+      authLogoutUser={[Function]}
+    >
+      <Popup
+        content="Logout"
+        keepInViewPort={true}
+        on="hover"
+        position="top left"
+        trigger={
+          <Button
+            as="button"
+            className="rss-leftmenu-button-logout"
+            floated="right"
+            icon="sign out"
+            onClick={[Function]}
+            role="button"
+            size="mini"
+          />
+        }
+      >
+        <Portal
+          closeOnDocumentClick={true}
+          closeOnEscape={true}
+          closeOnTriggerMouseLeave={true}
+          eventPool="default"
+          mouseEnterDelay={50}
+          mouseLeaveDelay={70}
+          onClose={[Function]}
+          onMount={[Function]}
+          onOpen={[Function]}
+          onUnmount={[Function]}
+          openOnTriggerClick={true}
+          openOnTriggerMouseEnter={true}
+          trigger={
+            <Button
+              as="button"
+              className="rss-leftmenu-button-logout"
+              floated="right"
+              icon="sign out"
+              onClick={[Function]}
+              role="button"
+              size="mini"
+            />
+          }
+          triggerRef={[Function]}
+        >
+          <Ref
+            innerRef={[Function]}
+            key="trigger"
+          >
+            <Button
+              as="button"
+              className="rss-leftmenu-button-logout"
+              floated="right"
+              icon="sign out"
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              role="button"
+              size="mini"
+            >
+              <button
+                className="ui mini icon right floated button rss-leftmenu-button-logout"
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onMouseEnter={[Function]}
+                onMouseLeave={[Function]}
+                role="button"
+              >
+                <Icon
+                  as="i"
+                  name="sign out"
+                >
+                  <i
+                    aria-hidden="true"
+                    className="sign out icon"
+                  />
+                </Icon>
+              </button>
+            </Button>
+          </Ref>
+        </Portal>
+      </Popup>
+    </LogoutButtonComponent>
+  </Connect(LogoutButtonComponent)>
+</Provider>
+`;
