@@ -11,6 +11,7 @@ import * as INIT_STATE from "../../../redux/initialstate";
 import API_ENTRIES_STRING from "../../../../../test/data/api/entries.unread";
 import API_FEEDS_STRING from "../../../../../test/data/api/feeds";
 import API_FOLDERS_STRING from "../../../../../test/data/api/folders";
+import IMM_FEEDS from "../../../../../test/data/immutable/feeds";
 
 const middleware = [thunk];
 const mockStore = configureMockStore(middleware);
@@ -36,7 +37,10 @@ describe("<LeftPaneContainer />", () => {
         const store = mockStore({
             authStore: INIT_STATE.AUTH_INITIAL_STATE,
             entriesStore: INIT_STATE.ENTRIES_INITIAL_STATE,
-            feedsStore: INIT_STATE.FEEDS_INITIAL_STATE,
+            feedsStore: {
+                ...INIT_STATE.FEEDS_INITIAL_STATE,
+                feeds: IMM_FEEDS
+            },
             filterStore: INIT_STATE.FILTER_INITIAL_STATE,
             foldersStore: INIT_STATE.FOLDERS_INITIAL_STATE,
             messagesStore: INIT_STATE.MESSAGES_INITIAL_STATE,
@@ -51,12 +55,18 @@ describe("<LeftPaneContainer />", () => {
 
         try {
             await fetchMock.flush();
-            console.log(fetchMock.calls());
-            console.log("Completed all (done())?", fetchMock.done());
+            //console.log(fetchMock.calls());
+            //console.log("Completed all (done())?", fetchMock.done());
 
             expect(wrapper).toMatchSnapshot();
+
+            //done();
         } catch (err) {
             throw err;
         }
+
+        // setTimeout(async () => {
+
+        // }, 10);
     });
 });
