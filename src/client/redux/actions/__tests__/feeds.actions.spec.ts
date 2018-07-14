@@ -64,12 +64,13 @@ describe("feeds.actions", () => {
 
     it("feedsGetAll() handles getting feeds", async () => {
         const feedID = "5b33c76cb2438d5708dc197e";
-        const entries_url =
-            "/api/entries/?showEntriesHasRead=false&feedId=" + feedID;
-        fetchMock.getOnce(entries_url, JSON.parse(API_ENTRIES_STRING));
 
         const feed_url = "/api/feeds/";
         fetchMock.getOnce(feed_url, JSON.parse(API_FEEDS_STRING));
+
+        const entries_url =
+            "/api/entries/?showEntriesHasRead=false&feedId=" + feedID;
+        fetchMock.getOnce(entries_url, JSON.parse(API_ENTRIES_STRING));
 
         const store = mockStore({
             entriesStore: INIT_STATE.ENTRIES_INITIAL_STATE,
@@ -124,13 +125,10 @@ describe("feeds.actions", () => {
         }
     });
 
-    it("deleteFeed() handles refreshing entries for current feeds", async () => {
+    it("deleteFeed() handles deleting a feed", async () => {
         const feedID = "5b33c76cb2438d5708dc197e";
         const url = "/api/feeds/" + feedID;
         fetchMock.deleteOnce(url, { body: { status: "success" } });
-
-        const feed_url = "/api/feeds/";
-        fetchMock.getOnce(feed_url, JSON.parse(API_FEEDS_STRING));
 
         const entries_url =
             "/api/entries/?showEntriesHasRead=false&feedId=" + feedID;
@@ -159,7 +157,7 @@ describe("feeds.actions", () => {
         }
     });
 
-    it("saveFeed() handles refreshing entries for current feeds", async () => {
+    it("saveFeed() handles saving feed", async () => {
         const feedID = "5b33c76cb2438d5708dc197e";
         const feeds_url = "/api/feeds/" + feedID;
         fetchMock.putOnce(feeds_url, { status: "success", feedInfo: FEED });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`feeds.actions deleteFeed() handles refreshing entries for current feeds 1`] = `
+exports[`feeds.actions deleteFeed() handles deleting a feed 1`] = `
 Array [
   Object {
     "type": "FEEDS_DELETE_BEGIN",
@@ -247,7 +247,7 @@ Array [
 ]
 `;
 
-exports[`feeds.actions saveFeed() handles refreshing entries for current feeds 1`] = `
+exports[`feeds.actions saveFeed() handles saving feed 1`] = `
 Array [
   Object {
     "type": "FEEDS_UPDATE_BEGIN",
