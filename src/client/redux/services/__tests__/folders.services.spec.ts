@@ -101,9 +101,7 @@ describe("feeds.services", () => {
         it("returns the folders for a valid response", async () => {
             const expectedFolders = ["folder1", "folder2"];
             const url = "/api/folders/";
-            fetchMock.getOnce(url, {
-                ...expectedFolders
-            });
+            fetchMock.getOnce(url, expectedFolders);
 
             expect.assertions(2);
 
