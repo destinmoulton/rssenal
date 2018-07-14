@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as fetchMock from "fetch-mock";
+
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
@@ -42,12 +42,6 @@ describe("<RightPaneContainer />", () => {
             </Provider>
         );
 
-        try {
-            await fetchMock.flush();
-
-            expect(wrapper).toMatchSnapshot();
-        } catch (err) {
-            throw err;
-        }
+        expect(wrapper).toMatchSnapshot();
     });
 });
