@@ -21,6 +21,7 @@ describe("<LeftPaneContainer />", () => {
         fetchMock.restore();
         localStorage.clear();
     });
+
     it("renders and matches the snapshot", async () => {
         const folders_url = "/api/folders/";
         fetchMock.getOnce(folders_url, JSON.parse(API_FOLDERS_STRING));
@@ -47,7 +48,6 @@ describe("<LeftPaneContainer />", () => {
                 <LeftPaneContainer />
             </Provider>
         );
-        fetchMock.catch(404);
 
         try {
             await fetchMock.flush();
