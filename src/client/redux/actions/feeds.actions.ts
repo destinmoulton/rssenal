@@ -59,9 +59,10 @@ function getAllEntriesForFeeds(feeds: Types.TFeeds) {
 
         try {
             const feedsArr: Types.IFeed[] = feeds.toArray();
-            feedsArr.forEach(async feed => {
-                await dispatch(EntriesActions.entriesGetForFeed(feed));
+            const prom = feedsArr.map(feed => {
+                dispatch(EntriesActions.entriesGetForFeed(feed));
             });
+            await Promise.all(prom);
         } catch (err) {
             console.error(err);
         }
