@@ -164,14 +164,14 @@ describe("feeds.actions", () => {
         const feeds_url = "/api/feeds/" + feedID;
         fetchMock.putOnce(feeds_url, { status: "success", feedInfo: FEED });
 
-        //const feed_url = "/api/feeds/";
+        const feed_url = "/api/feeds/";
 
-        //fetchMock.getOnce(feed_url, JSON.parse(API_FEEDS_STRING));
+        fetchMock.getOnce(feed_url, JSON.parse(API_FEEDS_STRING));
 
-        //const entries_url =
-        //"/api/entries/?showEntriesHasRead=false&feedId=" + feedID;
+        const entries_url =
+            "/api/entries/?showEntriesHasRead=false&feedId=" + feedID;
 
-        //fetchMock.getOnce(entries_url, JSON.parse(API_ENTRIES_STRING));
+        fetchMock.getOnce(entries_url, JSON.parse(API_ENTRIES_STRING));
 
         const store = mockStore({
             entriesStore: INIT_STATE.ENTRIES_INITIAL_STATE,

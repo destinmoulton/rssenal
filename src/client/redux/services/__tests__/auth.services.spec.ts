@@ -64,13 +64,13 @@ describe("auth.services", () => {
 
         it("returns true on valid username/password", async () => {
             fetchMock.postOnce("/api/auth/login", {
-                body: { status: "success" }
+                body: { status: "success", token: "NEWTOKEN" }
             });
 
             expect.assertions(2);
             try {
                 const ret = await AuthServices.apiLoginUser("testu", "testp");
-                expect(ret).toBe(true);
+                expect(ret).toBe("NEWTOKEN");
 
                 await fetchMock.flush();
                 expect(fetchMock.done()).toBe(true);

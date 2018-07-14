@@ -113,7 +113,9 @@ describe("feeds.services", () => {
 
                 await fetchMock.flush();
                 expect(fetchMock.done()).toBe(true);
-            } catch (err) {}
+            } catch (err) {
+                throw err;
+            }
         });
     });
 
