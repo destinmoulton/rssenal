@@ -201,6 +201,16 @@ describe("feeds.actions", () => {
         }
     });
 
+    it("feedsSetAll() handles setting the feeds", () => {
+        const store = mockStore({
+            feedsStore: {
+                ...INIT_STATE.FEEDS_INITIAL_STATE
+            }
+        });
+        store.dispatch(FeedsActions.feedsSetAll(IMM_FEEDS));
+        expect(store.getActions()).toMatchSnapshot();
+    });
+
     it("feedsUpdateUnreadCount() handles updating the unread count", () => {
         const store = mockStore({
             feedsStore: {

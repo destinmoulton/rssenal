@@ -331,6 +331,26 @@ Array [
 ]
 `;
 
+exports[`feeds.actions feedsSetAll() handles setting the feeds 1`] = `
+Array [
+  Object {
+    "feeds": Immutable.OrderedMap {
+      "5b33c76cb2438d5708dc197e": Object {
+        "__v": 0,
+        "_id": "5b33c76cb2438d5708dc197e",
+        "creation_date": "2018-06-27T17:20:44.037Z",
+        "description": null,
+        "folder_id": "5b33c57eb2438d5708dc1968",
+        "link": "http://highscalability.com/blog/",
+        "title": "High Scalability",
+        "url": "http://feeds.feedburner.com/HighScalability",
+      },
+    },
+    "type": "FEEDS_SET_ALL",
+  },
+]
+`;
+
 exports[`feeds.actions feedsUpdateUnreadCount() handles updating the unread count 1`] = `
 Array [
   Object {
