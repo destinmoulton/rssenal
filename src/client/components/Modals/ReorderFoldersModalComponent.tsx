@@ -19,7 +19,7 @@ export interface IReorderFolderMapDispatch {
 type TAllProps = IReorderFolderMapDispatch & IReorderFoldersMapState;
 
 interface IReorderFoldersModalState {
-    foldersAsArray: IFolder[];
+    sortableFolders: IFolder[];
     isModalOpen: boolean;
 }
 
@@ -28,20 +28,33 @@ class ReorderFoldersModalComponent extends React.Component<
     IReorderFoldersModalState
 > {
     state: IReorderFoldersModalState = {
-        foldersAsArray: [],
+        sortableFolders: [],
         isModalOpen: false
     };
 
-    static getDerivedStateFromProps(props: TAllProps) {
-        let tmpArray = props.folders
+    componentDidMount() {
+        this._prepSortableFolders(this.props.folders);
+    }
+
+    componentDidUpdate(prevProps: TAllProps) {
+        if (!prevProps.folders.equals(this.props.folders)) {
+            this._prepSortableFolders(this.props.folders);
+        }
+    }
+
+    _prepSortableFolders(folders: TFolders) {
+        let tmpArray = folders
             .toArray()
-            .sort((a, b) => propertyComparator(a, b, "asc", "order", false));
+            .sort((a: any, b: any) =>
+                propertyComparator(a, b, "asc", "order", false)
+            );
+
         //Remove the "Uncategorized" folder
         tmpArray.pop();
 
-        return {
-            foldersAsArray: tmpArray
-        };
+        this.setState({
+            sortableFolders: tmpArray
+        });
     }
 
     _handleCloseModal = () => {
@@ -57,8 +70,8 @@ class ReorderFoldersModalComponent extends React.Component<
     };
 
     _handlePressOK = () => {
-        const { foldersAsArray } = this.state;
-        const orderedFolders = foldersAsArray.map((folder, index) => {
+        const { sortableFolders } = this.state;
+        const orderedFolders = sortableFolders.map((folder, index) => {
             folder.order = index + 1;
             return folder;
         });
@@ -71,13 +84,14 @@ class ReorderFoldersModalComponent extends React.Component<
             reorderedObj.oldIndex,
             reorderedObj.newIndex
         );
+
         this.setState({
-            foldersAsArray: newFoldersArray
+            sortableFolders: newFoldersArray
         });
     };
 
     _reorderFoldersArray(previousIndex: number, newIndex: number): IFolder[] {
-        const array = this.state.foldersAsArray.slice(0);
+        const array = this.state.sortableFolders.slice(0);
         if (newIndex >= array.length) {
             let k = newIndex - array.length;
             while (k-- + 1) {
@@ -85,11 +99,12 @@ class ReorderFoldersModalComponent extends React.Component<
             }
         }
         array.splice(newIndex, 0, array.splice(previousIndex, 1)[0]);
+
         return array;
     }
 
     render() {
-        const { foldersAsArray, isModalOpen } = this.state;
+        const { sortableFolders, isModalOpen } = this.state;
         return (
             <span>
                 <Popup
@@ -111,10 +126,12 @@ class ReorderFoldersModalComponent extends React.Component<
                 >
                     <Header icon="numbered list" content="Reorder Folders" />
                     <Modal.Content>
-                        <SortableFolderList
-                            items={foldersAsArray}
-                            onSortEnd={this._onSortEnd}
-                        />
+                        <div className="rss-sortfolder-list-wrapper">
+                            <SortableFolderList
+                                items={sortableFolders}
+                                onSortEnd={this._onSortEnd}
+                            />
+                        </div>
                     </Modal.Content>
                     <Modal.Actions>
                         <div>
