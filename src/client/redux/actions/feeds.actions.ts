@@ -40,14 +40,18 @@ export function feedsGetAll() {
             let newFeeds = FeedsServices.convertRawFeedsToOrderedMap(feedsArr);
             newFeeds = FeedsServices.sortFeeds(newFeeds);
 
-            dispatch({
-                type: ACT_TYPES.FEEDS_GETALL_COMPLETE,
-                feeds: newFeeds
-            });
+            dispatch(feedsSetAll(newFeeds));
             return await dispatch(getAllEntriesForFeeds(newFeeds));
         } catch (err) {
             dispatch(message(err, "error"));
         }
+    };
+}
+
+function feedsSetAll(feeds: Types.TFeeds) {
+    return {
+        type: ACT_TYPES.FEEDS_SET_ALL,
+        feeds
     };
 }
 
@@ -81,13 +85,21 @@ export function feedsRefreshAll() {
 }
 
 export function deleteFeed(feedId: Types.TFeedID) {
-    return async (dispatch: Types.IDispatch) => {
+    return async (dispatch: Types.IDispatch, getState: Types.IGetState) => {
         dispatch({
             type: ACT_TYPES.FEEDS_DELETE_BEGIN
         });
 
         try {
             await FeedsServices.apiDeleteFeed(feedId);
+
+            const newFeeds = FeedsServices.removeFeed(
+                feedId,
+                getState().feedsStore.feeds
+            );
+
+            dispatch(feedsSetAll(newFeeds));
+
             dispatch(message("Feed removed.", "success"));
             dispatch(filterReset());
             await dispatch(feedsRefreshAll());

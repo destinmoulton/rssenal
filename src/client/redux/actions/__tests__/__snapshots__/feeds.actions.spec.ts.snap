@@ -6,6 +6,10 @@ Array [
     "type": "FEEDS_DELETE_BEGIN",
   },
   Object {
+    "feeds": Immutable.OrderedMap {},
+    "type": "FEEDS_SET_ALL",
+  },
+  Object {
     "lastUID": 1,
     "messages": Immutable.List [
       Object {
@@ -302,7 +306,7 @@ Array [
         "url": "http://feeds.feedburner.com/HighScalability",
       },
     },
-    "type": "FEEDS_GETALL_COMPLETE",
+    "type": "FEEDS_SET_ALL",
   },
   Object {
     "type": "FEEDS_CLEAR_UNREAD",
@@ -394,7 +398,7 @@ Array [
         "url": "http://feeds.feedburner.com/HighScalability",
       },
     },
-    "type": "FEEDS_GETALL_COMPLETE",
+    "type": "FEEDS_SET_ALL",
   },
   Object {
     "type": "FEEDS_CLEAR_UNREAD",

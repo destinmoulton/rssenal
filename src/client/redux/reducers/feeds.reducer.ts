@@ -23,7 +23,7 @@ function feedsReducer(
                 isAddingFeed: false
             };
         }
-        case ACT_TYPES.FEEDS_GETALL_COMPLETE: {
+        case ACT_TYPES.FEEDS_SET_ALL: {
             return {
                 ...state,
                 feeds: action.feeds

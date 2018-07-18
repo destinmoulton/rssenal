@@ -180,6 +180,10 @@ export function decrementUnread(
     };
 }
 
+export function removeFeed(feedID: Types.TFeedID, feeds: Types.TFeeds) {
+    return feeds.remove(feedID);
+}
+
 export function setSingleFeed(feed: Types.IFeed, feeds: Types.TFeeds) {
     return feeds.set(feed._id, feed);
 }
