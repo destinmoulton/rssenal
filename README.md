@@ -41,7 +41,7 @@ Alter the configuration values in `src/config/config.js`
 
 ### Redux Debugging
 
-To enable redux action and state logging set redux-debug to "on" in localStorage.
+To enable redux action and state logging set redux-debug to "on" in localStorage. Remove the item or set to "off" to disable redux console logs.
 
 ```
 localStorage.setItem("redux-debug", "on");
