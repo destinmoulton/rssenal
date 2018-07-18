@@ -48,7 +48,7 @@ export function feedsGetAll() {
     };
 }
 
-function feedsSetAll(feeds: Types.TFeeds) {
+export function feedsSetAll(feeds: Types.TFeeds) {
     return {
         type: ACT_TYPES.FEEDS_SET_ALL,
         feeds
