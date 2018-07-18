@@ -12,8 +12,8 @@ There are **no** options to share a post on Facebook, Twitter, or any other soci
 
 ### Requirements
 
-*   pm2
-*   mongodb
+-   pm2
+-   mongodb
 
 ### Installation Instructions
 
@@ -38,6 +38,14 @@ Without authentication:
 `> use rssenal` This will create the database.
 
 Alter the configuration values in `src/config/config.js`
+
+### Redux Debugging
+
+To enable redux action and state logging set redux-debug to "on" in localStorage.
+
+```
+localStorage.setItem("redux-debug", "on");
+```
 
 ### License
 
