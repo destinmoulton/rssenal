@@ -44,9 +44,9 @@ describe("feeds reducer", () => {
         });
     });
 
-    it("should handle FEEDS_GETALL_COMPLETE", () => {
+    it("should handle FEEDS_SET_ALL", () => {
         const action = {
-            type: ACT_TYPES.FEEDS_GETALL_COMPLETE,
+            type: ACT_TYPES.FEEDS_SET_ALL,
             feeds: DATA_FEEDS
         };
         const reduction = feedsReducer(undefined, action);
