@@ -350,7 +350,7 @@ exports[`<RightPaneContainer /> renders and matches the snapshot 1`] = `
                   "has_read": false,
                   "link": "http://feedproxy.google.com/~r/HighScalability/~3/uqbrISxcA-E/stuff-the-internet-says-on-scalability-for-june-22nd-2018.html",
                   "publish_date": "2018-06-22T15:56:46.000Z",
-                  "timeAgo": "22 days ago",
+                  "timeAgo": "a month ago",
                   "title": "Stuff The Internet Says On Scalability For June 22nd, 2018",
                 },
                 "5b33c76cb2438d5708dc1981": Object {
@@ -365,7 +365,7 @@ exports[`<RightPaneContainer /> renders and matches the snapshot 1`] = `
                   "has_read": false,
                   "link": "http://feedproxy.google.com/~r/HighScalability/~3/gKe2fkOoT0I/sponsored-post-datadog-inmemorynet-triplebyte-etleap-scalyr.html",
                   "publish_date": "2018-06-19T16:10:13.000Z",
-                  "timeAgo": "25 days ago",
+                  "timeAgo": "a month ago",
                   "title": "Sponsored Post: Datadog, InMemory.Net, Triplebyte, Etleap, Scalyr, MemSQL",
                 },
                 "5b33c76cb2438d5708dc1983": Object {
@@ -449,7 +449,7 @@ exports[`<RightPaneContainer /> renders and matches the snapshot 1`] = `
                   "has_read": false,
                   "link": "http://feedproxy.google.com/~r/HighScalability/~3/uqbrISxcA-E/stuff-the-internet-says-on-scalability-for-june-22nd-2018.html",
                   "publish_date": "2018-06-22T15:56:46.000Z",
-                  "timeAgo": "22 days ago",
+                  "timeAgo": "a month ago",
                   "title": "Stuff The Internet Says On Scalability For June 22nd, 2018",
                 },
                 "5b33c76cb2438d5708dc1981": Object {
@@ -464,7 +464,7 @@ exports[`<RightPaneContainer /> renders and matches the snapshot 1`] = `
                   "has_read": false,
                   "link": "http://feedproxy.google.com/~r/HighScalability/~3/gKe2fkOoT0I/sponsored-post-datadog-inmemorynet-triplebyte-etleap-scalyr.html",
                   "publish_date": "2018-06-19T16:10:13.000Z",
-                  "timeAgo": "25 days ago",
+                  "timeAgo": "a month ago",
                   "title": "Sponsored Post: Datadog, InMemory.Net, Triplebyte, Etleap, Scalyr, MemSQL",
                 },
                 "5b33c76cb2438d5708dc1983": Object {
@@ -655,7 +655,7 @@ exports[`<RightPaneContainer /> renders and matches the snapshot 1`] = `
                     "has_read": false,
                     "link": "http://feedproxy.google.com/~r/HighScalability/~3/gKe2fkOoT0I/sponsored-post-datadog-inmemorynet-triplebyte-etleap-scalyr.html",
                     "publish_date": "2018-06-19T16:10:13.000Z",
-                    "timeAgo": "25 days ago",
+                    "timeAgo": "a month ago",
                     "title": "Sponsored Post: Datadog, InMemory.Net, Triplebyte, Etleap, Scalyr, MemSQL",
                   }
                 }
@@ -690,7 +690,7 @@ exports[`<RightPaneContainer /> renders and matches the snapshot 1`] = `
                     "has_read": false,
                     "link": "http://feedproxy.google.com/~r/HighScalability/~3/uqbrISxcA-E/stuff-the-internet-says-on-scalability-for-june-22nd-2018.html",
                     "publish_date": "2018-06-22T15:56:46.000Z",
-                    "timeAgo": "22 days ago",
+                    "timeAgo": "a month ago",
                     "title": "Stuff The Internet Says On Scalability For June 22nd, 2018",
                   }
                 }

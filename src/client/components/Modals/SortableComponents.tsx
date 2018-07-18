@@ -4,7 +4,7 @@ import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import { IFolder } from "../../types";
 
 interface ISortableFolderItemProps {
-    value: any;
+    value: string;
 }
 
 export const SortableFolderItem = SortableElement(
@@ -24,18 +24,13 @@ export const SortableFolderList = SortableContainer(
         const { items } = props;
         const itemsList = items.map((value: IFolder, index: number) => {
             return (
-                <div
-                    className="rss-sortfolder-list-container"
+                <SortableFolderItem
                     key={`item-${index}`}
-                >
-                    <SortableFolderItem
-                        key={`item-${index}`}
-                        index={index}
-                        value={value.name}
-                    />
-                </div>
+                    index={index}
+                    value={value.name}
+                />
             );
         });
-        return <ul>{itemsList}</ul>;
+        return <div className="rss-sortfolder-list-container">{itemsList}</div>;
     }
 );
