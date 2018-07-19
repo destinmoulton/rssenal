@@ -5,7 +5,7 @@ import Feeds from "../models/Feeds.model";
 
 class EntriesController {
     get(req, res) {
-        return this._updateFeed(req.query.feedId)
+        return this._updateFeedEntries(req.query.feedId)
             .then(() => {
                 let query = {
                     feed_id: req.query.feedId
@@ -32,7 +32,11 @@ class EntriesController {
             .catch(err => {
                 return res.json({
                     status: "error",
-                    error: "Unable to get entries for feed. " + err.message + ". Feed ID " + req.query.feedId
+                    error:
+                        "Unable to get entries for feed. " +
+                        err.message +
+                        ". Feed ID " +
+                        req.query.feedId
                 });
             });
     }
@@ -42,7 +46,8 @@ class EntriesController {
             if (err) {
                 res.json({
                     status: "error",
-                    error: "Unable to find the entry with id: " +
+                    error:
+                        "Unable to find the entry with id: " +
                         req.params.entryId
                 });
             } else {
@@ -67,10 +72,10 @@ class EntriesController {
         });
     }
 
-    _updateFeed(feedId) {
+    _updateFeedEntries(feedId) {
         return Feeds.findOne({
-                _id: feedId
-            })
+            _id: feedId
+        })
             .then(feed => {
                 return feedparser.parse(feed.url);
             })
