@@ -1,6 +1,6 @@
 node_modules
 
-src/server/config/config.js
-dist/server/config/config.js
+dist/server
+config/server/config.js
 
 yarn-error.log
