@@ -22,22 +22,32 @@ There are **no** options to share a post on Facebook, Twitter, or any other soci
 Install node_modules:
 `$ npm install` or `$ yarn install`
 
-### Configuration and Compilation
+### Configuration
 
-Copy the contents of `src/config/config.template.js` into its own file `src/config/config.js`. Change the configured values to match your own setup.
-
-Compile the server:
-`$ npm run compile:server`
-
-You can leave the server compilation running or kill it with `Ctrl+c` when you have it configured.
-
-Create a db in mongo.
+#### Create a db in mongo.
 
 Without authentication:
 `$ mongo`
 `> use rssenal` This will create the database.
 
-Alter the configuration values in `src/config/config.js`
+#### config.js
+
+Copy the contents of `config/server/config.template.js` into its own file `config/server/config.js`. Change the configured values to match your own setup.
+
+### Build and Run the Production Server
+
+This will build and run the server:
+
+```
+$ npm run start:prod:server
+```
+
+### Development
+
+To compile the server in watch mode:
+`$ npm run compile:server`
+
+You can leave the server compilation running or kill it with `Ctrl+c` when you have it configured.
 
 ### Redux Debugging
 
