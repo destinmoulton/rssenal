@@ -2,7 +2,7 @@ import express from "express";
 import jwt from "jsonwebtoken";
 const router = express.Router();
 
-import CONFIG from "../../config/config";
+import CONFIG from "../../../../config/server/config";
 import requireJWT from "../../lib/requireJWT";
 
 router.post("/login", (req, res) => {

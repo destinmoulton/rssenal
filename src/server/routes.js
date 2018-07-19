@@ -2,7 +2,7 @@ import express from "express";
 import jwt from "express-jwt";
 const router = express.Router();
 
-import CONFIG from "./config/config";
+import CONFIG from "../../config/server/config";
 
 router.use(
     "/api",
