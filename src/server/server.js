@@ -12,10 +12,13 @@ const app = express();
 
 // Connect mongoose
 mongoose.Promise = global.Promise;
-mongoose.connect(CONFIG.mongo.uri, {
-    useMongoClient: true,
-    promiseLibrary: global.Promise
-});
+mongoose.connect(
+    CONFIG.mongo.uri,
+    {
+        useNewUrlParser: true,
+        promiseLibrary: global.Promise
+    }
+);
 
 // Setup body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
