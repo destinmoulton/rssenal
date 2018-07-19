@@ -4,7 +4,7 @@ import express from "express";
 import mongoose from "mongoose";
 import path from "path";
 
-import CONFIG from "./config/config";
+import CONFIG from "../../config/server/config";
 
 const PUBLIC_PATH = path.resolve(__dirname, "../public");
 
