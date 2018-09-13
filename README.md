@@ -59,4 +59,4 @@ localStorage.setItem("redux-debug", "on");
 
 ### License
 
-RSSenal is released under the MIT license.
+MIT
