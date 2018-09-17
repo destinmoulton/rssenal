@@ -38,13 +38,13 @@ export async function apiValidateToken() {
 
 export async function apiLoginUser(username: string, password: string) {
     const url = API_AUTH_LOGIN;
-    const init = {
-        method: "POST",
-        body: JSON.stringify({ username, password }),
+    const options = {
+        json: { username, password },
         headers: generateJSONHeaders()
     };
 
-    return fetch(url, init)
+    return ky
+        .post(url, options)
         .then(res => {
             return res.json();
         })
