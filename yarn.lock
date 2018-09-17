@@ -3989,6 +3989,10 @@ kleur@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-1.0.1.tgz#6b64a4a42c7226fc0319fec35904f824ad945f7e"
 
+ky@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/ky/-/ky-0.3.0.tgz#f783f5f621932d796db0f41c5628f94f42f85924"
+
 lazy-cache@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/lazy-cache/-/lazy-cache-1.0.4.tgz#a1d78fc3a50474cb80845d3b3b6e1da49a446e8e"
