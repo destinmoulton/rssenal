@@ -1,5 +1,8 @@
 {
     "compilerOptions": {
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
         "outDir": "./dist/public/js",
         "sourceMap": true,
         "noImplicitAny": true,

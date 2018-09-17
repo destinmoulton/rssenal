@@ -1,4 +1,6 @@
 import { OrderedMap } from "immutable";
+
+import ky from "../../lib/ky";
 import { API_FOLDERS_BASE, API_FOLDERS_GET_ALL } from "../apiendpoints";
 import { UNCATEGORIZED_FOLDER } from "../../constants";
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
@@ -7,12 +9,12 @@ import * as Types from "../../types";
 
 export async function apiAddFolder(newFolderName: string) {
     const url = API_FOLDERS_BASE;
-    const init = {
-        method: "POST",
-        body: JSON.stringify({ name: newFolderName }),
+    const options = {
+        json: { name: newFolderName },
         headers: generateJWTJSONHeaders()
     };
-    return fetch(url, init)
+    return ky
+        .post(url, options)
         .then(res => {
             return res.json();
         })
@@ -30,11 +32,11 @@ export async function apiAddFolder(newFolderName: string) {
 
 export async function apiDeleteFolder(folderID: Types.TFolderID) {
     const url = API_FOLDERS_BASE + folderID;
-    const init = {
-        method: "DELETE",
+    const options = {
         headers: generateJWTHeaders()
     };
-    return fetch(url, init)
+    return ky
+        .delete(url, options)
         .then(res => {
             return res.json();
         })
@@ -52,11 +54,11 @@ export async function apiDeleteFolder(folderID: Types.TFolderID) {
 
 export async function apiGetAllFolders() {
     const url = API_FOLDERS_GET_ALL;
-    const init = {
-        method: "GET",
+    const options = {
         headers: generateJWTHeaders()
     };
-    return fetch(url, init)
+    return ky
+        .get(url, options)
         .then(res => {
             return res.json();
         })
@@ -70,12 +72,12 @@ export async function apiGetAllFolders() {
 
 export async function apiReorderFolders(foldersArr: Types.IFolder[]) {
     const url = API_FOLDERS_BASE;
-    const init = {
-        method: "PUT",
-        body: JSON.stringify({ folders: foldersArr }),
+    const options = {
+        json: { folders: foldersArr },
         headers: generateJWTJSONHeaders()
     };
-    return fetch(url, init)
+    return ky
+        .put(url, options)
         .then(res => {
             return res.json();
         })
@@ -93,13 +95,13 @@ export async function apiReorderFolders(foldersArr: Types.IFolder[]) {
 
 export async function apiSaveFolder(folderInfo: Types.IFolder) {
     const url = API_FOLDERS_BASE + folderInfo._id;
-    const init = {
-        method: "PUT",
-        body: JSON.stringify({ name: folderInfo.name }),
+    const options = {
+        json: { name: folderInfo.name },
         headers: generateJWTJSONHeaders()
     };
 
-    return fetch(url, init)
+    return ky
+        .put(url, options)
         .then(res => {
             return res.json();
         })

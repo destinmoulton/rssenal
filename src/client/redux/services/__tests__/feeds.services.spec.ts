@@ -173,6 +173,49 @@ describe("feeds.services", () => {
         });
     });
 
+    describe("apiValidateFeedURL()", () => {
+        it("throws an error for an error response", async () => {
+            const url = "/api/validatefeedurl/";
+            fetchMock.postOnce(url, { body: { status: "error" } });
+
+            expect.assertions(2);
+
+            try {
+                await FeedsServices.apiValidateFeedURL("TESTURL");
+            } catch (err) {
+                expect(err).toBeInstanceOf(Error);
+
+                await fetchMock.flush();
+                expect(fetchMock.done()).toBe(true);
+            }
+        });
+
+        it("returns the validated feed for a valid response", async () => {
+            const expectedFeed = { feedData: "FEED DATA HERE" };
+            const url = "/api/validatefeedurl/";
+            fetchMock.postOnce(url, {
+                body: {
+                    status: "success",
+                    feedInfo: expectedFeed
+                }
+            });
+
+            expect.assertions(2);
+
+            try {
+                const feedInfo = await FeedsServices.apiValidateFeedURL(
+                    "TESTURL"
+                );
+                expect(feedInfo).toEqual(expectedFeed);
+
+                await fetchMock.flush();
+                expect(fetchMock.done()).toBe(true);
+            } catch (err) {
+                throw err;
+            }
+        });
+    });
+
     it("convertRawFeedsToOrderedMap() returns an OrderedMap<> of feeds", () => {
         const om = FeedsServices.convertRawFeedsToOrderedMap(
             JSON.parse(API_FEEDS_STRING).feeds

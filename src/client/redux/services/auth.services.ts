@@ -1,3 +1,5 @@
+import ky from "../../lib/ky";
+
 import { API_AUTH_LOGIN, API_AUTH_VALIDATE_TOKEN } from "../apiendpoints";
 
 import {
@@ -9,11 +11,12 @@ import * as Types from "../../types";
 
 export async function apiValidateToken() {
     const url = API_AUTH_VALIDATE_TOKEN;
-    const init = {
-        method: "GET",
+    const options = {
         headers: generateJWTHeaders()
     };
-    return fetch(url, init)
+
+    return ky
+        .get(url, options)
         .then(res => {
             if (!res.ok) {
                 return { status: "invalid" };
@@ -35,13 +38,13 @@ export async function apiValidateToken() {
 
 export async function apiLoginUser(username: string, password: string) {
     const url = API_AUTH_LOGIN;
-    const init = {
-        method: "POST",
-        body: JSON.stringify({ username, password }),
+    const options = {
+        json: { username, password },
         headers: generateJSONHeaders()
     };
 
-    return fetch(url, init)
+    return ky
+        .post(url, options)
         .then(res => {
             return res.json();
         })
