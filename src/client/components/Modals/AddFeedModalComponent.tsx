@@ -11,9 +11,8 @@ import {
 } from "semantic-ui-react";
 import SelectFolder from "./SelectFolder";
 
-import { API_FEEDVALIDATION_BASE } from "../../redux/apiendpoints";
 import { generateJWTJSONHeaders } from "../../lib/headers";
-
+import { apiValidateFeedURL } from "../../redux/services/feeds.services";
 import { IFeed, TFolderID, TFolders } from "../../types";
 
 export interface IAddFeedModalMapState {
@@ -120,40 +119,20 @@ class AddFeedModalComponent extends React.Component<
         });
     };
 
-    _serverValidateURL() {
+    async _serverValidateURL() {
         const { feedURL } = this.state;
 
-        const url = API_FEEDVALIDATION_BASE;
-        const init = {
-            headers: generateJWTJSONHeaders(),
-            method: "POST",
-            body: JSON.stringify({ feedURL })
-        };
-
-        fetch(url, init)
-            .then(res => {
-                return res.json();
-            })
-            .then(resObj => {
-                if (resObj.status === "error") {
-                    throw new Error(
-                        "The feed address does not seem to be valid. Try again."
-                    );
-                } else if (resObj.status === "success") {
-                    return resObj.feedInfo;
-                }
-            })
-            .then(feed => {
-                this._transitionToDisplayFeed(feed);
-            })
-            .catch(err => {
-                this.setState({
-                    formError: err.message,
-                    feedInfo: {},
-                    folderId: "0",
-                    isValidatingURL: false
-                });
+        try {
+            const feedInfo = await apiValidateFeedURL(feedURL);
+            this._transitionToDisplayFeed(feedInfo);
+        } catch (err) {
+            this.setState({
+                formError: err.message,
+                feedInfo: {},
+                folderId: "0",
+                isValidatingURL: false
             });
+        }
     }
 
     _buildURLForm() {
@@ -191,7 +170,8 @@ class AddFeedModalComponent extends React.Component<
                     inverted
                     loading={isValidatingURL}
                 >
-                    <Icon name="chevron right" />&nbsp;&nbsp;&nbsp;Continue
+                    <Icon name="chevron right" />
+                    &nbsp;&nbsp;&nbsp;Continue
                 </Button>
             </span>
         );

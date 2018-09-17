@@ -2,7 +2,7 @@ import { OrderedMap } from "immutable";
 
 import ky from "../../lib/ky";
 
-import { API_FEEDS_BASE } from "../apiendpoints";
+import { API_FEEDS_BASE, API_FEEDVALIDATION_BASE } from "../apiendpoints";
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { propertyComparator } from "../../lib/sort";
 import * as Types from "../../types";
@@ -96,6 +96,32 @@ export async function apiUpdateFeed(feedInfo: Types.IFeed) {
                 throw new Error(feedObj.error);
             } else if (feedObj.status === "success") {
                 return feedObj.feedInfo;
+            }
+        })
+        .catch(err => {
+            throw err;
+        });
+}
+
+export async function apiValidateFeedURL(urlToTest: string) {
+    const url = API_FEEDVALIDATION_BASE;
+    const init = {
+        headers: generateJWTJSONHeaders(),
+        json: { feedURL: urlToTest }
+    };
+
+    return ky
+        .post(url, init)
+        .then(res => {
+            return res.json();
+        })
+        .then(resObj => {
+            if (resObj.status === "error") {
+                throw new Error(
+                    "The feed address does not seem to be valid. Try again."
+                );
+            } else if (resObj.status === "success") {
+                return resObj.feedInfo;
             }
         })
         .catch(err => {
