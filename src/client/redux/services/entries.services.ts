@@ -1,5 +1,7 @@
 import * as moment from "moment";
 
+import ky from "../../lib/ky";
+
 import { API_ENTRIES_BASE } from "../apiendpoints";
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import * as Types from "../../types";
@@ -10,12 +12,12 @@ export function apiGetEntriesForFeed(
 ) {
     const queryString = `?showEntriesHasRead=${shouldShowRead}&feedId=${feedId}`;
     const url = API_ENTRIES_BASE + queryString;
-    const init = {
-        method: "GET",
+    const options = {
         headers: generateJWTHeaders()
     };
 
-    return fetch(url, init)
+    return ky
+        .get(url, options)
         .then(res => {
             return res.json();
         })
@@ -34,12 +36,12 @@ export function apiGetEntriesForFeed(
 export function apiUpdateEntryHasRead(entry: Types.IEntry, hasRead: boolean) {
     const url = API_ENTRIES_BASE + entry._id;
     const init = {
-        method: "PUT",
-        body: JSON.stringify({ has_read: hasRead }),
+        json: { has_read: hasRead },
         headers: generateJWTJSONHeaders()
     };
 
-    return fetch(url, init)
+    return ky
+        .put(url, init)
         .then(res => {
             return res.json();
         })
