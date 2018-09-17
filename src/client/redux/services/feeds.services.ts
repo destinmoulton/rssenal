@@ -1,5 +1,7 @@
 import { OrderedMap } from "immutable";
 
+import ky from "../../lib/ky";
+
 import { API_FEEDS_BASE } from "../apiendpoints";
 import { generateJWTJSONHeaders, generateJWTHeaders } from "../../lib/headers";
 import { propertyComparator } from "../../lib/sort";
@@ -8,13 +10,13 @@ import * as Types from "../../types";
 export async function apiAddFeed(feedInfo: Types.IFeed) {
     const url = API_FEEDS_BASE;
     const headers = generateJWTJSONHeaders();
-    const init = {
-        method: "POST",
-        body: JSON.stringify({ ...feedInfo }),
+    const options = {
+        json: { ...feedInfo },
         headers
     };
 
-    return fetch(url, init)
+    return ky
+        .post(url, options)
         .then(res => {
             return res.json();
         })
@@ -32,11 +34,11 @@ export async function apiAddFeed(feedInfo: Types.IFeed) {
 
 export async function apiDeleteFeed(feedID: Types.TFeedID) {
     const url = API_FEEDS_BASE + feedID;
-    const init = {
-        method: "DELETE",
+    const options = {
         headers: generateJWTHeaders()
     };
-    return fetch(url, init)
+    return ky
+        .delete(url, options)
         .then(res => {
             return res.json();
         })
@@ -54,11 +56,11 @@ export async function apiDeleteFeed(feedID: Types.TFeedID) {
 
 export async function apiGetAllFeeds() {
     const url = API_FEEDS_BASE;
-    const init = {
-        method: "GET",
+    const options = {
         headers: generateJWTHeaders()
     };
-    return fetch(url, init)
+    return ky
+        .get(url, options)
         .then(res => {
             return res.json();
         })
@@ -76,16 +78,16 @@ export async function apiGetAllFeeds() {
 
 export async function apiUpdateFeed(feedInfo: Types.IFeed) {
     const url = API_FEEDS_BASE + feedInfo._id;
-    const init = {
-        method: "PUT",
-        body: JSON.stringify({
+    const options = {
+        json: {
             title: feedInfo.title,
             folder_id: feedInfo.folder_id
-        }),
+        },
         headers: generateJWTJSONHeaders()
     };
 
-    return fetch(url, init)
+    return ky
+        .put(url, options)
         .then(res => {
             return res.json();
         })
