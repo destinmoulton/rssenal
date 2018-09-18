@@ -1,6 +1,8 @@
 import feedparser from "feedparser-promised";
 import moment from "moment";
 
+import logger from "../../lib/logger";
+
 import Entries from "../models/Entries.model";
 import Feeds from "../models/Feeds.model";
 
@@ -21,6 +23,7 @@ class EntriesController {
                     query["has_read"] = false;
                 }
             }
+
             const entries = await Entries.find(query).sort({
                 publish_date: "desc"
             });
@@ -84,25 +87,21 @@ class EntriesController {
                 moment(feed.last_updated).isAfter(timeAgo)
             ) {
                 // The feed was recently updated, so no need to parse
-                return true;
+                return Promise.resolve();
             }
 
             // Get and parse the RSS feed
             const entries = await feedparser.parse(feed.url);
 
-            entries.forEach(async entry => {
-                await this._addNewEntry(feedId, entry);
-            });
+            await Promise.all(
+                entries.map(async entry => {
+                    await this._addNewEntry(feedId, entry);
+                })
+            );
 
             // Update the time of update
             feed.last_updated = new Date();
-            await feed.save(err => {
-                if (err) {
-                    throw new Error(err);
-                }
-            });
-
-            return true;
+            return await feed.save();
         } catch (err) {
             throw err;
         }
@@ -125,12 +124,12 @@ class EntriesController {
                     creator: newEntry.author,
                     content: newEntry.description,
                     content_snippet: newEntry.summary,
-                    publish_date: newEntry.pubDate
+                    publish_date: newEntry.pubDate,
+                    has_read: false
                 };
-                const insert = new Entries(data);
-                return await insert.save();
+                return await Entries.create(data);
             }
-            return true;
+            return Promise.resolve();
         } catch (err) {
             throw err;
         }
