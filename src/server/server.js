@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import path from "path";
 
 import CONFIG from "../../config/server/config";
+import logger from "./lib/logger";
 
 const PUBLIC_PATH = path.resolve(__dirname, "../public");
 
@@ -38,7 +39,7 @@ app.listen(CONFIG.port);
 
 const date = new Date();
 // Output the server listening message
-console.log("-".repeat(50));
-console.log(`--- rssenal server listening on http://127.0.0.1:${CONFIG.port}`);
-console.log(`--- ${date.toString()}`);
-console.log("-".repeat(50));
+logger.info("-".repeat(50));
+logger.info(`--- rssenal server listening on http://127.0.0.1:${CONFIG.port}`);
+logger.info(`--- ${date.toString()}`);
+logger.info("-".repeat(50));
