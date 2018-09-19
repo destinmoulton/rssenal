@@ -17,6 +17,7 @@ describe("<FolderItemComponent />", () => {
     it("renders and matches the snapshot", () => {
         const wrapper = shallow(
             <FolderItemComponent
+                entriesRemoveRead={jest.fn()}
                 folderDelete={jest.fn()}
                 filterChange={jest.fn()}
                 filterVisibleEntries={jest.fn()}
