@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import * as EntryActions from "../../redux/actions/entries.actions";
 import { folderDelete } from "../../redux/actions/folders.actions";
 import * as FilterActions from "../../redux/actions/filter.actions";
 
@@ -23,6 +24,7 @@ const mapDispatchToProps = (
     dispatch: Types.IDispatch
 ): IFolderItemMapDispatch => {
     return {
+        entriesRemoveRead: () => dispatch(EntryActions.entriesRemoveRead()),
         folderDelete: (folderId: Types.TFolderID) =>
             dispatch(folderDelete(folderId)),
         filterChange: (newFilter: Types.IFilter) =>

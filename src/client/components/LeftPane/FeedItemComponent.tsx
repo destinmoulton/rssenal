@@ -12,6 +12,7 @@ export interface IFeedItemMapState {
 
 export interface IFeedItemMapDispatch {
     deleteFeed: (feedId: TFeedID) => void;
+    entriesRemoveRead: () => void;
     filterChange: (newFilter: object) => void;
     filterVisibleEntries: () => void;
 }
@@ -47,13 +48,22 @@ class FeedItemComponent extends React.Component<TAllProps, IFeedItemState> {
     };
 
     _handleClickFeed = () => {
-        const { filterChange, filterVisibleEntries, feed } = this.props;
+        const {
+            entriesRemoveRead,
+            filterChange,
+            filterVisibleEntries,
+            feed
+        } = this.props;
 
         filterChange({
             limit: "feed",
             id: feed._id
         });
 
+        // Remove read entries
+        entriesRemoveRead();
+
+        // Filter the entries
         filterVisibleEntries();
     };
 

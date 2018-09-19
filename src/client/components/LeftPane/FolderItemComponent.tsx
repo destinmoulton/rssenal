@@ -20,6 +20,7 @@ export interface IFolderItemMapState {
 }
 
 export interface IFolderItemMapDispatch {
+    entriesRemoveRead: () => void;
     folderDelete: (folderId: TFolderID) => void;
     filterChange: (filter: IFilter) => void;
     filterVisibleEntries: () => void;
@@ -63,13 +64,22 @@ class FolderItemComponent extends React.Component<TAllProps, IFolderItemState> {
     };
 
     _handleClickFolder = () => {
-        const { filterChange, filterVisibleEntries, folder } = this.props;
+        const {
+            entriesRemoveRead,
+            filterChange,
+            filterVisibleEntries,
+            folder
+        } = this.props;
 
         filterChange({
             limit: "folder",
             id: folder._id
         });
 
+        // Remove read entries
+        entriesRemoveRead();
+
+        // Filter the entries
         filterVisibleEntries();
     };
 
