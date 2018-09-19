@@ -92,3 +92,11 @@ export function ammendEntryReadStatus(
     const newEntry = { ...entry, has_read: hasRead };
     return currentEntries.set(entryId, newEntry);
 }
+
+export function removeReadEntries(entries: Types.TEntries): Types.TEntries {
+    return entries
+        .filter((entry: Types.IEntry) => {
+            return false === entry.has_read;
+        })
+        .toOrderedMap();
+}
