@@ -28,6 +28,7 @@ exports[`<FolderItemContainer /> renders and matches the snapshot 1`] = `
     <FolderItemComponent
       editFeed={[MockFunction]}
       editFolder={[MockFunction]}
+      entriesRemoveRead={[Function]}
       feeds={Immutable.OrderedMap {}}
       filter={
         Object {

@@ -677,6 +677,7 @@ exports[`<LeftPaneContainer /> renders and matches the snapshot 1`] = `
               <FolderItemComponent
                 editFeed={[Function]}
                 editFolder={[Function]}
+                entriesRemoveRead={[Function]}
                 feeds={
                   Immutable.OrderedMap {
                     "5b33c76cb2438d5708dc197e": Object {

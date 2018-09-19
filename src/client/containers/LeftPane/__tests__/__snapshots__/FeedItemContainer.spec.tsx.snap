@@ -31,6 +31,7 @@ exports[`<FeedItemContainer /> renders and matches the snapshot 1`] = `
     <FeedItemComponent
       deleteFeed={[Function]}
       editFeed={[MockFunction]}
+      entriesRemoveRead={[Function]}
       feed={
         Object {
           "__v": 0,
