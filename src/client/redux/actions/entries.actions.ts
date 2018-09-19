@@ -4,7 +4,7 @@ import * as ACT_TYPES from "../actiontypes";
 import * as EntriesServices from "../services/entries.services";
 import { SETTING_SHOW_ENTRIES_READ } from "../../constants";
 import { feedsDecrementUnread, feedsUpdateUnreadCount } from "./feeds.actions";
-import { filterVisibleEntries } from "./filter.actions";
+import * as FilterActions from "./filter.actions";
 
 import * as Types from "../../types";
 
@@ -70,13 +70,34 @@ export function entriesClearAll() {
     };
 }
 
+export function entriesSetAll(entries: Types.TEntries) {
+    return {
+        type: ACT_TYPES.ENTRIES_SET_ALL,
+        entries
+    };
+}
+
+export function entriesRemoveRead() {
+    return (dispatch: Types.IDispatch, getState: Types.IGetState) => {
+        const { entriesStore, settingsStore } = getState();
+        const entries = entriesStore.entries;
+        const settings = settingsStore.settings;
+        console.log(
+            "entriesRemoveRead() setting=",
+            settings.get(SETTING_SHOW_ENTRIES_READ).value
+        );
+        if (!settings.get(SETTING_SHOW_ENTRIES_READ).value) {
+            console.log("entriesRemoveRead() -- running removal");
+            const cleanEntries = EntriesServices.removeReadEntries(entries);
+            dispatch(entriesSetAll(cleanEntries));
+        }
+    };
+}
+
 function entriesSetAndFilter(entries: Types.TEntries) {
     return (dispatch: Types.IDispatch) => {
-        dispatch({
-            type: ACT_TYPES.ENTRIES_SET_ALL,
-            entries
-        });
+        dispatch(entriesSetAll(entries));
 
-        dispatch(filterVisibleEntries());
+        dispatch(FilterActions.filterVisibleEntries());
     };
 }

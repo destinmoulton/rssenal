@@ -57,17 +57,18 @@ class EntriesListComponent extends React.Component<
     }
 
     componentDidMount() {
-        this._prepareVisibleEntries(false);
+        this._prepareVisibleEntries();
     }
 
     componentDidUpdate(prevProps: TAllProps) {
         const hasFilterChanged = this.props.filter.id !== prevProps.filter.id;
         const hasSortChanged = this.props.sortBy !== prevProps.sortBy;
-        const hasFilteredEntriesChanged =
-            this.props.filteredEntries !== prevProps.filteredEntries;
+        const hasFilteredEntriesChanged = !this.props.filteredEntries.equals(
+            prevProps.filteredEntries
+        );
 
         if (hasFilterChanged) {
-            this._prepareVisibleEntries(true);
+            this._prepareVisibleEntries();
 
             // Reset scroll to top
             document.querySelector(".rss-entrylist-container").scrollTo(0, 0);
@@ -76,18 +77,14 @@ class EntriesListComponent extends React.Component<
                 activeEntryId: ""
             });
         } else if (hasFilteredEntriesChanged || hasSortChanged) {
-            this._prepareVisibleEntries(false);
+            this._prepareVisibleEntries();
         }
     }
 
-    _prepareVisibleEntries(hasFilterChanged: boolean) {
+    _prepareVisibleEntries() {
         const { filteredEntries } = this.props;
 
         let visibleEntries = this._sortEntries(filteredEntries);
-
-        if (hasFilterChanged) {
-            visibleEntries = this._filterHiddenEntries(visibleEntries);
-        }
 
         this.setState({
             visibleEntries: OrderedMap(visibleEntries)
@@ -101,19 +98,6 @@ class EntriesListComponent extends React.Component<
                 propertyComparator(a, b, sortParams[1], sortParams[0], false)
             )
             .toOrderedMap();
-    }
-
-    _filterHiddenEntries(visibleEntries: TEntries) {
-        const { settings } = this.props;
-
-        if (false === settings.get(SETTING_SHOW_IMAGES).value) {
-            return visibleEntries
-                .filter((entry: IEntry) => {
-                    return false === entry.has_read;
-                })
-                .toOrderedMap();
-        }
-        return visibleEntries;
     }
 
     _handleKeyDown = (e: any) => {
