@@ -17,9 +17,11 @@ describe("<FeedItemComponent />", () => {
     it("renders and matches the snapshot", () => {
         const wrapper = shallow(
             <FeedItemComponent
-                beginDeleteFeed={jest.fn()}
-                filterChangeActive={jest.fn()}
+                entriesRemoveRead={jest.fn()}
+                filterChange={jest.fn()}
+                filterVisibleEntries={jest.fn()}
                 editFeed={jest.fn()}
+                deleteFeed={jest.fn()}
                 feed={feed}
                 filter={FILTER}
                 unreadMapFeeds={UNREAD_MAP}
