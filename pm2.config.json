@@ -5,13 +5,13 @@
             "script": "dist/server/server.js",
             "watch": "dist/server",
             "node_args": "--inspect",
-            "env": {
+            "source_map_support": true,
+            "env_development": {
                 "NODE_ENV": "development"
             },
             "env_production": {
                 "NODE_ENV": "production"
-            },
-            "source_map_support": true
+            }
         }
     ]
 }
