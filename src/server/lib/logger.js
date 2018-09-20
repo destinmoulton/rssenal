@@ -9,16 +9,68 @@ if (!fs.existsSync(logDir)) {
     fs.mkdirSync(logDir);
 }
 
-const logger = winston.createLogger({
-    level: "info",
-    format: format.combine(format.splat(), format.simple()),
-    transports: [
-        new winston.transports.Console({ json: false, timestamp: true }),
-        new winston.transports.File({
-            filename: path.join(logDir, "info.log"),
-            json: false
-        })
-    ]
-});
+const FORMAT = format.combine(format.splat(), format.simple());
+const LEVEL = Symbol.for("level");
+const MESSAGE = Symbol.for("message");
+
+let logger = {};
+
+if (process.env.NODE_ENV === "production") {
+    logger = winston.createLogger({
+        transports: [
+            new winston.transports.File({
+                filename: path.join(logDir, "prod.log"),
+                format: FORMAT,
+                level: "error",
+                json: false
+            })
+        ]
+    });
+} else {
+    const customFormat = format.printf(info => {
+        return `${info.message}`;
+    });
+
+    logger = winston.createLogger({
+        transports: [
+            new winston.transports.File({
+                filename: path.join(logDir, "dev.log"),
+                format: FORMAT,
+                json: false
+            }),
+
+            new winston.transports.Console({
+                json: false,
+                format: customFormat,
+                //
+                // Possible to override the log method of the
+                // to use internal transport
+                //
+                log(info, callback) {
+                    setImmediate(() => this.emit("logged", info));
+
+                    if (this.stderrLevels[info[LEVEL]]) {
+                        console.error(info[MESSAGE]);
+
+                        if (callback) {
+                            callback();
+                        }
+                        return;
+                    }
+
+                    if (console[info[LEVEL]]) {
+                        console[info[LEVEL]](info[MESSAGE]);
+                    } else if (info[LEVEL] === "info") {
+                        console.log(info[MESSAGE]);
+                    }
+
+                    if (callback) {
+                        callback();
+                    }
+                }
+            })
+        ]
+    });
+}
 
 export default logger;

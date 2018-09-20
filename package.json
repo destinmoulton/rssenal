@@ -11,8 +11,8 @@
         "clean:server": "rm -rf dist/server/*",
         "build:dev:server": "npm run clean:server && babel --watch src/server --out-dir dist/server --source-maps inline",
         "build:prod:server": "npm run clean:server && babel src/server --out-dir dist/server",
-        "start:server": "pm2 start pm2.config.json",
-        "start:prod:server": "npm run build:prod:server && npm run start:server"
+        "start:dev:server": "pm2 start pm2.config.json --env development",
+        "start:prod:server": "npm run build:prod:server && pm2 start pm2.config.json --env production"
     },
     "keywords": [
         "rss",
