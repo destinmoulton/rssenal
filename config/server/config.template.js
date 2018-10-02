@@ -6,7 +6,11 @@ const auth = {
 const config = {
     port: 3000,
     mongo: {
-        uri: "mongodb://localhost/rssenal"
+        host: "mongodb://localhost",
+        options: {
+            dbName: "rssenal"
+            // Additional options here... ie auth
+        }
     },
     auth,
     jwt: {

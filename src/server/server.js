@@ -14,10 +14,11 @@ const app = express();
 // Connect mongoose
 mongoose.Promise = global.Promise;
 mongoose.connect(
-    CONFIG.mongo.uri,
+    CONFIG.mongo.host,
     {
         useNewUrlParser: true,
-        promiseLibrary: global.Promise
+        promiseLibrary: global.Promise,
+        ...CONFIG.mongo.options
     }
 );
 
