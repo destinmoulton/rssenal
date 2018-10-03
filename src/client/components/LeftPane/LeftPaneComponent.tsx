@@ -11,14 +11,14 @@ import FolderItemContainer from "../../containers/LeftPane/FolderItemContainer";
 
 import { propertyComparator } from "../../lib/sort";
 
-import { TFeeds, IFeed, IFolder, TFolders } from "../../types";
+import * as Types from "../../types";
 
 const log = debug("rssenal:LeftPaneComponent");
 
 export interface ILeftPaneMapState {
-    feeds: TFeeds;
+    feeds: Types.TFeeds;
     hasFolders: boolean;
-    folders: TFolders;
+    folders: Types.TFolders;
 }
 
 export interface ILeftPaneMapDispatch {
@@ -30,9 +30,9 @@ type IAllProps = ILeftPaneMapDispatch & ILeftPaneMapState;
 
 interface ILeftPaneState {
     addFeedModalOpen: boolean;
-    editFeed: IFeed;
+    editFeed: Types.IFeed;
     editFeedModalOpen: boolean;
-    editFolder: IFolder;
+    editFolder: Types.IFolder;
     editFolderModalOpen: boolean;
 }
 class LeftPaneComponent extends React.Component<IAllProps, ILeftPaneState> {
@@ -62,7 +62,7 @@ class LeftPaneComponent extends React.Component<IAllProps, ILeftPaneState> {
         }
     };
 
-    _handleOpenAddFeedModal = (feed: IFeed) => {
+    _handleOpenAddFeedModal = (feed: Types.IFeed) => {
         this.setState({
             editFeed: feed,
             addFeedModalOpen: true
@@ -75,7 +75,7 @@ class LeftPaneComponent extends React.Component<IAllProps, ILeftPaneState> {
         });
     };
 
-    _handleOpenEditFolderModal = (folder: IFolder) => {
+    _handleOpenEditFolderModal = (folder: Types.IFolder) => {
         this.setState({
             editFolder: folder,
             editFolderModalOpen: true
@@ -89,7 +89,7 @@ class LeftPaneComponent extends React.Component<IAllProps, ILeftPaneState> {
         });
     };
 
-    _handleOpenEditFeedModal = (feed: IFeed) => {
+    _handleOpenEditFeedModal = (feed: Types.IFeed) => {
         this.setState({
             editFeed: feed,
             editFeedModalOpen: true
@@ -114,8 +114,14 @@ class LeftPaneComponent extends React.Component<IAllProps, ILeftPaneState> {
 
         const { folders } = this.props;
         const sortedFolders = folders
-            .sort((a: IFolder, b: IFolder) =>
-                propertyComparator<IFolder, number>(a, b, "asc", "order", false)
+            .sort((a: Types.IFolder, b: Types.IFolder) =>
+                propertyComparator<Types.IFolder, number>(
+                    a,
+                    b,
+                    "asc",
+                    "order",
+                    false
+                )
             )
             .toArray();
         sortedFolders.unshift({ name: "All", _id: "all", order: -1 });
