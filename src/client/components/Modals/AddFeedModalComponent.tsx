@@ -1,3 +1,4 @@
+import debug from "debug";
 import * as React from "react";
 
 import {
@@ -11,9 +12,10 @@ import {
 } from "semantic-ui-react";
 import SelectFolder from "./SelectFolder";
 
-import { generateJWTJSONHeaders } from "../../lib/headers";
 import { apiValidateFeedURL } from "../../redux/services/feeds.services";
 import { IFeed, TFolderID, TFolders } from "../../types";
+
+const log = debug("rssenal:AddFeedModalComponent");
 
 export interface IAddFeedModalMapState {
     folders: TFolders;
@@ -59,12 +61,14 @@ class AddFeedModalComponent extends React.Component<
     state = INITIAL_STATE;
 
     _handleChangeURLInput = (e: React.FormEvent<HTMLInputElement>) => {
+        log("_handleChangeURLInput()");
         this.setState({
             feedURL: e.currentTarget.value
         });
     };
 
     _handleClickContinue = () => {
+        log("_handleClickContinue()");
         const { feedURL } = this.state;
 
         if (feedURL !== "") {
@@ -77,12 +81,14 @@ class AddFeedModalComponent extends React.Component<
     };
 
     _handleClose = () => {
+        log("_handleClose()");
         this.setState(INITIAL_STATE);
 
         this.props.onCloseModal();
     };
 
     _handleClickAddFeed = () => {
+        log("_handleClickAddFeed()");
         const { feedInfo, folderId, feedURL } = this.state;
 
         const dataToAdd = {
@@ -97,6 +103,7 @@ class AddFeedModalComponent extends React.Component<
     };
 
     _handleSelectFolder = (folderId: TFolderID) => {
+        log("_handleSelectFolder()");
         this.setState({
             folderId
         });
@@ -120,6 +127,7 @@ class AddFeedModalComponent extends React.Component<
     };
 
     async _serverValidateURL() {
+        log("_serverValidateURL()");
         const { feedURL } = this.state;
 
         try {
@@ -232,6 +240,7 @@ class AddFeedModalComponent extends React.Component<
     }
 
     render() {
+        log("render()");
         const { display } = this.state;
 
         const { isModalOpen } = this.props;
