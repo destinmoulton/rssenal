@@ -1,12 +1,11 @@
+import debug from "debug";
 import * as React from "react";
-import { connect } from "react-redux";
-
-import { Icon } from "semantic-ui-react";
 
 import Content from "./Content";
 import { sanitizeEntryTitle } from "../../../lib/sanitizer";
 
 import { TEntryID, IEntry } from "../../../types";
+const log = debug("rssenal:Entry");
 
 interface IEntryProps {
     entry: IEntry;
@@ -17,6 +16,7 @@ interface IEntryProps {
 
 class Entry extends React.Component<IEntryProps> {
     _toggleEntry(entryId: TEntryID) {
+        log("_toggleEntry()");
         const { toggleEntry } = this.props;
 
         toggleEntry(entryId);
@@ -24,6 +24,7 @@ class Entry extends React.Component<IEntryProps> {
 
     render() {
         const { entry, isActive, shouldShowImages } = this.props;
+        log("render()");
 
         let content = null;
         if (isActive) {

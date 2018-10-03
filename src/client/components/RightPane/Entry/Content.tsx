@@ -1,3 +1,4 @@
+import debug from "debug";
 import * as React from "react";
 
 import { Icon } from "semantic-ui-react";
@@ -5,6 +6,7 @@ import { Icon } from "semantic-ui-react";
 import { sanitizeEntryContent } from "../../../lib/sanitizer";
 
 import { IEntry } from "../../../types";
+const log = debug("rssenal:Content");
 
 interface IContentProps {
     entry: IEntry;
@@ -13,6 +15,7 @@ interface IContentProps {
 
 const Content = (props: IContentProps) => {
     const { entry, shouldShowImages } = props;
+    log("Content()", entry);
 
     const creator =
         entry.creator !== undefined || entry.creator !== ""

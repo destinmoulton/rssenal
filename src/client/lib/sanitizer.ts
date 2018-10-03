@@ -1,7 +1,10 @@
+import debug from "debug";
 import {
     SANITIZER_ALLOWED_CONTENT_TAGS,
     SANITIZER_ALLOWED_TAG_ATTRIBUTES
 } from "../constants";
+
+const log = debug("rssenal:sanitizer");
 
 interface ISanitizeHTML {
     (html: string, options: any): string;
@@ -12,6 +15,7 @@ export const sanitizeEntryContent = (
     dirtyContent: string,
     shouldShowImages: boolean
 ): string => {
+    log("sanitizeEntryContent()", dirtyContent);
     let allowedTags = SANITIZER_ALLOWED_CONTENT_TAGS.slice();
     if (shouldShowImages) {
         allowedTags.push("img");
