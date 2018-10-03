@@ -1,3 +1,4 @@
+import debug from "debug";
 import { OrderedMap } from "immutable";
 import * as React from "react";
 
@@ -14,6 +15,8 @@ import {
     TFeeds,
     TSettings
 } from "../../types";
+
+const log = debug("rssenal:EntriesListComponent()");
 
 export interface IEntriesListMapState {
     entries: TEntries;
@@ -116,6 +119,7 @@ class EntriesListComponent extends React.Component<
     };
 
     _handleToggleEntry = (entryId: TEntryID) => {
+        log("_handleToggleEntry()");
         let nextActiveEntryId = entryId;
         if (this.state.activeEntryId === entryId) {
             nextActiveEntryId = "";
@@ -131,6 +135,7 @@ class EntriesListComponent extends React.Component<
     };
 
     _activateSiblingEntry(direction: string) {
+        log("_activateSiblingEntry()", direction);
         const { activeEntryId, visibleEntries } = this.state;
 
         let sibling: IEntry = null;
@@ -189,6 +194,7 @@ class EntriesListComponent extends React.Component<
     }
 
     _markRead(entryId: TEntryID) {
+        log("_markRead()");
         const { entries, markEntryRead } = this.props;
         const entryToMark = entries.get(entryId);
 
@@ -220,6 +226,7 @@ class EntriesListComponent extends React.Component<
     }
 
     render() {
+        log("render()");
         const entryList = this._generateEntries();
 
         return <div className="rss-entrylist-container">{entryList}</div>;
