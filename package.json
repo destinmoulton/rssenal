@@ -23,6 +23,7 @@
     "author": "Destin Moulton",
     "license": "MIT",
     "dependencies": {
+        "@types/debug": "^0.0.30",
         "@types/enzyme": "^3.1.10",
         "@types/html-entities": "^1.2.16",
         "@types/jest": "^23.0.0",
