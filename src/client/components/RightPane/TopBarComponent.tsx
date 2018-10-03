@@ -1,7 +1,9 @@
+import debug from "debug";
 import * as React from "react";
 
 import SortMenu from "./SortMenu";
 import SettingsModalContainer from "../../containers/Modals/SettingsModalContainer";
+const log = debug("rssenal:TopBarComponent()");
 
 interface ITopBarProps {
     title: string;
@@ -11,6 +13,7 @@ interface ITopBarProps {
 
 class TopBarComponent extends React.Component<ITopBarProps> {
     render() {
+        log("render()");
         const { onChangeSort, sortBy, title } = this.props;
         return (
             <div className="rss-rightpane-topbar">
@@ -18,7 +21,8 @@ class TopBarComponent extends React.Component<ITopBarProps> {
                     {title}
                 </div>
                 <div className="rss-rightpane-topbar-sortselect-container">
-                    <SortMenu onChange={onChangeSort} currentSortBy={sortBy} />&nbsp;&nbsp;
+                    <SortMenu onChange={onChangeSort} currentSortBy={sortBy} />
+                    &nbsp;&nbsp;
                     <SettingsModalContainer />
                 </div>
             </div>

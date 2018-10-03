@@ -1,7 +1,11 @@
+import debug from "debug";
+
 import * as React from "react";
 import * as NotificationSystem from "react-notification-system";
 
 import { IMessage, TMessages } from "../types";
+
+const log = debug("rssenal:MessagesComponent");
 
 export interface IMessagesMapDispatch {
     messageRemove?: (message: IMessage) => void;
@@ -36,10 +40,12 @@ class MessagesComponent extends React.Component<TAllProps> {
     }
 
     _onCloseMessage = (message: IMessage) => {
+        log("_onCloseMessage()");
         this.props.messageRemove(message);
     };
 
     render() {
+        log("render()");
         return (
             <NotificationSystem
                 ref={(ref: NotificationSystem.System) =>

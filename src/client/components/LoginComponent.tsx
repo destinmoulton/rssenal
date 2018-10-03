@@ -1,3 +1,4 @@
+import debug from "debug";
 import * as React from "react";
 
 import {
@@ -9,6 +10,8 @@ import {
     Message,
     Segment
 } from "semantic-ui-react";
+
+const log = debug("rssenal:LoginComponent");
 
 export interface ILoginMapState {
     authenticationError: string;
@@ -36,6 +39,7 @@ class LoginComponent extends React.Component<TAllProps, ILoginState> {
     };
 
     _authenticateUser = () => {
+        log("_authenticateUser()");
         const { username, password } = this.state;
 
         if (username && password) {
@@ -44,6 +48,7 @@ class LoginComponent extends React.Component<TAllProps, ILoginState> {
     };
 
     render() {
+        log("render()");
         const { authenticationError } = this.props;
 
         let message = null;
@@ -70,7 +75,8 @@ class LoginComponent extends React.Component<TAllProps, ILoginState> {
                 >
                     <Grid.Column style={{ maxWidth: 450 }}>
                         <Header as="h2" className="rss-login-header">
-                            <Icon name="rss" />&nbsp;&nbsp;RSSenal
+                            <Icon name="rss" />
+                            &nbsp;&nbsp;RSSenal
                         </Header>
                         <Form size="large">
                             <Segment>

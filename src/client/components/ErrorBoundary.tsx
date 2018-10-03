@@ -1,6 +1,8 @@
+import debug from "debug";
+
 import * as React from "react";
 
-import * as Types from "../types";
+const log = debug("rssenal:ErrorBoundary");
 
 interface IErrorBoundaryState {
     hasError: boolean;
@@ -25,6 +27,7 @@ class ErrorBoundary extends React.Component<
     }
 
     componentDidCatch(error: Error, info: React.ErrorInfo) {
+        log("componentDidCatch()", error, info);
         this.setState({
             hasError: true,
             error,
@@ -33,6 +36,7 @@ class ErrorBoundary extends React.Component<
     }
 
     render() {
+        log("render()");
         if (this.state.hasError) {
             return (
                 <div>
