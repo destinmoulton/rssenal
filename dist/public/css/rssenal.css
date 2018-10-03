@@ -170,6 +170,14 @@ div.rss-entry-content-container blockquote p {
     margin-top: 5px;
 }
 
+div.rss-entry-content-container img {
+    max-width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5px;
+}
+
 /* The img tag inside the body of an rss feed */
 
 img.rss-entry-content-body-img {
