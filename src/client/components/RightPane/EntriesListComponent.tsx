@@ -7,27 +7,20 @@ import Entry from "./Entry/Entry";
 import { SETTING_SHOW_IMAGES } from "../../constants";
 import { propertyComparator } from "../../lib/sort";
 
-import {
-    IEntry,
-    IFilter,
-    TEntries,
-    TEntryID,
-    TFeeds,
-    TSettings
-} from "../../types";
+import * as Types from "../../types";
 
 const log = debug("rssenal:EntriesListComponent()");
 
 export interface IEntriesListMapState {
-    entries: TEntries;
-    feeds: TFeeds;
-    filter: IFilter;
-    settings: TSettings;
-    filteredEntries: TEntries;
+    entries: Types.TEntries;
+    feeds: Types.TFeeds;
+    filter: Types.IFilter;
+    settings: Types.TSettings;
+    filteredEntries: Types.TEntries;
 }
 
 export interface IEntriesListMapDispatch {
-    markEntryRead: (entry: IEntry) => void;
+    markEntryRead: (entry: Types.IEntry) => void;
 }
 
 interface IProps {
@@ -39,7 +32,9 @@ type TAllProps = IEntriesListMapState & IEntriesListMapDispatch & IProps;
 interface IEntriesListState {
     activeEntryId: string;
     currentTitle: string;
-    visibleEntries: OrderedMap<TEntryID, IEntry> | Iterable<IEntry>;
+    visibleEntries:
+        | OrderedMap<Types.TEntryID, Types.IEntry>
+        | Iterable<Types.IEntry>;
 }
 
 class EntriesListComponent extends React.Component<
@@ -49,7 +44,7 @@ class EntriesListComponent extends React.Component<
     state = {
         activeEntryId: "",
         currentTitle: "",
-        visibleEntries: OrderedMap<TEntryID, IEntry>()
+        visibleEntries: OrderedMap<Types.TEntryID, Types.IEntry>()
     };
 
     constructor(props: TAllProps) {
@@ -94,7 +89,7 @@ class EntriesListComponent extends React.Component<
         });
     }
 
-    _sortEntries(entries: TEntries) {
+    _sortEntries(entries: Types.TEntries) {
         const sortParams = this.props.sortBy.split(":");
         return entries
             .sort((a, b) =>
@@ -118,7 +113,7 @@ class EntriesListComponent extends React.Component<
         }
     };
 
-    _handleToggleEntry = (entryId: TEntryID) => {
+    _handleToggleEntry = (entryId: Types.TEntryID) => {
         log("_handleToggleEntry()");
         let nextActiveEntryId = entryId;
         if (this.state.activeEntryId === entryId) {
@@ -138,13 +133,13 @@ class EntriesListComponent extends React.Component<
         log("_activateSiblingEntry()", direction);
         const { activeEntryId, visibleEntries } = this.state;
 
-        let sibling: IEntry = null;
+        let sibling: Types.IEntry = null;
 
         if (activeEntryId === "") {
             sibling = visibleEntries.first();
         } else {
-            let previousEntry: IEntry = null;
-            let nextEntry: IEntry = null;
+            let previousEntry: Types.IEntry = null;
+            let nextEntry: Types.IEntry = null;
             let found = false;
             visibleEntries.map(entry => {
                 if (found && !nextEntry) {
@@ -184,7 +179,7 @@ class EntriesListComponent extends React.Component<
         });
     }
 
-    _scrollToEntry(entryId: TEntryID) {
+    _scrollToEntry(entryId: Types.TEntryID) {
         const entryEl = document.getElementById("rss-entry-item-" + entryId);
         setTimeout(() => {
             document
@@ -193,7 +188,7 @@ class EntriesListComponent extends React.Component<
         }, 10);
     }
 
-    _markRead(entryId: TEntryID) {
+    _markRead(entryId: Types.TEntryID) {
         log("_markRead()");
         const { entries, markEntryRead } = this.props;
         const entryToMark = entries.get(entryId);
