@@ -175,7 +175,8 @@ div.rss-entry-content-container img {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 5px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 /* The img tag inside the body of an rss feed */
@@ -185,7 +186,8 @@ img.rss-entry-content-body-img {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 5px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 div.rss-entry-link-container {
