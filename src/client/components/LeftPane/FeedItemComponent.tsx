@@ -5,7 +5,7 @@ import { Icon } from "semantic-ui-react";
 
 import { TFeedID, IFeed, IFilter, TUnreadMapFeeds } from "../../types";
 
-const log = debug("FeedItemComponent");
+const log = debug("rssenal:FeedItemComponent");
 
 export interface IFeedItemMapState {
     filter: IFilter;

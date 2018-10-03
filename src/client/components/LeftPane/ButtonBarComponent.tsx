@@ -6,7 +6,7 @@ import { Button, Icon, Popup } from "semantic-ui-react";
 import LogoutButtonContainer from "../../containers/LeftPane/LogoutButtonContainer";
 import ReorderFoldersModalContainer from "../../containers/Modals/ReorderFoldersModalContainer";
 
-const log = debug("ButtonBarComponent");
+const log = debug("rssenal:ButtonBarComponent");
 
 export interface IButtonBarMapState {}
 export interface IButtonBarMapDispatch {

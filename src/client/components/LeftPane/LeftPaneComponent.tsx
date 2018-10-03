@@ -1,4 +1,4 @@
-import { OrderedMap } from "immutable";
+import debug from "debug";
 import * as React from "react";
 
 import { Icon } from "semantic-ui-react";
@@ -12,6 +12,8 @@ import FolderItemContainer from "../../containers/LeftPane/FolderItemContainer";
 import { propertyComparator } from "../../lib/sort";
 
 import { TFeeds, IFeed, IFolder, TFolders } from "../../types";
+
+const log = debug("rssenal:LeftPaneComponent");
 
 export interface ILeftPaneMapState {
     feeds: TFeeds;
@@ -154,7 +156,8 @@ class LeftPaneComponent extends React.Component<IAllProps, ILeftPaneState> {
                 </div>
                 <div className="rss-leftmenu-folders-box">{listFolders}</div>
                 <div className="rss-leftmenu-logo">
-                    <Icon name="rss" />&nbsp;RSSenal
+                    <Icon name="rss" />
+                    &nbsp;RSSenal
                 </div>
             </div>
         );
