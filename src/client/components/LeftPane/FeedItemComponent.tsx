@@ -1,9 +1,11 @@
-import { Map } from "immutable";
+import debug from "debug";
 import * as React from "react";
 
 import { Icon } from "semantic-ui-react";
 
 import { TFeedID, IFeed, IFilter, TUnreadMapFeeds } from "../../types";
+
+const log = debug("FeedItemComponent");
 
 export interface IFeedItemMapState {
     filter: IFilter;
@@ -34,6 +36,7 @@ class FeedItemComponent extends React.Component<TAllProps, IFeedItemState> {
     };
 
     _handleClickDelete = () => {
+        log("_handleClickDelete()");
         const { deleteFeed, feed } = this.props;
         const conf = confirm(
             `Are you sure you want to delete "${feed.title}"?`
@@ -44,10 +47,12 @@ class FeedItemComponent extends React.Component<TAllProps, IFeedItemState> {
     };
 
     _handleClickEdit = () => {
+        log("_handleClickEdit()");
         this.props.editFeed(this.props.feed);
     };
 
     _handleClickFeed = () => {
+        log("_handleClickFeed()");
         const {
             entriesRemoveRead,
             filterChange,
@@ -68,12 +73,14 @@ class FeedItemComponent extends React.Component<TAllProps, IFeedItemState> {
     };
 
     _handleHideOptions = () => {
+        log("_handleHideOptions()");
         this.setState({
             isOptionsVisible: false
         });
     };
 
     _handleShowOptions = () => {
+        log("_handleShowOptions()");
         this.setState({
             isOptionsVisible: true
         });
@@ -97,6 +104,7 @@ class FeedItemComponent extends React.Component<TAllProps, IFeedItemState> {
     }
 
     render() {
+        log("render()");
         const { feed, filter, unreadMapFeeds } = this.props;
         const { isOptionsVisible } = this.state;
 
