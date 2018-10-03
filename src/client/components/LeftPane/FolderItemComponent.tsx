@@ -4,35 +4,27 @@ import * as React from "react";
 import { Icon, SemanticICONS } from "semantic-ui-react";
 
 import ListFeeds from "./ListFeeds";
+import * as Types from "../../types";
 
-const log = debug("FolderItemComponent");
-
-import {
-    IFeed,
-    IFolder,
-    IFilter,
-    TFolderID,
-    TFeeds,
-    TUnreadMapFolders
-} from "../../types";
+const log = debug("rssenal:FolderItemComponent");
 
 export interface IFolderItemMapState {
-    filter: IFilter;
-    unreadMapGroups: TUnreadMapFolders;
-    feeds: TFeeds;
+    filter: Types.IFilter;
+    unreadMapGroups: Types.TUnreadMapFolders;
+    feeds: Types.TFeeds;
 }
 
 export interface IFolderItemMapDispatch {
     entriesRemoveRead: () => void;
-    folderDelete: (folderId: TFolderID) => void;
-    filterChange: (filter: IFilter) => void;
+    folderDelete: (folderId: Types.TFolderID) => void;
+    filterChange: (filter: Types.IFilter) => void;
     filterVisibleEntries: () => void;
 }
 
 interface IFolderItemProps {
-    editFeed: (feed: IFeed) => void;
-    editFolder: (currentFolder: IFolder) => void;
-    folder: IFolder;
+    editFeed: (feed: Types.IFeed) => void;
+    editFolder: (currentFolder: Types.IFolder) => void;
+    folder: Types.IFolder;
 }
 
 type TAllProps = IFolderItemProps &
