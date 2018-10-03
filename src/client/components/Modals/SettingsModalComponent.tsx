@@ -1,8 +1,11 @@
+import debug from "debug";
 import * as React from "react";
 
 import { Button, Header, Icon, Modal, Popup, Radio } from "semantic-ui-react";
 
 import { ISetting, TSettings } from "../../types";
+
+const log = debug("rssenal:SettingsModalComponent");
 
 export interface ISettingsModalMapDispatch {
     settingChange: (setting_key: string, setting_value: any) => void;
@@ -28,12 +31,14 @@ class SettingsModalComponent extends React.Component<
     };
 
     _handleClickOpenModal = () => {
+        log("_handleClickOpenModal()");
         this.setState({
             isModalOpen: true
         });
     };
 
     _handleClickCloseModal = () => {
+        log("_handleClickCloseModal()");
         this.setState({
             isModalOpen: false
         });
@@ -74,6 +79,7 @@ class SettingsModalComponent extends React.Component<
         setting_value: any,
         setting: ISetting
     ) {
+        log("_handleChangeSetting()");
         this.props.settingChange(setting_key, setting_value);
 
         if (setting.refresh_entries_on_change) {
@@ -82,6 +88,7 @@ class SettingsModalComponent extends React.Component<
     }
 
     render() {
+        log("render()");
         const { isModalOpen } = this.state;
         const content = this._buildSettings();
         return (

@@ -1,9 +1,11 @@
+import debug from "debug";
 import * as React from "react";
 
 import { Button, Header, Modal } from "semantic-ui-react";
 
 import { IFolder } from "../../types";
-import EditFeedModalComponent from "./EditFeedModalComponent";
+
+const log = debug("rssenal:EditFolderModalComponent");
 
 export interface IEditFolderModalMapDispatch {
     folderSave: (folder: any) => void;
@@ -39,6 +41,7 @@ class EditFolderModalComponent extends React.Component<TAllProps, IState> {
     }
 
     _handleClose = () => {
+        log("_handleClose()");
         this.setState({
             folderInfo: INITIAL_FOLDER
         });
@@ -46,6 +49,7 @@ class EditFolderModalComponent extends React.Component<TAllProps, IState> {
     };
 
     _handleSave = () => {
+        log("_handleSave()");
         const { folderInfo } = this.state;
 
         if (folderInfo.name.trim() !== "") {
@@ -106,6 +110,7 @@ class EditFolderModalComponent extends React.Component<TAllProps, IState> {
     }
 
     render() {
+        log("render()");
         const { folder, isModalOpen } = this.props;
         const form = this._buildEditInput();
 

@@ -1,9 +1,12 @@
+import debug from "debug";
 import * as React from "react";
 
 import { Button, Header, Icon, Modal } from "semantic-ui-react";
 import SelectFolder from "./SelectFolder";
 
 import { TFolderID, TFolders } from "../../types";
+
+const log = debug("rssenal:EditFeedModalComponent");
 
 export interface IEditFeedModalMapDispatch {
     saveFeed: (feedInfo: any) => void;
@@ -42,6 +45,7 @@ class EditFeedModalComponent extends React.Component<TAllProps, IState> {
     }
 
     _handleClose = () => {
+        log("_handleClose()");
         this.setState({
             newFeed: {}
         });
@@ -50,6 +54,7 @@ class EditFeedModalComponent extends React.Component<TAllProps, IState> {
     };
 
     _handleSave = () => {
+        log("_handleSave()");
         const { newFeed } = this.state;
 
         if (newFeed.name !== "") {
@@ -73,6 +78,7 @@ class EditFeedModalComponent extends React.Component<TAllProps, IState> {
     };
 
     _handleSelectFolderChange = (folderId: TFolderID) => {
+        log("_handleSelectFolderChange()");
         const { newFeed } = this.state;
         newFeed.folder_id = folderId;
 
@@ -132,6 +138,7 @@ class EditFeedModalComponent extends React.Component<TAllProps, IState> {
     }
 
     render() {
+        log("render()");
         const { isModalOpen } = this.props;
         const form = this._buildEditInput();
 

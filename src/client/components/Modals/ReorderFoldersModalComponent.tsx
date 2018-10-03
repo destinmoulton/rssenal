@@ -1,3 +1,4 @@
+import debug from "debug";
 import * as React from "react";
 
 import { Button, Header, Modal, Popup } from "semantic-ui-react";
@@ -7,6 +8,8 @@ import { SortableFolderList } from "./SortableComponents";
 import { propertyComparator } from "../../lib/sort";
 
 import { IFolder, TFolders } from "../../types";
+
+const log = debug("rssenal:ReorderFoldersModalComponent");
 
 export interface IReorderFoldersMapState {
     folders: TFolders;
@@ -58,18 +61,21 @@ class ReorderFoldersModalComponent extends React.Component<
     }
 
     _handleCloseModal = () => {
+        log("_handleCloseModal()");
         this.setState({
             isModalOpen: false
         });
     };
 
     _handleOpenModal = () => {
+        log("_handleOpenModal()");
         this.setState({
             isModalOpen: true
         });
     };
 
     _handlePressOK = () => {
+        log("_handlePressOK()");
         const { sortableFolders } = this.state;
         const orderedFolders = sortableFolders.map((folder, index) => {
             folder.order = index + 1;
@@ -80,6 +86,7 @@ class ReorderFoldersModalComponent extends React.Component<
     };
 
     _onSortEnd = (reorderedObj: any) => {
+        log("_onSortEnd()");
         const newFoldersArray = this._reorderFoldersArray(
             reorderedObj.oldIndex,
             reorderedObj.newIndex
@@ -104,6 +111,7 @@ class ReorderFoldersModalComponent extends React.Component<
     }
 
     render() {
+        log("render()");
         const { sortableFolders, isModalOpen } = this.state;
         return (
             <span>

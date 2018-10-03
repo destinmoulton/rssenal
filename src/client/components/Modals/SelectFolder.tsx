@@ -1,8 +1,11 @@
+import debug from "debug";
 import * as React from "react";
 
 import { Dropdown } from "semantic-ui-react";
 
 import { TFolders, TFolderID } from "../../types";
+
+const log = debug("rssenal:SelectFolder");
 
 interface ISelectFolderProps {
     onChange: (folderId: TFolderID) => void;
@@ -12,12 +15,14 @@ interface ISelectFolderProps {
 
 class SelectFolder extends React.Component<ISelectFolderProps> {
     _handleOnChange = (e: any, dropdown: any) => {
+        log("_handleOnChange()");
         const selectedValue = dropdown.value;
 
         this.props.onChange(selectedValue);
     };
 
     render() {
+        log("render()");
         const { folders, selectedValue } = this.props;
 
         // Convert the feed folders Immutable list into
