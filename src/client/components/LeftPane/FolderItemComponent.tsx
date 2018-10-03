@@ -1,8 +1,11 @@
+import debug from "debug";
 import * as React from "react";
 
 import { Icon, SemanticICONS } from "semantic-ui-react";
 
 import ListFeeds from "./ListFeeds";
+
+const log = debug("FolderItemComponent");
 
 import {
     IFeed,
@@ -48,6 +51,7 @@ class FolderItemComponent extends React.Component<TAllProps, IFolderItemState> {
     };
 
     _handleClickDelete = () => {
+        log("_handleClickDelete()");
         const { folderDelete, folder } = this.props;
         const conf = confirm(
             `Are you sure you want to delete the '${
@@ -60,10 +64,12 @@ class FolderItemComponent extends React.Component<TAllProps, IFolderItemState> {
     };
 
     _handleClickEdit = () => {
+        log("_handleClickEdit()");
         this.props.editFolder(this.props.folder);
     };
 
     _handleClickFolder = () => {
+        log("_handleClickFolder()");
         const {
             entriesRemoveRead,
             filterChange,
@@ -84,12 +90,14 @@ class FolderItemComponent extends React.Component<TAllProps, IFolderItemState> {
     };
 
     _handleHideOptions = () => {
+        log("_handleHideOptions()");
         this.setState({
             optionsAreVisible: false
         });
     };
 
     _handleShowOptions = () => {
+        log("_handleShowOptions()");
         const { folder } = this.props;
 
         if (folder._id != "0") {
@@ -100,6 +108,7 @@ class FolderItemComponent extends React.Component<TAllProps, IFolderItemState> {
     };
 
     _handleToggleFeedsVisible = () => {
+        log("_handleToggleFeedsVisible()");
         this.setState({
             feedsAreVisible: !this.state.feedsAreVisible
         });
@@ -173,6 +182,7 @@ class FolderItemComponent extends React.Component<TAllProps, IFolderItemState> {
     }
 
     render() {
+        log("render()");
         const { editFeed, feeds, filter, folder } = this.props;
 
         const { feedsAreVisible, optionsAreVisible } = this.state;
