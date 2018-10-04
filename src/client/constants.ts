@@ -73,6 +73,7 @@ export const SANITIZER_ALLOWED_TAG_ATTRIBUTES = {
     li: <any>[],
     ol: <any>[],
     p: <any>[],
+    pre: <any>["class"],
     span: <any>[],
     strong: <any>[],
     td: <any>[],
