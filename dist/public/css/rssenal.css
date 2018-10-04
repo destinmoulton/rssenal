@@ -27,7 +27,7 @@ input.rss-foldermodal-name {
 }
 
 div.rss-folders-feeditem {
-    padding-left: 15px;
+    padding-left: 20px;
     cursor: pointer;
     width: 100%;
     float: left;
@@ -72,6 +72,7 @@ div.rss-folders-folderitem-icon {
 
 div.rss-folders-folderitem-title {
     float: left;
+    font-size: 1.1em;
     width: 62%;
 }
 
