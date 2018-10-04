@@ -76,8 +76,8 @@ export const SANITIZER_ALLOWED_TAG_ATTRIBUTES = {
     pre: <any>["class"],
     span: <any>[],
     strong: <any>[],
-    td: <any>[],
-    th: <any>[],
+    td: <any>["rowspan", "colspan", "style"],
+    th: <any>["rowspan", "colspan", "style"],
     tr: <any>[],
     ul: <any>[]
 };

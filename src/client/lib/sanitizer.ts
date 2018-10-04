@@ -70,7 +70,7 @@ export const sanitizeEntryContent = (
 
     let sanitized = sanitizeHTML(dirtyContent, {
         allowedTags,
-        SANITIZER_ALLOWED_TAG_ATTRIBUTES,
+        allowedAttributes: SANITIZER_ALLOWED_TAG_ATTRIBUTES,
         exclusiveFilter,
         transformTags
     });
