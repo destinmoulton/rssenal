@@ -76,6 +76,10 @@ div.rss-folders-folderitem-title {
     width: 62%;
 }
 
+div.rss-folders-folderitem-all {
+    padding-left: 5px;
+}
+
 div.rss-folders-folderitem-unread {
     float: left;
     margin-left: 3px;

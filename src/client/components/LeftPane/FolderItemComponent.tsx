@@ -126,11 +126,12 @@ class FolderItemComponent extends React.Component<TAllProps, IFolderItemState> {
     _domFolderTitle() {
         const { folder } = this.props;
 
+        let classes = "rss-folders-folderitem-title";
+        if (folder._id === "all") {
+            classes += " rss-folders-folderitem-all";
+        }
         return (
-            <div
-                className="rss-folders-folderitem-title"
-                onClick={this._handleClickFolder}
-            >
+            <div className={classes} onClick={this._handleClickFolder}>
                 {folder.name}
             </div>
         );
