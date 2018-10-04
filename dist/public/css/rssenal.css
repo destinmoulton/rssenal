@@ -154,8 +154,7 @@ div.rss-entry-content-container blockquote {
     font-size: 1em;
     font-style: italic;
     width: 80%;
-    margin: 15px 0;
-    margin-left: 25px;
+    margin: 25px 0px 15px 25px;
     padding: 0.25em 10px;
     line-height: 1.45;
     position: relative;
