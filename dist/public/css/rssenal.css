@@ -125,8 +125,18 @@ div.rss-entry-content-container figure figcaption {
     text-align: center;
 }
 
-div.rss-entry-content-container pre,
-code {
+/** code - inline code blocks **/
+
+div.rss-entry-content-container code {
+    background-color: lightgoldenrodyellow;
+    font-size: 12px;
+    padding: 4px 6px;
+    border-radius: 3px;
+}
+
+/** pre - code blocks **/
+
+div.rss-entry-content-container pre {
     border: 1px solid darkgray;
     background-color: lightgoldenrodyellow;
     font-size: 12px;
