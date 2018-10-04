@@ -38,11 +38,11 @@ export const sanitizeEntryContent = (
             }
         },
         b: "strong",
-        h1: "strong",
-        h2: "strong",
-        h3: "strong",
-        h4: "strong",
-        h5: "strong",
+        h1: "h1",
+        h2: "h1",
+        h3: "h1",
+        h4: "h1",
+        h5: "h1",
         i: "em",
         img: (tagName: string, attribs: any) => {
             if (attribs.src[0] === "/") {
