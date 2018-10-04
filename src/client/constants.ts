@@ -40,6 +40,7 @@ export const SANITIZER_ALLOWED_CONTENT_TAGS = [
     "em",
     "figure",
     "figcaption",
+    "h1",
     "i",
     "li",
     "ol",
