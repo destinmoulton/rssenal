@@ -197,6 +197,9 @@ div.rss-entry-content-container table {
     border-color: #3a3a3a;
     border-collapse: collapse;
     margin-bottom: 15px;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
 div.rss-entry-content-container th {
