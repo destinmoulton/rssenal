@@ -125,12 +125,13 @@ div.rss-entry-content-container figure figcaption {
     text-align: center;
 }
 
-div.rss-entry-content-container pre {
+div.rss-entry-content-container pre,
+code {
     border: 1px solid darkgray;
     background-color: lightgoldenrodyellow;
     font-size: 12px;
     padding: 5px;
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 
 div.rss-entry-content-container blockquote {
