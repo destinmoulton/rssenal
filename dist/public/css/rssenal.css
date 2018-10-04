@@ -149,7 +149,7 @@ div.rss-entry-content-container blockquote {
 div.rss-entry-content-container blockquote:before {
     display: block;
     content: "\201C";
-    font-size: 50px;
+    font-size: 40px;
     position: absolute;
     left: -20px;
     top: -20px;
