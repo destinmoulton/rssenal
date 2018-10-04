@@ -123,18 +123,18 @@ div.rss-entry-content-container {
     margin-left: 6px;
     margin-top: 4px;
     margin-right: 6px;
-    font-size: 1.1em;
+    font-size: 1em;
 }
 
-div.rss-entry-content-container figure figcaption {
-    text-align: center;
+div.rss-entry-content-container strong {
+    font-size: 1.1em;
 }
 
 /** code - inline code blocks **/
 
 div.rss-entry-content-container code {
     background-color: lightgoldenrodyellow;
-    font-size: 12px;
+    font-size: 1em;
     padding: 4px 6px;
     border-radius: 3px;
 }
@@ -144,14 +144,14 @@ div.rss-entry-content-container code {
 div.rss-entry-content-container pre {
     border: 1px solid darkgray;
     background-color: lightgoldenrodyellow;
-    font-size: 12px;
+    font-size: 1em;
     padding: 5px;
     overflow-x: auto;
 }
 
 div.rss-entry-content-container blockquote {
     font-family: Georgia, serif;
-    font-size: 14px;
+    font-size: 1em;
     font-style: italic;
     width: 80%;
     margin: 15px 0;
@@ -174,16 +174,20 @@ div.rss-entry-content-container blockquote:before {
 
 div.rss-entry-content-container blockquote cite {
     color: #7a7a7a;
-    font-size: 14px;
+    font-size: 1em;
     display: block;
     margin-top: 5px;
 }
 
 div.rss-entry-content-container blockquote p {
     color: #7a7a7a;
-    font-size: 14px;
+    font-size: 1em;
     display: block;
     margin-top: 5px;
+}
+
+div.rss-entry-content-container figure figcaption {
+    text-align: center;
 }
 
 div.rss-entry-content-container img {
