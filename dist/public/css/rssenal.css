@@ -190,6 +190,31 @@ div.rss-entry-content-container img {
     margin-bottom: 15px;
 }
 
+div.rss-entry-content-container table {
+    font-family: verdana, arial, sans-serif;
+    font-size: 11px;
+    color: #333333;
+    border-width: 1px;
+    border-color: #3a3a3a;
+    border-collapse: collapse;
+}
+
+div.rss-entry-content-container th {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #3a3a3a;
+    background-color: #b3b3b3;
+}
+
+div.rss-entry-content-container td {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #3a3a3a;
+    background-color: #ffffff;
+}
+
 /* The img tag inside the body of an rss feed */
 
 img.rss-entry-content-body-img {
