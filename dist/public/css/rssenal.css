@@ -123,11 +123,11 @@ div.rss-entry-content-container {
     margin-left: 6px;
     margin-top: 4px;
     margin-right: 6px;
-    font-size: 1em;
+    font-size: 1.1em;
 }
 
 div.rss-entry-content-container strong {
-    font-size: 1.1em;
+    font-size: 1.2em;
 }
 
 /** code - inline code blocks **/
