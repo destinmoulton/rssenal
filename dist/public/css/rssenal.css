@@ -241,13 +241,14 @@ img.rss-entry-content-body-img {
 div.rss-entry-link-container {
     margin-left: auto;
     margin-right: auto;
-    padding: 5px;
+    padding: 2px;
     border: 1px solid #5a5a5a;
     border-radius: 4px;
     background-color: #e5e5e5;
     text-align: center;
     margin-top: 4px;
-    width: 200px;
+    width: 120px;
+    font-size: 0.9em;
 }
 
 .rss-entrylist-container {
