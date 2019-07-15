@@ -3,5 +3,4 @@ node_modules
 
 dist/server
 config/server/config.js
-
-yarn-error.log
+docker/mongo-data
