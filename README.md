@@ -13,7 +13,16 @@ There are **no** options to share a post on Facebook, Twitter, or any other soci
 ### Requirements
 
 -   pm2
--   mongodb
+-   mongodb or docker\*
+
+\*A mongodb `docker-compose.yml` file is provided in the `docker` folder.
+
+Assuming you have `docker` and `docker-compose` installed... To start the mongodb docker container:
+
+```
+$ cd docker
+$ docker-compose up -d
+```
 
 ### Installation Instructions
 
@@ -24,12 +33,6 @@ Install node_modules:
 
 ### Configuration
 
-#### Create a db in mongo.
-
-Without authentication:
-`$ mongo`
-`> use rssenal` This will create the database.
-
 #### config.js
 
 Copy the contents of `config/server/config.template.js` into its own file `config/server/config.js`. Change the configured values to match your own setup.
@@ -39,15 +42,18 @@ Copy the contents of `config/server/config.template.js` into its own file `confi
 This will build and run the server:
 
 ```
-$ npm run start:prod:server
+$ npm run start-prod-server
 ```
 
 ### Development
 
 To compile the server in watch mode:
-`$ npm run compile:server`
+`$ npm run build-dev-server`
 
 You can leave the server compilation running or kill it with `Ctrl+c` when you have it configured.
+
+To start the development server:
+`$ npm run start-dev-server`
 
 ### Redux Debugging
 
