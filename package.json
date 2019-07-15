@@ -4,15 +4,15 @@
     "description": "RSS reader.",
     "main": "index.js",
     "scripts": {
-        "test:client:singlerun": "jest --config=jest.client.config.json",
-        "test:client:watch": "jest --watch --config=jest.client.config.json --no-watchman",
-        "test:clearCache": "jest --clearCache",
-        "build:client": "webpack --config webpack.config.js -d --watch",
-        "clean:server": "rm -rf dist/server/*",
-        "build:dev:server": "npm run clean:server && babel --watch src/server --out-dir dist/server --source-maps inline",
-        "build:prod:server": "npm run clean:server && babel src/server --out-dir dist/server",
-        "start:dev:server": "pm2 start pm2.config.json --env development",
-        "start:prod:server": "npm run build:prod:server && pm2 start pm2.config.json --env production"
+        "test-client-singlerun": "jest --config=jest.client.config.json",
+        "test-client-watch": "jest --watch --config=jest.client.config.json --no-watchman",
+        "test-clearCache": "jest --clearCache",
+        "build-client": "webpack --config webpack.config.js -d --watch",
+        "clean-server": "rm -rf dist/server/*",
+        "build-dev-server": "npm run clean-server && babel --watch src/server --out-dir dist/server --source-maps inline",
+        "build-prod-server": "npm run clean-server && babel src/server --out-dir dist/server",
+        "start-dev-server": "pm2 start pm2.config.json --env development",
+        "start-prod-server": "npm run build-prod-server && pm2 start pm2.config.json --env production"
     },
     "keywords": [
         "rss",
