@@ -1,0 +1,10 @@
+version: '3'
+services:
+  rssenal-mongodb-test:
+    image: mongo:latest
+    ports:
+    - 27017:27017
+    volumes:
+    - ./mongo-data/db:/data/db
+    - ./mongo-data/config:/data/configdb
+ 
